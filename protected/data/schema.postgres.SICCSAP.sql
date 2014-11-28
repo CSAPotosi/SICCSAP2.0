@@ -58,7 +58,7 @@ create table if not exists horario(
 create table turno(
   id_turno serial primary key ,
   nombre_turno varchar(32) not null unique ,
-  tipo_turno varchar(8)
+  tipo_turno varchar(8),
   hora_ingreso time not null,
   hora_salida time not null,
   tolerancia int default 0,
@@ -71,7 +71,7 @@ create table registro(
   fecha_hora_registro timestamp ,
   observaciones varchar(128),
   id_empleado int,
-  foreign key (id_empleado) references empleado(id_empleado)
+  foreign key (id_empleado) references empleado(id)
 );
 
 create table if not exists asignacion_empleado(
