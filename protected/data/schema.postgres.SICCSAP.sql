@@ -38,7 +38,8 @@ create table if not exists empleado(
 create table if not exists unidad(
   id_unidad serial primary key ,
   nombre_unidad varchar(32) not null unique,
-  descripcion_unidad varchar(128)
+  descripcion_unidad varchar(128),
+  estado varchar(16)
 );
 
 create table if not exists cargo(
@@ -46,13 +47,15 @@ create table if not exists cargo(
   nombre_cargo varchar (32) not null unique ,
   descripcion_cargo varchar(128),
   id_unidad int,
+  estado varchar(16),
   foreign key (id_unidad) references unidad(id_unidad)
 );
 
 create table if not exists horario(
   id_horario serial primary key ,
   nombre_horario varchar(32) not null unique,
-  tipo_horario varchar (32)
+  tipo_horario varchar (32),
+  estado varchar(16)
 );
 
 create table turno(
@@ -63,6 +66,7 @@ create table turno(
   hora_salida time not null,
   tolerancia int default 0,
   id_horario int,
+  estado varchar(16),
   foreign key (id_horario) references  horario(id_horario)
 );
 
