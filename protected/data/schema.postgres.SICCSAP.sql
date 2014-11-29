@@ -1,6 +1,4 @@
 /* comando para insertar desde archivo \i ubicacion del archivo ej c:wamp/www/schema.postgres.SICCSAP.sql*/
-drop database if exists siccsap;
-create database if not exists siccsap;
 
 /* Oso */
 ///////////////////////////////////////////////////////////////////////

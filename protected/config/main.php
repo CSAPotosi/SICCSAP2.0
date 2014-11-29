@@ -11,13 +11,16 @@ return array(
 	'theme'=>'lte',
 	// preloading 'log' component
 	'preload'=>array('log'),
-
+    //'language'=>'es', //Lenguaje destino
+    //'sourceLanguage'=>'en', //Lenguaje de origen
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
 		'application.components.*',
 	),
-
+    /*'coreMessages'=>array(
+        'basePath'=>'protected/messages'
+    ),*/
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 
