@@ -33,7 +33,7 @@ class Horario extends CActiveRecord
 		return array(
 			array('nombre_horario', 'required'),
 			array('nombre_horario, tipo_horario', 'length', 'max'=>32),
-			array('estado', 'length', 'max'=>16),
+			array('estado', 'default', 'value'=>'ACTIVO'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_horario, nombre_horario, tipo_horario, estado', 'safe', 'on'=>'search'),

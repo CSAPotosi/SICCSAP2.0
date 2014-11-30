@@ -19,6 +19,8 @@
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap time Picker -->
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/timepicker/bootstrap-timepicker.min.css" rel="stylesheet"/>
         <!-- Theme style -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/AdminLTE.css" rel="stylesheet" type="text/css" />
 
@@ -28,38 +30,7 @@
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
-		<script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/jquery-2.1.1.min.js"></script>
-		<script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/bootstrap/js/bootstrap.min.js"></script>
-		<script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/jquery-ui.min.js"></script>
-		        
-        <!-- Morris.js charts -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/raphael-min.js"></script>
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/morris/morris.min.js" type="text/javascript"></script>
-        <!-- Sparkline -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
-        <!-- jvectormap -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
-        <!-- jQuery Knob Chart -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/jqueryKnob/jquery.knob.js" type="text/javascript"></script>
-        <!-- daterangepicker -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
-        <!-- datepicker -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-        <!-- Bootstrap WYSIHTML5 -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
-        <!-- iCheck -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-
-        <!-- AdminLTE App -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/app.js" type="text/javascript"></script>
-
-        <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/dashboard.js" type="text/javascript"></script>
-
-        <!-- AdminLTE for demo purposes -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/demo.js" type="text/javascript"></script>
-    </head>
+	</head>
     <body class="skin-blue">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
@@ -336,16 +307,7 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        <li class="active">
-                            <a href="index.html">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="pages/widgets.html">
-                                <i class="fa fa-th"></i> <span>Widgets</span> <small class="badge pull-right bg-green">new</small>
-                            </a>
-                        </li>
+
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-clock-o"></i>
@@ -357,68 +319,7 @@
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Nuevo Horario",Yii::app()->createUrl('Horario/create')) ?></li>
                             </ul>
                         </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-laptop"></i>
-                                <span>UI Elements</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/UI/general.html"><i class="fa fa-angle-double-right"></i> General</a></li>
-                                <li><a href="pages/UI/icons.html"><i class="fa fa-angle-double-right"></i> Icons</a></li>
-                                <li><a href="pages/UI/buttons.html"><i class="fa fa-angle-double-right"></i> Buttons</a></li>
-                                <li><a href="pages/UI/sliders.html"><i class="fa fa-angle-double-right"></i> Sliders</a></li>
-                                <li><a href="pages/UI/timeline.html"><i class="fa fa-angle-double-right"></i> Timeline</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-edit"></i> <span>Forms</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/forms/general.html"><i class="fa fa-angle-double-right"></i> General Elements</a></li>
-                                <li><a href="pages/forms/advanced.html"><i class="fa fa-angle-double-right"></i> Advanced Elements</a></li>
-                                <li><a href="pages/forms/editors.html"><i class="fa fa-angle-double-right"></i> Editors</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-table"></i> <span>Tables</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/tables/simple.html"><i class="fa fa-angle-double-right"></i> Simple tables</a></li>
-                                <li><a href="pages/tables/data.html"><i class="fa fa-angle-double-right"></i> Data tables</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="pages/calendar.html">
-                                <i class="fa fa-calendar"></i> <span>Calendar</span>
-                                <small class="badge pull-right bg-red">3</small>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="pages/mailbox.html">
-                                <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                                <small class="badge pull-right bg-yellow">12</small>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-folder"></i> <span>Examples</span>
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/examples/invoice.html"><i class="fa fa-angle-double-right"></i> Invoice</a></li>
-                                <li><a href="pages/examples/login.html"><i class="fa fa-angle-double-right"></i> Login</a></li>
-                                <li><a href="pages/examples/register.html"><i class="fa fa-angle-double-right"></i> Register</a></li>
-                                <li><a href="pages/examples/lockscreen.html"><i class="fa fa-angle-double-right"></i> Lockscreen</a></li>
-                                <li><a href="pages/examples/404.html"><i class="fa fa-angle-double-right"></i> 404 Error</a></li>
-                                <li><a href="pages/examples/500.html"><i class="fa fa-angle-double-right"></i> 500 Error</a></li>
-                                <li><a href="pages/examples/blank.html"><i class="fa fa-angle-double-right"></i> Blank Page</a></li>
-                            </ul>
-                        </li>
+
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -432,23 +333,59 @@
                         <?php echo $this->pageTitle; ?>
                     </h1>
 					<?php if(isset($this->breadcrumbs)):?>
+
 						<?php $this->widget('zii.widgets.CBreadcrumbs', array(
 							'links'=>$this->breadcrumbs,
+							'htmlOptions'=>array('class'=>'breadcrumb'),
 						)); ?><!-- breadcrumbs -->
 					<?php endif?>
-                    <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-                        <li class="active">Dashboard</li>
-                    </ol>
+
                 </section>
 				<?php echo $content; ?>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
-        <!-- add new calendar event modal -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/jquery-2.1.1.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/bootstrap/js/bootstrap.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/jquery-ui.min.js"></script>
+        <!-- InputMask -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
 
 
 
 
+        <!-- Sparkline -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
+        <!-- jvectormap -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
+        <!-- jQuery Knob Chart -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/jqueryKnob/jquery.knob.js" type="text/javascript"></script>
+        <!-- daterangepicker -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+        <!-- datepicker -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+        <!-- Bootstrap WYSIHTML5 -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
+        <!-- iCheck -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+        <!-- AdminLTE App -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/app.js" type="text/javascript"></script>
+
+
+
+        <!-- AdminLTE for demo purposes -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/demo.js" type="text/javascript"></script>
+        <!-- bootstrap time picker -->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
+        <!-- Page script -->
+        <script type="text/javascript">
+            $(function() {
+                //Mascara
+                $("[data-mask]").inputmask();
+            });
+        </script>
     </body>
 </html>

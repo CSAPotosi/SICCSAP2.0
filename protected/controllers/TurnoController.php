@@ -1,6 +1,6 @@
 <?php
 
-class HorarioController extends Controller
+class TurnoController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -32,7 +32,7 @@ class HorarioController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','cambiaEstado'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -62,16 +62,16 @@ class HorarioController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Horario;
+		$model=new Turno;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Horario']))
+		if(isset($_POST['Turno']))
 		{
-			$model->attributes=$_POST['Horario'];
+			$model->attributes=$_POST['Turno'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_horario));
+				$this->redirect(array('view','id'=>$model->id_turno));
 		}
 
 		$this->render('create',array(
@@ -91,11 +91,11 @@ class HorarioController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Horario']))
+		if(isset($_POST['Turno']))
 		{
-			$model->attributes=$_POST['Horario'];
+			$model->attributes=$_POST['Turno'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_horario));
+				$this->redirect(array('view','id'=>$model->id_turno));
 		}
 
 		$this->render('update',array(
@@ -122,29 +122,9 @@ class HorarioController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProviderActive=new CActiveDataProvider('Horario',array(
-            'criteria'=>array(
-            'condition'=>"estado='ACTIVO'",
-            'order'=>'id_horario ASC',
-           ),
-            'pagination'=>array(
-                'pageSize'=>15,
-            ),
-        ));
-
-        $dataProviderInactive=new CActiveDataProvider('Horario',array(
-            'criteria'=>array(
-                'condition'=>"estado='INACTIVO'",
-                'order'=>'id_horario ASC',
-            ),
-            'pagination'=>array(
-                'pageSize'=>15,
-            ),
-        ));
-
+		$dataProvider=new CActiveDataProvider('Turno');
 		$this->render('index',array(
-			'dataProviderActive'=>$dataProviderActive,
-            'dataProviderInactive'=>$dataProviderInactive,
+			'dataProvider'=>$dataProvider,
 		));
 	}
 
@@ -153,10 +133,10 @@ class HorarioController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Horario('search');
+		$model=new Turno('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Horario']))
-			$model->attributes=$_GET['Horario'];
+		if(isset($_GET['Turno']))
+			$model->attributes=$_GET['Turno'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -167,12 +147,12 @@ class HorarioController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Horario the loaded model
+	 * @return Turno the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Horario::model()->findByPk($id);
+		$model=Turno::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -180,28 +160,14 @@ class HorarioController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Horario $model the model to be validated
+	 * @param Turno $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='horario-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='turno-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
 	}
-
-    public function actionCambiaEstado($id){
-        $model=Horario::model()->findByPk($id);
-        if($model===null)
-            throw new CHttpException(404,'The requested page does not exist.');
-        else{
-            if($model->estado=="ACTIVO")
-                $model->estado="INACTIVO";
-            else
-                $model->estado="ACTIVO";
-            $model->save();
-        }
-        $this->redirect(array("index"));
-    }
 }

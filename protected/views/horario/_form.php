@@ -4,7 +4,6 @@
 /* @var $form CActiveForm */
 ?>
 
-<div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'horario-form',
@@ -56,4 +55,3 @@
 
 <?php $this->endWidget(); ?>
 
-</div><!-- form -->
