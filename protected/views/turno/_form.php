@@ -39,14 +39,14 @@
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'hora_ingreso',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-            <input type="text"  name="Turno[hora_ingreso]" id="Turno_hora_ingreso" class="form-control" data-inputmask='"mask": "99:99 aM"' placeholder="hora" data-mask/>
+            <input type="text"  value="<?php echo date("h:i A", strtotime($model->hora_ingreso)); ?>" name="Turno[hora_ingreso]" id="Turno_hora_ingreso" class="form-control" data-inputmask='"mask": "99:99 aM"' placeholder="hora" data-mask/>
 		</div>
 		<?php echo $form->error($model,'hora_ingreso',array('class'=>'label label-danger')); ?>
 	</div>
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'hora_salida',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-            <input type="text"  name="Turno[hora_salida]" id="Turno_hora_salida" class="form-control" data-inputmask='"mask": "99:99 aM"' placeholder="hora" data-mask/>
+            <input type="text"  value="<?php echo date("h:i A", strtotime($model->hora_salida)); ?>" name="Turno[hora_salida]" id="Turno_hora_salida" class="form-control" data-inputmask='"mask": "99:99 aM"' placeholder="hora" data-mask/>
 		</div>
 		<?php echo $form->error($model,'hora_salida',array('class'=>'label label-danger')); ?>
 	</div>
@@ -62,7 +62,7 @@
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'id_horario',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo $form->textField($model,'id_horario',array('class'=>'form-control','placeholder'=>'id_horario')); ?>
+			<?php echo $form->textField($model,'id_horario',array('class'=>'form-control','placeholder'=>'id_horario','disabled'=>'true')); ?>
 		</div>
 		<?php echo $form->error($model,'id_horario',array('class'=>'label label-danger')); ?>
 	</div>
@@ -70,7 +70,7 @@
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'estado',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo $form->textField($model,'estado',array('class'=>'form-control','placeholder'=>'estado')); ?>
+			<?php echo $form->textField($model,'estado',array('class'=>'form-control','placeholder'=>'estado','disabled='=>'true')); ?>
 		</div>
 		<?php echo $form->error($model,'estado',array('class'=>'label label-danger')); ?>
 	</div>
@@ -80,7 +80,6 @@
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
 				<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary btn-lg')); ?>
-                
             </div>
         </div>
     </div>

@@ -32,7 +32,7 @@ class TurnoController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','cambiaEstado'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -170,4 +170,18 @@ class TurnoController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+    public function actionCambiaEstado($id){
+        $model=Turno::model()->findByPk($id);
+        if($model===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        else{
+            if($model->estado=="ACTIVO")
+                $model->estado="INACTIVO";
+            else
+                $model->estado="ACTIVO";
+            $model->save();
+        }
+        $this->redirect(array("horario/view",'id'=>$model->id_horario));
+    }
 }

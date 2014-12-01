@@ -37,6 +37,7 @@ class Turno extends CActiveRecord
 			array('tolerancia, id_horario', 'numerical', 'integerOnly'=>true),
 			array('nombre_turno', 'length', 'max'=>32),
 			array('tipo_turno', 'length', 'max'=>8),
+            array('estado','default','value'=>'ACTIVO'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_turno, nombre_turno, tipo_turno, hora_ingreso, hora_salida, tolerancia, id_horario', 'safe', 'on'=>'search'),

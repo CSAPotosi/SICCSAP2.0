@@ -51,8 +51,18 @@ class HorarioController extends Controller
 	 */
 	public function actionView($id)
 	{
+        $turnos=new CActiveDataProvider('Turno',array(
+            'criteria'=>array(
+                'condition'=>"id_horario={$id}",
+                'order'=>'estado ASC',
+            ),
+            'pagination'=>array(
+                'pageSize'=>10,
+            ),
+        ));
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+            'turnos'=>$turnos,
 		));
 	}
 

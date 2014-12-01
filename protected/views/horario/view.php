@@ -48,20 +48,27 @@
             <table class="table table-hover">
                 <tbody>
                 <tr>
-                    <th>ID</th>
-                    <th>User</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                    <th>Reason</th>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Hora Entrada</th>
+                    <th>Hora Salida</th>
+                    <th>Tolerancia (en min)</th>
+                    <th>Estado</th>
+                    <th>Operaciones</th>
                 </tr>
-                </tbody></table>
+                <?php $this->widget('zii.widgets.CListView', array(
+                    'dataProvider'=>$turnos,
+                    'itemView'=>'_itemTurno',
+                )); ?>
+                </tbody>
+            </table>
         </div>
         <div class="box-footer">
-
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Nuevo Turno</button>
         </div>
     </div>
     <!-- Large modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Large modal</button>
+
 
     <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
