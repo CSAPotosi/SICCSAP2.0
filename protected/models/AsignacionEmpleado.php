@@ -1,26 +1,30 @@
 <?php
 
 /**
- * This is the model class for table "registro".
+ * This is the model class for table "asignacion_empleado".
  *
- * The followings are the available columns in table 'registro':
- * @property string $fecha
- * @property string $hora_asistencia
- * @property string $observaciones
+ * The followings are the available columns in table 'asignacion_empleado':
  * @property integer $id_asignacion
+ * @property string $fecha_inicio
+ * @property string $fecha_fin
+ * @property integer $id_empleado
+ * @property integer $id_cargo
+ * @property integer $id_horario
  *
  * The followings are the available model relations:
- * @property AsignacionEmpleado $idAsignacion
+ * @property Registro[] $registros
+ * @property Empleado $idEmpleado
+ * @property Cargo $idCargo
+ * @property Horario $idHorario
  */
-class Registro extends CActiveRecord
+class AsignacionEmpleado extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
-
 	public function tableName()
 	{
-		return 'registro';
+		return 'asignacion_empleado';
 	}
 
 	/**
@@ -31,12 +35,11 @@ class Registro extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha, hora_asistencia, id_asignacion', 'required'),
-			array('id_asignacion', 'numerical', 'integerOnly'=>true),
-			array('observaciones', 'length', 'max'=>128),
+			array('id_empleado, id_cargo, id_horario', 'numerical', 'integerOnly'=>true),
+			array('fecha_inicio, fecha_fin', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('fecha, hora_asistencia, observaciones, id_asignacion', 'safe', 'on'=>'search'),
+			array('id_asignacion, fecha_inicio, fecha_fin, id_empleado, id_cargo, id_horario', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,7 +51,10 @@ class Registro extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idAsignacion' => array(self::BELONGS_TO, 'AsignacionEmpleado', 'id_asignacion'),
+			'registros' => array(self::HAS_MANY, 'Registro', 'id_asignacion'),
+			'idEmpleado' => array(self::BELONGS_TO, 'Empleado', 'id_empleado'),
+			'idCargo' => array(self::BELONGS_TO, 'Cargo', 'id_cargo'),
+			'idHorario' => array(self::BELONGS_TO, 'Horario', 'id_horario'),
 		);
 	}
 
@@ -58,10 +64,12 @@ class Registro extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'fecha' => 'Fecha',
-			'hora_asistencia' => 'Hora Asistencia',
-			'observaciones' => 'Observaciones',
 			'id_asignacion' => 'Id Asignacion',
+			'fecha_inicio' => 'Fecha Inicio',
+			'fecha_fin' => 'Fecha Fin',
+			'id_empleado' => 'Id Empleado',
+			'id_cargo' => 'Id Cargo',
+			'id_horario' => 'Id Horario',
 		);
 	}
 
@@ -83,10 +91,12 @@ class Registro extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('fecha',$this->fecha,true);
-		$criteria->compare('hora_asistencia',$this->hora_asistencia,true);
-		$criteria->compare('observaciones',$this->observaciones,true);
 		$criteria->compare('id_asignacion',$this->id_asignacion);
+		$criteria->compare('fecha_inicio',$this->fecha_inicio,true);
+		$criteria->compare('fecha_fin',$this->fecha_fin,true);
+		$criteria->compare('id_empleado',$this->id_empleado);
+		$criteria->compare('id_cargo',$this->id_cargo);
+		$criteria->compare('id_horario',$this->id_horario);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -97,22 +107,10 @@ class Registro extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Registro the static model class
+	 * @return AsignacionEmpleado the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-    public function getAsignacion($id_empleado)
-    {
-
-        $modelo=AsignacionEmpleado::model()->find(array(
-            'select'=>'id_asignacion',
-            'condition'=>'id_empleado=:id_empleado and fecha_fin is null',
-            'params'=>array(':id_empleado'=>$id_empleado),
-        ));
-        if($modelo ==NULL)
-            return 0;
-        return $modelo->id_asignacion;
-    }
 }

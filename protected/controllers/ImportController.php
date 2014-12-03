@@ -10,12 +10,12 @@ class ImportController extends Controller
             if($model->validate())
             {
                 $uf=CUploadedFile::getInstance($model,'archivo');
-                if($uf->getExtensionName()=="csv" or $uf->hetExtensionName()=="txt")
+                if($uf->getExtensionName()=="dat" or $uf->hetExtensionName()=="txt")
                 {
                     $i=0;
                     $archi=fopen($uf->gettempName(),"r");
-                    $array=array();
-                    while(($data=fgetcsv($archi,1000000,";"))!=FALSE)
+
+                    /**while(($data=fgetcsv($archi,1000000,";"))!=FALSE)
                     {
                         $model=new Registro();
 
@@ -29,8 +29,19 @@ class ImportController extends Controller
                         $model->observaciones=utf8_decode($var[2]);
                         $i=0;
                         $model->save();
+                    }**/
+                    while(!feof($archi))
+                    {
+                        $linea=fgets($archi);
+                        sscanf($linea,"%d %s %s",$a,$b,$c);
+                        $model= new Registro();
+                        $model->fecha=$b;
+                        $model->hora_asistencia=$c;
+                        $model->id_asignacion=$model->getAsignacion($a);
+                        $model->save();
                     }
                     fclose($archi);
+
                     /**
                     if(!$uf==null)
                     {
@@ -57,12 +68,5 @@ class ImportController extends Controller
 
         $this->render('Csv',array('model'=>$model));
     }
-    public function EliminarRepetidos($array)
-    {
 
-        foreach($array as $a)
-        {
-            $a["nit"]=-$a["nit"];
-        }
-    }
 }

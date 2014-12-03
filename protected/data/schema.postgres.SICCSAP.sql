@@ -1,8 +1,6 @@
 /* comando para insertar desde archivo \i ubicacion del archivo ej c:wamp/www/schema.postgres.SICCSAP.sql*/
 
 /* Oso */
-///////////////////////////////////////////////////////////////////////
-
 /*tabla persona*/
 create table if not exists persona(
   id serial not null primary key ,
@@ -64,17 +62,8 @@ create table turno(
   hora_salida time not null,
   tolerancia int default 0,
   id_horario int,
-  estado varchar(16),
   foreign key (id_horario) references  horario(id_horario)
 );
-create table registro(
-  id_asistencia serial primary key ,
-  codigo int unique not null,
-  fecha_hora_registro timestamp not null,
-  observaciones varchar(128),
-  foreign key (codigo) references empleado(id)
-);
-
 create table if not exists asignacion_empleado(
   id_asignacion serial primary key,
   fecha_inicio date,
@@ -86,7 +75,14 @@ create table if not exists asignacion_empleado(
   foreign key (id_cargo) references cargo(id_cargo),
   foreign key (id_horario) references horario(id_horario)
 );
-
+create table registro(
+  fecha date not null,
+  hora_asistencia time not null,
+  observaciones varchar(128),
+  id_asignacion int not null,
+  primary key(fecha,hora_asistencia,id_asignacion),
+  foreign key (id_asignacion) references asignacion_empleado(id_asignacion)
+);
 create table if not exists medico(
   id int not null primary key,
   matricula varchar(32) unique not null,
@@ -94,9 +90,3 @@ create table if not exists medico(
   estado varchar(16),
   foreign key (id) references persona (id)
 );
-
-
-
-
-
-
