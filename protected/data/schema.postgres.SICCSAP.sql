@@ -67,13 +67,12 @@ create table turno(
   estado varchar(16),
   foreign key (id_horario) references  horario(id_horario)
 );
-
 create table registro(
   id_asistencia serial primary key ,
-  fecha_hora_registro timestamp ,
+  codigo int unique not null,
+  fecha_hora_registro timestamp not null,
   observaciones varchar(128),
-  id_empleado int,
-  foreign key (id_empleado) references empleado(id)
+  foreign key (codigo) references empleado(id)
 );
 
 create table if not exists asignacion_empleado(

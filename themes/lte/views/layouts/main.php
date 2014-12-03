@@ -319,6 +319,18 @@
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Nuevo Horario",Yii::app()->createUrl('Horario/create')) ?></li>
                             </ul>
                         </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-clock-o"></i>
+                                <span>Administrar Asistencia</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Asistencia",Yii::app()->createUrl('Registro/create')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Importar Asistencia",Yii::app()->createUrl('import/csv')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Reportes",Yii::app()->createUrl('Registro')) ?></li>
+                            </ul>
+                        </li>
 
                     </ul>
                 </section>

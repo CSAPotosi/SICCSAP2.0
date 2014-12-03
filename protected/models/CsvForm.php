@@ -1,0 +1,17 @@
+<?php
+
+class CsvForm extends CFormModel {
+    public $archivo;
+    public function rules()
+    {
+        return array(
+            array('archivo', 'file', 'allowEmpty'=>false,
+                'types'=>'csv,txt'),
+        );
+    }
+    public function attributeLabels(){
+        return array(
+            "archivo"=>"Archivo Csv",
+        );
+    }
+}
