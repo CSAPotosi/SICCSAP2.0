@@ -385,6 +385,9 @@
             $(function() {
                 //Mascara
                 $("[data-mask]").inputmask();
+                $(".timepicker").timepicker({
+                    showInputs: false
+                });
             });
         </script>
     </body>

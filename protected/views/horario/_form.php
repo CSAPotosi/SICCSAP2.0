@@ -35,10 +35,6 @@
             <?php echo $form->error($model,'tipo_horario',array('class'=>'label label-danger')); ?>
         </div>
 
-
-        <?php echo $form->labelEx($model,'estado'); ?>
-        <?php echo $form->textField($model,'estado',array('size'=>16,'maxlength'=>16)); ?>
-        <?php echo $form->error($model,'estado'); ?>
     </div>
 
 

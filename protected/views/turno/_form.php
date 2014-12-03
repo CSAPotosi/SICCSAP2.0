@@ -35,18 +35,22 @@
 		</div>
 		<?php echo $form->error($model,'tipo_turno',array('class'=>'label label-danger')); ?>
 	</div>
+    <?php  $value=($model->hora_ingreso=="")?"":date("h:i A", strtotime($model->hora_ingreso));   ?>
+
 
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'hora_ingreso',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-            <input type="text"  value="<?php echo date("h:i A", strtotime($model->hora_ingreso)); ?>" name="Turno[hora_ingreso]" id="Turno_hora_ingreso" class="form-control" data-inputmask='"mask": "99:99 aM"' placeholder="hora" data-mask/>
+            <input type="text"  value="<?php echo $value; ?>" name="Turno[hora_ingreso]" id="Turno_hora_ingreso" class="form-control" data-inputmask='"mask": "99:99 aM"' placeholder="hora" data-mask/>
 		</div>
 		<?php echo $form->error($model,'hora_ingreso',array('class'=>'label label-danger')); ?>
 	</div>
+
+    <?php  $value=($model->hora_salida=="")?"":date("h:i A", strtotime($model->hora_salida));   ?>
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'hora_salida',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-            <input type="text"  value="<?php echo date("h:i A", strtotime($model->hora_salida)); ?>" name="Turno[hora_salida]" id="Turno_hora_salida" class="form-control" data-inputmask='"mask": "99:99 aM"' placeholder="hora" data-mask/>
+            <input type="text"  value="<?php echo $value; ?>" name="Turno[hora_salida]" id="Turno_hora_salida" class="form-control" data-inputmask='"mask": "99:99 aM"' placeholder="hora" data-mask/>
 		</div>
 		<?php echo $form->error($model,'hora_salida',array('class'=>'label label-danger')); ?>
 	</div>

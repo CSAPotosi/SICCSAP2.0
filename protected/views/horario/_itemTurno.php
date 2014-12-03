@@ -15,7 +15,7 @@
             <a href="<?php echo $this->createUrl('turno/cambiaEstado',array('id'=>$data->id_turno)); ?>" class="btn btn-primary btn-sm <?php echo $act[$data->estado]; ?>" title="Activar"><i class="fa fa-fw fa-check"></i></a>
             <a href="<?php echo $this->createUrl('turno/cambiaEstado',array('id'=>$data->id_turno)); ?>" class="btn btn-danger btn-sm <?php echo $inact[$data->estado]; ?>" title="Inactivar"><i class="fa fa-fw fa-times"></i></a>
         </div>
-        <a href="<?php echo $this->createUrl('turno/update',array('id'=>$data->id_turno)); ?>" class="btn btn-primary btn-sm" title="Inactivar"><i class="fa fa-fw fa-edit"></i></a>
+        <a href="<?php echo $this->createUrl('turno/update',array('id'=>$data->id_turno)); ?>" class="btn btn-primary btn-sm" title="Actualizar"><i class="fa fa-fw fa-edit"></i></a>
     </td>
 </tr>
 
