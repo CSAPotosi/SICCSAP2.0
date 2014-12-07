@@ -1,21 +1,21 @@
 <div class="col-md-12">
 
 	<?php
-	/* @var $this RegistroController */
+	/* @var $this EspecialidadController */
 	/* @var $dataProvider CActiveDataProvider */
 
 	$this->breadcrumbs=array(
-		'Registros',
+		'Especialidads',
 	);
 
 	$this->menu=array(
-		array('label'=>'Create Registro', 'url'=>array('create')),
-		array('label'=>'Manage Registro', 'url'=>array('admin')),
+		array('label'=>'Create Especialidad', 'url'=>array('create')),
+		array('label'=>'Manage Especialidad', 'url'=>array('admin')),
 	);
 	?>
 	<div class="box box-primary">
 		<div class="box-header">
-			<h3 class="box-title">Registros</h3>
+			<h3 class="box-title">Especialidads</h3>
             <div class="box-tools pull-right">
                 <button class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
             </div>

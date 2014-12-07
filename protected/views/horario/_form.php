@@ -26,7 +26,6 @@
             </div>
             <?php echo $form->error($model,'nombre_horario',array('class'=>'label label-danger')); ?>
         </div>
-
         <div class="form-group">
             <?php echo $form->labelEx($model,'tipo_horario',array('class'=>'col-md-2 control-label')); ?>
             <div class="col-sm-8">
@@ -36,8 +35,6 @@
         </div>
 
     </div>
-
-
     <div class="box-footer">
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
@@ -45,9 +42,4 @@
             </div>
         </div>
     </div>
-
-
-
-
 <?php $this->endWidget(); ?>
-

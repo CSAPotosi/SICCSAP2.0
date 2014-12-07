@@ -20,8 +20,6 @@ create table if not exists persona(
   email varchar(128),
   fotografia varchar(128) default 'default.gif'
 );
-
-
 create table if not exists empleado(
   id int primary key ,
   fecha_contratacion date ,
@@ -29,15 +27,12 @@ create table if not exists empleado(
   estado varchar (16),
   foreign key (id) references persona(id)
 );
-
-
 create table if not exists unidad(
   id_unidad serial primary key ,
   nombre_unidad varchar(32) not null unique,
   descripcion_unidad varchar(128),
   estado varchar(16)
 );
-
 create table if not exists cargo(
   id_cargo serial primary key ,
   nombre_cargo varchar (32) not null unique ,
@@ -46,14 +41,12 @@ create table if not exists cargo(
   estado varchar(16),
   foreign key (id_unidad) references unidad(id_unidad)
 );
-
 create table if not exists horario(
   id_horario serial primary key ,
   nombre_horario varchar(32) not null unique,
   tipo_horario varchar (32),
   estado varchar(16)
 );
-
 create table turno(
   id_turno serial primary key ,
   nombre_turno varchar(32) not null unique ,
@@ -89,4 +82,15 @@ create table if not exists medico(
   colegiatura varchar(64),
   estado varchar(16),
   foreign key (id) references persona (id)
+);
+CREATE TABLE especialidad(
+  id_especialidad SERIAL primary key not null,
+  nombre_especialidad  varchar(50) not null,
+  descripcion varchar(128)
+);
+create table medico_especialidad(
+  id_medico int ,
+  id_especialidad int,
+  foreign key (id_medico)references medico(id_medico),
+  foreign key(id_especialidad) references especialidad(id_especialidad)
 );
