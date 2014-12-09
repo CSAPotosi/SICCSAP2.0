@@ -2,9 +2,11 @@
 
 class SiteController extends Controller
 {
+
 	/**
 	 * Declares class-based actions.
 	 */
+    public $layout='login';
 	public function actions()
 	{
 		return array(

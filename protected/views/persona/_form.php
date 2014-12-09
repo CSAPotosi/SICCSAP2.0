@@ -20,30 +20,35 @@
 
 	<?php echo $form->errorSummary($model,null,null,array('class'=>'alert alert-error')); ?>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'dni',array('class'=>'col-md-2 control-label')); ?>
-		<div class="col-sm-8">
-			<?php echo $form->textField($model,'dni',array('class'=>'form-control','placeholder'=>'dni')); ?>
-		</div>
-		<?php echo $form->error($model,'dni',array('class'=>'label label-danger')); ?>
-	</div>
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <?php echo $form->labelEx($model,'dni',array('class'=>'col-md-3 control-label')); ?>
+                <div class="col-sm-9">
+                    <?php echo $form->textField($model,'dni',array('class'=>'form-control','placeholder'=>'dni')); ?>
+                </div>
+                <?php echo $form->error($model,'dni',array('class'=>'label label-danger')); ?>
+            </div>
+            <div class="form-group">
+                <?php echo $form->labelEx($model,'nit',array('class'=>'col-md-3 control-label')); ?>
+                <div class="col-sm-9">
+                    <?php echo $form->textField($model,'nit',array('class'=>'form-control','placeholder'=>'nit')); ?>
+                </div>
+                <?php echo $form->error($model,'nit',array('class'=>'label label-danger')); ?>
+            </div>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'nit',array('class'=>'col-md-2 control-label')); ?>
-		<div class="col-sm-8">
-			<?php echo $form->textField($model,'nit',array('class'=>'form-control','placeholder'=>'nit')); ?>
-		</div>
-		<?php echo $form->error($model,'nit',array('class'=>'label label-danger')); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'nombres',array('class'=>'col-md-2 control-label')); ?>
-		<div class="col-sm-8">
-			<?php echo $form->textField($model,'nombres',array('class'=>'form-control','placeholder'=>'nombres')); ?>
-		</div>
-		<?php echo $form->error($model,'nombres',array('class'=>'label label-danger')); ?>
-	</div>
-
+            <div class="form-group">
+                <?php echo $form->labelEx($model,'nombres',array('class'=>'col-md-3 control-label')); ?>
+                <div class="col-sm-9">
+                    <?php echo $form->textField($model,'nombres',array('class'=>'form-control','placeholder'=>'nombres')); ?>
+                </div>
+                <?php echo $form->error($model,'nombres',array('class'=>'label label-danger')); ?>
+            </div>
+        </div>
+        <div class="col-md-2" >
+            <img src="<?php echo Yii::app()->request->baseUrl; ?>/files/hce/default.jpg" class="img-responsive img-thumbnail col-sm-12" />
+        </div>
+    </div>
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'primer_apellido',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
@@ -63,7 +68,7 @@
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'sexo',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo $form->textField($model,'sexo',array('class'=>'form-control','placeholder'=>'sexo')); ?>
+            <?php echo $form->dropDownList($model,'sexo',$model->getSexo(),array('class'=>'form-control')); ?>
 		</div>
 		<?php echo $form->error($model,'sexo',array('class'=>'label label-danger')); ?>
 	</div>
@@ -79,7 +84,7 @@
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'estado_civil',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo $form->textField($model,'estado_civil',array('class'=>'form-control','placeholder'=>'estado_civil')); ?>
+            <?php echo $form->dropDownList($model,'estado_civil',$model->getEstadoCivil(),array('class'=>'form-control')); ?>
 		</div>
 		<?php echo $form->error($model,'estado_civil',array('class'=>'label label-danger')); ?>
 	</div>

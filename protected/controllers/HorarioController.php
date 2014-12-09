@@ -54,7 +54,7 @@ class HorarioController extends Controller
         $turnos=new CActiveDataProvider('Turno',array(
             'criteria'=>array(
                 'condition'=>"id_horario={$id}",
-                'order'=>'estado ASC',
+                'order'=>'id_horario DESC',
             ),
             'pagination'=>array(
                 'pageSize'=>10,
@@ -88,6 +88,7 @@ class HorarioController extends Controller
 			'model'=>$model,
 		));
 	}
+
 
 	/**
 	 * Updates a particular model.
@@ -201,7 +202,7 @@ class HorarioController extends Controller
 		}
 	}
 
-    public function actionCambiaEstado($id){
+    /*public function actionCambiaEstado($id){
         $model=Horario::model()->findByPk($id);
         if($model===null)
             throw new CHttpException(404,'The requested page does not exist.');
@@ -213,5 +214,5 @@ class HorarioController extends Controller
             $model->save();
         }
         $this->redirect(array("index"));
-    }
+    }*/
 }

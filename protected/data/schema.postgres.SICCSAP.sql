@@ -57,6 +57,7 @@ create table turno(
   id_horario int,
   foreign key (id_horario) references  horario(id_horario)
 );
+
 create table if not exists asignacion_empleado(
   id_asignacion serial primary key,
   fecha_inicio date,
@@ -68,6 +69,7 @@ create table if not exists asignacion_empleado(
   foreign key (id_cargo) references cargo(id_cargo),
   foreign key (id_horario) references horario(id_horario)
 );
+
 create table registro(
   fecha date not null,
   hora_asistencia time not null,
@@ -91,6 +93,6 @@ CREATE TABLE especialidad(
 create table medico_especialidad(
   id_medico int ,
   id_especialidad int,
-  foreign key (id_medico)references medico(id_medico),
+  foreign key (id_medico)references medico(id),
   foreign key(id_especialidad) references especialidad(id_especialidad)
 );

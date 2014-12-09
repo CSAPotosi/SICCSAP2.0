@@ -36,7 +36,6 @@ $this->menu=array(
 		'hora_salida',
 		'tolerancia',
 		'id_horario',
-		'estado',
 	),
 )); ?>
 </div>

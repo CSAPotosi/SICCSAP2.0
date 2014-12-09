@@ -142,4 +142,17 @@ class Persona extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function getSexo(){
+        return array(
+            ''=>'IND',
+            'M'=>'MASCULINO',
+            'F'=>'FEMENINO',
+        );
+    }
+    public function getEstadoCivil(){
+        return array(
+            'SOLTERO'=>'SOLTERO',
+        );
+    }
 }

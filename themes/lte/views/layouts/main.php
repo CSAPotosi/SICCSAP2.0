@@ -5,8 +5,7 @@
         <title><?php echo CHtml::encode(Yii::app()->name); ?></title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-		<link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-        <link href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo Yii::app()->theme->baseUrl; ?>/elements/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
 		<link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/ionicons/css/ionicons.min.css" rel="stylesheet" type="text/css">
         <!-- Morris chart -->
@@ -332,7 +331,17 @@
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Reportes",Yii::app()->createUrl('Registro')) ?></li>
                             </ul>
                         </li>
-
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-users"></i>
+                                <span>Personas</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Persona",Yii::app()->createUrl('Persona/create')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Listar persona",Yii::app()->createUrl('#')) ?></li>
+                            </ul>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->

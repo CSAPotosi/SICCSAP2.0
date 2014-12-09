@@ -53,7 +53,7 @@
                     <th>Hora Entrada</th>
                     <th>Hora Salida</th>
                     <th>Tolerancia (en min)</th>
-                    <th>Estado</th>
+
                     <th>Operaciones</th>
                 </tr>
                 <?php $this->widget('zii.widgets.CListView', array(
@@ -73,29 +73,7 @@
     <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"><i class="fa fa-envelope-o"></i> Compose New Message</h4>
-                </div>
-                <form action="#" method="post">
-                    <div class="modal-body">
-
-                        <div class="form-group">
-                            <div class="btn btn-success btn-file">
-                                <i class="fa fa-paperclip"></i> Attachment
-                                <input type="file" name="attachment"/>
-                            </div>
-                            <p class="help-block">Max. 32MB</p>
-                        </div>
-
-                    </div>
-                    <div class="modal-footer clearfix">
-
-                        <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Discard</button>
-
-                        <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-envelope"></i> Send Message</button>
-                    </div>
-                </form>
+                Aca va el contenido de todo el sistema
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->

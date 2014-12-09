@@ -71,13 +71,6 @@
 		<?php echo $form->error($model,'id_horario',array('class'=>'label label-danger')); ?>
 	</div>
 
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'estado',array('class'=>'col-md-2 control-label')); ?>
-		<div class="col-sm-8">
-			<?php echo $form->textField($model,'estado',array('class'=>'form-control','placeholder'=>'estado','disabled='=>'true')); ?>
-		</div>
-		<?php echo $form->error($model,'estado',array('class'=>'label label-danger')); ?>
-	</div>
 
 </div>
 	<div class="box-footer">
