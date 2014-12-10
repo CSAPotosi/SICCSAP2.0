@@ -18,22 +18,22 @@
 <div class="box-body">
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo $form->errorSummary($model,null,null,array('class'=>'alert alert-error')); ?>
+	<?php echo CHtml::errorSummary($model,null,null,array('class'=>'alert alert-error')); ?>
 
 	<div class="form-group">
-		<?php echo $form->labelEx($model,'nombre_especialidad',array('class'=>'col-md-2 control-label')); ?>
+		<?php echo CHtml::labelEx($model,'nombre_especialidad',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo $form->textField($model,'nombre_especialidad',array('class'=>'form-control','placeholder'=>'nombre_especialidad')); ?>
+			<?php echo CHtml::textField($model,'nombre_especialidad',array('class'=>'form-control','placeholder'=>'nombre_especialidad')); ?>
 		</div>
-		<?php echo $form->error($model,'nombre_especialidad',array('class'=>'label label-danger')); ?>
+		<?php echo CHtml::error($model,'nombre_especialidad',array('class'=>'label label-danger')); ?>
 	</div>
 
 	<div class="form-group">
-		<?php echo $form->labelEx($model,'descripcion',array('class'=>'col-md-2 control-label')); ?>
+		<?php echo CHtml::labelEx($model,'descripcion',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo $form->textField($model,'descripcion',array('class'=>'form-control','placeholder'=>'descripcion')); ?>
+			<?php echo CHtml::textField($model,'descripcion',array('class'=>'form-control','placeholder'=>'descripcion')); ?>
 		</div>
-		<?php echo $form->error($model,'descripcion',array('class'=>'label label-danger')); ?>
+		<?php echo CHtml::error($model,'descripcion',array('class'=>'label label-danger')); ?>
 	</div>
 
 </div>
