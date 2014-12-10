@@ -1,5 +1,6 @@
 <?php
-class PersonaController extends Controller
+
+class MedicoController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -31,7 +32,7 @@ class PersonaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','crearMedicos'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -43,6 +44,7 @@ class PersonaController extends Controller
 			),
 		);
 	}
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -58,51 +60,89 @@ class PersonaController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
-	{
-		$model=new Persona;
-        $medico=new Medico;
+    public function actionCreate()
+    {
+        $modelM=new Medico;
+        $items=$this->getItems();
+        //$modelME= new MedicoEspecialidad;
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+        if(isset($_POST['Medico']))
+        {
+            $modelM->attributes=$_POST['Medico'];
+            if($modelM->save()){
+                foreach($items as $i=>$item)
+                {
+                    if(isset($_POST['MedicoEspecialidad'][$i])){
+                        $item->attributes=$_POST['MedicoEspecialidad'][$i];
+                        $item->id_medico=$modelM->id_medico;
 
-		if(isset($_POST['Persona']) and ($_POST['medico']))
-		{
-			$model->attributes=$_POST['Persona'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
+                        $item->save();
+                    }
+                }
+                $this->redirect(array('view','id'=>$modelM->id_medico));
+            }
+        }
 
-		$this->render('create',array(
-			'model'=>$model,
-            'medico'=>$medico,
-		));
-	}
+        $this->render('create',array(
+            'modelM'=>$modelM,
+            'items'=>$items,
+        ));
+    }
+    public function getItems(){
+        $items=array();
+        if(isset($_POST['MedicoEspecialidad'])&&is_array($_POST['MedicoEspecialidad'])){
+            foreach($_POST['MedicoEspecialidad'] as $item){
+                if ( array_key_exists('id_medico', $item) ){
+                    $items[] = MedicoEspecialidad::model()->findByPk($item['id_medico']);
+                }
+                // Otherwise create a new record
+                else {
+                    $items[] = new MedicoEspecialidad;
+                }
+            }
+
+        }
+        return $items;
+    }
 
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
+    public function actionUpdate($id)
+    {
+        $model=$this->loadModel($id);
+        $items=$this->getItems();
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
 
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
+        if(isset($_POST['Medico']))
+        {
+            $model->attributes=$_POST['Medico'];
+            if($model->save()){
+                foreach($items as $i=>$item)
+                {
+                    if(isset($_POST['MedicoEspecialidad'][$i])){
+                        $item->attributes=$_POST['MedicoEspecialidad'][$i];
+                        $item->id_medico=$id;
+                        $item->save();
+                    }
+                }
+                $this->redirect(array('view','id'=>$model->id_medico));
+            }
+        }
+        else{
+            $items=MedicoEspecialidad::model()->find('id_medico=:idmedico',array(':idmedico'=>$id));
+        }
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Persona']))
-		{
-			$model->attributes=$_POST['Persona'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
+        $this->render('update',array(
+            'modelM'=>$model,
+            'items'=>$items,
+        ));
+    }
 
 	/**
 	 * Deletes a particular model.
@@ -123,7 +163,7 @@ class PersonaController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Persona');
+		$dataProvider=new CActiveDataProvider('Medico');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -134,10 +174,10 @@ class PersonaController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new Persona('search');
+		$model=new Medico('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Persona']))
-			$model->attributes=$_GET['Persona'];
+		if(isset($_GET['Medico']))
+			$model->attributes=$_GET['Medico'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -148,12 +188,12 @@ class PersonaController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return Persona the loaded model
+	 * @return Medico the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=Persona::model()->findByPk($id);
+		$model=Medico::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -161,11 +201,11 @@ class PersonaController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param Persona $model the model to be validated
+	 * @param Medico $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='persona-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='medico-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

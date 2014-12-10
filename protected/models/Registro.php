@@ -14,6 +14,8 @@
  */
 class Registro extends CActiveRecord
 {
+    public $id1;
+    public $id2;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -34,6 +36,9 @@ class Registro extends CActiveRecord
 			array('fecha, hora_asistencia, id_asignacion', 'required'),
 			array('id_asignacion', 'numerical', 'integerOnly'=>true),
 			array('observaciones', 'length', 'max'=>128),
+
+
+
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('fecha, hora_asistencia, observaciones, id_asignacion', 'safe', 'on'=>'search'),
@@ -62,6 +67,7 @@ class Registro extends CActiveRecord
 			'hora_asistencia' => 'Hora Asistencia',
 			'observaciones' => 'Observaciones',
 			'id_asignacion' => 'Id Asignacion',
+
 		);
 	}
 

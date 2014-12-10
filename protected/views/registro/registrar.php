@@ -31,21 +31,37 @@
         <div class="form-group">
             <label class="col-md-2 control-label")>Unidad</label>
             <div class="col-sm-5">
-                <input />
+                <?php echo $form->dropDownList($model,'id1',
+                    CHtml::listData( Unidad::model()->findAll(),'id_unidad','nombre_unidad'),
+                        array(
+                            'ajax'=>array(
+                                'type'=>'POST',
+                                'url'=>$this->createUrl('Registro/Elegircargo'),
+                                'update'=>'#'.CHtml::activeId($model,'id2'),
+                            ),
+                        )
+                );?>
             </div>
-            <?php echo $form->error($model,'id_asignacion',array('class'=>'label label-danger')); ?>
         </div>
         <div class="form-group">
             <label class="col-md-2 control-label")>Cargo</label>
             <div class="col-sm-5">
-                <textarea class="form-control" rows="3" placeholder="cargo"></textarea>
+                <?php echo $form->dropDownList($model,'id2',array(),
+                    array(
+                        'ajax'=>array(
+                            'type'=>'POST',
+                            'url'=>$this->createUrl('Registro/ElegirEmpleado'),
+                            'update'=>'#'.CHtml::activeId($model,'id_asignacion'),
+                        ),
+                    )
+                );?>
             </div>
-            <?php echo $form->error($model,'id_asignacion',array('class'=>'label label-danger')); ?>
+            <?php echo $form->error($model,'id2',array('class'=>'label label-danger')); ?>
         </div>
         <div class="form-group">
             <?php echo $form->labelEx($model,'id_asignacion',array('class'=>'col-md-2 control-label')); ?>
             <div class="col-sm-8">
-                <?php echo $form->textField($model,'id_asignacion',array('class'=>'form-control','placeholder'=>'empleado')); ?>
+                <?php echo $form->dropDownList($model,'id_asignacion',array()); ?>
             </div>
             <?php echo $form->error($model,'id_asignacion',array('class'=>'label label-danger')); ?>
         </div>

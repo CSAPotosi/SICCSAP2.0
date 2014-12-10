@@ -10,6 +10,7 @@
  * @property string $estado
  *
  * The followings are the available model relations:
+ * @property MedicoEspecialidad[] $medicoEspecialidads
  * @property Persona $id0
  */
 class Medico extends CActiveRecord
@@ -49,6 +50,7 @@ class Medico extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'medicoEspecialidads' => array(self::HAS_MANY, 'MedicoEspecialidad', 'id'),
 			'id0' => array(self::BELONGS_TO, 'Persona', 'id'),
 		);
 	}
