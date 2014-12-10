@@ -20,36 +20,36 @@
 <div class="box-body">
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
-	<?php echo CHtml::errorSummary($modelM,null,null,array('class'=>'alert alert-error')); ?>
+	<?php echo $form->errorSummary($modelM,null,null,array('class'=>'alert alert-error')); ?>
 
 	<div class="form-group">
-		<?php echo CHtml::labelEx($modelM,'id',array('class'=>'col-md-2 control-label')); ?>
+		<?php echo CHtml::activelabelEx($modelM,'id',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo CHtml::textField($modelM,'id',array('class'=>'form-control','placeholder'=>'id')); ?>
+			<?php echo CHtml::activetextField($modelM,'id',array('class'=>'form-control','placeholder'=>'id')); ?>
 		</div>
 		<?php echo CHtml::error($modelM,'id',array('class'=>'label label-danger')); ?>
 	</div>
 
 	<div class="form-group">
-		<?php echo CHtml::labelEx($modelM,'matricula',array('class'=>'col-md-2 control-label')); ?>
+		<?php echo CHtml::activelabelEx($modelM,'matricula',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo CHtml::textField($modelM,'matricula',array('class'=>'form-control','placeholder'=>'matricula')); ?>
+			<?php echo CHtml::activetextField($modelM,'matricula',array('class'=>'form-control','placeholder'=>'matricula')); ?>
 		</div>
 		<?php echo CHtml::error($modelM,'matricula',array('class'=>'label label-danger')); ?>
 	</div>
 
 	<div class="form-group">
-		<?php echo CHtml::labelEx($modelM,'colegiatura',array('class'=>'col-md-2 control-label')); ?>
+		<?php echo CHtml::activelabelEx($modelM,'colegiatura',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo CHtml::textField($modelM,'colegiatura',array('class'=>'form-control','placeholder'=>'colegiatura')); ?>
+			<?php echo CHtml::activetextField($modelM,'colegiatura',array('class'=>'form-control','placeholder'=>'colegiatura')); ?>
 		</div>
 		<?php echo CHtml::error($modelM,'colegiatura',array('class'=>'label label-danger')); ?>
 	</div>
 
 	<div class="form-group">
-		<?php echo CHtml::labelEx($modelM,'estado',array('class'=>'col-md-2 control-label')); ?>
+		<?php echo CHtml::activelabelEx($modelM,'estado',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo CHtml::textField($modelM,'estado',array('class'=>'form-control','placeholder'=>'estado')); ?>
+			<?php echo CHtml::activetextField($modelM,'estado',array('class'=>'form-control','placeholder'=>'estado')); ?>
 		</div>
 		<?php echo CHtml::error($modelM,'estado',array('class'=>'label label-danger')); ?>
 	</div>
@@ -60,7 +60,7 @@
     <div id="especialidad" class="form-group">
         <div class="col-sm-1">
         <?php foreach($items as $item): ?>
-            <label>Especialidad</label>
+
             <?php echo CHtml::dropDownList($item,'[]id_especialidad',CHtml::listData( Especialidad::model()->findAll(),'id_especialidad','nombre_especialidad')); ?>
             <?php echo CHtml::error($item,'[]id_especialidad'); ?>
         <?php endforeach; ?>
@@ -81,8 +81,8 @@
         $(document).ready(function(){
             $("#addEspecialidad").click(function(e){
                 e.preventDefault();
-                var label='<?php echo CHtml::labelEx(MedicoEspecialidad::model(),"[]id_especialidad"); ?>';
-                var lista='<?php echo str_replace("\n","",CHtml::dropDownList(MedicoEspecialidad::model(),"[]id_especialidad",CHtml::listData( Especialidad::model()->findAll(),"id_especialidad","nombre_especialidad"))); ?>';
+                var label='<?php echo CHtml::activelabelEx(MedicoEspecialidad::model(),"[]id_especialidad"); ?>';
+                var lista='<?php echo str_replace("\n","",CHtml::activedropDownList(MedicoEspecialidad::model(),"[]id_especialidad",CHtml::listData( Especialidad::model()->findAll(),"id_especialidad","nombre_especialidad"))); ?>';
                 $("#especialidad").append(label);
                 $("#especialidad").append(lista);
             });

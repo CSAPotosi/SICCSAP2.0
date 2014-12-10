@@ -21,7 +21,7 @@
 	<?php echo CHtml::errorSummary($model,null,null,array('class'=>'alert alert-error')); ?>
 
 	<div class="form-group">
-		<?php echo CHtml::labelEx($model,'nombre_especialidad',array('class'=>'col-md-2 control-label')); ?>
+		<?php echo CHtml::activelabelEx($model,'nombre_especialidad',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
 			<?php echo CHtml::textField($model,'nombre_especialidad',array('class'=>'form-control','placeholder'=>'nombre_especialidad')); ?>
 		</div>

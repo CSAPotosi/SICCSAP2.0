@@ -76,12 +76,12 @@ class MedicoController extends Controller
                 {
                     if(isset($_POST['MedicoEspecialidad'][$i])){
                         $item->attributes=$_POST['MedicoEspecialidad'][$i];
-                        $item->id_medico=$modelM->id_medico;
+                        $item->id_medico=$modelM->id;
 
                         $item->save();
                     }
                 }
-                $this->redirect(array('view','id'=>$modelM->id_medico));
+                $this->redirect(array('view','id'=>$modelM->id));
             }
         }
 
