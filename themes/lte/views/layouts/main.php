@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <title><?php echo CHtml::encode(Yii::app()->name); ?></title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/style.css" rel="stylesheet" type="text/css"/>
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/elements/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
@@ -339,7 +340,7 @@
                             </a>
                             <ul class="treeview-menu">
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Persona",Yii::app()->createUrl('Persona/create')) ?></li>
-                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Listar persona",Yii::app()->createUrl('#')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Listar persona",Yii::app()->createUrl('Persona')) ?></li>
                             </ul>
                         </li>
                     </ul>
@@ -400,8 +401,13 @@
 
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/demo.js" type="text/javascript"></script>
+
+        <!-- Para el dashboard-->
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/dashboard.js"></script>
+
         <!-- bootstrap time picker -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
+        
         <!-- Page script -->
         <script type="text/javascript">
             $(function() {
@@ -411,6 +417,10 @@
                     showInputs: false
                 });
             });
+            $('#Persona_dni').keyup(function(){
+                $('#Persona_nit').val($(this).val())
+            });
+
         </script>
     </body>
 </html>

@@ -68,7 +68,10 @@ class PersonaController extends Controller
 
 		if(isset($_POST['Persona']) and ($_POST['medico']))
 		{
-			$model->attributes=$_POST['Persona'];
+
+            $model->attributes=array_map('strtoupper',$_POST['Persona']);
+            //var_dump($model);
+            //Yii::app()->end();
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -94,7 +97,7 @@ class PersonaController extends Controller
 
 		if(isset($_POST['Persona']))
 		{
-			$model->attributes=$_POST['Persona'];
+			$model->attributes=array_map('strtoupper',$_POST['Persona']);
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}

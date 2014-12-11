@@ -1,9 +1,3 @@
-<style>
-    .col-centered{
-        float: none;
-        margin: 0 auto;
-    }
-</style>
 
 
 <div class="col-md-3 text-center col-centered">

@@ -145,14 +145,23 @@ class Persona extends CActiveRecord
 
     public function getSexo(){
         return array(
-            ''=>'IND',
+            ''=>'ELIJA SEXO',
             'M'=>'MASCULINO',
             'F'=>'FEMENINO',
         );
     }
     public function getEstadoCivil(){
         return array(
+            ''=>'ELIJA ESTADO CIVIL',
             'SOLTERO'=>'SOLTERO',
+            'CASADO'=>'CASADO',
+            'DIVORCIADO'=>'DIVORCIADO',
+        );
+    }
+    public function getPais(){
+        return array(
+            'BOLIVIA'=>'BOLIVIA',
+            'ARGENTINA'=>'ARGENTINA',
         );
     }
 }

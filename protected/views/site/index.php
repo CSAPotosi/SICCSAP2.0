@@ -4,17 +4,103 @@
 $this->pageTitle=Yii::app()->name;
 ?>
 
-<h1>Welcome to <i><?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Principal</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
 
-<p>Congratulations! You have successfully created your Yii application.</p>
+            <div class="box-body">
+                conytenido
+            </div>
 
-<p>You may change the content of this page by modifying the following two files:</p>
-<ul>
-	<li>View file: <code><?php echo __FILE__; ?></code></li>
-	<li>Layout file: <code><?php echo $this->getLayoutFile('main'); ?></code></li>
-</ul>
+            <div class="box-footer">
+                pie
+            </div>
+        </div>
+    </div>
+</div>
 
-<p>For more details on how to further develop this application, please read
-the <a href="http://www.yiiframework.com/doc/">documentation</a>.
-Feel free to ask in the <a href="http://www.yiiframework.com/forum/">forum</a>,
-should you have any questions.</p>
+<div class="row">
+    <div class="col-md-6 connectedSortable ui-sortable">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Mi titulo 1   </h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                conytenido
+            </div>
+
+            <div class="box-footer">
+                pie
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Mi titulo 3   </h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                conytenido
+            </div>
+
+            <div class="box-footer">
+                pie
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 connectedSortable ui-sortable">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Mi titulo 2   </h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                conytenido
+            </div>
+
+            <div class="box-footer">
+                pie
+            </div>
+        </div>
+
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Mi titulo 4   </h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                conytenido
+            </div>
+
+            <div class="box-footer">
+                pie
+            </div>
+        </div>
+    </div>
+</div>
+

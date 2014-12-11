@@ -1,0 +1,8 @@
+input{
+    text-transform: uppercase;
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
