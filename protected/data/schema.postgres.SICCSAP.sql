@@ -51,9 +51,14 @@ create table turno(
   id_turno serial primary key ,
   nombre_turno varchar(32) not null unique ,
   tipo_turno varchar(8),
-  hora_ingreso time not null,
+  hora_entrada time not null,
+  inicio_entrada int,
+  fin_entrada int,
   hora_salida time not null,
+  inicio_salida int,
+  fin_salida int,
   tolerancia int default 0,
+  dias varchar(7),
   id_horario int,
   foreign key (id_horario) references  horario(id_horario)
 );
@@ -75,6 +80,7 @@ create table registro(
   hora_asistencia time not null,
   observaciones varchar(128),
   id_asignacion int not null,
+  estado bool,
   primary key(fecha,hora_asistencia,id_asignacion),
   foreign key (id_asignacion) references asignacion_empleado(id_asignacion)
 );

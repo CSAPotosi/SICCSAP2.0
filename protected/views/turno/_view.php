@@ -22,8 +22,8 @@
 	<?php echo CHtml::encode($data->tipo_turno); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('hora_ingreso')); ?>:</b>
-	<?php echo CHtml::encode($data->hora_ingreso); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('hora_entrada')); ?>:</b>
+	<?php echo CHtml::encode($data->hora_entrada); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('hora_salida')); ?>:</b>

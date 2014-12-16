@@ -64,7 +64,8 @@
             </table>
         </div>
         <div class="box-footer">
-            <a class="btn btn-block btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i> Compose Message</a>
+            <?php echo CHtml::link('Nuevo Turno',array('turno/create','id_hor'=>$model->id_horario),array('class'=>'btn btn-primary'));?>
+            <!--<a class="btn btn-block btn-primary" data-toggle="modal" data-target="#compose-modal"><i class="fa fa-pencil"></i> Nuevo Turno</a>-->
         </div>
     </div>
     <!-- Large modal -->

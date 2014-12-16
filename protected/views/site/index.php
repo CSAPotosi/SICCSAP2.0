@@ -5,7 +5,7 @@ $this->pageTitle=Yii::app()->name;
 ?>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-12 connectedSortable ui-sortable">
         <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Principal</h3>

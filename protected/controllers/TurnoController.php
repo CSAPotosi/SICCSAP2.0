@@ -60,7 +60,7 @@ class TurnoController extends Controller
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($id_hor = 0)
 	{
 		$model=new Turno;
 
@@ -69,10 +69,13 @@ class TurnoController extends Controller
 
 		if(isset($_POST['Turno']))
 		{
-			$model->attributes=$_POST['Turno'];
+
+			$model->attributes=array_map('strtoupper', $_POST['Turno']);
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_turno));
+                $this->redirect(array("horario/view",'id'=>$model->id_horario));
+				//$this->redirect(array('view','id'=>$model->id_turno));
 		}
+        $model->id_horario=$id_hor;
 
 		$this->render('create',array(
 			'model'=>$model,
@@ -93,14 +96,16 @@ class TurnoController extends Controller
 
 		if(isset($_POST['Turno']))
 		{
-			$model->attributes=$_POST['Turno'];
+			$model->attributes=array_map('strtoupper', $_POST['Turno']);
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_turno));
+                $this->redirect(array("horario/view",'id'=>$model->id_horario));
+				//$this->redirect(array('view','id'=>$model->id_turno));
 		}
 
 		$this->render('update',array(
 			'model'=>$model,
 		));
+
 	}
 
 	/**

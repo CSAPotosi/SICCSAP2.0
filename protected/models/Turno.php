@@ -7,9 +7,14 @@
  * @property integer $id_turno
  * @property string $nombre_turno
  * @property string $tipo_turno
- * @property string $hora_ingreso
+ * @property string $hora_entrada
+ * @property integer $inicio_entrada
+ * @property integer $fin_entrada
  * @property string $hora_salida
+ * @property integer $inicio_salida
+ * @property integer $fin_salida
  * @property integer $tolerancia
+ * @property string $dias
  * @property integer $id_horario
  *
  * The followings are the available model relations:
@@ -33,14 +38,14 @@ class Turno extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre_turno, hora_ingreso, hora_salida', 'required'),
-			array('tolerancia, id_horario', 'numerical', 'integerOnly'=>true),
+			array('nombre_turno, hora_entrada, hora_salida', 'required'),
+			array('inicio_entrada, fin_entrada, inicio_salida, fin_salida, tolerancia, id_horario', 'numerical', 'integerOnly'=>true),
 			array('nombre_turno', 'length', 'max'=>32),
 			array('tipo_turno', 'length', 'max'=>8),
-            array('estado','default','value'=>'ACTIVO'),
+			array('dias', 'length', 'max'=>7),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_turno, nombre_turno, tipo_turno, hora_ingreso, hora_salida, tolerancia, id_horario', 'safe', 'on'=>'search'),
+			array('id_turno, nombre_turno, tipo_turno, hora_entrada, inicio_entrada, fin_entrada, hora_salida, inicio_salida, fin_salida, tolerancia, dias, id_horario', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -65,9 +70,14 @@ class Turno extends CActiveRecord
 			'id_turno' => 'Id Turno',
 			'nombre_turno' => 'Nombre Turno',
 			'tipo_turno' => 'Tipo Turno',
-			'hora_ingreso' => 'Hora Ingreso',
+			'hora_entrada' => 'Hora Entrada',
+			'inicio_entrada' => 'Inicio Entrada',
+			'fin_entrada' => 'Fin Entrada',
 			'hora_salida' => 'Hora Salida',
+			'inicio_salida' => 'Inicio Salida',
+			'fin_salida' => 'Fin Salida',
 			'tolerancia' => 'Tolerancia',
+			'dias' => 'Dias',
 			'id_horario' => 'Id Horario',
 		);
 	}
@@ -93,9 +103,14 @@ class Turno extends CActiveRecord
 		$criteria->compare('id_turno',$this->id_turno);
 		$criteria->compare('nombre_turno',$this->nombre_turno,true);
 		$criteria->compare('tipo_turno',$this->tipo_turno,true);
-		$criteria->compare('hora_ingreso',$this->hora_ingreso,true);
+		$criteria->compare('hora_entrada',$this->hora_entrada,true);
+		$criteria->compare('inicio_entrada',$this->inicio_entrada);
+		$criteria->compare('fin_entrada',$this->fin_entrada);
 		$criteria->compare('hora_salida',$this->hora_salida,true);
+		$criteria->compare('inicio_salida',$this->inicio_salida);
+		$criteria->compare('fin_salida',$this->fin_salida);
 		$criteria->compare('tolerancia',$this->tolerancia);
+		$criteria->compare('dias',$this->dias,true);
 		$criteria->compare('id_horario',$this->id_horario);
 
 		return new CActiveDataProvider($this, array(
@@ -113,4 +128,13 @@ class Turno extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    public function getTipoTurno(){
+        return array(
+            'MAÑANA'=>'MAÑANA',
+            'TARDE'=>'TARDE',
+            'NOCHE'=>'NOCHE',
+            'CONTINUO'=>'CONTINUO',
+            'DIA COMPLETO'=>'DIA COMPLETO',
+        );
+    }
 }

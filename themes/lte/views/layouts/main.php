@@ -15,6 +15,8 @@
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
         <!-- Date Picker -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+        <!-- iCheck for checkboxes and radio inputs -->
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/iCheck/all.css" rel="stylesheet" type="text/css" />
         <!-- Daterange picker -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
         <!-- bootstrap wysihtml5 - text editor -->
@@ -29,7 +31,6 @@
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-          <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery-1.11.1.min.js" ></script>
         <![endif]-->
 	</head>
     <body class="skin-blue">
@@ -376,9 +377,6 @@
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
 
-
-
-
         <!-- Sparkline -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
         <!-- jvectormap -->
@@ -392,8 +390,7 @@
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
         <!-- Bootstrap WYSIHTML5 -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
-        <!-- iCheck -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
+
         <!-- AdminLTE App -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/app.js" type="text/javascript"></script>
 
@@ -402,8 +399,11 @@
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/demo.js" type="text/javascript"></script>
 
-        <!-- Para el dashboard-->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/dashboard.js"></script>
+        <!-- Para el dashboard y las graficas-->
+
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/raphael-min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/morris/morris.min.js" type="text/javascript"></script>
+
 
         <!-- bootstrap time picker -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
@@ -422,5 +422,6 @@
             });
 
         </script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/dashboard.js"></script>
     </body>
 </html>

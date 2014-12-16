@@ -32,7 +32,7 @@ $this->menu=array(
 		'id_turno',
 		'nombre_turno',
 		'tipo_turno',
-		'hora_ingreso',
+		'hora_entrada',
 		'hora_salida',
 		'tolerancia',
 		'id_horario',

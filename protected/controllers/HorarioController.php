@@ -79,7 +79,8 @@ class HorarioController extends Controller
 
 		if(isset($_POST['Horario']))
 		{
-			$model->attributes=$_POST['Horario'];
+            $model->attributes=array_map('strtoupper', $_POST['Horario']);
+
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id_horario));
 		}
@@ -104,7 +105,7 @@ class HorarioController extends Controller
 
 		if(isset($_POST['Horario']))
 		{
-			$model->attributes=$_POST['Horario'];
+			$model->attributes=array_map('strtoupper', $_POST['Horario']);
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id_horario));
 		}
