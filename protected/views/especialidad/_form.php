@@ -23,15 +23,15 @@
 	<div class="form-group">
 		<?php echo CHtml::activelabelEx($model,'nombre_especialidad',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo CHtml::textField($model,'nombre_especialidad',array('class'=>'form-control','placeholder'=>'nombre_especialidad')); ?>
+			<?php echo CHtml::activetextField($model,'nombre_especialidad',array('class'=>'form-control','placeholder'=>'nombre_especialidad')); ?>
 		</div>
 		<?php echo CHtml::error($model,'nombre_especialidad',array('class'=>'label label-danger')); ?>
 	</div>
 
 	<div class="form-group">
-		<?php echo CHtml::labelEx($model,'descripcion',array('class'=>'col-md-2 control-label')); ?>
+		<?php echo CHtml::activelabelEx($model,'descripcion',array('class'=>'col-md-2 control-label')); ?>
 		<div class="col-sm-8">
-			<?php echo CHtml::textField($model,'descripcion',array('class'=>'form-control','placeholder'=>'descripcion')); ?>
+			<?php echo CHtml::activetextField($model,'descripcion',array('class'=>'form-control','placeholder'=>'descripcion')); ?>
 		</div>
 		<?php echo CHtml::error($model,'descripcion',array('class'=>'label label-danger')); ?>
 	</div>

@@ -12,7 +12,7 @@
         );
         ?>
 
-        <h1>Create Horario</h1>
+        <center><h1>Crear Horario</h1></center>
 
         <?php $this->renderPartial('_form', array('model'=>$model)); ?>
     </div>

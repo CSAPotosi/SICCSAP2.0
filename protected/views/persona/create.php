@@ -11,8 +11,9 @@
             );
 
             ?>
-            <h1>Create Persona</h1>
-            <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+            <center><h1>Crear Persona</h1></center>
+            <?php $this->renderPartial('_form', array('model'=>$model,'modelM'=>$modelM,'items'=>$items,'modelE'=>$modelE)); ?>
+            <?php $this->renderPartial('_formEspecialidad', array('modelE'=>$modelE)); ?>
 
     </div>
 

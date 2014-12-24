@@ -58,10 +58,12 @@
     </div>
     <br></br>
     <div id="especialidad" class="form-group">
-        <div class="col-sm-1">
+        <div class="col-sm-1" id="la">
         <?php foreach($items as $item): ?>
+            <div id="la">
+            <?php echo CHtml::activedropDownList($item,'[]id_especialidad',CHtml::listData( Especialidad::model()->findAll(),'id_especialidad','nombre_especialidad')
 
-            <?php echo CHtml::dropDownList($item,'[]id_especialidad',CHtml::listData( Especialidad::model()->findAll(),'id_especialidad','nombre_especialidad')); ?>
+            ); ?></div>
             <?php echo CHtml::error($item,'[]id_especialidad'); ?>
         <?php endforeach; ?>
          </div>
@@ -69,23 +71,16 @@
 </div>
 	<div class="box-footer">
         <div class="form-group">
-            <div class="col-sm-offset-5 col-sm-10">
+            <div class="col-sm-offset-5">
 				<?php echo CHtml::submitButton($modelM->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary btn-lg')); ?>
             </div>
         </div>
     </div>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Agregar una Especialidad</button>
+
 
 <?php $this->endWidget(); ?>
 </div>
-    <script>
-        $(document).ready(function(){
-            $("#addEspecialidad").click(function(e){
-                e.preventDefault();
-                var label='<?php echo CHtml::activelabelEx(MedicoEspecialidad::model(),"[]id_especialidad"); ?>';
-                var lista='<?php echo str_replace("\n","",CHtml::activedropDownList(MedicoEspecialidad::model(),"[]id_especialidad",CHtml::listData( Especialidad::model()->findAll(),"id_especialidad","nombre_especialidad"))); ?>';
-                $("#especialidad").append(label);
-                $("#especialidad").append(lista);
-            });
-        });
-    </script>
+
+
 </div><!-- form -->

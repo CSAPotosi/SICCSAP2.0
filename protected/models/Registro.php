@@ -4,10 +4,11 @@
  * This is the model class for table "registro".
  *
  * The followings are the available columns in table 'registro':
+ * @property integer $id_asignacion
  * @property string $fecha
  * @property string $hora_asistencia
  * @property string $observaciones
- * @property integer $id_asignacion
+ * @property boolean $estado
  *
  * The followings are the available model relations:
  * @property AsignacionEmpleado $idAsignacion
@@ -16,10 +17,11 @@ class Registro extends CActiveRecord
 {
     public $id1;
     public $id2;
+    public $id_uni;
+    public $id_emp;
 	/**
 	 * @return string the associated database table name
 	 */
-
 	public function tableName()
 	{
 		return 'registro';
@@ -33,15 +35,13 @@ class Registro extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha, hora_asistencia, id_asignacion', 'required'),
+			array('id_asignacion, fecha, hora_asistencia', 'required'),
 			array('id_asignacion', 'numerical', 'integerOnly'=>true),
 			array('observaciones', 'length', 'max'=>128),
-
-
-
+			array('estado', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('fecha, hora_asistencia, observaciones, id_asignacion', 'safe', 'on'=>'search'),
+			array('id_asignacion, fecha, hora_asistencia, observaciones, estado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,11 +63,11 @@ class Registro extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'id_asignacion' => 'Id Asignacion',
 			'fecha' => 'Fecha',
 			'hora_asistencia' => 'Hora Asistencia',
 			'observaciones' => 'Observaciones',
-			'id_asignacion' => 'Id Asignacion',
-
+			'estado' => 'Estado',
 		);
 	}
 
@@ -89,10 +89,11 @@ class Registro extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('id_asignacion',$this->id_asignacion);
 		$criteria->compare('fecha',$this->fecha,true);
 		$criteria->compare('hora_asistencia',$this->hora_asistencia,true);
 		$criteria->compare('observaciones',$this->observaciones,true);
-		$criteria->compare('id_asignacion',$this->id_asignacion);
+		$criteria->compare('estado',$this->estado);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -111,7 +112,6 @@ class Registro extends CActiveRecord
 	}
     public function getAsignacion($id_empleado)
     {
-
         $modelo=AsignacionEmpleado::model()->find(array(
             'select'=>'id_asignacion',
             'condition'=>'id_empleado=:id_empleado and fecha_fin is null',

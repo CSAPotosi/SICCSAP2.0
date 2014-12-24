@@ -15,7 +15,7 @@
 	);
 	?>
 
-	<h1>Create Especialidad</h1>
+	<center><h1>Crear Especialidad</h1></center>
 
 	<?php $this->renderPartial('_form', array('model'=>$model)); ?>	</div>
 </div>

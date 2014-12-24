@@ -60,13 +60,15 @@ class PersonaController extends Controller
 	 */
 	public function actionCreate()
 	{
+        $modelE=new Especialidad;
+        $items=$this->getItems();
 		$model=new Persona;
-        $medico=new Medico;
+        $modelM=new Medico;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Persona']) and ($_POST['medico']))
+		if(isset($_POST['Persona']))
 		{
 
             $model->attributes=array_map('strtoupper',$_POST['Persona']);
@@ -78,10 +80,36 @@ class PersonaController extends Controller
 
 		$this->render('create',array(
 			'model'=>$model,
-            'medico'=>$medico,
+            'modelM'=>$modelM,
+            'items'=>$items,
+            'modelE'=>$modelE,
 		));
 	}
+    public function actionActualizarEs()
+    {
+        $model=new Especialidad();
+        $lista=CHtml::listData($model,'id_especialidad','nombre_especialidad');
+        foreach($lista as $valor=> $descripcion)
+        {
+            echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );
+        }
+    }
+    public function getItems(){
+        $items=array();
+        if(isset($_POST['MedicoEspecialidad'])&&is_array($_POST['MedicoEspecialidad'])){
+            foreach($_POST['MedicoEspecialidad'] as $item){
+                if ( array_key_exists('id_medico', $item) ){
+                    $items[] = MedicoEspecialidad::model()->findByPk($item['id_medico']);
+                }
+                // Otherwise create a new record
+                else {
+                    $items[] = new MedicoEspecialidad;
+                }
+            }
 
+        }
+        return $items;
+    }
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

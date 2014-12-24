@@ -15,8 +15,10 @@
 	);
 	?>
 
-	<h1>Create Medico</h1>
+	<center><h1>Crear Medico</h1></center>
 
-	<?php $this->renderPartial('_form', array('modelM'=>$modelM,'items'=>$items)); ?>
+	<?php $this->renderPartial('_form', array('modelM'=>$modelM)); ?>
+
+
     </div>
 </div>

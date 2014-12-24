@@ -28,7 +28,7 @@ class MedicoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','CrearEspecialidad','ActualizarEs'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -64,12 +64,14 @@ class MedicoController extends Controller
     {
         $modelM=new Medico;
         $items=$this->getItems();
+        $modelE=new Especialidad();
         //$modelME= new MedicoEspecialidad;
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
         if(isset($_POST['Medico']))
         {
+
             $modelM->attributes=$_POST['Medico'];
             if($modelM->save()){
                 foreach($items as $i=>$item)
@@ -79,6 +81,7 @@ class MedicoController extends Controller
                         $item->id_medico=$modelM->id;
 
                         $item->save();
+
                     }
                 }
                 $this->redirect(array('view','id'=>$modelM->id));
@@ -88,7 +91,27 @@ class MedicoController extends Controller
         $this->render('create',array(
             'modelM'=>$modelM,
             'items'=>$items,
+            'modelE'=>$modelE,
         ));
+    }
+    public function actionCrearEspecialidad()
+    {
+        $modelE=new Especialidad;
+        if(isset($_POST['Especialidad']))
+        {
+            $modelE->attributes=$_POST['Especialidad'];
+            $modelE->save();
+
+        }
+    }
+    public function actionActualizarEs()
+    {
+        $model=new Especialidad();
+        $lista=CHtml::listData($model,'id_especialidad','nombre_especialidad');
+        foreach($lista as $valor=> $descripcion)
+        {
+            echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );
+        }
     }
     public function getItems(){
         $items=array();

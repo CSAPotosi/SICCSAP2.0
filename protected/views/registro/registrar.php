@@ -1,3 +1,4 @@
+<!--
 <script>
     $(document).ready(function(){
         $('#Empleado_dni').keyup(function(){
@@ -5,15 +6,10 @@
             $('#Empleado_id_empleado').attr('Value',$('#Empleado_dni').attr('Value'));
         });
     });
-</script>
+</script>-->
 <div class="col-md-12">
     <div class="box box-primary">
-<?php
-/* @var $this RegistroController */
-/* @var $model Registro */
-/* @var $form CActiveForm */
-?>
-
+        <center><h1></h1></center>
 <div class="form">
 
     <?php $form=$this->beginWidget('CActiveForm', array(
@@ -28,17 +24,18 @@
     <div class="box-body">
         <center><b><p class="note">Los Campos con <span class="required">*</span> Son Obligatorios.</p></b></center>
         <?php echo $form->errorSummary($model,null,null,array('class'=>'alert alert-error')); ?>
-        <div class="form-group">
-            <label class="col-md-2 control-label")>Unidad</label>
-            <div class="col-sm-5">
-                <?php echo $form->dropDownList($model,'id1',
-                    CHtml::listData( Unidad::model()->findAll(),'id_unidad','nombre_unidad'),
-                        array(
-                            'ajax'=>array(
-                                'type'=>'POST',
-                                'url'=>$this->createUrl('Registro/Elegircargo'),
-                                'update'=>'#'.CHtml::activeId($model,'id2'),
-                            ),
+                <div class="form-group">
+                    <label class="col-md-2 control-label")>Unidad</label>
+                    <div class="col-sm-5">
+                        <?php echo $form->dropDownList($model,'id1',
+                            CHtml::listData( Unidad::model()->findAll(),'id_unidad','nombre_unidad'),
+                            array(
+                                'ajax'=>array(
+                                    'type'=>'POST',
+                                    'url'=>$this->createUrl('Registro/elegirCargo'),
+                                    'update'=>'#'.CHtml::activeId($model,'id2'),
+                                ),
+                            'class'=>'form-control','prompt'=>'seleccione',
                         )
                 );?>
             </div>
@@ -52,7 +49,7 @@
                             'type'=>'POST',
                             'url'=>$this->createUrl('Registro/ElegirEmpleado'),
                             'update'=>'#'.CHtml::activeId($model,'id_asignacion'),
-                        ),
+                        ),'class'=>'form-control','prompt'=>'seleccione',
                     )
                 );?>
             </div>
@@ -61,7 +58,7 @@
         <div class="form-group">
             <?php echo $form->labelEx($model,'id_asignacion',array('class'=>'col-md-2 control-label')); ?>
             <div class="col-sm-8">
-                <?php echo $form->dropDownList($model,'id_asignacion',array()); ?>
+                <?php echo $form->dropDownList($model,'id_asignacion',array(),array('class'=>'form-control')); ?>
             </div>
             <?php echo $form->error($model,'id_asignacion',array('class'=>'label label-danger')); ?>
         </div>
@@ -96,6 +93,13 @@
                 <?php echo $form->textField($model,'observaciones',array('class'=>'form-control','placeholder'=>'observaciones o comentarios del tickeo')); ?>
             </div>
             <?php echo $form->error($model,'observaciones',array('class'=>'label label-danger')); ?>
+        </div>
+        <div class="form-group">
+            <?php echo $form->labelEx($model,'esdado',array('class'=>'col-md-2 control-label')); ?>
+            <div class="col-sm-8">
+                <?php echo $form->dropDownList($model,'estado',array('t'=>'Entrada','f'=>'Salida'),array('class'=>'form-control','placeholder'=>'campo')); ?>
+            </div>
+            <?php echo $form->error($model,'estado',array('class'=>'label label-danger')); ?>
         </div>
 
     </div>

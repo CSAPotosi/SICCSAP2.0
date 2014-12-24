@@ -76,10 +76,10 @@ create table if not exists asignacion_empleado(
 );
 
 create table registro(
+  id_asignacion int not null,
   fecha date not null,
   hora_asistencia time not null,
   observaciones varchar(128),
-  id_asignacion int not null,
   estado bool,
   primary key(fecha,hora_asistencia,id_asignacion),
   foreign key (id_asignacion) references asignacion_empleado(id_asignacion)
@@ -101,4 +101,21 @@ create table medico_especialidad(
   id_especialidad int,
   foreign key (id_medico)references medico(id),
   foreign key(id_especialidad) references especialidad(id_especialidad)
+);
+create table historial_paciente(
+  id int primary key,
+  ocupacion_paciente varchar(50),
+  grupo_sanguineo_paciente varchar(5),
+  tipo_paciente varchar(20),
+  fecha_muerte timestamp,
+  fecha_creacion timestamp not null,
+  fecha_actualizacion timestamp not null,
+  foreign key (id) references persona(id)
+);
+create table contactos(
+  id_persona int,
+  id_historial int,
+  relacion varchar(64),
+  foreign key (id) references persona(id),
+  foreign key (id) references historial_paciente(id)
 );

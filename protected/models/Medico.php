@@ -15,6 +15,7 @@
  */
 class Medico extends CActiveRecord
 {
+    public $id_especialidad;
 	/**
 	 * @return string the associated database table name
 	 */

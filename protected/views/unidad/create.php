@@ -15,7 +15,7 @@
 	);
 	?>
 
-	<h1>Create Unidad</h1>
+	<center><h1>Crear Unidad</h1></center>
 
 	<?php $this->renderPartial('_form', array('model'=>$model)); ?>	</div>
 </div>

@@ -10,12 +10,18 @@ class RegistroController extends Controller
             $var=$model->id_asignacion=$_POST['Registro']['id_asignacion'];
             $model->fecha=$_POST['Registro']['fecha'];
             $model->hora_asistencia=$_POST['Registro']['hora_asistencia'];
-            $model->observaciones=$_POST['Registro']['observaciones'];
+            $model->observaciones='M'.$_POST['Registro']['observaciones'];
+            $model->estado=$_POST['Registro']['estado'];
+            $model->id_asignacion=$model->getAsignacion($var);
 
-            $model->getAsignacion($var);
             $model->save();
         }
         $this->render('registrar',array('model'=>$model));
+    }
+    public function actionReporte()
+    {
+        $modelR=new Registro();
+        $this->render('reporte',array('modelR'=>$modelR));
     }
     public function accessRules()
     {
@@ -34,6 +40,7 @@ class RegistroController extends Controller
         foreach($lista as $valor=> $descripcion)
         {
             echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );
+
         }
     }
     public function actionElegirempleado()
@@ -46,19 +53,18 @@ class RegistroController extends Controller
         $cryteria->condition='a.fecha_fin is null and c.id_cargo='.$id_dos;
         //var_dump($cryteria);
 
-
-
-
-
-
-
         $lista=Persona::model()->findAll($cryteria);
         //var_dump($lista);
         $lista=CHtml::listData($lista,'id','primer_apellido');
+
         foreach($lista as $valor=> $descripcion)
         {
             echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );
+
         }
     }
+    public function actionElegirEmpleadoReporte()
+    {
 
+    }
 }

@@ -25,7 +25,9 @@
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/timepicker/bootstrap-timepicker.min.css" rel="stylesheet"/>
         <!-- Theme style -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/AdminLTE.css" rel="stylesheet" type="text/css" />
-
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>css/style.css" rel="stylesheet" type="text/css" >
+        <link rel="stylesheet" type="text/css" href="css/style.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -330,7 +332,7 @@
                             <ul class="treeview-menu">
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Asistencia",Yii::app()->createUrl('Registro/registrar')) ?></li>
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Importar Asistencia",Yii::app()->createUrl('import/csv')) ?></li>
-                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Reportes",Yii::app()->createUrl('Registro')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Reportes",Yii::app()->createUrl('Registro/reporte')) ?></li>
                             </ul>
                         </li>
                         <li class="treeview">
@@ -342,6 +344,29 @@
                             <ul class="treeview-menu">
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Persona",Yii::app()->createUrl('Persona/create')) ?></li>
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Listar persona",Yii::app()->createUrl('Persona')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Crear Medico",Yii::app()->createUrl('Medico/create')) ?></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-users"></i>
+                                <span>unidad</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Unidad",Yii::app()->createUrl('Unidad/create')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Ver unidades",Yii::app()->createUrl('Unidad')) ?></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-users"></i>
+                                <span>Horarios</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Horarios",Yii::app()->createUrl('Horario/create')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Ver horarios",Yii::app()->createUrl('Horario')) ?></li>
                             </ul>
                         </li>
                     </ul>
@@ -368,6 +393,7 @@
 				<?php echo $content; ?>
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
+
 
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/jquery-2.1.1.min.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/bootstrap/js/bootstrap.min.js"></script>
@@ -422,6 +448,6 @@
             });
 
         </script>
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/dashboard.js"></script>
+
     </body>
 </html>

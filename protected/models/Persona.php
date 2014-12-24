@@ -27,6 +27,7 @@
  */
 class Persona extends CActiveRecord
 {
+    public $checkbox;
 	/**
 	 * @return string the associated database table name
 	 */
