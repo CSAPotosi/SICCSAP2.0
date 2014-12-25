@@ -31,7 +31,7 @@ class PersonaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','crearMedicos'),
+				'actions'=>array('create','update','crearMedicos','CrearEspecialidad'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -64,6 +64,7 @@ class PersonaController extends Controller
         $items=$this->getItems();
 		$model=new Persona;
         $modelM=new Medico;
+        $modelH=new HistorialPaciente;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
@@ -83,6 +84,7 @@ class PersonaController extends Controller
             'modelM'=>$modelM,
             'items'=>$items,
             'modelE'=>$modelE,
+            'modelH'=>$modelH,
 		));
 	}
     public function actionActualizarEs()
@@ -202,4 +204,14 @@ class PersonaController extends Controller
 			Yii::app()->end();
 		}
 	}
+    public function actionCrearEspecialidad()
+    {
+        $modelE=new Especialidad;
+        if(isset($_POST['Especialidad']))
+        {
+            $modelE->attributes=$_POST['Especialidad'];
+            $modelE->save();
+
+        }
+    }
 }

@@ -116,6 +116,6 @@ create table contactos(
   id_persona int,
   id_historial int,
   relacion varchar(64),
-  foreign key (id) references persona(id),
-  foreign key (id) references historial_paciente(id)
+  foreign key (id_persona) references persona(id),
+  foreign key (id_historial) references historial_paciente(id)
 );
