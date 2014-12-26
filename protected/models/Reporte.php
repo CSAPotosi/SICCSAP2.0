@@ -7,15 +7,15 @@
  */
 
 class Reporte {
-    public $id_empleado;
-    public $per;
-    public $uni;
-    public $car;
-    public $lista_jornada;
-    public $totaltrabajado;
-    public $totaltiempoextra;
-    public $totaltiemporetrazo;
-    public $totaldiastrabajados;
+    public $id_empleado;//int
+    public $per;//modelo persona
+    public $uni;//nombre de unidad
+    public $car;//nombre de cargo
+    public $lista_jornada;//lista de modelos reportejornada
+    public $totaltrabajado;//total horas trabajadas
+    public $totaltiempoextra;//total tiempo extra
+    public $totaltiemporetrazo;//total tiempo de retrazo
+    public $totaldiastrabajados;//total dias trabajados
     function  Reporte($id_persona,$fechainicio,$fechafin){
 
     }
