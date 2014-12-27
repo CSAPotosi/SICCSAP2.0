@@ -15,7 +15,7 @@ class Reporte {
     public $totaltrabajado;//total horas trabajadas
     public $totaltiempoextra;//total tiempo extra
     public $totaltiemporetrazo;//total tiempo de retrazo
-    public $totaldiastrabajados;//total dias trabajados
+    public $totaldiastrabajados;//total dias trabajados     gggggggggggggggggggggggggggggggggggggggggggggggggggggggg
     function  Reporte($id_persona,$fechainicio,$fechafin){
 
     }
