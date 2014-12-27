@@ -2,16 +2,6 @@
 <div class="modal fade bs-example-modal-lg" id="dialog" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <?php $form=$this->beginWidget('CActiveForm', array(
-                'id'=>'persona-formEspecialidad',
-                'action'=>Yii::app()->createUrl('Persona/CrearEspecialidad'),
-                // Please note: When you enable ajax validation, make sure the corresponding
-                // controller action is handling ajax validation correctly.
-                // There is a call to performAjaxValidation() commented in generated controller code.
-                // See class documentation of CActiveForm for details on this.
-                'enableAjaxValidation'=>false,
-                'htmlOptions'=>array('class'=>'form-horizontal'),
-            )); ?>
             <center><h1>Crear Especialidad</h1></center>
             <div class="form" >
                 <div class="box-body">
@@ -53,7 +43,6 @@
         </div>
     </div>
 </div>
-<?php $this->endWidget(); ?>
 <script>
     $(document).ready(function(){
         $( "#boton" ).click(function() {
