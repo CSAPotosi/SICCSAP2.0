@@ -14,7 +14,7 @@ class reportejornada {
     public $tiemporetrazo;//
     public $turno;//modelo turno
     public $fecha;//fecha de la jornada
-    public $observacion;//
+    public $observacion;//hhhhhhhhhhhhhhhhhhhhhhhh
     public $estado;//verdadero si hay todos los tickeos, en otro caso falso
     function reportejornada($id_asignacion,$fecha,$id_turno){
 
