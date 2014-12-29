@@ -109,4 +109,11 @@ class SiteController extends Controller
 		Yii::app()->user->logout();
 		$this->redirect(Yii::app()->homeUrl);
 	}
+
+    /*public function actionPruebas(){
+
+        $r = new Reporte(1,'2014-12-17','2014-12-18');
+        var_dump($r);
+        Yii::app()->end();
+    }*/
 }

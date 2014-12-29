@@ -420,7 +420,7 @@
         <!-- AdminLTE App -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/app.js" type="text/javascript"></script>
 
-
+    
 
         <!-- AdminLTE for demo purposes -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/demo.js" type="text/javascript"></script>
@@ -433,7 +433,7 @@
 
         <!-- bootstrap time picker -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
-        
+
         <!-- Page script -->
         <script type="text/javascript">
             $(function() {
@@ -447,7 +447,7 @@
                 $('#Persona_nit').val($(this).val())
             });
 
-        </script>
 
+        </script>
     </body>
 </html>
