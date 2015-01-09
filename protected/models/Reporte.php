@@ -68,13 +68,15 @@ class Reporte extends CFormModel{
         $lista=array();
         $turnos=$this->loadTurnos($asig->id_horario);
         for($f=$fecha_ini;$f<=$fecha_fin;$f->add(new DateInterval('P1D'))){
+            $flag=true;
             foreach($turnos as $item){
                 $aux = new ReporteJornada($asig->id_asignacion,$f->format('Y-m-d'),$item->id_turno);
                 $lista[]=$aux;
-                $this->totaldiastrabajados+=($aux->estado)?1:0;
+                $flag=($flag&&$aux->estado);
                 $this->totaltiempoextra+=$aux->tiempoextra;
                 $this->totaltiemporetraso+=$aux->tiemporetraso;
             }
+            $this->totaldiastrabajados+=($flag)?1:0;
         }
         return $lista;
     }

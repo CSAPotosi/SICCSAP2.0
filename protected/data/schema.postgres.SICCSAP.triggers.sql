@@ -1,15 +1,52 @@
-//triggers del sistema
-//aqui entrar todos los archivos del sistema de base de datos
-create or replace function procesar_asistencia() returns trigger as $$
+create or replace function funcion_filtro() returns trigger as $$
+declare
+	id_hora int;
+	turnos int;
+	dia int;
+	hora_reg time;
 begin
-  if exists (select * from asignacion_empleado where id_asignacion=new.id_asignacion) and not exists (select * from registro where id_asignacion=new.id_asignacion and fecha=new.fecha and hora_asistencia=new.hora_asistencia)then
-  return new;
-  end if;
-  return null;
+	id_hora:=(select id_horario from asignacion_empleado where id_asignacion=NEW.id_asignacion);
+	if id_hora is null then
+		return NULL;
+	end if;
+	dia:=extract(dow from NEW.fecha)+1;
+	turnos:=(select id_turno from turno where id_horario=id_hora and substring(dias from dia for 1)='1' and ((NEW.hora_asistencia between (hora_entrada-(inicio_entrada*interval '1 minute')) and (hora_entrada+(   fin_entrada*interval '1 minute'))) or (NEW.hora_asistencia between (hora_salida-(inicio_salida*interval '1 minute')) and (hora_salida+(   fin_salida*interval '1 minute')))) limit 1);
+	if(turnos is NULL) then
+		return NULL;
+	end if;
+	
+	if exists(select * from turno where id_turno=turnos and NEW.hora_asistencia between (hora_entrada-(inicio_entrada*interval '1 minute')) and (hora_entrada+(   fin_entrada*interval '1 minute'))) then
+		NEW.estado=true;
+		hora_reg:=(select r.hora_asistencia from registro r ,turno t where t.id_turno=turnos and r.fecha=NEW.fecha and r.hora_asistencia between (t.hora_entrada-(t.inicio_entrada*interval '1 minute')) and (t.hora_entrada+( t.fin_entrada*interval '1 minute')) limit 1);
+		if(hora_reg is not null) then
+				if ((select hora_reg - hora_entrada from turno where id_turno =turnos limit 1)< (select NEW.hora_asistencia - hora_entrada from turno where id_turno =turnos limit 1)) then
+					return NULL;
+				else
+					delete from registro where fecha=NEW.fecha and hora_asistencia=hora_reg;
+					return NEW;
+				end if;
+		else
+			return NEW;
+		end if;
+	else
+		NEW.estado=false;
+		hora_reg:=(select r.hora_asistencia from registro r ,turno t where t.id_turno=turnos and r.fecha=NEW.fecha and r.hora_asistencia between (t.hora_salida-(t.inicio_salida*interval '1 minute')) and (t.hora_salida+( t.fin_salida*interval '1 minute')) limit 1);
+    --falta considerar tickeo manual
+		if(hora_reg is not null) then
+				if ((select hora_reg - hora_salida from turno where id_turno =turnos limit 1)> (select NEW.hora_asistencia - hora_salida from turno where id_turno =turnos limit 1)) then
+					return NULL;
+				else
+					delete from registro where fecha=NEW.fecha and hora_asistencia=hora_reg;
+					return NEW;
+				end if;
+		else
+			return NEW;
+		end if;
+	end if;
+	return NULL;
 end;
 $$
-language plpgsql;
+language 'plpgsql';
 
-CREATE TRIGGER filtrar_repetidos
-BEFORE insert ON registro
-FOR EACH ROW EXECUTE PROCEDURE procesar_asistencia();
+create trigger filtro before insert on registro
+for each row execute procedure funcion_filtro();

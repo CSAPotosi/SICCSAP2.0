@@ -110,10 +110,9 @@ class SiteController extends Controller
 		$this->redirect(Yii::app()->homeUrl);
 	}
 
-    /*public function actionPruebas(){
-
-        $r = new Reporte(1,'2014-12-17','2014-12-18');
+    public function actionPruebas(){
+        $r = new Reporte(1,'2014-12-01','2014-12-26');
         var_dump($r);
         Yii::app()->end();
-    }*/
+    }
 }

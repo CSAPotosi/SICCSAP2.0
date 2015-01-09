@@ -252,8 +252,8 @@
                                 <li class="user-header bg-light-blue">
                                     <img src="<?php echo Yii::app()->theme->baseUrl;?>/elements/img/avatar3.png" class="img-circle" alt="User Image" />
                                     <p>
-                                        Jane Doe - Web Developer
-                                        <small>Member since Nov. 2012</small>
+                                        Pedro - Administrador
+                                        <small>Miembro desde Nov. 2014</small>
                                     </p>
                                 </li>
                                 <!-- Menu Body -->
@@ -294,7 +294,7 @@
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/elements/img/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
-                            <p>Hello, Jane</p>
+                            <p>Hola Pedro</p>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>
@@ -356,6 +356,29 @@
                             <ul class="treeview-menu">
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Unidad",Yii::app()->createUrl('Unidad/create')) ?></li>
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Ver unidades",Yii::app()->createUrl('Unidad')) ?></li>
+                            </ul>
+                        </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-users"></i>
+                                <span>Horarios</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Horarios",Yii::app()->createUrl('Horario/create')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Ver horarios",Yii::app()->createUrl('Horario')) ?></li>
+                            </ul>
+                        </li>
+
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-users"></i>
+                                <span>Horarios</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Registrar Horarios",Yii::app()->createUrl('Horario/create')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Ver horarios",Yii::app()->createUrl('Horario')) ?></li>
                             </ul>
                         </li>
                         <li class="treeview">
