@@ -1,5 +1,4 @@
 <?php
-
 class RegistroController extends Controller
 {
 	public function actionRegistrar()
@@ -21,7 +20,19 @@ class RegistroController extends Controller
     public function actionReporte()
     {
         $modelR=new Registro();
-        $this->render('reporte',array('modelR'=>$modelR));
+        if(isset($_POST['Registro'])){
+            $empleado=$_POST['Registro']['id_emp'];
+            $rango=$_POST['Registro']['Rango'];
+            sscanf($rango,"%s - %s",$a,$b);
+            $fecha_ini= new DateTime($a);
+            $fecha_fin= new DateTime($b);
+            $rep= new Reporte($empleado,$fecha_ini->format('Y-m-d'),$fecha_fin->format('Y-m-d'));
+
+            $this->render('reporte',array('modelR'=>$modelR,'reporte'=>$rep));
+        }
+
+
+        $this->render('reporte',array('modelR'=>$modelR,'reporte'=>new Reporte(1,'2014-12-12','2014-12-12')));
     }
     public function accessRules()
     {
@@ -60,11 +71,6 @@ class RegistroController extends Controller
         foreach($lista as $valor=> $descripcion)
         {
             echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );
-
         }
-    }
-    public function actionElegirEmpleadoReporte()
-    {
-
     }
 }

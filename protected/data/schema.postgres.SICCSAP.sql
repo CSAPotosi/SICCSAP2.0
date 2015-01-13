@@ -119,3 +119,44 @@ create table contactos(
   foreign key (id_persona) references persona(id),
   foreign key (id_historial) references historial_paciente(id)
 );
+create table diagnostico_consulta(
+  id_diagnostico serial primary key,
+  enfermedad(patologia) varchar(15) not null,
+  tratamiento varchar(50),
+  observaciones varchar(100),
+  id_historial int,
+  foreign key (id_historial) references historial_paciente(id)
+);
+create table signos{
+  nombre
+  tipo
+  unidad..
+  }
+create table receta(
+  id_receta serial primary key,
+  nombre varchar(100) not null,
+  cantidad int,
+  tratamiento varchar(200),
+  id_diagnostico int not null,
+  foreign key (id_diagnostico) references diagnostico_consulta(id_diagnostico)
+);
+create table reconsulta(
+  id_reconsulta serial primary key,
+  fecha_reconsulta timestamp not null,
+  evolucion varchar(200) not null,
+  observaciones varchar(200),
+  id_diagnostico int not null,
+  foreign key (id_diagnostico) references diagnostico_consulta(id_diagnostico)
+);
+create capitulo{
+ uchcoenv
+}
+
+create table cie10(
+  codigo varchar(8) primary key,
+  titulo varchar(64),
+  descripcion text,
+  codigo_padre varchar(8),
+  foreign key (codigo_padre) references cie10 (codigo)
+    foreign key (idcapitulo) references cie10 (idcapitulo)
+)

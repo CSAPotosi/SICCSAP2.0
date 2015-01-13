@@ -19,6 +19,7 @@ class Registro extends CActiveRecord
     public $id2;
     public $id_uni;
     public $id_emp;
+    public $Rango;
 	/**
 	 * @return string the associated database table name
 	 */

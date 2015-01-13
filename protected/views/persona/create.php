@@ -18,6 +18,7 @@
             );
             ?>
             <center><h1>Crear Persona</h1></center>
+
             <?php $this->renderPartial('_form', array('model'=>$model)); ?>
 
             <?php $this->renderPartial('_formEspecialidad', array('modelE'=>$modelE)); ?>
@@ -27,21 +28,10 @@
         <div class="row" id="box2">
             <?php $this->renderPartial('_formPaciente', array('modelH'=>$modelH)); ?>
         </div>
-
-        <div class="row">
-            <div class="col-md-2">
-                <label>
-                    <input type="checkbox" id="checkbox" value="option1">
-                    Medico
-                </label>
-                <label>
-                    <input type="checkbox" id="checkbox1" value="option1">
-                    Paciente
-                </label>
-            </div>
-
+        <div class="row" id="box3">
+            <?php $this->renderPartial('_form_empleado', array('empleado'=>$empleado,'asignacion_empleado'=>$asignacion_empleado)); ?>
         </div>
-
+     </div>
 
         <div class="box-footer">
             <div class="form-group">
@@ -50,11 +40,28 @@
                 </div>
             </div>
         </div>
+
         <?php $this->endWidget(); ?>
 
     </div>
 
 
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <label>
+            <input type="checkbox" id="checkbox" value="option1">
+            Medico
+        </label>
+        <label>
+            <input type="checkbox" id="checkbox1" value="option1">
+            Paciente
+        </label>
+        <label>
+            <input type="checkbox" id="checkbox3" value="option1">
+            empleado
+        </label>
+    </div>
 </div>
 <button id="checkbox2">Llenar informnacion</button>
 <script>
@@ -62,12 +69,16 @@
 
         $("#box1").hide();
         $("#box2").hide();
+        $("#box3").hide();
         $("#checkbox2").click(function(){
             if($('#checkbox').is(":checked")){
                 $('#box1').show();
             }
             if($("#checkbox1").is(":checked")){
                 $("#box2").show();
+            }
+            if($("#checkbox3").is(":checked")){
+                $("#box3").show();
             }
         });
     });

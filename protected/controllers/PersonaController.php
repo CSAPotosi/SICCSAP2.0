@@ -65,14 +65,17 @@ class PersonaController extends Controller
 		$model=new Persona;
         $modelM=new Medico;
         $modelH=new HistorialPaciente;
+        $empleado=new Empleado;
+        $asignacion_empleado=new AsignacionEmpleado;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Persona']))
+		if((isset($_POST['Persona']))||(isset($_POST['Persona/_formMedico'])))
 		{
 
             $model->attributes=array_map('strtoupper',$_POST['Persona']);
+
             //var_dump($model);
             //Yii::app()->end();
 			if($model->save())
@@ -85,6 +88,8 @@ class PersonaController extends Controller
             'items'=>$items,
             'modelE'=>$modelE,
             'modelH'=>$modelH,
+            'empleado'=>$empleado,
+            'asignacion_empleado'=>$asignacion_empleado,
 		));
 	}
     public function actionActualizarEs()

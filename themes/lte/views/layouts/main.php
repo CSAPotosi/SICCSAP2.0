@@ -369,6 +369,19 @@
                                 <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Ver horarios",Yii::app()->createUrl('Horario')) ?></li>
                             </ul>
                         </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-users"></i>
+                                <span>Consulta externa</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Consulta Externa",Yii::app()->createUrl('DiagnosticoConsulta/create')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Receta",Yii::app()->createUrl('Receta/create')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Reconsulta",Yii::app()->createUrl('Reconsulta/create')) ?></li>
+
+                            </ul>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->
