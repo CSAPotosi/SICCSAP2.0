@@ -15,6 +15,7 @@ create table if not exists persona(
   pais varchar(64),
   provincia varchar(64),
   localidad varchar(64),
+  direccion varchar (64),
   telefono varchar(32),
   celular varchar(32),
   email varchar(128),

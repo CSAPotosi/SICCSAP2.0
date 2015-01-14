@@ -61,28 +61,49 @@ insert into turno (nombre_turno,tipo_turno,hora_entrada,inicio_entrada,fin_entra
 insert into turno (nombre_turno,tipo_turno,hora_entrada,inicio_entrada,fin_entrada,hora_salida,inicio_salida,fin_salida,tolerancia,dias,id_horario) values ('Farmacia mañana','Mañana','08:00',60,60,'15:30',30,30,0,'1111111',10);
 insert into turno (nombre_turno,tipo_turno,hora_entrada,inicio_entrada,fin_entrada,hora_salida,inicio_salida,fin_salida,tolerancia,dias,id_horario) values ('Farmacia tarde','Farmacia','16:01',0,60,'23:59',60,0,0,'1111111',10);
 
+insert into persona(nombres,primer_apellido,segundo_apellido) values
+  ('GUILLERMO OSCAR','AZURDUY',''),
+  ('JULIO CESAR','',''),
+  ('XIMENA','ARPAT',''),
+  ('LUIS','BENITEZ','ROJAS'),
+  ('KUSKAYA','ROSSO',''),
+  ('JHOJAIRA','ROSSO',''),
+  ('DAYSI','FLORES','ARANA'),
+  ('NEYDA M.','CUEVAS','GOYTIA'),
+  ('LIZBETH','GALARZA',''),
+  ('OLGA','VELIZ','CONDORI'),
+  ('MARLENE','CALLAPA',''),
+  ('NORKA','TICONA','SARATE'),
+  ('ROSMERY','GUTIERREZ',''),
+  ('LUZ','MAYTA',''),
+  ('ROXANA','VILLANUEVA',''),
+  ('SCARLET','CARDOZO',''),
+  ('LEYDI','MARTINEZ','BARRIOS'),
+  ('RONNY','MORUNO',''),
+  ('SANDRA','LLANOS',''),
+  ('XIMENA','VALVERDE',''),
+  ('LILIANA','SILEZ',''),
+  ('MARLENE','MENACHO','PARRA'),
+  ('LUCILA','CONDEX',''),
+  ('KENNY','CEBALLOS',''),
+  ('ROGER MIRCO','RODRIGUEZ',''),
+  ('RENE','ROSSO',''),
+  ('KARINA','GENOVEVA',''),
+  ('ANA','',''),
+  ('EDWIN','SANCHEZ','');
 
-insert into persona (primer_apellido,nombres) values ('persona 1',' persona 1');
-insert into persona (primer_apellido,nombres) values ('persona 2',' persona 2');
-insert into persona (primer_apellido,nombres) values ('persona 3',' persona 3');
-insert into persona (primer_apellido,nombres) values ('persona 4',' persona 4');
-insert into persona (primer_apellido,nombres) values ('persona 5',' persona 5');
-insert into persona (primer_apellido,nombres) values ('persona 6',' persona 6');
-insert into persona (primer_apellido,nombres) values ('persona 7',' persona 7');
+insert into empleado (id) values
+  (1),(2),(3),(4),(5),(6),(7),(8),
+  (9),(10),(11),(12),(13),(14),(15),(16),
+  (17),(18),(19),(20),(21),(22),(23),(24),
+  (25),(26),(27),(28),(29);
 
-
-insert into empleado (id,fecha_contratacion,estado) values (1,NOW(),'ACTIVO');
-insert into empleado (id,fecha_contratacion,estado) values (2,NOW(),'ACTIVO');
-insert into empleado (id,fecha_contratacion,estado) values (3,NOW(),'ACTIVO');
-insert into empleado (id,fecha_contratacion,estado) values (4,NOW(),'ACTIVO');
-insert into empleado (id,fecha_contratacion,estado) values (5,NOW(),'ACTIVO');
-insert into empleado (id,fecha_contratacion,estado) values (6,NOW(),'ACTIVO');
-insert into empleado (id,fecha_contratacion,estado) values (7,NOW(),'ACTIVO');
-
-
-insert into asignacion_empleado (fecha_inicio,id_empleado,id_cargo,id_horario) values ('01-01-2014',1,3,1);
-insert into asignacion_empleado (fecha_inicio,id_empleado,id_cargo,id_horario) values ('01-01-2014',5,9,3);
-insert into asignacion_empleado (fecha_inicio,id_empleado,id_cargo,id_horario) values ('01-01-2014',6,9,3);
-insert into asignacion_empleado (fecha_inicio,id_empleado,id_cargo,id_horario) values ('01-01-2014',7,9,3);
-
-
+insert into asignacion_empleado (fecha_inicio,id_empleado,id_cargo,id_horario) values
+  ('01-01-2014',1,4,1),('01-01-2014',2,6,1),('01-01-2014',3,7,1),('01-01-2014',4,3,1),
+  ('01-01-2014',5,14,8),('01-01-2014',6,15,8),('01-01-2014',7,11,5),('01-01-2014',8,9,3),
+  ('01-01-2014',9,?,?),('01-01-2014',10,?,?),('01-01-2014',11,?,?),('01-01-2014',12,?,?),
+  ('01-01-2014',13,?,?),('01-01-2014',14,?,?),('01-01-2014',15,?,?),('01-01-2014',16,?,?),
+  ('01-01-2014',17,?,?),('01-01-2014',18,?,?),('01-01-2014',19,?,?),('01-01-2014',20,?,?),
+  ('01-01-2014',21,16,6),('01-01-2014',22,16,7),('01-01-2014',23,16,6),('01-01-2014',24,10,4),
+  ('01-01-2014',25,10,4),('01-01-2014',26,17,9),('01-01-2014',27,?,?),('01-01-2014',28,?,?),
+  ('01-01-2014',29,10,4);

@@ -146,7 +146,6 @@ class Persona extends CActiveRecord
 
     public function getSexo(){
         return array(
-            ''=>'ELIJA SEXO',
             'M'=>'MASCULINO',
             'F'=>'FEMENINO',
         );
