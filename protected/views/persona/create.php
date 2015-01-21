@@ -36,7 +36,7 @@
         <div class="box-footer">
             <div class="form-group">
                 <div class="col-sm-offset-6 col-sm-6" >
-                    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary btn-lg'));?>
+                    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary btn-lg', 'name'=>'botongeneral', 'id'=>'123'));?>
                 </div>
             </div>
         </div>
@@ -81,5 +81,9 @@
                 $("#box3").show();
             }
         });
+        $("#123").click(function(e)
+        {
+            $('#formempleado').submit();
+        })
     });
 </script>

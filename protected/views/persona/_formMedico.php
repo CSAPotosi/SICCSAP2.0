@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="box-body">
-            <div class="form">
+            <div class="form" id="formmedico">
                 <center><p class="note">Los campos con <span class="required">*</span> son obligatorios</p></center>
                 <?php echo CHtml::errorSummary($modelM,null,null,array('class'=>'alert alert-error')); ?>
                 <div class="form-group">

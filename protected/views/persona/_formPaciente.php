@@ -8,7 +8,7 @@
             </div>
         </div>
         <div class="box-body">
-            <div class="form">
+            <div class="form" id="formpaciente">
                 <div class="box-body">
 
                     <p class="note">Fields with <span class="required">*</span> are required.</p>

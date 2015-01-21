@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="box-body">
-<div class="desplegable">
+<div class="form" id="formempleado">
 <h3>Empleado</h3>
 
 <div class="form-group">
