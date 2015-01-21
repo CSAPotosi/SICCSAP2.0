@@ -245,14 +245,14 @@
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="glyphicon glyphicon-user"></i>
-                                <span>Jane Doe <i class="caret"></i></span>
+                                <span><?php echo Yii::app()->user->getState('nombre'); ?> <i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
                                     <img src="<?php echo Yii::app()->theme->baseUrl;?>/elements/img/avatar3.png" class="img-circle" alt="User Image" />
                                     <p>
-                                        Jane Doe - Web Developer
+                                        <?php echo 'Hola '.Yii::app()->user->getState('nombre'); ?>
                                         <small>Member since Nov. 2012</small>
                                     </p>
                                 </li>
@@ -274,7 +274,7 @@
                                         <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                                        <?php echo CHtml::link("Salir",Yii::app()->createUrl('Site/logout'),array('class'=>'btn btn-default btn-flag')); ?>
                                     </div>
                                 </li>
                             </ul>
@@ -294,7 +294,7 @@
                             <img src="<?php echo Yii::app()->theme->baseUrl;?>/elements/img/avatar3.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
-                            <p>Hello, Jane</p>
+                            <p>Hola <?php echo Yii::app()->user->getState('nombre'); ?></p>
 
                             <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                         </div>

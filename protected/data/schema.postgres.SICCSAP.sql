@@ -21,6 +21,15 @@ create table if not exists persona(
   email varchar(128),
   fotografia varchar(128) default 'default.gif'
 );
+
+create table if not exists usuario(
+  id_usuario serial primary key not null ,
+  nombre varchar (64) unique not null ,
+  clave varchar (128) not null,
+  id_persona int,
+  foreign key (id_persona) references persona(id)
+);
+
 create table if not exists empleado(
   id int primary key ,
   fecha_contratacion date ,
