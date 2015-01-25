@@ -3,7 +3,6 @@
 <section class="content">
         <!-- Fila principal-->
         <?php echo $content; ?>
-
 </section>
 
 <?php $this->endContent(); ?>

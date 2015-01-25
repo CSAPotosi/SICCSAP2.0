@@ -311,7 +311,16 @@
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-
+                        <li class="treeview">
+                            <a href="#">
+                                <span class="glyphicon glyphicon-folder-open"></span>
+                                <span>Historial Medico</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Listar Historias",Yii::app()->createUrl('HistorialPaciente')) ?></li>
+                            </ul>
+                        </li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-clock-o"></i>
