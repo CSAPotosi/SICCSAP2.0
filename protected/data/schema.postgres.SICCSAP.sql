@@ -130,11 +130,10 @@ create table if not exists contactos(
   foreign key (id_historial) references historial_paciente(id)
 );
 
-create table if not exists consulta(
-  id_consulta serial primary key not null ,
+create table if not exists Consulta(
+  id_diagnostico serial primary key not null ,
   fecha_diagnostico timestamp not null ,
-  anamnesis text ,
-  exploracion text ,
+  sintomas text ,
   diagnostico text ,
   tratamiento text ,
   observaciones text ,
@@ -169,26 +168,26 @@ create table if not exists reconsulta(
   fecha_reconsulta timestamp not null ,
   evolucion text ,
   tratamiento text ,
-  id_consulta int not null ,
-  foreign key (id_consulta) references consulta(id_consulta)
+  id_diagnostico int not null ,
+  foreign key (id_diagnostico) references diagnostico(id_diagnostico)
 );
 
 create table if not exists signos_vitales(
   id_sv serial primary key not null,
-  nombre_sv varchar (128) not null unique,
-  nombre_corto_sv varchar (64) not null null ,
+  nombre_sv varchar (128) not null ,
   tipo_sv varchar (64) not null default 'INDEFINIDO',
   unidad_sv varchar (16) not null default 'INDEFINIDO',
+  descripcion text
 );
 
-create table if not exists consulta_signos_vitales(
-  id_consulta int not null,
+create table if not exists paciente_signos_vitales(
+  id_historia int not null,
   id_sv int not null ,
   fecha timestamp not null,
   valor float ,
   observacion text ,
-  primary key (id_consulta,id_sv,fecha),
-  foreign key (id_consulta) references consulta(id_consulta),
+  primary key (id_historia,id_sv,fecha),
+  foreign key (id_historia) references historial_paciente(id),
   foreign key (id_sv) references signos_vitales(id_sv)
 );
 
@@ -208,21 +207,17 @@ create table receta(
   foreign key (id_diagnostico) references diagnostico(id_diagnostico),
   foreign key (id_med) references medicamento(id_med)
 );
-
-create table tipo_antecedente(
-  id_tipo_ant serial primary key not null,
-  titulo varchar(32) not null unique,
-  genero_aplicado varchar(1) default 'I',
-  descripcion varchar(128)
+create table if not exists antecedentes_medicos(
+  id_ant serial primary key not null ,
+  nombre_ant varchar (64),
+  tipo_ant varchar (64),
+  descripcion_ant text
 );
-
-create table antecedente_medico(
-  fecha_creacion timestamp,
-  fecha_modificacion timestamp,
-  descripcion_ant text,
-  id_historia int,
-  id_tipo int,
+create table if not exists historia_antecedentes(
+  id_historia int not null ,
+  id_ant int not null,
+  efectos_producidos text ,
+  primary key (id_historia,id_ant),
   foreign key (id_historia) references historial_paciente(id),
-  foreign key (id_tipo) references tipo_antecedente(id_tipo_antecedente),
-  primary key(fecha_creacion,id_historia,id_tipo)
+  foreign key (id_ant) references antecedentes_medicos(id_ant)
 );

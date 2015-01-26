@@ -469,6 +469,10 @@
                 $('#Persona_nit').val($(this).val())
             });
 
+            $(document).ready(function(){
+
+                });
+            });
         </script>
 
     </body>
