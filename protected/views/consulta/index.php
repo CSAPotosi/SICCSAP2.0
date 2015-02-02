@@ -13,7 +13,12 @@
                 </div>
             </div>
             <div role="tabpanel" class="tab-pane fade active in" id="consulta" aria-labelledby="consulta-tab">
-                hola mundo 2
+                <div class="box box-solid">
+                    <div class="box-body">
+                        <?php $this->renderPartial('_form_diagnostico',array('ConsultaModel'=>$ConsultaModel)); ?>
+                    </div>
+                </div>
+
             </div>
             <div role="tabpanel" class="tab-pane fade" id="reconsulta" aria-labelledby="reconsulta-tab">
                 hola mundo 3x

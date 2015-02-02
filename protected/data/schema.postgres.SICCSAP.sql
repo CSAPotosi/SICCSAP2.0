@@ -57,7 +57,7 @@ create table if not exists horario(
   tipo_horario varchar (32),
   estado varchar(16)
 );
-create table turno(
+create table if not exists turno(
   id_turno serial primary key ,
   nombre_turno varchar(32) not null unique ,
   tipo_turno varchar(8),
@@ -142,27 +142,6 @@ create table if not exists consulta(
   foreign key (id_historia) references historial_paciente(id)
 );
 
-create table if not exists capitulo_cie10(
-  numero_cap varchar(8) primary key not null ,
-  titulo_cap text unique not null ,
-  descripcion text
-);
-
-create table if not exists cie10(
-  codigo varchar(8) primary key not null ,
-  titulo text unique not null ,
-  descripcion text ,
-  codigo_padre varchar (8),
-  numero_cap varchar (8) not null ,
-  foreign key (codigo_padre) references cie10(codigo),
-  foreign key (numero_cap) references capitulo_cie10(numero_cap)
-);
-
-create table if not exists clasificacion_diagnostico_cie10(
-  id_diagnostico int not null ,
-  codigo_cie10 varchar (8) not null ,
-  primary key (id_diagnostico,codigo_cie10)
-);
 
 create table if not exists reconsulta(
   id_reconsulta serial not null primary key ,
@@ -176,9 +155,9 @@ create table if not exists reconsulta(
 create table if not exists signos_vitales(
   id_sv serial primary key not null,
   nombre_sv varchar (128) not null unique,
-  nombre_corto_sv varchar (64) not null null ,
+  nombre_corto_sv varchar (64) not null,
   tipo_sv varchar (64) not null default 'INDEFINIDO',
-  unidad_sv varchar (16) not null default 'INDEFINIDO',
+  unidad_sv varchar (16) not null default 'INDEFINIDO'
 );
 
 create table if not exists consulta_signos_vitales(
@@ -192,37 +171,68 @@ create table if not exists consulta_signos_vitales(
   foreign key (id_sv) references signos_vitales(id_sv)
 );
 
-create table medicamento(
+create table if not exists medicamento(
   id_med serial primary key not null ,
   nombre_med varchar (128) not null,
   unidad_med varchar (8)
 );
 
-create table receta(
-  id_diagnostico int not null ,
+create table if not exists receta(
+  id_consulta int not null ,
   id_med int not null,
   fecha date not null ,
   cantidad int not null,
   indicaciones text ,
-  primary key (id_diagnostico,id_med,fecha),
-  foreign key (id_diagnostico) references diagnostico(id_diagnostico),
+  primary key (id_consulta,id_med,fecha),
+  foreign key (id_consulta) references consulta(id_consulta),
   foreign key (id_med) references medicamento(id_med)
 );
 
-create table tipo_antecedente(
+create table if not exists tipo_antecedente(
   id_tipo_ant serial primary key not null,
   titulo varchar(32) not null unique,
   genero_aplicado varchar(1) default 'I',
   descripcion varchar(128)
 );
 
-create table antecedente_medico(
+create table if not exists antecedente_medico(
   fecha_creacion timestamp,
   fecha_modificacion timestamp,
   descripcion_ant text,
   id_historia int,
   id_tipo int,
   foreign key (id_historia) references historial_paciente(id),
-  foreign key (id_tipo) references tipo_antecedente(id_tipo_antecedente),
+  foreign key (id_tipo) references tipo_antecedente(id_tipo_ant),
   primary key(fecha_creacion,id_historia,id_tipo)
+);
+
+
+//parte cie 10
+
+create table capitulo_cie10(
+  num_capitulo varchar(8) primary key not null,
+  titulo_cap text not null unique,
+  descripcion_cap text,
+  codigo_inicial varchar(8) not null,
+  codigo_final varchar(8) not null
+);
+
+create table categoria_cie10(
+  id_cat_cie10 serial primary key not null,
+  titulo_cat_cie10 text unique not null,
+  descripcion text,
+  codigo_inicial varchar(8) not null,
+  codigo_final varchar(8) not null,
+  num_capitulo varchar(8) not null,
+  foreign key (num_capitulo) references capitulo_cie10(num_capitulo)
+);
+
+create table item_cie10(
+  codigo varchar(8) primary key not null,
+  titulo text not null unique,
+  descripcion text,
+  codigo_item_padre varchar(8),
+  id_cat_cie10 int not null,
+  foreign key (codigo_item_padre) references item_cie10(codigo),
+  foreign key (id_cat_cie10) references categoria_cie10(id_cat_cie10)
 );

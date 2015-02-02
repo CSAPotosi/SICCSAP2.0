@@ -107,3 +107,7 @@ insert into asignacion_empleado (fecha_inicio,id_empleado,id_cargo,id_horario) v
   ('01-01-2014',21,16,6),('01-01-2014',22,16,7),('01-01-2014',23,16,6),('01-01-2014',24,10,4),
   ('01-01-2014',25,10,4),('01-01-2014',26,17,9),('01-01-2014',27,?,?),('01-01-2014',28,?,?),
   ('01-01-2014',29,10,4);
+
+
+
+insert into usuario ( nombre, clave, id_persona) values ('admin',md5('admin'),1);
