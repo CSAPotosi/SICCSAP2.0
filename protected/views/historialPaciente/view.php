@@ -38,7 +38,7 @@ $this->breadcrumbs=array(
                 <div class="box-tools pull-right">
                     <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
                     <button class="btn btn-default btn-sm" data-widget="remove" data-toggle="tooltip" title="" data-original-title="Remove"><i class="fa fa-times"></i></button>
-                    <a href="<?php echo $this->createUrl('consulta/'); ?>" class="btn btn-default btn-sm" title="Nueva Consulta"><i class="fa fa-plus"></i></a>
+                    <a href="<?php echo $this->createUrl('consulta/',array('hid'=>$model->id)); ?>" class="btn btn-default btn-sm" title="Nueva Consulta"><i class="fa fa-plus"></i></a>
                 </div>
             </div>
 

@@ -6,3 +6,7 @@ input{
     float: none;
     margin: 0 auto;
 }
+
+.pintar{
+    background: #000099;
+}
