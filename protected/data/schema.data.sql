@@ -111,3 +111,12 @@ insert into asignacion_empleado (fecha_inicio,id_empleado,id_cargo,id_horario) v
 
 
 insert into usuario ( nombre, clave, id_persona) values ('admin',md5('admin'),1);
+
+insert into signos_vitales (nombre_sv,nombre_corto_sv,unidad_sv) values ('presion arterial sistole','Pre. Art.','Sist.'),
+  ('presion arterial diastole','Pre. Art.','Diast.'),
+  ('pulsaciones','Puls.','ppm'),
+  ('ritmo respiratorio','ritmo resp.','rpm'),
+  ('temperatura','temp.','º Grados'),
+  ('altura','alt.','cm'),
+  ('peso','peso','Kgs.'),
+  ('Indice de masa corporal','IMC','kg/m^2');

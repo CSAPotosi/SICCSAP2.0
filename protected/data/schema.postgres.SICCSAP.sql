@@ -160,6 +160,7 @@ create table if not exists signos_vitales(
   unidad_sv varchar (16) not null default 'INDEFINIDO'
 );
 
+
 create table if not exists consulta_signos_vitales(
   id_consulta int not null,
   id_sv int not null ,
@@ -209,7 +210,7 @@ create table if not exists antecedente_medico(
 
 //parte cie 10
 
-create table capitulo_cie10(
+create table if not exists capitulo_cie10(
   num_capitulo varchar(8) primary key not null,
   titulo_cap text not null unique,
   descripcion_cap text,
@@ -217,7 +218,7 @@ create table capitulo_cie10(
   codigo_final varchar(8) not null
 );
 
-create table categoria_cie10(
+create table if not exists categoria_cie10(
   id_cat_cie10 serial primary key not null,
   titulo_cat_cie10 text unique not null,
   descripcion text,
@@ -227,7 +228,7 @@ create table categoria_cie10(
   foreign key (num_capitulo) references capitulo_cie10(num_capitulo)
 );
 
-create table item_cie10(
+create table if not exists item_cie10(
   codigo varchar(8) primary key not null,
   titulo text not null unique,
   descripcion text,
@@ -236,3 +237,53 @@ create table item_cie10(
   foreign key (codigo_item_padre) references item_cie10(codigo),
   foreign key (id_cat_cie10) references categoria_cie10(id_cat_cie10)
 );
+
+
+create table if not exists servicio(
+  id_servicio serial not null primary key,
+  fecha_creacion_servicio timestamp,
+  fecha_modificacion_servicio timestamp
+);
+
+create table if not EXISTS costos(
+  id_costo serial not null primary key,
+  fecha_inicio timestamp not null,
+  fecha_fin timestamp,
+  monto float not null,
+  id_servicio int not null
+);
+
+create table if not EXISTS tipo_sala(
+  id_tipo_sala int not null primary key,
+  nombre_tipo_sala varchar(128) unique not null,
+  descripcion_tipo_sala varchar(128) ,
+  foreign key (id_tipo_sala) references servicio(id_servicio)
+);
+
+create table if not exists sala(
+  id_sala serial not null primary key,
+  numero_sala int not null,
+  ubicacion_sala varchar(128),
+  estado_sala varchar(32),
+  id_tipo_sala int not null,
+  foreign key (id_tipo_sala) references tipo_sala(id_tipo_sala)
+);
+
+create table if not EXISTS categoria_servicio(
+  id_categoria_serv serial not null primary key,
+  nombre_categoria varchar(128) not null unique,
+  descripcion_categoria_serv varchar(128)
+);
+
+create table if not EXISTS servicio_medico(
+  id_servicio_medico int not null primary key,
+  nombre_servicio varchar(128) not null unique,
+  descripcion_servicio varchar(128),
+  id_categoria_serv int not null,
+  foreign key (id_servicio_medico) references servicio(id_servicio),
+  foreign key (id_categoria_serv) references categoria_servicio(id_categoria_serv)
+);
+
+
+
+

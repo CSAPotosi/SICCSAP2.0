@@ -120,4 +120,10 @@ class Consulta extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+
+    protected function beforeValidate(){
+        $this->fecha_diagnostico=new CDbExpression('NOW()');
+        return parent::beforeValidate();
+    }
 }
