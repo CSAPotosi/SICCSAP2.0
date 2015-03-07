@@ -136,21 +136,13 @@ create table if not exists consulta(
   anamnesis text ,
   exploracion text ,
   diagnostico text ,
-  tratamiento text ,
   observaciones text ,
   id_historia int not null ,
-  foreign key (id_historia) references historial_paciente(id)
+  id_consulta_padre int,
+  foreign key (id_historia) references historial_paciente(id),
+  foreign key (id_consulta_padre) references consulta(id_consulta)
 );
 
-
-create table if not exists reconsulta(
-  id_reconsulta serial not null primary key ,
-  fecha_reconsulta timestamp not null ,
-  evolucion text ,
-  tratamiento text ,
-  id_consulta int not null ,
-  foreign key (id_consulta) references consulta(id_consulta)
-);
 
 create table if not exists signos_vitales(
   id_sv serial primary key not null,
@@ -165,8 +157,7 @@ create table if not exists consulta_signos_vitales(
   id_consulta int not null,
   id_sv int not null ,
   fecha timestamp not null,
-  valor float ,
-  observacion text ,
+  valor varchar(16),
   primary key (id_consulta,id_sv,fecha),
   foreign key (id_consulta) references consulta(id_consulta),
   foreign key (id_sv) references signos_vitales(id_sv)
@@ -178,15 +169,25 @@ create table if not exists medicamento(
   unidad_med varchar (8)
 );
 
+create table if not exists tratamiento(
+  id_tratamiento serial not null primary key,
+  fecha_tratamiento timestamp not null,
+  indicaciones text,
+  id_consulta int,
+  foreign key (id_consulta) references consulta(id_consulta)
+);
+
 create table if not exists receta(
-  id_consulta int not null ,
+  id_receta serial not null primary key ,
   id_med int not null,
-  fecha date not null ,
   cantidad int not null,
+  duracion_tratamiento varchar(128),
   indicaciones text ,
-  primary key (id_consulta,id_med,fecha),
-  foreign key (id_consulta) references consulta(id_consulta),
-  foreign key (id_med) references medicamento(id_med)
+  via varchar(128),
+  info_adicional text,
+  id_tratamiento int not null,
+  foreign key (id_med) references medicamento(id_med),
+  foreign key (id_tratamiento) references tratamiento(id_tratamiento)
 );
 
 create table if not exists tipo_antecedente(
@@ -268,7 +269,7 @@ create table if not exists sala(
   id_tipo_sala int not null,
   foreign key (id_tipo_sala) references tipo_sala(id_tipo_sala)
 );
-
+/*
 create table if not EXISTS categoria_servicio(
   id_categoria_serv serial not null primary key,
   nombre_categoria varchar(128) not null unique,
@@ -284,6 +285,6 @@ create table if not EXISTS servicio_medico(
   foreign key (id_categoria_serv) references categoria_servicio(id_categoria_serv)
 );
 
-
+*/
 
 
