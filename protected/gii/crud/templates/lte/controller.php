@@ -76,7 +76,7 @@ class <?php echo $this->controllerClass; ?> extends <?php echo $this->baseContro
 
 		if(isset($_POST['<?php echo $this->modelClass; ?>']))
 		{
-			$model->attributes=$_POST['<?php echo $this->modelClass; ?>'];
+			$model->attributes=array_map('strtoupper',$_POST['<?php echo $this->modelClass; ?>']);
 			if($model->save())
 				$this->redirect(array('view','id'=>$model-><?php echo $this->tableSchema->primaryKey; ?>));
 		}
@@ -100,7 +100,7 @@ class <?php echo $this->controllerClass; ?> extends <?php echo $this->baseContro
 
 		if(isset($_POST['<?php echo $this->modelClass; ?>']))
 		{
-			$model->attributes=$_POST['<?php echo $this->modelClass; ?>'];
+            $model->attributes=array_map('strtoupper',$_POST['<?php echo $this->modelClass; ?>']);
 			if($model->save())
 				$this->redirect(array('view','id'=>$model-><?php echo $this->tableSchema->primaryKey; ?>));
 		}

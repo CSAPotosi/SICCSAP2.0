@@ -122,6 +122,8 @@ create table if not exists historial_paciente(
   fecha_actualizacion timestamp not null,
   foreign key (id) references persona(id)
 );
+
+
 create table if not exists contactos(
   id_persona int,
   id_historial int,

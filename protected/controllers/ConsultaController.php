@@ -27,8 +27,9 @@ class ConsultaController extends Controller{
         );
     }
 
-    public function actionIndex()
+    public function actionIndex($cid=0)
     {
+        /*
         $SVModelList=array();
         $aux=SignosVitales::model()->findAll();
         foreach($aux as $i)
@@ -38,6 +39,12 @@ class ConsultaController extends Controller{
         $this->render('index',array(
             'ConsultaModel'=>$ConsultaModel,
             'SVModelList'=>$SVModelList,
+        ));
+
+
+*/
+        $this->render('index',array(
+            'consulta_id'=>$cid,
         ));
     }
 
@@ -55,6 +62,14 @@ class ConsultaController extends Controller{
         $this->render('index',array(
             'ConsultaModel'=>$consultaModel,
         ));*/
+        $consultaModel = new Consulta;
+        if(isset($_POST['Consulta'])){
+            $consultaModel->attributes=array_map('strtoupper',$_POST['Consulta']);
+            $consultaModel->id_historia=$this->_historia->id;
+            if($consultaModel->save())
+                $this->redirect(array('index','hid'=>$this->_historia->id));
+        }
+
     }
 
     public function filterHistoriaContext($filterChain){

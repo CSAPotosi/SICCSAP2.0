@@ -39,10 +39,10 @@ class Consulta extends CActiveRecord
 		return array(
 			array('fecha_diagnostico, id_historia', 'required'),
 			array('id_historia', 'numerical', 'integerOnly'=>true),
-			array('anamnesis, exploracion, diagnostico, tratamiento, observaciones', 'safe'),
+			array('anamnesis, exploracion, diagnostico,  observaciones', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_consulta, fecha_diagnostico, anamnesis, exploracion, diagnostico, tratamiento, observaciones, id_historia', 'safe', 'on'=>'search'),
+			array('id_consulta, fecha_diagnostico, anamnesis, exploracion, diagnostico, observaciones, id_historia', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,7 +72,6 @@ class Consulta extends CActiveRecord
 			'anamnesis' => 'Anamnesis',
 			'exploracion' => 'Exploracion',
 			'diagnostico' => 'Diagnostico',
-			'tratamiento' => 'Tratamiento',
 			'observaciones' => 'Observaciones',
 			'id_historia' => 'Id Historia',
 		);
@@ -101,7 +100,6 @@ class Consulta extends CActiveRecord
 		$criteria->compare('anamnesis',$this->anamnesis,true);
 		$criteria->compare('exploracion',$this->exploracion,true);
 		$criteria->compare('diagnostico',$this->diagnostico,true);
-		$criteria->compare('tratamiento',$this->tratamiento,true);
 		$criteria->compare('observaciones',$this->observaciones,true);
 		$criteria->compare('id_historia',$this->id_historia);
 
@@ -125,5 +123,11 @@ class Consulta extends CActiveRecord
     protected function beforeValidate(){
         $this->fecha_diagnostico=new CDbExpression('NOW()');
         return parent::beforeValidate();
+    }
+
+    public function getDiagnosticoCorto(){
+        if(strlen($this->diagnostico)>35)
+            return substr($this->diagnostico,0,33)."...";
+        return $this->diagnostico;
     }
 }
