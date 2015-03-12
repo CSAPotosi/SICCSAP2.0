@@ -37,7 +37,7 @@ class Consulta extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_diagnostico, id_historia', 'required'),
+			array('fecha_diagnostico, id_historia, anamnesis', 'required'),
 			array('id_historia', 'numerical', 'integerOnly'=>true),
 			array('anamnesis, exploracion, diagnostico,  observaciones', 'safe'),
 			// The following rule is used by search().

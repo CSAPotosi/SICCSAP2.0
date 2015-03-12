@@ -58,7 +58,7 @@ class HistorialPacienteController extends Controller
                 'order'=>'fecha_diagnostico DESC',
                 'limit'=>5,
             ),
-
+            'pagination'=>false,
         ));
 
 		$this->render('view',array(
