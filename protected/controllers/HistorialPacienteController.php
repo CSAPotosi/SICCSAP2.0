@@ -51,8 +51,19 @@ class HistorialPacienteController extends Controller
 	 */
 	public function actionView($id)
 	{
+
+        $listaConsulta=new CActiveDataProvider('Consulta',array(
+            'criteria'=>array(
+                'condition'=>"id_historia={$id} and id_consulta_padre is null",
+                'order'=>'fecha_diagnostico DESC',
+                'limit'=>5,
+            ),
+            'pagination'=>false,
+        ));
+
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+            'listaConsulta'=>$listaConsulta,
 		));
 	}
 

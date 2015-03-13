@@ -14,31 +14,27 @@
     Diagnostico Medico
 </h5>
 
-<div class="form-group">
-    <?php echo CHtml::activeLabel($ConsultaModel,'anamnesis');?>
-    <?php echo CHtml::activeTextArea($ConsultaModel,'anamnesis',array('class'=>'form-control'));?>
-    <?php echo CHtml::error($ConsultaModel,'anamnesis');?>
-</div>
+
 <div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <?php echo CHtml::activeLabel($ConsultaModel,'anamnesis');?>
+            <?php echo CHtml::activeTextArea($ConsultaModel,'anamnesis',array('class'=>'form-control'));?>
+            <?php echo CHtml::error($ConsultaModel,'anamnesis');?>
+        </div>
+    </div>
     <div class="col-md-6">
         <div class="form-group">
             <?php echo CHtml::activeLabel($ConsultaModel,'exploracion');?>
             <?php echo CHtml::activeTextArea($ConsultaModel,'exploracion',array('class'=>'form-control'));?>
         </div>
     </div>
+</div>
+<div class="row">
     <div class="col-md-6">
         <div class="form-group">
             <?php echo CHtml::activeLabel($ConsultaModel,'diagnostico');?>
             <?php echo CHtml::activeTextArea($ConsultaModel,'diagnostico',array('class'=>'form-control'));?>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-md-6">
-        <div class="form-group">
-            <?php echo CHtml::activeLabel($ConsultaModel,'tratamiento');?>
-            <?php echo CHtml::activeTextArea($ConsultaModel,'tratamiento',array('class'=>'form-control'));?>
         </div>
     </div>
     <div class="col-md-6">

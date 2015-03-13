@@ -1,19 +1,20 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <?php
+            /* @var $this SalaController */
+            /* @var $model TipoSala */
 
+            $this->breadcrumbs=array(
+                'Tipo Salas'=>array('index'),
+                'Crear Nueva Sala',
+            );
+            ?>
 
-<div class="col-md-12">
-	<div class="box box-primary">
-	<?php
-	/* @var $this SalaController */
-	/* @var $model TipoSala */
+            <h1>Crear Nueva Sala</h1>
 
-	$this->breadcrumbs=array(
-        'Tipo Salas'=>array('index'),
-        'Crear Nueva Sala',
-    );
-	?>
-
-    <h1>Crear Nueva Sala</h1>
-
-    <?php $this->renderPartial('_formSala', array('itemSala'=>$itemSala)); ?>
+            <?php $this->renderPartial('_formSala', array('itemSala'=>$itemSala)); ?>
+        </div>
     </div>
 </div>
+
