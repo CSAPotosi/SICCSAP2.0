@@ -1,4 +1,5 @@
 <?php
+
 class PersonaController extends Controller
 {
 	/**
@@ -31,7 +32,7 @@ class PersonaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','crearMedicos','CrearEspecialidad'),
+				'actions'=>array('create','update'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -43,6 +44,7 @@ class PersonaController extends Controller
 			),
 		);
 	}
+
 	/**
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
@@ -60,69 +62,53 @@ class PersonaController extends Controller
 	 */
 	public function actionCreate()
 	{
-        $modelE=new Especialidad;
-        $items=$this->getItems();
 		$model=new Persona;
-        $modelM=new Medico;
-        $modelH=new HistorialPaciente;
-        $empleado=new Empleado;
-        $asignacion_empleado=new AsignacionEmpleado;
+        $paciente=new Paciente;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if((isset($_POST['Persona']))||(isset($_POST['Persona/_formMedico'])))
+		if(isset($_POST['Persona']))
 		{
+            $filename="";
+            if (!empty($_POST['Persona']['fotografia']))
+            {
+                $foto = $_POST['Persona']['fotografia'];
+                //var_dump($foto);
 
-            $model->attributes=array_map('strtoupper',$_POST['Persona']);
+                //Decode with base64
+                $foto = str_replace('data:image/png;base64,', '', $foto);
+                $foto = str_replace(' ', '+', $foto);
+                //var_dump($foto);
+                $data_foto = base64_decode($foto);
+                //echo "foto decodificada 64: ";
+                //var_dump($data_foto);
 
-            //var_dump($model);
-            //Yii::app()->end();
+                //Set photo filename
+                $filename = $_POST['Persona']['dni'].'.png';
+                $filepath = YiiBase::getPathOfAlias("webroot").'/fotografias/'.$filename;
+                $writeToDisk = file_put_contents($filepath, $data_foto);
+
+                //var_dump($cadena_foto);
+                //Yii::app()->end();
+            }
+			$model->attributes=array_map('strtoupper',$_POST['Persona']);
+            $model->fotografia=$filename;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
-            'modelM'=>$modelM,
-            'items'=>$items,
-            'modelE'=>$modelE,
-            'modelH'=>$modelH,
-            'empleado'=>$empleado,
-            'asignacion_empleado'=>$asignacion_empleado,
+            'paciente'=>$paciente,
 		));
 	}
-    public function actionActualizarEs()
-    {
-        $model=new Especialidad();
-        $lista=CHtml::listData($model,'id_especialidad','nombre_especialidad');
-        foreach($lista as $valor=> $descripcion)
-        {
-            echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );
-        }
-    }
-    public function getItems(){
-        $items=array();
-        if(isset($_POST['MedicoEspecialidad'])&&is_array($_POST['MedicoEspecialidad'])){
-            foreach($_POST['MedicoEspecialidad'] as $item){
-                if ( array_key_exists('id_medico', $item) ){
-                    $items[] = MedicoEspecialidad::model()->findByPk($item['id_medico']);
-                }
-                // Otherwise create a new record
-                else {
-                    $items[] = new MedicoEspecialidad;
-                }
-            }
 
-        }
-        return $items;
-    }
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
-
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
@@ -132,16 +118,33 @@ class PersonaController extends Controller
 
 		if(isset($_POST['Persona']))
 		{
-			$model->attributes=array_map('strtoupper',$_POST['Persona']);
+            $filename="";
+            if(!empty($_POST['Persona']['fotografia']))
+            {
+                $foto = $_POST['Persona']['fotografia'];
+                //Decode with base64
+                $foto = str_replace('data:image/png;base64,', '', $foto);
+                $foto = str_replace(' ', '+', $foto);
+                $data_foto = base64_decode($foto);
+                //Set photo filename
+                $filename = $_POST['Persona']['dni'].'.png';
+                $filepath = YiiBase::getPathOfAlias("webroot").'/fotografias/'.$filename;
+                $writeToDisk = file_put_contents($filepath, $data_foto);
+            }
+            $model->attributes=array_map('strtoupper',$_POST['Persona']);
+            $model->fotografia=$filename;
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
-
+        //$cadena= file_get_contents($model->fotografia);
+        //$cadena_foto=base64_encode($cadena);
+        //$cadena_foto=str_replace('+',' ',$cadena_foto);
+        //   $cadena_foto='data:image/png;base64,'.$cadena_foto;
+        //$model->fotografia=$cadena_foto;
 		$this->render('update',array(
 			'model'=>$model,
 		));
 	}
-
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -209,14 +212,4 @@ class PersonaController extends Controller
 			Yii::app()->end();
 		}
 	}
-    public function actionCrearEspecialidad()
-    {
-        $modelE=new Especialidad;
-        if(isset($_POST['Especialidad']))
-        {
-            $modelE->attributes=$_POST['Especialidad'];
-            $modelE->save();
-
-        }
-    }
 }
