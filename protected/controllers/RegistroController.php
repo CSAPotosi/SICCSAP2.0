@@ -51,7 +51,6 @@ class RegistroController extends Controller
         foreach($lista as $valor=> $descripcion)
         {
             echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );
-
         }
     }
     public function actionElegirempleado()
