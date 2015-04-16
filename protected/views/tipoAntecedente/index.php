@@ -2,21 +2,21 @@
     <div class="col-md-12">
 
         <?php
-        /* @var $this PersonaController */
+        /* @var $this TipoAntecedenteController */
         /* @var $dataProvider CActiveDataProvider */
 
         $this->breadcrumbs=array(
-		'Personas',
+		'Tipo Antecedentes',
 	);
 
         $this->menu=array(
-        array('label'=>'Create Persona', 'url'=>array('create')),
-        array('label'=>'Manage Persona', 'url'=>array('admin')),
+        array('label'=>'Create TipoAntecedente', 'url'=>array('create')),
+        array('label'=>'Manage TipoAntecedente', 'url'=>array('admin')),
         );
         ?>
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Personas</h3>
+                <h3 class="box-title">Tipo Antecedentes</h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
                 </div>

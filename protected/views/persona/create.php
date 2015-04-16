@@ -1,89 +1,36 @@
-<div class="col-md-12">
-	<div class="box box-primary">
-        <?php $form=$this->beginWidget('CActiveForm', array(
-            // Please note: When you enable ajax validation, make sure the corresponding
-            // controller action is handling ajax validation correctly.
-            // There is a call to performAjaxValidation() commented in generated controller code.
-            // See class documentation of CActiveForm for details on this.
-            'enableAjaxValidation'=>false,
-            'htmlOptions'=>array('class'=>'form-horizontal'),
-        )); ?>
-            <?php
-            /* @var $this PersonaController */
-            /* @var $model Persona */
+<div class="row">
+    <div class="col-md-12">
 
-            $this->breadcrumbs=array(
-                'Personas'=>array('index'),
-                'Create',
-            );
-            ?>
-            <center><h1>Crear Persona</h1></center>
+        <?php
+        /* @var $this PersonaController */
+        /* @var $model Persona */
 
-            <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+        $this->breadcrumbs=array(
+            'Personas'=>array('index'),
+            'Create',
+        );
 
-            <?php $this->renderPartial('_formEspecialidad', array('modelE'=>$modelE)); ?>
-        <div class="row" id="box1">
-            <?php $this->renderPartial('_formMedico', array('modelM'=>$modelM,'items'=>$items)); ?>
-        </div>
-        <div class="row" id="box2">
-            <?php $this->renderPartial('_formPaciente', array('modelH'=>$modelH)); ?>
-        </div>
-        <div class="row" id="box3">
-            <?php $this->renderPartial('_form_empleado', array('empleado'=>$empleado,'asignacion_empleado'=>$asignacion_empleado)); ?>
-        </div>
-     </div>
+        $this->menu=array(
+            array('label'=>'List Persona', 'url'=>array('index')),
+            array('label'=>'Manage Persona', 'url'=>array('admin')),
+        );
+        ?>
+        <ul class="nav nav-tabs" id="padre">
 
-        <div class="box-footer">
-            <div class="form-group">
-                <div class="col-sm-offset-6 col-sm-6" >
-                    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary btn-lg', 'name'=>'botongeneral', 'id'=>'123'));?>
+            <li class="active"><a href="#persona"  data-toggle="tab">Datos Persona</a></li>
+            <li><a href="#paciente"  data-toggle="tab">Datos Paciente</a></li>
+        </ul>
+        <div class="tab-content" >
+            <div class="tab-pane fade active in" id="persona">
+                <div class="box box-solid">
+                    <?php $this->renderPartial('_form', array('model'=>$model)); ?>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="paciente">
+                <div class="box box-solid">
+                    <?php $this->renderPartial('_form_paciente', array('paciente'=>$paciente)); ?>
                 </div>
             </div>
         </div>
-
-        <?php $this->endWidget(); ?>
-
-    </div>
-
-
-</div>
-<div class="row">
-    <div class="col-md-2">
-        <label>
-            <input type="checkbox" id="checkbox" value="option1">
-            Medico
-        </label>
-        <label>
-            <input type="checkbox" id="checkbox1" value="option1">
-            Paciente
-        </label>
-        <label>
-            <input type="checkbox" id="checkbox3" value="option1">
-            empleado
-        </label>
     </div>
 </div>
-<button id="checkbox2">Llenar informnacion</button>
-<script>
-    $(document).ready(function(){
-
-        $("#box1").hide();
-        $("#box2").hide();
-        $("#box3").hide();
-        $("#checkbox2").click(function(){
-            if($('#checkbox').is(":checked")){
-                $('#box1').show();
-            }
-            if($("#checkbox1").is(":checked")){
-                $("#box2").show();
-            }
-            if($("#checkbox3").is(":checked")){
-                $("#box3").show();
-            }
-        });
-        $("#123").click(function(e)
-        {
-            $('#formempleado').submit();
-        })
-    });
-</script>

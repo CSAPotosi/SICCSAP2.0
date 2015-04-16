@@ -6,14 +6,18 @@
 
 
 $this->breadcrumbs=array(
-	'Personas'=>array('index'),
-	$model->id,
+    'Personas'=>array('index'),
+    $model->id,
 );
 
-
+$this->menu=array(
+    array('label'=>'List Persona', 'url'=>array('index')),
+    array('label'=>'Create Persona', 'url'=>array('create')),
+    array('label'=>'Update Persona', 'url'=>array('update', 'id'=>$model->id)),
+    array('label'=>'Delete Persona', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id),'confirm'=>'Are you sure you want to delete this item?')),
+    array('label'=>'Manage Persona', 'url'=>array('admin')),
+);
 ?>
-
-
 <div class="row">
     <div class="col-md-12">
         <ul id="tabsPersona" class="nav nav-tabs" role="tab-panel">
@@ -23,35 +27,38 @@ $this->breadcrumbs=array(
                 </div>
             </li>
             <li role="presentation" class="active"><a href="#persona" id="persona-tab" role="tab" data-toggle="tab" aria-controls="persona" aria-expanded="false">Datos Personales</a></li>
-            <li role="presentation"><a href="#medico" id="medico-tab" role="tab" data-toggle="tab" aria-controls="medico" aria-expanded="false">Datos de Medico</a></li>
+            <li role="presentation"><a href="#paciente" id="paciente-tab" role="tab" data-toggle="tab" aria-controls="paciente" aria-expanded="false">Datos de historial Meidico</a></li>
         </ul>
         <div id="tabcontent" class="tab-content">
             <div role="tabpanel" class="tab-pane fade active in" id="persona" aria-labelledby="persona-tab">
                 <?php $this->widget('zii.widgets.CDetailView', array(
                     'data'=>$model,
                     'attributes'=>array(
-                        'fotografia',
                         'id',
+                        'codigo',
                         'dni',
-                        'nit',
                         'nombres',
                         'primer_apellido',
                         'segundo_apellido',
                         'sexo',
                         'fecha_nacimiento',
                         'estado_civil',
-                        'pais',
+                        'pais_nacimiento',
                         'provincia',
                         'localidad',
+                        'nivel_estudio',
+                        'pais_vive',
+                        'direccion',
                         'telefono',
                         'celular',
                         'email',
+                        'fotografia',
                     ),
                     'htmlOptions'=>array('class'=>'table table-striped'),
                 )); ?>
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="medico" aria-labelledby="medico-tab">
-                  hola mundo
+            <div role="tabpanel" class="tab-pane fade" id="paciente" aria-labelledby="paciente-tab">
+                hola mundo
             </div>
         </div>
     </div>

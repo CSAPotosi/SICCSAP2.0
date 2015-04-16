@@ -17,13 +17,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'dni'); ?>
-		<?php echo $form->textField($model,'dni',array('size'=>32,'maxlength'=>32)); ?>
+		<?php echo $form->label($model,'codigo'); ?>
+		<?php echo $form->textField($model,'codigo',array('size'=>16,'maxlength'=>16)); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'nit'); ?>
-		<?php echo $form->textField($model,'nit',array('size'=>32,'maxlength'=>32)); ?>
+		<?php echo $form->label($model,'dni'); ?>
+		<?php echo $form->textField($model,'dni',array('size'=>32,'maxlength'=>32)); ?>
 	</div>
 
 	<div class="row">
@@ -43,7 +43,7 @@
 
 	<div class="row">
 		<?php echo $form->label($model,'sexo'); ?>
-		<?php echo $form->textField($model,'sexo',array('size'=>16,'maxlength'=>16)); ?>
+		<?php echo $form->textField($model,'sexo',array('size'=>32,'maxlength'=>32)); ?>
 	</div>
 
 	<div class="row">
@@ -57,8 +57,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'pais'); ?>
-		<?php echo $form->textField($model,'pais',array('size'=>60,'maxlength'=>64)); ?>
+		<?php echo $form->label($model,'pais_nacimiento'); ?>
+		<?php echo $form->textField($model,'pais_nacimiento'); ?>
 	</div>
 
 	<div class="row">
@@ -69,6 +69,21 @@
 	<div class="row">
 		<?php echo $form->label($model,'localidad'); ?>
 		<?php echo $form->textField($model,'localidad',array('size'=>60,'maxlength'=>64)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'nivel_estudio'); ?>
+		<?php echo $form->textField($model,'nivel_estudio',array('size'=>32,'maxlength'=>32)); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'pais_vive'); ?>
+		<?php echo $form->textField($model,'pais_vive'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->label($model,'direccion'); ?>
+		<?php echo $form->textField($model,'direccion',array('size'=>60,'maxlength'=>64)); ?>
 	</div>
 
 	<div class="row">

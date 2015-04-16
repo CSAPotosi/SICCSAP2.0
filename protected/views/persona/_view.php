@@ -14,12 +14,13 @@
         </div>
     </div>
 	<div class="box-body">
-	<b><?php echo CHtml::encode($data->getAttributeLabel('dni')); ?>:</b>
-	<?php echo CHtml::encode($data->dni); ?>
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('codigo')); ?>:</b>
+	<?php echo CHtml::encode($data->codigo); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('nit')); ?>:</b>
-	<?php echo CHtml::encode($data->nit); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('dni')); ?>:</b>
+	<?php echo CHtml::encode($data->dni); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('nombres')); ?>:</b>
@@ -34,9 +35,13 @@
 	<?php echo CHtml::encode($data->segundo_apellido); ?>
 	<br />
 
+
 	<b><?php echo CHtml::encode($data->getAttributeLabel('sexo')); ?>:</b>
 	<?php echo CHtml::encode($data->sexo); ?>
-	<br />
+	<br /><?php $paciente=Paciente::model()->findByPk($data->id)?>
+        <div id="botondetallepaciente">
+            <?php echo (!empty($paciente->id_paciente))?CHtml::link("Ver Detalle de Paciente",Yii::app()->createUrl('Persona/view',array('id'=>$data->id)),array('class'=>'btn btn-success')):CHtml::link("Registrar Paciente",Yii::app()->createUrl('Persona/update',array('id'=>$data->id)),array('class'=>'btn btn-danger')); ?>
+        </div>
 
 	<?php /*
 	<b><?php echo CHtml::encode($data->getAttributeLabel('fecha_nacimiento')); ?>:</b>
@@ -47,8 +52,8 @@
 	<?php echo CHtml::encode($data->estado_civil); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('pais')); ?>:</b>
-	<?php echo CHtml::encode($data->pais); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('pais_nacimiento')); ?>:</b>
+	<?php echo CHtml::encode($data->pais_nacimiento); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('provincia')); ?>:</b>
@@ -57,6 +62,18 @@
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('localidad')); ?>:</b>
 	<?php echo CHtml::encode($data->localidad); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('nivel_estudio')); ?>:</b>
+	<?php echo CHtml::encode($data->nivel_estudio); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('pais_vive')); ?>:</b>
+	<?php echo CHtml::encode($data->pais_vive); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('direccion')); ?>:</b>
+	<?php echo CHtml::encode($data->direccion); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('telefono')); ?>:</b>
