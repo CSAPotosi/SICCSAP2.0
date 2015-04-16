@@ -32,10 +32,9 @@ class ConsultaSignosVitales extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_consulta, id_sv, fecha', 'required'),
+			array('id_sv, fecha', 'required'),
 			array('id_consulta, id_sv', 'numerical', 'integerOnly'=>true),
-			array('valor', 'numerical'),
-			array('observacion', 'safe'),
+			array('valor', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_consulta, id_sv, fecha, valor, observacion', 'safe', 'on'=>'search'),
@@ -51,7 +50,7 @@ class ConsultaSignosVitales extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'idConsulta' => array(self::BELONGS_TO, 'Consulta', 'id_consulta'),
-			'idSv' => array(self::BELONGS_TO, 'SignosVitales', 'id_sv'),
+			'SignosVitales' => array(self::BELONGS_TO, 'SignosVitales', 'id_sv'),
 		);
 	}
 
@@ -108,4 +107,9 @@ class ConsultaSignosVitales extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    protected function beforeValidate(){
+        $this->fecha=new CDbExpression('NOW()');
+        return parent::beforeValidate();
+    }
 }

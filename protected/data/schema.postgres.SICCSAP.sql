@@ -4,10 +4,10 @@
 /*tabla persona*/
 create table if not exists persona(
   id serial not null primary key ,
-  dni varchar(32),
+  dni varchar(32) not null default '0',
   nit varchar(32),
-  nombres varchar(128),
-  primer_apellido varchar(64),
+  nombres varchar(128) not null ,
+  primer_apellido varchar(64) not null,
   segundo_apellido varchar(64),
   sexo varchar (16),
   fecha_nacimiento timestamp ,
@@ -112,6 +112,14 @@ create table if not exists medico_especialidad(
   foreign key (id_medico)references medico(id),
   foreign key(id_especialidad) references especialidad(id_especialidad)
 );
+create table if not exists empresa(
+  id_empresa serial not null primary key ,
+  nit varchar(16),
+  nombre varchar(128) not null,
+  direccion varchar(128),
+  telefono varchar (32),
+);
+
 create table if not exists historial_paciente(
   id int primary key,
   ocupacion_paciente varchar(50),
@@ -120,16 +128,13 @@ create table if not exists historial_paciente(
   fecha_muerte timestamp,
   fecha_creacion timestamp not null,
   fecha_actualizacion timestamp not null,
-  foreign key (id) references persona(id)
-);
-
-
-create table if not exists contactos(
-  id_persona int,
-  id_historial int,
-  relacion varchar(64),
-  foreign key (id_persona) references persona(id),
-  foreign key (id_historial) references historial_paciente(id)
+  id_contacto int,
+  id_titular int,
+  id_empresa int ,
+  foreign key (id) references persona(id),
+  foreign key (id_contacto) references persona(id),
+  foreign key (id_titular) references historial_paciente(id),
+  foreign key (id_empresa) references empresa(id_empresa)
 );
 
 create table if not exists consulta(
@@ -241,6 +246,13 @@ create table if not exists item_cie10(
   foreign key (id_cat_cie10) references categoria_cie10(id_cat_cie10)
 );
 
+create table if not exists consulta_cie10(
+  id_consulta int not null ,
+  codigo_cie10 varchar(8) not null ,
+  foreign key (id_consulta) references consulta(id_consulta),
+  foreign key (codigo_cie10) references item_cie10(codigo),
+  primary key (id_consulta,codigo_cie10)
+);
 
 create table if not exists servicio(
   id_servicio serial not null primary key,

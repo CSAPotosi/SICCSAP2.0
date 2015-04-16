@@ -11,33 +11,54 @@ class Cie10Controller extends Controller
 
     public function actionCargaCategoria(){
 
-        $categorias=CategoriaCie10::model()->findAll(array(
-            'condition'=>'num_capitulo=:numero',
-            'params'=>array(':numero'=>$_POST['capitulo'])
-        ));
-
-        header("Content-type: application/json");
-        echo CJSON::encode($categorias);
+        if(isset($_POST['capitulo'])&&$_POST['capitulo']!=''){
+            echo CHtml::tag('option',array('value'=>''),CHtml::encode('SELECCIONE UNA CATEGORIA'),true);
+            $categorias=CategoriaCie10::model()->findAll("num_capitulo='{$_POST['capitulo']}'");
+            $data=CHtml::listData($categorias,'id_cat_cie10','titulo_cat_cie10');
+            foreach($data as $id=>$nombre)
+                echo CHtml::tag('option',array('value'=>$id),CHtml::encode($nombre),true);
+        }
+        else
+            echo CHtml::tag('option',array('value'=>''),CHtml::encode('ANTES SELECCIONE UN CAPITULO'),true);
+        //header("Content-type: application/json");
+        //echo CJSON::encode($categorias);
     }
 
     public function actionCargaGrupo(){
-        $grupo=ItemCie10::model()->findAll(array(
-            'condition'=>'id_cat_cie10=:id_cat and codigo_item_padre is null',
-            'params'=>array(':id_cat'=>$_POST['categoria'])
-        ));
-
-        header('Content-type: application/json');
-        echo CJSON::encode($grupo);
+        if(isset($_POST['categoria'])&&$_POST['categoria']!=''){
+            echo CHtml::tag('option',array('value'=>''),CHtml::encode('SELECCIONE UN GRUPO'),true);
+            $grupo=ItemCie10::model()->findAll("id_cat_cie10='{$_POST['categoria']}' and codigo_item_padre is null");
+            $data=CHtml::listData($grupo,'codigo','titulo');
+            foreach($data as $id=>$nombre)
+                echo CHtml::tag('option',array('value'=>$id),CHtml::encode($nombre),true);
+        }
+        else
+            echo CHtml::tag('option',array('value'=>''),CHtml::encode('ANTES SELECCIONE UNA CATEGORIA'),true);
     }
 
     public function actionCargaItem(){
-        $item=ItemCie10::model()->findAll(array(
-            'condition'=>' codigo_item_padre =:padre or codigo=:padre',
-            'params'=>array(':padre'=>$_POST['grupo'])
-        ));
+        if(isset($_POST['grupo'])&&$_POST['grupo']!=''){
+            $items=ItemCie10::model()->findAll("codigo_item_padre ='{$_POST['grupo']}' or codigo='{$_POST['grupo']}'");
+            $data=CHtml::listData($items,'codigo','titulo');
+            foreach($data as $id=>$nombre){
+                echo "<tr value='{$id}'><td>{$id}</td><td>{$nombre}</td></tr>";
+            }
+        }
+        else
+            echo "<tr value=''><td>No se encontraron resultados</td></tr>";
 
-        header('Content-type: application/json');
-        echo CJSON::encode($item);
+    }
+
+    public function actionBuscaItem(){
+        if(isset($_POST['buscador'])&&$_POST['buscador']!=''){
+            $items=ItemCie10::model()->findAll("codigo like '%{$_POST['buscador']}%' or titulo like '%{$_POST['buscador']}%' or descripcion like '%{$_POST['buscador']}%'");
+            $data=CHtml::listData($items,'codigo','titulo');
+            foreach($data as $id=>$nombre){
+                echo "<tr  value='{$id}'><td>".str_replace($_POST['buscador'],"<b>".$_POST['buscador']."</b>",$id)."</td><td>".str_replace($_POST['buscador'],"<b>".$_POST['buscador']."</b>",$nombre)."</td></tr>";
+            }
+        }
+        else
+            echo "<tr value=''><td>No se encontraron resultados</td></tr>";
     }
 	// Uncomment the following methods and override them if needed
 	/*

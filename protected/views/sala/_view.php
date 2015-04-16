@@ -1,27 +1,23 @@
 <?php
 /* @var $this SalaController */
 /* @var $data TipoSala */
+    $color=array('aqua','green','yellow','red','blue','purple','teal','maroon');
+    $index_color=rand(0,7);
+
 ?>
-
-<div class="box box-solid box-primary">
-	<div class="box-header">
-        <h3 class="box-title">	<?php echo CHtml::link(CHtml::encode($data->id_tipo_sala), array('view', 'id'=>$data->id_tipo_sala)); ?>
-	<br />
-
-</h3>
-        <div class="box-tools pull-right">
-            <button class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+<div class="col-md-3">
+    <div class="small-box bg-<?php echo $color[$index_color]?>">
+        <div class="inner">
+            <h3><?php echo CHtml::encode($data->nombre_tipo_sala); ?></h3>
+            <p>
+                <?php echo CHtml::encode($data->descripcion_tipo_sala); ?>
+                Nro de salas: <b>2</b>
+            </p>
         </div>
+
+
+        <?php echo CHtml::link('Ver detalle <i class="fa fa-arrow-circle-right"></i>',array('sala/view','id'=>$data->id_tipo_sala),array('class'=>'small-box-footer')) ?>
     </div>
-	<div class="box-body">
-	<b><?php echo CHtml::encode($data->getAttributeLabel('nombre_tipo_sala')); ?>:</b>
-	<?php echo CHtml::encode($data->nombre_tipo_sala); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('descripcion_tipo_sala')); ?>:</b>
-	<?php echo CHtml::encode($data->descripcion_tipo_sala); ?>
-	<br />
-
-	</div>
 </div>
+
 

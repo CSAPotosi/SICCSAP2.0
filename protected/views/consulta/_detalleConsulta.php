@@ -9,7 +9,7 @@
         </div>
     </div>
 </div>
-
+<?php echo CHtml::activeHiddenField($detalleConsulta,'id_consulta');?>
 <div class="row">
     <div class="col-md-6">
         <p>

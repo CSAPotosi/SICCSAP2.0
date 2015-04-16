@@ -74,7 +74,7 @@ $this->breadcrumbs=array(
 
             </div>
             <div class="box-footer">
-                <?php echo CHtml::link('Ver todo','#',array('class'=>'btn btn-primary'));?>
+                <?php echo CHtml::link('Ver todo',array('consulta/listConsulta','hid'=>$model->id),array('class'=>'btn btn-primary'));?>
                 <?php echo CHtml::link('Nueva Consulta',array('consulta/','hid'=>$model->id),array('class'=>'btn btn-primary pull-right'));?>
             </div>
         </div>

@@ -6,23 +6,56 @@ $this->breadcrumbs=array(
 );
 ?>
 
+<style>
+    select,tr>td{
+        font-family: 'Courier New', Courier, monospace;
+    }
+</style>
 <div class="row">
+    <form>
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-body">
                 <div class="form-group">
+                    <div class="input-group">
+                        <?php echo CHtml::textField('Buscador',null,array('id'=>'buscador','class'=>'form-control','placeholder'=>'ESCRIBE EL CODIGO, TITULO O DESCRIPCION DEL ITEM'))?>
+                        <span class="input-group-addon">
+                            <i class="fa fa-search"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <?php echo CHtml::label('Capitulo','capitulo'); ?>
-                    <?php echo CHtml::dropDownList('capitulo',null,CHtml::listData(CapituloCie10::model()->findAll(),'num_capitulo','customTitle'),array('class'=>'form-control')); ?>
+                    <?php echo CHtml::dropDownList('capitulo',null,CHtml::listData(CapituloCie10::model()->findAll(),'num_capitulo','customTitle'),array('id'=>'capitulo','class'=>'form-control','empty'=>'SELECCIONE UN CAPITULO','ajax'=>array(
+                        'type'=>'POST',
+                        'url'=>CHtml::normalizeUrl(array('/cie10/cargaCategoria')),
+                        'update'=>'#categoria',
+                    ))); ?>
                 </div>
 
                 <div class="form-group">
                     <?php echo CHtml::label('Categoria','categoria'); ?>
-                    <?php echo CHtml::dropDownList('categoria',null,array('Nada'=>'nada'),array('class'=>'form-control')); ?>
+                    <?php echo CHtml::dropDownList('categoria',null,array(''=>'ANTES SELECCIONE UN CAPITULO'),array('id'=>'categoria','class'=>'form-control','ajax'=>array(
+                        'type'=>'POST',
+                        'url'=>CHtml::normalizeUrl(array('/cie10/cargaGrupo')),
+                        'update'=>'#grupo',
+                    ))); ?>
                 </div>
 
                 <div class="form-group">
                     <?php echo CHtml::label('Grupo','grupo'); ?>
-                    <?php echo CHtml::dropDownList('grupo',null,array('Nada'=>'nada'),array('class'=>'form-control')); ?>
+                    <?php echo CHtml::dropDownList('grupo',null,array(''=>'ANTES SELECCIONE UNA CATEGORIA'),array('id'=>'grupo','class'=>'form-control','ajax'=>array(
+                        'type'=>'POST',
+                        'url'=>CHtml::normalizeUrl(array('/cie10/cargaItem')),
+                        'update'=>'#Items',
+                        'complete'=>'js:function(){
+                            $("#Items>tr").on("click",function(){
+                                $("#Items>tr").removeClass("bg-blue");
+                                $(this).toggleClass("bg-blue");
+                            });
+                        }',
+                    ))); ?>
                 </div>
 
                 <div class="form-group">
@@ -35,14 +68,9 @@ $this->breadcrumbs=array(
                                 <th>TITULO</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="Items">
                             <tr>
-                                <td>asds1</td>
-                                <td>asds2</td>
-                            </tr>
-                            <tr>
-                                <td>asds3</td>
-                                <td>asds4</td>
+                                <td colspan="2">Ningun Elemento Encontrado</td>
                             </tr>
                             </tbody>
                         </table>
@@ -53,59 +81,27 @@ $this->breadcrumbs=array(
             </div>
         </div>
     </div>
+    </form>
 </div>
 
-
-<script src="<?php echo Yii::app()->baseUrl; ?>/js/jquery-1.11.1.min.js"></script>
-<script>
-    $(document).ready(function(){
-        $('#capitulo').change(function(){
+<?php
+    Yii::app()->clientScript->registerScript('buscarAjax','$("#buscador").keyup(function(){
+        if($(this).val().length>3)
             $.ajax({
-                url: '<?php echo CHtml::normalizeUrl(array('/cie10/cargaCategoria')); ?>',
-                type: 'post',
-                data: { capitulo:$(this).val() },
-                success: cargar_categoria,
-                dataType:'json'
+                type:"post",
+                data:{buscador:$(this).val()},
+                url:"'.CHtml::normalizeUrl(array('/cie10/buscaItem')).'",
+                success:function(datos){
+                    $("#Items").html(datos);
+                    $("#Items>tr").on("click",clickRow);
+                }
             });
         });
-        $('#categoria').change(function(){
-            $.ajax({
-                url: '<?php echo CHtml::normalizeUrl(array('/cie10/cargaGrupo')); ?>',
-                type: 'post',
-                data: { categoria:$(this).val() },
-                success: cargar_grupo,
-                dataType:'json'
-            });
-        });
-        $('#grupo').change(function(){
-            $.ajax({
-                url: '<?php echo CHtml::normalizeUrl(array('/cie10/cargaItem')); ?>',
-                type: 'post',
-                data: { grupo:$(this).val() },
-                success: cargar_item,
-                dataType:'json'
-            });
-        });
-        function cargar_categoria(retorno){
-            retorno.forEach(function(data){
-                $('<option>').val(data.id_cat_cie10).text('['+data.codigo_inicial+'-'+data.codigo_final+'] '+data.titulo_cat_cie10).appendTo('#categoria');
-            });
-        }
-        function cargar_grupo(retorno){
-            retorno.forEach(function(data){
-                $('<option>').val(data.codigo).text('['+data.codigo+'] '+data.titulo).appendTo('#grupo');
-            });
-        }
-        function cargar_item(retorno){
-            $('#item>tbody').children().remove();
-            retorno.forEach(function(data){
-                $('<tr><td>'+data.codigo+'</td><td>'+data.titulo+'</td></tr>').appendTo('#item>tbody');
-            });
-        }
 
-        $('#item tbody tr').click(function(){
-            alert($(this).children().eq(0).text());
-        });
-    });
-</script>
+        function clickRow(){
+            $("#Items>tr").removeClass("bg-blue");
+            $(this).toggleClass("bg-blue");
+        }
+    ');
 
+?>

@@ -22,7 +22,7 @@
                     <div class="box-body" id="contenedor-consulta">
                         <?php
                             if($consulta_id==0)
-                                $this->renderPartial('_formConsulta',array('consultaModel'=>$consultaModel));
+                                $this->renderPartial('_formConsulta',array('consultaModel'=>$consultaModel,'listaSV'=>$listaSV));
                             else
                                 $this->renderPartial('_detalleConsulta',array('detalleConsulta'=>$consultaModel));
                         ?>
@@ -32,7 +32,7 @@
             <div role="tabpanel" class="tab-pane fade especial <?php echo ($consulta_id==0)?'hide':''; ?>" id="reconsulta" aria-labelledby="reconsulta-tab">
                 <div class="box box-solid">
                     <div class="box-body">
-                        hola mundo 3x
+                        <?php $this->renderPartial('_reconsulta');?>
                     </div>
                 </div>
             </div>
@@ -46,6 +46,3 @@
         </div>
     </div>
 </div>
-
-
-
