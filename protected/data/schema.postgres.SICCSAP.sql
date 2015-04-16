@@ -4,24 +4,43 @@
 /*tabla persona*/
 create table if not exists persona(
   id serial not null primary key ,
-  dni varchar(32) not null default '0',
-  nit varchar(32),
-  nombres varchar(128) not null ,
-  primer_apellido varchar(64) not null,
+  codigo varchar(16) not null,
+  dni varchar(32) not null ,
+  nombres varchar(128) not null,
+  primer_apellido varchar(64) not null ,
   segundo_apellido varchar(64),
-  sexo varchar (16),
+  sexo varchar (32),
   fecha_nacimiento timestamp ,
   estado_civil varchar(32),
-  pais varchar(64),
+  pais_nacimiento int,
   provincia varchar(64),
   localidad varchar(64),
+  nivel_estudio varchar(32),
+  pais_vive int,
   direccion varchar (64),
   telefono varchar(32),
   celular varchar(32),
   email varchar(128),
-  fotografia varchar(128) default 'default.gif'
+  fotografia varchar(128),
+  foreign key (pais_nacimiento) references pais(id_pais),
+  foreign key (pais_vive) references pais(id_pais)
 );
-
+create table paciente(
+  id_paciente int primary key not null,
+  ocupacion_paciente varchar(32),
+  grupo_sanguineo_paciente varchar(16),
+  estado_paciente varchar(32),
+  id_contacto_paciente int,
+  foreign key (id_paciente) references persona(id),
+  foreign key (id_contacto_paciente) references persona(id)
+);
+create table if not exists historial_paciente(
+  id_historial serial primary key not null,
+  fecha_muerte timestamp,
+  fecha_creacion timestamp not null,
+  fecha_actualizacion timestamp not null,
+  foreign key (id_historial) references paciente(id_paciente)
+);
 create table if not exists usuario(
   id_usuario serial primary key not null ,
   nombre varchar (64) unique not null ,
@@ -29,7 +48,6 @@ create table if not exists usuario(
   id_persona int,
   foreign key (id_persona) references persona(id)
 );
-
 create table if not exists empleado(
   id int primary key ,
   fecha_contratacion date ,
@@ -112,31 +130,29 @@ create table if not exists medico_especialidad(
   foreign key (id_medico)references medico(id),
   foreign key(id_especialidad) references especialidad(id_especialidad)
 );
-create table if not exists empresa(
-  id_empresa serial not null primary key ,
-  nit varchar(16),
-  nombre varchar(128) not null,
+create table empresa(
+  id_empresa serial primary key not null,
+  nombre varchar(128)not null,
   direccion varchar(128),
-  telefono varchar (32),
+  telefono int
 );
-
-create table if not exists historial_paciente(
-  id int primary key,
-  ocupacion_paciente varchar(50),
-  grupo_sanguineo_paciente varchar(5),
-  tipo_paciente varchar(20),
-  fecha_muerte timestamp,
-  fecha_creacion timestamp not null,
-  fecha_actualizacion timestamp not null,
-  id_contacto int,
-  id_titular int,
-  id_empresa int ,
-  foreign key (id) references persona(id),
-  foreign key (id_contacto) references persona(id),
-  foreign key (id_titular) references historial_paciente(id),
-  foreign key (id_empresa) references empresa(id_empresa)
+create table convenio(
+  id_convenio serial primary key not null,
+  nombre varchar(128)
 );
-
+create table asegurado(
+  id_asegurado varchar(16) primary key not null,
+  id_convenio int,
+  foreign key (id_convenio) references convenio(id_convenio)
+);
+create table convenio_empresa(
+  fecha_inicio date not null,
+  fecha_fin date,
+  id_empresa int not null,
+  id_convenio int not null,
+  foreign key (id_empresa) references empresa(id_empresa),
+  foreign key (id_convenio) references convenio(id_convenio)
+);
 create table if not exists consulta(
   id_consulta serial primary key not null ,
   fecha_diagnostico timestamp not null ,
