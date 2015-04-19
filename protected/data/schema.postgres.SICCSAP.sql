@@ -2,6 +2,12 @@
 
 /* Oso */
 /*tabla persona*/
+create table if not exists pais(
+  id_pais serial not null primary key ,
+  nombre varchar (32),
+  codigo_pais varchar (8)
+);
+
 create table if not exists persona(
   id serial not null primary key ,
   codigo varchar(16) not null,
@@ -25,7 +31,7 @@ create table if not exists persona(
   foreign key (pais_nacimiento) references pais(id_pais),
   foreign key (pais_vive) references pais(id_pais)
 );
-create table paciente(
+create table if not exists paciente(
   id_paciente int primary key not null,
   ocupacion_paciente varchar(32),
   grupo_sanguineo_paciente varchar(16),
@@ -130,22 +136,22 @@ create table if not exists medico_especialidad(
   foreign key (id_medico)references medico(id),
   foreign key(id_especialidad) references especialidad(id_especialidad)
 );
-create table empresa(
+create table if not exists empresa(
   id_empresa serial primary key not null,
   nombre varchar(128)not null,
   direccion varchar(128),
   telefono int
 );
-create table convenio(
+create table if not exists convenio(
   id_convenio serial primary key not null,
   nombre varchar(128)
 );
-create table asegurado(
+create table if not exists asegurado(
   id_asegurado varchar(16) primary key not null,
   id_convenio int,
   foreign key (id_convenio) references convenio(id_convenio)
 );
-create table convenio_empresa(
+create table if not exists convenio_empresa(
   fecha_inicio date not null,
   fecha_fin date,
   id_empresa int not null,
@@ -162,7 +168,7 @@ create table if not exists consulta(
   observaciones text ,
   id_historia int not null ,
   id_consulta_padre int,
-  foreign key (id_historia) references historial_paciente(id),
+  foreign key (id_historia) references historial_paciente(id_historial),
   foreign key (id_consulta_padre) references consulta(id_consulta)
 );
 
@@ -226,7 +232,7 @@ create table if not exists antecedente_medico(
   descripcion_ant text,
   id_historia int,
   id_tipo int,
-  foreign key (id_historia) references historial_paciente(id),
+  foreign key (id_historia) references historial_paciente(id_historial),
   foreign key (id_tipo) references tipo_antecedente(id_tipo_ant),
   primary key(fecha_creacion,id_historia,id_tipo)
 );
