@@ -82,7 +82,7 @@ class HistorialPacienteController extends Controller
 		{
 			$model->attributes=$_POST['HistorialPaciente'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->id_historial));
 		}
 
 		$this->render('create',array(
@@ -106,7 +106,7 @@ class HistorialPacienteController extends Controller
 		{
 			$model->attributes=$_POST['HistorialPaciente'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('view','id'=>$model->id_historial));
 		}
 
 		$this->render('update',array(

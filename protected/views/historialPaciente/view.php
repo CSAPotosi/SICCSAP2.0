@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Historial Pacientes'=>array('index'),
-	$model->id,
+	$model->id_historial,
 );
 ?>
 
@@ -64,7 +64,7 @@ $this->breadcrumbs=array(
                             'buttons'=>array(
                                 'ver'=>array(
                                     'label'=>'<i class="fa fa-eye"></i>',
-                                    'url'=>'Yii::app()->createUrl("/consulta",array("hid"=>'.$model->id.',"cid"=>$data->id_consulta))',
+                                    'url'=>'Yii::app()->createUrl("/consulta",array("hid"=>'.$model->id_historial.',"cid"=>$data->id_consulta))',
                                     'options'=>array('title'=>'Ver Detalles'),
                                 ),
                             ),
@@ -74,8 +74,8 @@ $this->breadcrumbs=array(
 
             </div>
             <div class="box-footer">
-                <?php echo CHtml::link('Ver todo',array('consulta/listConsulta','hid'=>$model->id),array('class'=>'btn btn-primary'));?>
-                <?php echo CHtml::link('Nueva Consulta',array('consulta/','hid'=>$model->id),array('class'=>'btn btn-primary pull-right'));?>
+                <?php echo CHtml::link('Ver todo',array('consulta/listConsulta','hid'=>$model->id_historial),array('class'=>'btn btn-primary'));?>
+                <?php echo CHtml::link('Nueva Consulta',array('consulta/','hid'=>$model->id_historial),array('class'=>'btn btn-primary pull-right'));?>
             </div>
         </div>
 
@@ -144,17 +144,14 @@ $this->breadcrumbs=array(
         <div class="box box-primary">
             <div class="box-header">
                 <h3 class="box-title">
-                    View HistorialPaciente #<?php echo $model->id; ?>
+                    View HistorialPaciente #<?php echo $model->id_historial; ?>
                 </h3>
             </div>
             <div class="box-body">
                 <?php $this->widget('zii.widgets.CDetailView', array(
                     'data'=>$model,
                     'attributes'=>array(
-                        'id',
-                        'ocupacion_paciente',
-                        'grupo_sanguineo_paciente',
-                        'tipo_paciente',
+                        'id_historial',
                         'fecha_muerte',
                         'fecha_creacion',
                         'fecha_actualizacion',

@@ -28,7 +28,7 @@ class ConsultaController extends Controller{
     }
 
     public function actionListConsulta(){
-        $id_historia=$this->_historia->id;
+        $id_historia=$this->_historia->id_historial;
         $listaConsulta=new CActiveDataProvider('Consulta',array(
             'criteria'=>array(
                 'condition'=>"id_historia={$id_historia} and id_consulta_padre is null",
@@ -57,7 +57,7 @@ class ConsultaController extends Controller{
 
         if($cid==0){
             $consultaModel = new Consulta;
-            $consultaModel->id_historia = $this->_historia->id;
+            $consultaModel->id_historia = $this->_historia->id_historial;
         }
         else{
             $consultaModel=Consulta::model()->findByPk($cid);
@@ -119,9 +119,9 @@ class ConsultaController extends Controller{
         $consultaModel = new Consulta;
         if(isset($_POST['Consulta'])){
             $consultaModel->attributes=array_map('strtoupper',$_POST['Consulta']);
-            $consultaModel->id_historia=$this->_historia->id;
+            $consultaModel->id_historia=$this->_historia->id_historial;
             if($consultaModel->save())
-                $this->redirect(array('index','hid'=>$this->_historia->id));
+                $this->redirect(array('index','hid'=>$this->_historia->id_historial));
         }
 
     }

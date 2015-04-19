@@ -47,19 +47,21 @@ create table if not exists historial_paciente(
   fecha_actualizacion timestamp not null,
   foreign key (id_historial) references paciente(id_paciente)
 );
-create table if not exists usuario(
-  id_usuario serial primary key not null ,
-  nombre varchar (64) unique not null ,
-  clave varchar (128) not null,
-  id_persona int,
-  foreign key (id_persona) references persona(id)
-);
+
 create table if not exists empleado(
   id int primary key ,
   fecha_contratacion date ,
   profesion varchar(32),
   estado varchar (16),
   foreign key (id) references persona(id)
+);
+
+create table if not exists usuario(
+  id_usuario serial primary key not null ,
+  nombre varchar (64) unique not null ,
+  clave varchar (128) not null,
+  id_empleado int,
+  foreign key (id_empleado) references empleado(id)
 );
 create table if not exists unidad(
   id_unidad serial primary key ,
@@ -131,6 +133,7 @@ CREATE TABLE if not exists especialidad(
   descripcion varchar(128)
 );
 create table if not exists medico_especialidad(
+  id_M_E serial not null primary key,
   id_medico int ,
   id_especialidad int,
   foreign key (id_medico)references medico(id),
@@ -276,18 +279,18 @@ create table if not exists consulta_cie10(
   primary key (id_consulta,codigo_cie10)
 );
 
-create table if not exists servicio(
-  id_servicio serial not null primary key,
-  fecha_creacion_servicio timestamp,
-  fecha_modificacion_servicio timestamp
-);
 
-create table if not EXISTS costos(
-  id_costo serial not null primary key,
-  fecha_inicio timestamp not null,
-  fecha_fin timestamp,
-  monto float not null,
-  id_servicio int not null
+
+
+create table if not exists servicio(
+  id_servicio serial not null primary key.
+  codigo_serv varchar(16) ,
+  nombre_serv varchar(128),
+  unidad_serv varchar(64),
+  fecha_creacion timestamp not null,
+  fecha_actualizacion timestamp not null,
+  id_empresa int not null,
+  foreign key(id_empresa) references empresa(id_empresa)
 );
 
 create table if not EXISTS tipo_sala(
@@ -305,22 +308,106 @@ create table if not exists sala(
   id_tipo_sala int not null,
   foreign key (id_tipo_sala) references tipo_sala(id_tipo_sala)
 );
+create table if not exists precio_servicio(
+  id_servicio int not null,
+  fecha_inicio timestamp not null,
+  fecha_fin timestamp,
+  monto float,
+  primary key(id_servicio,fecha_inicio),
+  foreign key(id_servicio) references servicio(id_servicio)
+);
+
+create table if not exists atencion_medica(
+  id_servicio int primary key,
+  tipo_atencion varchar(16) not null,
+  id_M_E int not null,
+  foreign key (id_servicio) references servicio(id_servicio),
+  foreign key (id_M_E) references medico_especialidad(id_M_E)
+);
+
+create table if not exists categoria_ex_laboratorio(
+  id_cat_lab serial not null primary key,
+  codigo_cat_lab varchar(8) unique,
+  nombre_cat_lab varchar(32) not null
+);
+
+create table if not exists examen_laboratorio(
+  id_servicio int primary key,
+  id_cat_lab int not null,
+  foreign key(id_servicio) references servicio(id_servicio),
+  foreign key(id_cat_lab) references categoria_ex_laboratorio(id_cat_lab)
+);
+
+create table if not exists categoria_ex_gabinete(
+  id_cat_gab serial not null primary key,
+  codigo_cat_gab varchar(8) unique,
+  nombre_cat_gab varchar(32) not null
+);
+
+create table if not exists examen_gabinete(
+  id_servicio int not null primary key,
+  id_cat_gab int not null,
+  foreign key(id_servicio) references servicio(id_servicio)
+    foreign key(id_cat_gab) references categoria_ex_gabinete(id_cat_gab)
+);
+
+create table if not exists categoria_servicio_clinico(
+  id_cat_cli serial not null primary key,
+  codigo_cat_cli varchar(8) unique,
+  nombre_cat_cli varchar(32) not null
+);
+
+create table if not exists servicio_clinico(
+  id_servicio int not null primary key,
+  id_cat_cli int not null,
+  foreign key (id_servicio) references servicio(id_servicio),
+  foreign key (id_cat_cli) references categorio_servicio_clinico(id_cat_cli)
+);
+
+create table if not exists orden_examen(
+  id_orden serial not null primary key,
+  id_historial int not null,
+  fecha_orden timestamp not null,
+  observacion varchar(128),
+  foreign key(id_historial) references historial_paciente(id_historial)
+);
+
+create table if not exists detalle_orden_examen(
+  id_orden int not null,
+  id_servicio int not null,
+  estado vsrchar(16),
+  primary key(id_orden,id_servicio),
+  foreign key (id_orden) references orden_examen(id_orden),
+  foreign key (id_servicio) references servicio(id_servicio)
+);
+
+create table if not exists solicitud_servicios(
+  id_solicitud serial not null primary key,
+  id_historial int not null,
+  fecha_solicitud timestamp,
+  total float,
+  foreign key(id_historial) references historial_paciente(id_historial)
+);
+
+create table if not exists detalle_solicitud_servicio(
+  id_solicitud int not null,
+  id_servicio int not null,
+  cantidad float not null,
+  total_bruto float not null,
+  total_neto float not null,
+  foreign key (id_solicitud) references solicitud_servicios(id_solicitud),
+  foreign key (id_servicio) references servicio(id_servicio)
+);
 /*
-create table if not EXISTS categoria_servicio(
-  id_categoria_serv serial not null primary key,
-  nombre_categoria varchar(128) not null unique,
-  descripcion_categoria_serv varchar(128)
+create table if not exists servicio_internacion(
+	id_internacion int not null,
+	id_servicio int not null,
+	fecha_servicio_int timestamp not null,
+	cantidad float not null,
+	total_bruto float not null,
+	total_neto float not null,
+	estado_pago varchar(8) not null,
+	foreign key (id_internacion) references internacion(id_internacion),
+	foreign key (id_servicio) references servicio(id_servicio)
 );
-
-create table if not EXISTS servicio_medico(
-  id_servicio_medico int not null primary key,
-  nombre_servicio varchar(128) not null unique,
-  descripcion_servicio varchar(128),
-  id_categoria_serv int not null,
-  foreign key (id_servicio_medico) references servicio(id_servicio),
-  foreign key (id_categoria_serv) references categoria_servicio(id_categoria_serv)
-);
-
 */
-
-

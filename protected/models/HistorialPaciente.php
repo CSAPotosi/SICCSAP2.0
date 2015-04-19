@@ -34,15 +34,12 @@ class HistorialPaciente extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, fecha_creacion, fecha_actualizacion', 'required'),
-			array('id', 'numerical', 'integerOnly'=>true),
-			array('ocupacion_paciente', 'length', 'max'=>50),
-			array('grupo_sanguineo_paciente', 'length', 'max'=>5),
-			array('tipo_paciente', 'length', 'max'=>20),
+			array('id_historial, fecha_creacion, fecha_actualizacion', 'required'),
+			array('id_historial', 'numerical', 'integerOnly'=>true),
 			array('fecha_muerte', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, ocupacion_paciente, grupo_sanguineo_paciente, tipo_paciente, fecha_muerte, fecha_creacion, fecha_actualizacion', 'safe', 'on'=>'search'),
+			array('id_historial,  fecha_muerte, fecha_creacion, fecha_actualizacion', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,9 +63,6 @@ class HistorialPaciente extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'ocupacion_paciente' => 'Ocupacion Paciente',
-			'grupo_sanguineo_paciente' => 'Grupo Sanguineo Paciente',
-			'tipo_paciente' => 'Tipo Paciente',
 			'fecha_muerte' => 'Fecha Muerte',
 			'fecha_creacion' => 'Fecha Creacion',
 			'fecha_actualizacion' => 'Fecha Actualizacion',
@@ -94,9 +88,6 @@ class HistorialPaciente extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id',$this->id);
-		$criteria->compare('ocupacion_paciente',$this->ocupacion_paciente,true);
-		$criteria->compare('grupo_sanguineo_paciente',$this->grupo_sanguineo_paciente,true);
-		$criteria->compare('tipo_paciente',$this->tipo_paciente,true);
 		$criteria->compare('fecha_muerte',$this->fecha_muerte,true);
 		$criteria->compare('fecha_creacion',$this->fecha_creacion,true);
 		$criteria->compare('fecha_actualizacion',$this->fecha_actualizacion,true);

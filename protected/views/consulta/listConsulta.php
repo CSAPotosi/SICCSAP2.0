@@ -25,7 +25,7 @@
             </div>
             <div class="box-body table-responsive">
 
-                <?php echo CHtml::link('Nueva Consulta',array('consulta/','hid'=>$historiaModel->id),array('class'=>'btn btn-primary pull-right'));?>
+                <?php echo CHtml::link('Nueva Consulta',array('consulta/','hid'=>$historiaModel->id_historial),array('class'=>'btn btn-primary pull-right'));?>
 
                 <?php $this->widget('zii.widgets.grid.CGridView',array(
                     'id'=>'tablaConsulta',
@@ -55,7 +55,7 @@
                             'buttons'=>array(
                                 'ver'=>array(
                                     'label'=>'<i class="fa fa-eye"></i>',
-                                    'url'=>'Yii::app()->createUrl("/consulta",array("hid"=>'.$historiaModel->id.',"cid"=>$data->id_consulta))',
+                                    'url'=>'Yii::app()->createUrl("/consulta",array("hid"=>'.$historiaModel->id_historial.',"cid"=>$data->id_consulta))',
                                     'options'=>array('title'=>'Ver Detalles'),
                                 ),
                             ),
