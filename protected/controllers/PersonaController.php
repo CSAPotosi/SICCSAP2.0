@@ -32,7 +32,7 @@ class PersonaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+				'actions'=>array('create','update','buscarPersonaAjax'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -164,9 +164,11 @@ class PersonaController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('Persona');
+        $listaPersonas=Persona::model()->findAll(array(
+            'order'=>'id DESC'
+        ));
 		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
+            'listaPersonas'=>$listaPersonas,
 		));
 	}
 
@@ -212,4 +214,18 @@ class PersonaController extends Controller
 			Yii::app()->end();
 		}
 	}
+
+    public function actionBuscarPersonaAjax(){
+        $codigo= $_POST['cadena'];
+        $listaPersonas=Persona::model()->findAll(array(
+            'condition'=>"codigo like '%{$codigo}%'",
+            'order'=>'id DESC'
+        ));
+        if($listaPersonas==null){
+            echo 'No se han encontrado resultados';
+        }
+        return $this->renderPartial('_listaPersonas',array(
+            'listaPersonas'=>$listaPersonas,
+        ));
+    }
 }

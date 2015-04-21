@@ -25,10 +25,9 @@ class UserIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else{
             $this->errorCode=self::ERROR_NONE;
-            $persona=Persona::model()->findByPk($usuario->id_persona);
-            $this->setState('nombre',$persona->nombres.' '.$persona->primer_apellido);
+            $this->setState('nombre',join(' ',array($usuario->empleado->persona->nombres,$usuario->empleado->persona->primer_apellido)));
+            $this->setState('foto',$usuario->empleado->persona->fotografia);
         }
-
 		return !$this->errorCode;
 	}
 }

@@ -49,7 +49,7 @@ class Paciente extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idPaciente' => array(self::BELONGS_TO, 'Persona', 'id_paciente'),
+			'persona' => array(self::BELONGS_TO, 'Persona', 'id_paciente'),
 			'idContactoPaciente' => array(self::BELONGS_TO, 'Persona', 'id_contacto_paciente'),
 		);
 	}

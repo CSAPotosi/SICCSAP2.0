@@ -35,6 +35,7 @@ create table if not exists paciente(
   id_paciente int primary key not null,
   ocupacion_paciente varchar(32),
   grupo_sanguineo_paciente varchar(16),
+  fecha_muerte timestamp,
   estado_paciente varchar(32),
   id_contacto_paciente int,
   foreign key (id_paciente) references persona(id),
@@ -42,7 +43,6 @@ create table if not exists paciente(
 );
 create table if not exists historial_paciente(
   id_historial serial primary key not null,
-  fecha_muerte timestamp,
   fecha_creacion timestamp not null,
   fecha_actualizacion timestamp not null,
   foreign key (id_historial) references paciente(id_paciente)
@@ -283,7 +283,7 @@ create table if not exists consulta_cie10(
 
 
 create table if not exists servicio(
-  id_servicio serial not null primary key.
+  id_servicio serial not null primary key,
   codigo_serv varchar(16) ,
   nombre_serv varchar(128),
   unidad_serv varchar(64),
@@ -347,8 +347,8 @@ create table if not exists categoria_ex_gabinete(
 create table if not exists examen_gabinete(
   id_servicio int not null primary key,
   id_cat_gab int not null,
-  foreign key(id_servicio) references servicio(id_servicio)
-    foreign key(id_cat_gab) references categoria_ex_gabinete(id_cat_gab)
+  foreign key(id_servicio) references servicio(id_servicio),
+  foreign key(id_cat_gab) references categoria_ex_gabinete(id_cat_gab)
 );
 
 create table if not exists categoria_servicio_clinico(
@@ -361,7 +361,7 @@ create table if not exists servicio_clinico(
   id_servicio int not null primary key,
   id_cat_cli int not null,
   foreign key (id_servicio) references servicio(id_servicio),
-  foreign key (id_cat_cli) references categorio_servicio_clinico(id_cat_cli)
+  foreign key (id_cat_cli) references categoria_servicio_clinico(id_cat_cli)
 );
 
 create table if not exists orden_examen(
@@ -375,7 +375,7 @@ create table if not exists orden_examen(
 create table if not exists detalle_orden_examen(
   id_orden int not null,
   id_servicio int not null,
-  estado vsrchar(16),
+  estado varchar(16),
   primary key(id_orden,id_servicio),
   foreign key (id_orden) references orden_examen(id_orden),
   foreign key (id_servicio) references servicio(id_servicio)

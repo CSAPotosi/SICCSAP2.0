@@ -164,7 +164,7 @@
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="<?php echo Yii::app()->theme->baseUrl;?>/elements/img/avatar3.png" class="img-circle" alt="User Image" />
+                                    <img src="<?php echo Yii::app()->baseUrl.'/fotografias/'.Yii::app()->user->getState('foto');?>" class="img-circle" alt="User Image" />
                                     <p>
                                         <?php echo 'Hola '.Yii::app()->user->getState('nombre'); ?>
                                         <small>Member since Nov. 2012</small>
@@ -194,7 +194,7 @@
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="<?php echo Yii::app()->theme->baseUrl;?>/elements/img/avatar3.png" class="img-circle" alt="User Image" />
+                            <img src="<?php echo Yii::app()->baseUrl.'/fotografias/'.Yii::app()->user->getState('foto');?>" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p>Hola <?php echo Yii::app()->user->getState('nombre'); ?></p>
@@ -205,7 +205,7 @@
                     <!-- search form -->
                     <form action="#" method="get" class="sidebar-form">
                         <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="C.I. o Nombre del Paciente" id="search"/>
+                            <input type="text" name="q" class="form-control" placeholder="Codigo Paciente" id="search"/>
                             <span class="input-group-btn">
                                 <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
                             </span>
@@ -379,10 +379,7 @@
                 $('#Persona_nit').val($(this).val())
             });
 
-            $(document).ready(function(){
 
-                });
-            });
         </script>
         <script>
             $("#search").keyup(function(){

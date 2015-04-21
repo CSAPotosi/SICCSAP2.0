@@ -46,12 +46,13 @@ class Persona extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('codigo, dni, nombres, primer_apellido', 'required'),
+			array('nombres, primer_apellido', 'required'),
 			array('pais_nacimiento, pais_vive', 'numerical', 'integerOnly'=>true),
-			array('codigo', 'length', 'max'=>16),
 			array('dni, sexo, estado_civil, nivel_estudio, telefono, celular', 'length', 'max'=>32),
 			array('nombres, email, fotografia', 'length', 'max'=>128),
 			array('primer_apellido, segundo_apellido, provincia, localidad, direccion', 'length', 'max'=>64),
+            array('dni','default','value'=>0),
+            array('fecha_nacimiento','default','value'=>'01-01-0001'),
 			array('fecha_nacimiento', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -69,6 +70,8 @@ class Persona extends CActiveRecord
 		return array(
 			'paisNacimiento' => array(self::BELONGS_TO, 'Pais', 'pais_nacimiento'),
 			'paisVive' => array(self::BELONGS_TO, 'Pais', 'pais_vive'),
+            'paciente'=>array(self::HAS_ONE,'Paciente','id_paciente'),
+            'empleado'=>array(self::HAS_ONE,'Empleado','id'),
 		);
 	}
 
@@ -170,5 +173,9 @@ class Persona extends CActiveRecord
     public function getPais()
     {
         return CHtml::listData(pais::model()->findAll(),'id_pais','nombre');
+    }
+
+    public function getNombreCompleto(){
+        return join(" ",array($this->primer_apellido,$this->segundo_apellido,$this->nombres));
     }
 }

@@ -1,4 +1,4 @@
-create or replace function funcion_filtro() returns trigger as $$
+/*create or replace function funcion_filtro() returns trigger as $$
 declare
 	id_hora int;
 	turnos int;
@@ -50,3 +50,36 @@ language 'plpgsql';
 
 create trigger filtro before insert on registro
 for each row execute procedure funcion_filtro();
+*/
+
+create or replace function toFirstChars(cadena varchar) returns varchar as $$
+declare
+	codigo varchar:='';
+	item RECORD;
+begin
+	for item in select regexp_split_to_table(cadena, E'\\s+') as palabra loop
+		codigo:=codigo||left(item.palabra,1);
+	end loop;
+	return upper(codigo);
+end;
+$$
+language 'plpgsql';
+
+create or replace function generarCodigoPersona() returns trigger as $$
+declare
+	new_codigo varchar:='';
+	item RECORD;
+	num_reg int;
+begin
+	new_codigo:=toFirstChars(concat_ws(' ',NEW.primer_apellido,NEW.segundo_apellido,NEW.nombres));
+	new_codigo:=to_char(NEW.fecha_nacimiento,'DDMMYY')||'-'||new_codigo||'-';
+	num_reg=(select count(*) from persona where codigo like new_codigo||'%')+1;
+	NEW.codigo=new_codigo||num_reg;
+	return new;
+end;
+$$
+language 'plpgsql';
+
+create trigger trigger_new_persona
+before insert or update on persona
+for each row execute procedure generarCodigoPersona();
