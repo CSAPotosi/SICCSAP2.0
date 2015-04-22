@@ -18,7 +18,7 @@ class ConsultaController extends Controller{
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('index','createConsultaAjax','listConsulta','loadConsultaAjax'),
+                'actions'=>array('index','createConsultaAjax','listConsulta','loadConsultaAjax','NuevoAntecedente','CrearAntecedente'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
@@ -44,33 +44,70 @@ class ConsultaController extends Controller{
     }
     public function actionIndex($cid=0)
     {
-
-
+        $AntecedenteMedico=new AntecedenteMedico;
+        $TipoAntecente=new TipoAntecedente;
+        $listaAntecedentesMedico=AntecedenteMedico::model()->FindAll();
         $svModel= SignosVitales::model()->findAll();
-
+        $listaante=TipoAntecedente::model()->FindAll();
         $listaSV=array();
+        $genero='';
+        $his="";
         foreach($svModel as $item){
             $model= new ConsultaSignosVitales;
             $model->id_sv=$item->id_sv;
             $listaSV[]=$model;
         }
-
         if($cid==0){
             $consultaModel = new Consulta;
             $consultaModel->id_historia = $this->_historia->id_historial;
+            $genero=Persona::model()->findByPk($consultaModel->id_historia);
         }
         else{
             $consultaModel=Consulta::model()->findByPk($cid);
+            $genero=Persona::model()->findByPk($consultaModel->id_historia);
         }
-
+        $his=$this->_historia->id_historial;
         $this->render('index',array(
+            'TipoAntecedente'=>$TipoAntecente,
+            'genero'=>$genero,
             'consulta_id'=>$cid,
             'consultaModel'=>$consultaModel,
             'listaSV'=>$listaSV,
+            'listaAntecedenteMedico'=>$listaAntecedentesMedico,
+            'AntecedenteMedico'=>$AntecedenteMedico,
+            'TipoAntecente'=>$TipoAntecente,
+            'listaante'=>$listaante,
+            'his'=>$his,
         ));
     }
+    public function actionCrearAntecedente()
+    {
+        $model=new TipoAntecedente;
+        $model->attributes=$_POST['TipoAntecedente'];
+        $model->save();
+        $contenido=TipoAntecedente::model()->FindAll();
+        $contador=0;
+        foreach($contenido as $cont){
+            $contador++;
+        }
+        header('Content-Type:application/json;');
+        echo CJSON::encode(array('success'=>true,'descripcion'=>$model->descripcion,'titulo'=>$model->titulo,'contador'=>$contador,'id'=>$model->id_tipo_ant));
+    }
+    public function actionNuevoAntecedente()
+    {
+            $antecedentes=new AntecedenteMedico;
+            $var=TipoAntecedente::model()->findByPk((int)$_POST['AntecedenteMedico']['id_tipo']);
+            $antecedentes->descripcion_ant=$_POST['AntecedenteMedico']['descripcion_ant'];
+            $antecedentes->id_historia=$_POST['AntecedenteMedico']['id_historia'];
+            $antecedentes->id_tipo=$var->id_tipo_ant;
+            $antecedentes->save();
+            $titulotabla=$var->titulo;
+            $variable=TipoAntecedente::model()->findByPk($antecedentes->id_tipo);
+            header('Content-Type:application/json;');
+            echo CJSON::encode(array('success'=>true,'fechaCreacion'=>$antecedentes->fecha_creacion,'fechaModificacion'=>$antecedentes->fecha_modificacion,'descripcion_ant'=>$antecedentes->descripcion_ant,'tipo'=>$variable->titulo));
 
 
+    }
     public function actionCreateConsultaAjax(){
         /*if(isset($_POST['CIE10'])){
             foreach($_POST['CIE10'] as $item)
@@ -123,9 +160,7 @@ class ConsultaController extends Controller{
             if($consultaModel->save())
                 $this->redirect(array('index','hid'=>$this->_historia->id_historial));
         }
-
     }
-
     public function filterHistoriaContext($filterChain){
         $historia_id =null;
         if(isset($_GET['hid']))
@@ -167,6 +202,4 @@ class ConsultaController extends Controller{
         }
 
     }
-
-
 }
