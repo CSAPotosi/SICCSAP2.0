@@ -28,7 +28,7 @@ class PersonaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','Crearcontacto','Crearpaciente'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -64,13 +64,9 @@ class PersonaController extends Controller
 	{
 		$model=new Persona;
         $paciente=new Paciente;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Persona']))
 		{
-            $filename="";
+            $filename="no-photo.png";
             if (!empty($_POST['Persona']['fotografia']))
             {
                 $foto = $_POST['Persona']['fotografia'];
@@ -94,14 +90,17 @@ class PersonaController extends Controller
             }
 			$model->attributes=array_map('strtoupper',$_POST['Persona']);
             $model->fotografia=$filename;
+
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('update','id'=>$model->id));
+
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
             'paciente'=>$paciente,
 		));
+
 	}
 
 	/**
@@ -109,17 +108,48 @@ class PersonaController extends Controller
 	 * If update is successful, the browser will be redirected to the 'view' page.
 	 * @param integer $id the ID of the model to be updated
 	 */
+    public function actionCrearcontacto()
+    {
+        $Percontacto=new Persona;
+        if(isset($_POST['Persona']))
+        {
+            $Percontacto->attributes=array_map('strtoupper',$_POST['Persona']);
+            $Percontacto->save();
+        }
+        $nomcont=Persona::model()->findByPk($Percontacto->id);
+        header('Content-Type:application/json;');
+        echo CJSON::encode(array('success'=>true,'id_contacto'=>$nomcont->id));
+    }
+    public function actionCrearpaciente()
+    {
+        $infopaciente=new Paciente;
+        $historial=new HistorialPaciente();
+        if(isset($_POST['Paciente']))
+        {
+            $infopaciente->id_paciente=((int)$_POST['Paciente']['id_paciente']);
+            $infopaciente->attributes=array_map('strtoupper',$_POST['Paciente']);
+            if($infopaciente->save()){
+                $historial->id_historial=$infopaciente->id_paciente;
+                $historial->save();
+                $this->redirect(array('index'));
+            }
+        }
+    }
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
+        $contacto=new Persona;
+        $paciente=new Paciente;
 
+        $lastid=$id;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['Persona']))
 		{
-            $filename="";
-            if(!empty($_POST['Persona']['fotografia']))
+            $filename=$_POST['Persona']['fotografia'];
+
+            if(strlen($_POST['Persona']['fotografia'])>128)
             {
                 $foto = $_POST['Persona']['fotografia'];
                 //Decode with base64
@@ -133,8 +163,10 @@ class PersonaController extends Controller
             }
             $model->attributes=array_map('strtoupper',$_POST['Persona']);
             $model->fotografia=$filename;
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+			if($model->save()){
+				$this->redirect(array('update','id'=>$model->id));
+                //$this->redirect(array('view','id'=>$model->id));
+            }
 		}
         //$cadena= file_get_contents($model->fotografia);
         //$cadena_foto=base64_encode($cadena);
@@ -143,6 +175,8 @@ class PersonaController extends Controller
         //$model->fotografia=$cadena_foto;
 		$this->render('update',array(
 			'model'=>$model,
+            'paciente'=>$paciente,
+            'contacto'=>$contacto,
 		));
 	}
 	/**

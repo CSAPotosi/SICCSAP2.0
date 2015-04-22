@@ -46,11 +46,9 @@
                 </tbody>
             </table>
         </div>
-
         <div class="col-md-2">
             <label for="">A&ntilde;adir Nuevo</label>
             <?php echo CHtml::link('<i class="fa fa-plus"></i>','',array("class"=>"btn btn-block btn-primary pull-right",'data-toggle'=>'modal','data-target'=>'#winCie10'));?>
-
         </div>
     </div>
     <div class="margin">

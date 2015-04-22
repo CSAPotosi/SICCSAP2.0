@@ -107,4 +107,17 @@ class Paciente extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    public function getTiposangre(){
+        return array(
+            ''=>'ELIJA TIPO DE SANGRE',
+            'O+'=>'O+',
+            'A+'=>'A+',
+            'A-'=>'A-',
+            'B+'=>'B+',
+            'B-'=>'B-',
+            'AB+'=>'AB+',
+            'AB-'=>'AB-',
+            'O-'=>'O-',
+        );
+    }
 }

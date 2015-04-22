@@ -18,7 +18,7 @@
         <ul class="nav nav-tabs" id="padre">
 
             <li class="active"><a href="#persona"  data-toggle="tab">Datos Persona</a></li>
-            <li><a href="#paciente"  data-toggle="tab">Datos Paciente</a></li>
+
         </ul>
         <div class="tab-content" >
             <div class="tab-pane fade active in" id="persona">
@@ -28,7 +28,7 @@
             </div>
             <div class="tab-pane fade" id="paciente">
                 <div class="box box-solid">
-                    <?php $this->renderPartial('_form_paciente', array('paciente'=>$paciente)); ?>
+
                 </div>
             </div>
         </div>

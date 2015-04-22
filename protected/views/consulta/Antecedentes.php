@@ -35,15 +35,15 @@
                             </tr>
                             <?php
                             foreach($listaAntecedenteMedico as $medico){
-
-                                    ?>
+                                  if($medico->id_historia==$his){
+                                ?>
                                     <tr>
                                         <td><?php echo $medico->TipoAntecedente->titulo;?></td>
                                         <td><?php echo $medico->descripcion_ant;?></td>
                                         <td><?php echo $medico->fecha_creacion;?></td>
                                     </tr>
                                 <?php
-
+                                  }
                             }?>
                         </table>
                         </div>
@@ -62,7 +62,8 @@
                                     <?php
                                     foreach($listaAntecedenteMedico as $medico){
                                         $la=TipoAntecedente::model()->findByPk($medico->id_tipo);
-                                        if($ante->titulo==$la->titulo){
+
+                                        if($ante->titulo==$la->titulo&&$medico->id_historia==$his){
                                         ?>
                                     <tr>
                                          <td><?php echo $la->titulo?></td>
@@ -77,6 +78,7 @@
                         <div id="ocultar">
                             <form method="post" name="formulario" class="formulario" id="<?php echo $cont;?>">
                                 <input type="hidden" name="AntecedenteMedico[id_tipo]" value="<?php echo $ante->id_tipo_ant;?>">
+                                <input type="hidden" name="AntecedenteMedico[id_historia]" value="<?php echo $his;?>">
                                 <textarea rows="3" name="AntecedenteMedico[descripcion_ant]" style="margin: 0px; width: 1335px; height: 125px;" name="<?php echo $ante->titulo;?>"></textarea>
                             </form>
                          </div>
@@ -94,7 +96,6 @@
 
     <?php Yii::app()->clientScript->registerScript('RegistroAntecedente','
     $(document).ready(function(){
-
         $("#insertar").on("click",function(){
         var contador=$(".formulario").length+1;
         var valor=2;
@@ -102,7 +103,6 @@
           var text=$("#"+valor+"").children("textarea").val();
            if(text!=""){
            var data=$("#"+valor+"").serialize();
-
             $.ajax({
                 url: \''.CHtml::normalizeUrl(array("/Consulta/NuevoAntecedente")).'\',
                 type: \'post\',

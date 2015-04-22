@@ -158,7 +158,7 @@ class Persona extends CActiveRecord
 	}
     public function getSexo(){
         return array(
-            'Musculino'=>'MASCULINO',
+            'Masculino'=>'MASCULINO',
             'Femenino'=>'FEMENINO',
         );
     }
@@ -177,5 +177,13 @@ class Persona extends CActiveRecord
 
     public function getNombreCompleto(){
         return join(" ",array($this->primer_apellido,$this->segundo_apellido,$this->nombres));
+    }
+    public function getNivelestudio(){
+        return array(
+            ''=>'SELECCIONE NIVEL DE ESTUDIO',
+            'BASICO'=>'BASICO',
+            'INTERMEDIO'=>'INTERMEDIO',
+            'SUPERIOR'=>'SUPERIOR',
+        );
     }
 }

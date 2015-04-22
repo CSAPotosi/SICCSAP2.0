@@ -7,7 +7,6 @@ create table if not exists pais(
   nombre varchar (32),
   codigo_pais varchar (8)
 );
-
 create table if not exists persona(
   id serial not null primary key ,
   codigo varchar(16) not null,

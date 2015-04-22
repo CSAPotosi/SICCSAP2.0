@@ -28,13 +28,6 @@
         <div  class="row">
             <div class="col-md-8">
                 <div class="form-group">
-                    <?php echo $form->labelEx($model,'codigo',array('class'=>'col-md-2 control-label')); ?>
-                    <div class="col-sm-8">
-                        <?php echo $form->textField($model,'codigo',array('class'=>'form-control','placeholder'=>'codigo')); ?>
-                    </div>
-                    <?php echo $form->error($model,'codigo',array('class'=>'label label-danger')); ?>
-                </div>
-                <div class="form-group">
                     <?php echo $form->labelEx($model,'dni',array('class'=>'col-md-2 control-label')); ?>
                     <div class="col-sm-8">
                         <?php echo $form->textField($model,'dni',array('class'=>'form-control','placeholder'=>'dni')); ?>
@@ -83,10 +76,10 @@
                                 'language'=> 'es',//default Yii::app()->language
                                 'mode'    => 'datetime',//'datetime' or 'time' ('datetime' default)
                                 'options'   => array(
-                                    'dateFormat' => 'dd.mm.yy',
+                                    'dateFormat' => 'dd-mm-yy',
                                     'timeFormat' => 'hh:mm tt',// default
                                 ),
-                                'htmlOptions'=>array('class'=>'form-control','value'=>'01.01.0001 00:00'),
+                                'htmlOptions'=>array('class'=>'form-control'),
                             )
                         );
                         ?>
@@ -103,7 +96,7 @@
                 <div class="form-group">
                     <?php echo $form->labelEx($model,'pais_nacimiento',array('class'=>'col-md-2 control-label')); ?>
                     <div class="col-sm-8">
-                        <?php echo $form->dropDownList($model,'pais_nacimiento',$model->getPais(),array('class'=>'form-control'))?>
+                        <?php echo $form->dropDownList($model,'pais_nacimiento',$model->getPais(),array('class'=>'form-control','prompt'=>'seleccione'))?>
                     </div>
                     <?php echo $form->error($model,'pais_nacimiento',array('class'=>'label label-danger')); ?>
                 </div>
@@ -129,7 +122,7 @@
             <div class="form-group">
                 <?php echo $form->labelEx($model,'nivel_estudio',array('class'=>'col-md-2 control-label')); ?>
                 <div class="col-sm-8">
-                    <?php echo $form->textField($model,'nivel_estudio',array('class'=>'form-control','placeholder'=>'nivel_estudio')); ?>
+                    <?php echo $form->dropDownList($model,'nivel_estudio',$model->getNivelestudio(),array('class'=>'form-control')); ?>
                 </div>
                 <?php echo $form->error($model,'nivel_estudio',array('class'=>'label label-danger')); ?>
             </div>
@@ -137,7 +130,7 @@
             <div class="form-group">
                 <?php echo $form->labelEx($model,'pais_vive',array('class'=>'col-md-2 control-label')); ?>
                 <div class="col-sm-8">
-                    <?php echo $form->dropDownList($model,'pais_vive',$model->getPais(),array('class'=>'form-control'))?>
+                    <?php echo $form->dropDownList($model,'pais_vive',$model->getPais(),array('class'=>'form-control','prompt'=>'seleccione'))?>
                 </div>
                 <?php echo $form->error($model,'pais_vive',array('class'=>'label label-danger')); ?>
             </div>
@@ -177,14 +170,13 @@
     </div>
     <div class="box-footer">
         <div class="form-group">
-            <div class="col-sm-offset-4 col-sm-10" >
-
-                <?php echo CHtml::submitButton($model->isNewRecord ? 'Guardar Datos Personales' : 'Save',array('class'=>'btn btn-primary btn-lg')); ?>
-
+            <div class="col-sm-offset-0 col-sm-10" >
+                <?php echo CHtml::submitButton($model->isNewRecord ? 'Guardar Datos Personales' : 'Actualizar Datos Personales',array('class'=>'btn btn-primary btn-lg','id'=>'registro_contacto')); ?>
             </div>
         </div>
     </div>
 
     <?php $this->endWidget(); ?>
+
 
 </div><!-- form -->
