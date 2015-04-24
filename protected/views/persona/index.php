@@ -36,9 +36,7 @@
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-2">
-                        <a class="btn btn-block btn-social bg-green">
-                            <i class="fa fa-wheelchair"></i>Nuevo Paciente
-                        </a>
+                        <?php echo CHtml::link("<i class='fa fa-wheelchair'></i>Nuevo Paciente",array('Persona/create'),array('class'=>'btn btn-block btn-social bg-green'))?>
                     </div>
                     <div class="col-md-2">
                         <a class="btn btn-block btn-social bg-red">

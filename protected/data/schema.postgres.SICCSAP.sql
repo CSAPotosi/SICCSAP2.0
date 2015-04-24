@@ -182,8 +182,6 @@ create table if not exists signos_vitales(
   tipo_sv varchar (64) not null default 'INDEFINIDO',
   unidad_sv varchar (16) not null default 'INDEFINIDO'
 );
-
-
 create table if not exists consulta_signos_vitales(
   id_consulta int not null,
   id_sv int not null ,
@@ -283,29 +281,13 @@ create table if not exists consulta_cie10(
 
 create table if not exists servicio(
   id_servicio serial not null primary key,
-  codigo_serv varchar(16) ,
+  codigo_serv varchar(16),
   nombre_serv varchar(128),
   unidad_serv varchar(64),
   fecha_creacion timestamp not null,
   fecha_actualizacion timestamp not null,
   id_empresa int not null,
   foreign key(id_empresa) references empresa(id_empresa)
-);
-
-create table if not EXISTS tipo_sala(
-  id_tipo_sala int not null primary key,
-  nombre_tipo_sala varchar(128) unique not null,
-  descripcion_tipo_sala varchar(128) ,
-  foreign key (id_tipo_sala) references servicio(id_servicio)
-);
-
-create table if not exists sala(
-  id_sala serial not null primary key,
-  numero_sala int not null,
-  ubicacion_sala varchar(128),
-  estado_sala varchar(32),
-  id_tipo_sala int not null,
-  foreign key (id_tipo_sala) references tipo_sala(id_tipo_sala)
 );
 create table if not exists precio_servicio(
   id_servicio int not null,
@@ -315,7 +297,20 @@ create table if not exists precio_servicio(
   primary key(id_servicio,fecha_inicio),
   foreign key(id_servicio) references servicio(id_servicio)
 );
-
+create table if not EXISTS tipo_sala(
+  id_tipo_sala int not null primary key,
+  nombre_tipo_sala varchar(128) unique not null,
+  descripcion_tipo_sala varchar(128) ,
+  foreign key (id_tipo_sala) references servicio(id_servicio)
+);
+create table if not exists sala(
+  id_sala serial not null primary key,
+  numero_sala int not null,
+  ubicacion_sala varchar(128),
+  estado_sala varchar(32),
+  id_tipo_sala int not null,
+  foreign key (id_tipo_sala) references tipo_sala(id_tipo_sala)
+);
 create table if not exists atencion_medica(
   id_servicio int primary key,
   tipo_atencion varchar(16) not null,

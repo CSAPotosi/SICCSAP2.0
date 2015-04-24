@@ -5,7 +5,6 @@
  *
  * The followings are the available columns in table 'historial_paciente':
  * @property integer $id_historial
- * @property string $fecha_muerte
  * @property string $fecha_creacion
  * @property string $fecha_actualizacion
  *
@@ -33,7 +32,6 @@ class HistorialPaciente extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fecha_creacion, fecha_actualizacion', 'required'),
-			array('fecha_muerte', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_historial, fecha_muerte, fecha_creacion, fecha_actualizacion', 'safe', 'on'=>'search'),
@@ -51,6 +49,7 @@ class HistorialPaciente extends CActiveRecord
 			'antecedenteMedicos' => array(self::HAS_MANY, 'AntecedenteMedico', 'id_historia'),
 			'idHistorial' => array(self::BELONGS_TO, 'Paciente', 'id_historial'),
 			'consultas' => array(self::HAS_MANY, 'Consulta', 'id_historia'),
+
 		);
 	}
 
@@ -61,7 +60,6 @@ class HistorialPaciente extends CActiveRecord
 	{
 		return array(
 			'id_historial' => 'Id Historial',
-			'fecha_muerte' => 'Fecha Muerte',
 			'fecha_creacion' => 'Fecha Creacion',
 			'fecha_actualizacion' => 'Fecha Actualizacion',
 		);
@@ -86,7 +84,6 @@ class HistorialPaciente extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id_historial',$this->id_historial);
-		$criteria->compare('fecha_muerte',$this->fecha_muerte,true);
 		$criteria->compare('fecha_creacion',$this->fecha_creacion,true);
 		$criteria->compare('fecha_actualizacion',$this->fecha_actualizacion,true);
 

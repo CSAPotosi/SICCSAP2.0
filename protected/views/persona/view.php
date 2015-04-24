@@ -20,21 +20,20 @@ $this->menu=array(
 ?>
 <div class="row">
     <div class="col-md-12">
-        <ul id="tabsPersona" class="nav nav-tabs" role="tab-panel">
-            <li class="pull-right header">
-                <div class="btn-group">
-                    <?php echo CHtml::link("<i class='fa fa-edit'></i>",Yii::app()->createUrl('Persona/update',array('id'=>$model->id)),array('class'=>'btn btn-primary')); ?>
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title"><b>Datos Personales</b></h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+
                 </div>
-            </li>
-            <li role="presentation" class="active"><a href="#persona" id="persona-tab" role="tab" data-toggle="tab" aria-controls="persona" aria-expanded="false">Datos Personales</a></li>
-            <li role="presentation"><a href="#paciente" id="paciente-tab" role="tab" data-toggle="tab" aria-controls="paciente" aria-expanded="false">Datos de historial Meidico</a></li>
-        </ul>
-        <div id="tabcontent" class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="persona" aria-labelledby="persona-tab">
-                <?php $this->widget('zii.widgets.CDetailView', array(
+            </div>
+            <div class="box-body">
+
+                <?php
+                $this->widget('zii.widgets.CDetailView', array(
                     'data'=>$model,
                     'attributes'=>array(
-                        'id',
                         'codigo',
                         'dni',
                         'nombres',
@@ -52,14 +51,49 @@ $this->menu=array(
                         'telefono',
                         'celular',
                         'email',
-                        'fotografia',
                     ),
-                    'htmlOptions'=>array('class'=>'table table-striped'),
+                    'htmlOptions'=>array('class'=>'table table-condensed'),
                 )); ?>
             </div>
-            <div role="tabpanel" class="tab-pane fade" id="paciente" aria-labelledby="paciente-tab">
-                hola mundo
+            <div class="box-footer">
+                <?php echo CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Datos Personales",array('Persona/'),array('class'=>'btn btn-social bg-blue'))?>
             </div>
         </div>
+        <?php if($model->paciente!=null){?>
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title"><b>Informacion de Paciente</b></h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <?php
+                    $this->widget('zii.widgets.CDetailView', array(
+                        'data'=>$model->paciente,
+                        'attributes'=>array(
+                            'ocupacion_paciente',
+                            'grupo_sanguineo_paciente',
+                            'fecha_muerte',
+                            'estado_paciente',
+                            'id_contacto_paciente',
+                        ),
+                        'htmlOptions'=>array('class'=>'table table-condensed'),
+                    ));
+                    $this->widget('zii.widgets.CDetailView', array(
+                        'data'=>$model->paciente->pacihisto,
+                        'attributes'=>array(
+                          'fecha_creacion',
+                          'fecha_actualizacion',
+                        ),
+                        'htmlOptions'=>array('class'=>'table table-condensed'),
+                    ));
+                ?>
+            </div>
+            <div class="box-footer">
+                <?php echo CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Informacion de Paciente",array('Persona/'),array('class'=>'btn btn-social bg-blue'))?>
+            </div>
+        </div>
+        <?php }?>
     </div>
 </div>

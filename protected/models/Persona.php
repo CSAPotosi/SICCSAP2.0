@@ -72,6 +72,7 @@ class Persona extends CActiveRecord
 			'paisVive' => array(self::BELONGS_TO, 'Pais', 'pais_vive'),
             'paciente'=>array(self::HAS_ONE,'Paciente','id_paciente'),
             'empleado'=>array(self::HAS_ONE,'Empleado','id'),
+            'contacto_paciente'=>array(self::BELONGS_TO,'Paciente','id'),
 		);
 	}
 
@@ -177,6 +178,11 @@ class Persona extends CActiveRecord
 
     public function getNombreCompleto(){
         return join(" ",array($this->primer_apellido,$this->segundo_apellido,$this->nombres));
+    }
+    public function getEdad(){
+        $fecha=$this->fecha_nacimiento;
+        list($Y,$m,$d) = explode("-",$fecha);
+        return( date("md") < $m.$d ? date("Y")-$Y-1 : date("Y")-$Y );
     }
     public function getNivelestudio(){
         return array(

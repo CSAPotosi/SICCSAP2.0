@@ -14,8 +14,8 @@
         'htmlOptions'=>array('class'=>'form-horizontal'),
     )); ?>
     <div class="box-body">
-        <h2><center><b><p class="note">Los Campos com <span class="required">*</span> son Obligatorios</p></b></center></h2>
 
+        <h2><center><b><p class="note">Los Campos com <span class="required">*</span> son Obligatorios</p></b></center></h2>
         <?php echo $form->errorSummary($model,null,null,array('class'=>'alert alert-error')); ?>
         <div class="col-md-3">
             <?php $this->widget('zii.widgets.XPhoto',array(

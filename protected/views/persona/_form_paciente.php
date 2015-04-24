@@ -50,6 +50,9 @@
                     </div>
 
                 </div>
+                <div id="id_contacto_persona">
+
+                </div>
             </div>
         </div>
     </div>
@@ -81,13 +84,6 @@
                     'enableAjaxValidation'=>false,
                     'htmlOptions'=>array('class'=>'form-horizontal'),
                 )); ?>
-                <div class="form-group">
-
-                    <div class="col-sm-12">
-                        <?php echo $form->textField($contacto,'codigo',array('class'=>'form-control text-center','placeholder'=>'codigo')); ?>
-                    </div>
-                    <?php echo $form->error($contacto,'codigo',array('class'=>'label label-danger')); ?>
-                </div>
                 <div class="form-group">
                     <div class="col-sm-12">
                         <?php echo $form->textField($contacto,'dni',array('class'=>'form-control text-center','placeholder'=>'dni')); ?>
@@ -136,6 +132,7 @@
                     </div>
                     <?php echo $form->error($contacto,'telefono',array('class'=>'label label-danger')); ?>
                 </div>
+                <input id="Persona_fotogradia" name="Persona[fotografia]" type="hidden" value="no-photo.png">
                 <?php echo CHtml::Button('Guardar',
                     array('id'=>'btncontacto','class'=>'btn btn-primary pull-left')); ?>
                 <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</button>
@@ -165,7 +162,8 @@
                  data: data,
                  success: function(datos)
                  {
-                 $(\'<input class="form-control" name="Paciente[id_contacto_paciente]" id="Paciente_id_contacto_paciente" type="text" value="\'+datos.id_contacto+\'" disabled="disabled">\').appendTo(\'#input-contacto\');
+                 $(\'<input class="form-control" name="Paciente[id_contacto_paciente]" id="Paciente_id_contacto_paciente" type="hidden" value="\'+datos.id_contacto+\'" disabled="disabled">\').appendTo(\'#id_contacto_persona\');
+                 $(\'<input class="form-control" type="text" value="\'+datos.nombre_contacto+\'" disabled="disabled">\').appendTo(\'#input-contacto\');
                  }
              });
              return false;

@@ -116,9 +116,8 @@ class PersonaController extends Controller
             $Percontacto->attributes=array_map('strtoupper',$_POST['Persona']);
             $Percontacto->save();
         }
-        $nomcont=Persona::model()->findByPk($Percontacto->id);
         header('Content-Type:application/json;');
-        echo CJSON::encode(array('success'=>true,'id_contacto'=>$nomcont->id));
+        echo CJSON::encode(array('success'=>true,'nombre_contacto'=>$Percontacto->GetNombreCompleto(),'id_contacto'=>$Percontacto->id));
     }
     public function actionCrearpaciente()
     {
