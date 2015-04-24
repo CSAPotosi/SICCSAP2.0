@@ -13,8 +13,6 @@
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/morris/morris.css" rel="stylesheet" type="text/css" />
         <!-- jvectormap -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-        <!-- Date Picker -->
-        <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
         <!-- iCheck for checkboxes and radio inputs -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/iCheck/all.css" rel="stylesheet" type="text/css" />
         <!-- Daterange picker -->
@@ -27,6 +25,10 @@
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/style.css" rel="stylesheet" type="text/css" >
+
+        <!-- Date time picker -->
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/bootstrap-datetimepicker.min.css" rel="stylesheet" type="text/css" />
+
         <link rel="stylesheet" type="text/css" href="css/style.css">
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -367,20 +369,6 @@
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
         
         <!-- Page script -->
-        <script type="text/javascript">
-            $(function() {
-                //Mascara
-                $("[data-mask]").inputmask();
-                $(".timepicker").timepicker({
-                    showInputs: false
-                });
-            });
-            $('#Persona_dni').keyup(function(){
-                $('#Persona_nit').val($(this).val())
-            });
-
-
-        </script>
         <script>
             $("#search").keyup(function(){
                 if($(this).val().length>3)

@@ -53,8 +53,37 @@ $this->pageTitle="Pagina Principal";
     <div class="col-md-12">
         <div class="box box-solid">
             <div class="box-body">
-                asdasd
+                <div class="row">
+                    <div class='col-sm-6'>
+                        <div class="form-group">
+                            <div class='input-group date' id='datetimepicker1'>
+                                <input type='text' class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <a href="http://eonasdan.github.io/bootstrap-datetimepicker/#using-locales">PAgina de datetimepicker</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<?php
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/moment.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/bootstrap-datetimepicker.min.js',CClientScript::POS_END);
+
+Yii::app()->clientScript->registerScript('datetime','
+    $(function(){
+        $("#datetimepicker1").datetimepicker({
+        	locale:"es",
+        	defaultDate:"04/20/2015",
+        	format:"DD-MM-YYYY HH:mm A",
+        	maxDate:"04/24/2015"
+        });
+    });
+',CClientScript::POS_END);
+?>
+
