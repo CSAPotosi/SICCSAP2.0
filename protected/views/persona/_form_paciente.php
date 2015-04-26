@@ -7,7 +7,7 @@
 <div class="form">
 
     <?php $form=$this->beginWidget('CActiveForm', array(
-        'id'=>'historial-paciente-form','action'=>yii::app()->createUrl("persona/Crearpaciente"),
+        'id'=>'historial-paciente-form','action'=>($paciente->isNewRecord ? yii::app()->createUrl("persona/Crearpaciente"):yii::app()->createUrl("persona/_form_updatepa&id=".$paciente->id_paciente)),
         'enableAjaxValidation'=>false,
         'htmlOptions'=>array('class'=>'form-horizontal'),
     )); ?>
@@ -41,14 +41,14 @@
         </div>
         <div class="form-group">
             <div class="col-sm-2">
+                <?php echo $form->hiddenField($paciente,'id_contacto_paciente',array('class'=>'form-control','id'=>'id_cont')); ?>
             </div>
             <div class="col-sm-8">
                 <div class="input-group margin" id="input-contacto">
                     <div class="input-group-btn">
-                        <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#contacto">Registar Contacto</button>
-
+                       <?php echo CHtml::Button($paciente->isNewRecord ? 'Registrar Contacto de paciente' : 'Actualizar Contacto de paciente',array('class'=>"btn btn-warning", 'data-toggle'=>'modal', 'data-target'=>'#contacto')); ?>
+                       <input class="form-control" type="text" id="nomcont" value="<?php echo ($paciente->id_paciente!=null ? $paciente->idContactoPaciente->nombreCompleto: "");?>" disabled="disabled">
                     </div>
-
                 </div>
                 <div id="id_contacto_persona">
 
@@ -162,8 +162,8 @@
                  data: data,
                  success: function(datos)
                  {
-                 $(\'<input class="form-control" name="Paciente[id_contacto_paciente]" id="Paciente_id_contacto_paciente" type="hidden" value="\'+datos.id_contacto+\'" disabled="disabled">\').appendTo(\'#id_contacto_persona\');
-                 $(\'<input class="form-control" type="text" value="\'+datos.nombre_contacto+\'" disabled="disabled">\').appendTo(\'#input-contacto\');
+                 $("#id_cont").val(""+datos.id_contacto+"");
+                 $("#nomcont").val(""+datos.nombre_contacto+"");
                  }
              });
              return false;

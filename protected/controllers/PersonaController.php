@@ -18,7 +18,6 @@ class PersonaController extends Controller
 			'postOnly + delete', // we only allow deletion via POST request
 		);
 	}
-
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.
@@ -28,11 +27,11 @@ class PersonaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','Crearcontacto','Crearpaciente'),
+				'actions'=>array('index','view','Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','buscarPersonaAjax'),
+				'actions'=>array('create','update','buscarPersonaAjax','updatepa'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -102,7 +101,6 @@ class PersonaController extends Controller
 		));
 
 	}
-
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -139,19 +137,14 @@ class PersonaController extends Controller
 		$model=$this->loadModel($id);
         $contacto=new Persona;
         $paciente=new Paciente;
-
-        $lastid=$id;
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Persona']))
 		{
             $filename=$_POST['Persona']['fotografia'];
-
             if(strlen($_POST['Persona']['fotografia'])>128)
             {
                 $foto = $_POST['Persona']['fotografia'];
-                //Decode with base64
                 $foto = str_replace('data:image/png;base64,', '', $foto);
                 $foto = str_replace(' ', '+', $foto);
                 $data_foto = base64_decode($foto);
@@ -163,15 +156,13 @@ class PersonaController extends Controller
             $model->attributes=array_map('strtoupper',$_POST['Persona']);
             $model->fotografia=$filename;
 			if($model->save()){
-				$this->redirect(array('update','id'=>$model->id));
-                //$this->redirect(array('view','id'=>$model->id));
+                if($model->paciente!=null)
+                   $this->redirect(array('update','id'=>$model->id));
+                else
+                    $this->redirect(array('index'));
             }
 		}
-        //$cadena= file_get_contents($model->fotografia);
-        //$cadena_foto=base64_encode($cadena);
-        //$cadena_foto=str_replace('+',' ',$cadena_foto);
-        //   $cadena_foto='data:image/png;base64,'.$cadena_foto;
-        //$model->fotografia=$cadena_foto;
+
 		$this->render('update',array(
 			'model'=>$model,
             'paciente'=>$paciente,
@@ -183,18 +174,76 @@ class PersonaController extends Controller
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
 	 * @param integer $id the ID of the model to be deleted
 	 */
+    public function action_form_Updatepa($id){
+        $model=$this->loadModel($id);
+        $paciente=$this->loadModelpaciente($id);
+        $contacto=new Persona;
+        if(isset($_POST['Persona']))
+        {
+            $filename=$_POST['Persona']['fotografia'];
+            if(strlen($_POST['Persona']['fotografia'])>128)
+            {
+                $foto = $_POST['Persona']['fotografia'];
+                $foto = str_replace('data:image/png;base64,', '', $foto);
+                $foto = str_replace(' ', '+', $foto);
+                $data_foto = base64_decode($foto);
+                //Set photo filename
+                $filename = $_POST['Persona']['dni'].'.png';
+                $filepath = YiiBase::getPathOfAlias("webroot").'/fotografias/'.$filename;
+                $writeToDisk = file_put_contents($filepath, $data_foto);
+            }
+            $model->attributes=array_map('strtoupper',$_POST['Persona']);
+            $model->fotografia=$filename;
+            if($model->save()){
+                $this->redirect(array('_form_updatepa','id'=>$model->id));
+            }
+        }
+        if(isset($_POST['Paciente']))
+        {
+            $paciente->attributes=array_map('strtoupper',$_POST['Paciente']);
+            if($paciente->save()){
+                $this->redirect(array('HistorialPaciente/view','id'=>$paciente->id_paciente));
+            }
+        }
+        $this->render('_form_updatepa',array(
+            'model'=>$model,
+            'paciente'=>$paciente,
+            'contacto'=>$contacto,
+        ));
+    }
+    public function action_form_Updateper($id){
+        $model=$this->loadModel($id);
+        if(isset($_POST['Persona']))
+        {
+            $filename=$_POST['Persona']['fotografia'];
+            if(strlen($_POST['Persona']['fotografia'])>128)
+            {
+                $foto = $_POST['Persona']['fotografia'];
+                $foto = str_replace('data:image/png;base64,', '', $foto);
+                $foto = str_replace(' ', '+', $foto);
+                $data_foto = base64_decode($foto);
+                //Set photo filename
+                $filename = $_POST['Persona']['dni'].'.png';
+                $filepath = YiiBase::getPathOfAlias("webroot").'/fotografias/'.$filename;
+                $writeToDisk = file_put_contents($filepath, $data_foto);
+            }
+            $model->attributes=array_map('strtoupper',$_POST['Persona']);
+            $model->fotografia=$filename;
+            if($model->save()){
+                    $this->redirect(array('index'));
+            }
+        }
+        $this->render('_form_updateper',array(
+            'model'=>$model,
+        ));
+    }
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
-
 		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}
-
-	/**
-	 * Lists all models.
-	 */
 	public function actionIndex()
 	{
         $listaPersonas=Persona::model()->findAll(array(
@@ -230,11 +279,18 @@ class PersonaController extends Controller
 	public function loadModel($id)
 	{
 		$model=Persona::model()->findByPk($id);
-		if($model===null)
+        $paciente=Paciente::model()->findByPk($id);
+		if($model===null &&$paciente===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
-
+    public function loadModelpaciente($id)
+    {
+        $paciente=Paciente::model()->findByPk($id);
+        if($paciente===null)
+            throw new CHttpException(404,'The requested page does not exist.');
+        return $paciente;
+    }
 	/**
 	 * Performs the AJAX validation.
 	 * @param Persona $model the model to be validated

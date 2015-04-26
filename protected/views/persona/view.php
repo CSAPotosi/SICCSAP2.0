@@ -29,7 +29,6 @@ $this->menu=array(
                 </div>
             </div>
             <div class="box-body">
-
                 <?php
                 $this->widget('zii.widgets.CDetailView', array(
                     'data'=>$model,
@@ -56,7 +55,7 @@ $this->menu=array(
                 )); ?>
             </div>
             <div class="box-footer">
-                <?php echo CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Datos Personales",array('Persona/'),array('class'=>'btn btn-social bg-blue'))?>
+                <?php echo ($model->paciente!=null ? CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Datos Personales",array('Persona/_form_updatepa','id'=>$model->id),array('class'=>'btn btn-social bg-blue')):CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Datos Personales2",array('Persona/_form_updateper','id'=>$model->id),array('class'=>'btn btn-social bg-blue')))?>
             </div>
         </div>
         <?php if($model->paciente!=null){?>
@@ -80,14 +79,7 @@ $this->menu=array(
                         ),
                         'htmlOptions'=>array('class'=>'table table-condensed'),
                     ));
-                    $this->widget('zii.widgets.CDetailView', array(
-                        'data'=>$model->paciente->pacihisto,
-                        'attributes'=>array(
-                          'fecha_creacion',
-                          'fecha_actualizacion',
-                        ),
-                        'htmlOptions'=>array('class'=>'table table-condensed'),
-                    ));
+
                 ?>
             </div>
             <div class="box-footer">

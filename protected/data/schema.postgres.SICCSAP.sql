@@ -138,8 +138,8 @@ create table if not exists medico_especialidad(
   foreign key (id_medico)references medico(id),
   foreign key(id_especialidad) references especialidad(id_especialidad)
 );
-create table if not exists empresa(
-  id_empresa serial primary key not null,
+create table if not exists institucion(
+  id_insti serial primary key not null,
   nombre varchar(128)not null,
   direccion varchar(128),
   telefono int
@@ -173,8 +173,6 @@ create table if not exists consulta(
   foreign key (id_historia) references historial_paciente(id_historial),
   foreign key (id_consulta_padre) references consulta(id_consulta)
 );
-
-
 create table if not exists signos_vitales(
   id_sv serial primary key not null,
   nombre_sv varchar (128) not null unique,
