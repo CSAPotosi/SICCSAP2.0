@@ -28,7 +28,7 @@ class ServicioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','Crearlab'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -80,7 +80,17 @@ class ServicioController extends Controller
             'precio'=>$precio,
 		));
 	}
+    public function actionCrearlab(){
+        $model=new Servicio;
+        $precio=new PrecioServicio;
+        $cat_lab=new CategoriaExLaboratorio;
 
+        $this->render('_form_lab',array(
+            'model'=>$model,
+            'precio'=>$precio,
+            'cat_lab'=>$cat_lab,
+        ));
+    }
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.

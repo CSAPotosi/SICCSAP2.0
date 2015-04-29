@@ -16,24 +16,33 @@
 )); ?>
 <div class="box-body">
 	<?php echo $form->errorSummary($model,null,null,array('class'=>'alert alert-error')); ?>
+    <div class="form-group">
+        <div class="input-group">
+            <?php echo $form->labelEx($model,'Codigo',array('class'=>'input-group-addon')); ?>
+            <?php echo $form->textField($model,'codigo_serv',array('class'=>'form-control','placeholder'=>'Codigo de Servicio')); ?>
+            <?php echo $form->error($model,'codigo_serv',array('class'=>'label label-danger')); ?>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="input-group">
+            <?php echo $form->labelEx($model,'Nombre del Servicio',array('class'=>'input-group-addon')); ?>
+            <?php echo $form->textField($model,'nombre_serv',array('class'=>'form-control','placeholder'=>'Nombre Servicio')); ?>
+            <?php echo $form->error($model,'nombre_serv',array('class'=>'label label-danger')); ?>
+        </div>
+    </div>
 	<div class="form-group">
-        <?php echo $form->textField($model,'codigo_serv',array('class'=>'form-control','placeholder'=>'Codigo de Servicio')); ?>
-		<?php echo $form->error($model,'codigo_serv',array('class'=>'label label-danger')); ?>
+        <div class="input-group">
+            <?php echo $form->labelEx($model,'Unidad del servicio',array('class'=>'input-group-addon')); ?>
+            <?php echo $form->textField($model,'unidad_serv',array('class'=>'form-control','placeholder'=>'Unidad de Servicios')); ?>
+            <?php echo $form->error($model,'unidad_serv',array('class'=>'label label-danger')); ?>
+        </div>
 	</div>
 	<div class="form-group">
-		<?php echo $form->labelEx($model,'Nombre del Servicio'); ?>
-        <?php echo $form->textField($model,'nombre_serv',array('class'=>'form-control','placeholder'=>'Nombre Servicio')); ?>
-		<?php echo $form->error($model,'nombre_serv',array('class'=>'label label-danger')); ?>
-	</div>
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'Unidad del servicio'); ?>
-        <?php echo $form->textField($model,'unidad_serv',array('class'=>'form-control','placeholder'=>'Unidad de Servicios')); ?>
-		<?php echo $form->error($model,'unidad_serv',array('class'=>'label label-danger')); ?>
-	</div>
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'Institucion o Clinica'); ?>
-		<?php echo $form->dropDownList($model,'id_insti',$model->GetInstitucion(),array('class'=>'form-control','prompt'=>'seleccione')); ?>
-		<?php echo $form->error($model,'id_insti',array('class'=>'label label-danger')); ?>
+        <div class="input-group">
+            <?php echo $form->labelEx($model,'Institucion o Clinica',array('class'=>'input-group-addon')); ?>
+            <?php echo $form->dropDownList($model,'id_insti',$model->GetInstitucion(),array('class'=>'form-control','prompt'=>'seleccione')); ?>
+            <?php echo $form->error($model,'id_insti',array('class'=>'label label-danger')); ?>
+        </div>
 	</div>
 </div>
 	<div class="box-footer">

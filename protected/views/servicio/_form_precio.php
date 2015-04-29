@@ -17,18 +17,19 @@
         <div class="box-body">
             <?php echo $form->errorSummary($precio,null,null,array('class'=>'alert alert-error')); ?>
             <div class="form-group">
-                <?php echo $form->textField($precio,'fecha_inicio',array('class'=>'form-control','placeholder'=>'Fecha Inicio')); ?>
-                <?php echo $form->error($precio,'fecha_inicio',array('class'=>'label label-danger')); ?>
+                <div class="input-group">
+                    <?php echo $form->labelEx($precio,'Fecha Fin',array('class'=>'input-group-addon')); ?>
+                    <?php echo $form->dateField($precio,'fecha_fin',array('class'=>'form-control')); ?>
+                    <?php echo $form->error($precio,'fecha_fin',array('class'=>'label label-danger')); ?>
+                </div>
             </div>
             <div class="form-group">
-                <?php echo $form->labelEx($precio,'fecha_fin'); ?>
-                <?php echo $form->textField($precio,'fecha_fin',array('class'=>'form-control','placeholder'=>'Fecha Fin')); ?>
-                <?php echo $form->error($precio,'fecha_fin',array('class'=>'label label-danger')); ?>
-            </div>
-            <div class="form-group">
-                <?php echo $form->labelEx($precio,'Monto'); ?>
-                <?php echo $form->textField($precio,'monto',array('class'=>'form-control','placeholder'=>'Monto')); ?>
-                <?php echo $form->error($precio,'monto',array('class'=>'label label-danger')); ?>
+                <div class="input-group">
+                    <?php echo $form->labelEx($precio,'Monto',array('class'=>'input-group-addon')); ?>
+                    <?php echo $form->textField($precio,'monto',array('class'=>'form-control','placeholder'=>'Monto')); ?>
+                    <?php echo $form->error($precio,'monto',array('class'=>'label label-danger')); ?>
+                    <?php echo $form->labelEx($precio,'Bs',array('class'=>'input-group-addon')); ?>
+                </div>
             </div>
         </div>
         <div class="box-footer">
