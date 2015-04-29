@@ -308,6 +308,18 @@
 
                             </ul>
                         </li>
+                        <li class="treeview">
+                            <a href="#">
+                                <i class="fa fa-fw fa-list-alt"></i>
+                                <span>Servicios</span>
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Servicios",Yii::app()->createUrl('Servicio')) ?></li>
+                                <li><?php echo CHtml::link("<i class='fa fa-angle-double-right'></i> Crear Nuevo Servicios",Yii::app()->createUrl('Servicio/create')) ?></li>
+
+                            </ul>
+                        </li>
                     </ul>
                 </section>
                 <!-- /.sidebar -->
@@ -367,7 +379,6 @@
 
         <!-- bootstrap time picker -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
-        
         <!-- Page script -->
         <script>
             $("#search").keyup(function(){

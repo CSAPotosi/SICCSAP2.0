@@ -71,13 +71,11 @@
 
     Yii::app()->clientScript->registerScript('buscadorAjax','
         $("#buscaPersona").keyup(function(){buscarPersona($(this))});
-
         function buscarPersona(control){
             var cad=control.val();
             if(cad.length>5||cad.length==0)
                 ajaxBuscaPersona(control);
         };
-
         function ajaxBuscaPersona(control){
             $.ajax({
                 url:"'.CHtml::normalizeUrl(array('persona/buscarPersonaAjax')).'",

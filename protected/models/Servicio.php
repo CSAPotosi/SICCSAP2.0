@@ -5,12 +5,21 @@
  *
  * The followings are the available columns in table 'servicio':
  * @property integer $id_servicio
- * @property string $fecha_creacion_servicio
- * @property string $fecha_modificacion_servicio
+ * @property string $codigo_serv
+ * @property string $nombre_serv
+ * @property string $unidad_serv
+ * @property string $fecha_creacion
+ * @property string $fecha_actualizacion
+ * @property integer $id_insti
  *
  * The followings are the available model relations:
- * @property ServicioMedico $servicioMedico
+ * @property ServicioClinico $servicioClinico
+ * @property ExamenGabinete $examenGabinete
+ * @property ExamenLaboratorio $examenLaboratorio
+ * @property Institucion $idInsti
+ * @property AtencionMedica $atencionMedica
  * @property TipoSala $tipoSala
+ * @property PrecioServicio[] $precioServicios
  */
 class Servicio extends CActiveRecord
 {
@@ -30,10 +39,14 @@ class Servicio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_creacion_servicio, fecha_modificacion_servicio', 'safe'),
+			array('fecha_creacion, fecha_actualizacion, id_insti', 'required'),
+			array('id_insti', 'numerical', 'integerOnly'=>true),
+			array('codigo_serv', 'length', 'max'=>16),
+			array('nombre_serv', 'length', 'max'=>128),
+			array('unidad_serv', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_servicio, fecha_creacion_servicio, fecha_modificacion_servicio', 'safe', 'on'=>'search'),
+			array('id_servicio, codigo_serv, nombre_serv, unidad_serv, fecha_creacion, fecha_actualizacion, id_insti', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,8 +58,13 @@ class Servicio extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'servicioMedico' => array(self::HAS_ONE, 'ServicioMedico', 'id_servicio_medico'),
+			'servicioClinico' => array(self::HAS_ONE, 'ServicioClinico', 'id_servicio'),
+			'examenGabinete' => array(self::HAS_ONE, 'ExamenGabinete', 'id_servicio'),
+			'examenLaboratorio' => array(self::HAS_ONE, 'ExamenLaboratorio', 'id_servicio'),
+			'idInsti' => array(self::BELONGS_TO, 'Institucion', 'id_insti'),
+			'atencionMedica' => array(self::HAS_ONE, 'AtencionMedica', 'id_servicio'),
 			'tipoSala' => array(self::HAS_ONE, 'TipoSala', 'id_tipo_sala'),
+			'precioServicios' => array(self::HAS_MANY, 'PrecioServicio', 'id_servicio'),
 		);
 	}
 
@@ -57,8 +75,12 @@ class Servicio extends CActiveRecord
 	{
 		return array(
 			'id_servicio' => 'Id Servicio',
-			'fecha_creacion_servicio' => 'Fecha Creacion Servicio',
-			'fecha_modificacion_servicio' => 'Fecha Modificacion Servicio',
+			'codigo_serv' => 'Codigo Serv',
+			'nombre_serv' => 'Nombre Serv',
+			'unidad_serv' => 'Unidad Serv',
+			'fecha_creacion' => 'Fecha Creacion',
+			'fecha_actualizacion' => 'Fecha Actualizacion',
+			'id_insti' => 'Id Insti',
 		);
 	}
 
@@ -81,8 +103,12 @@ class Servicio extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id_servicio',$this->id_servicio);
-		$criteria->compare('fecha_creacion_servicio',$this->fecha_creacion_servicio,true);
-		$criteria->compare('fecha_modificacion_servicio',$this->fecha_modificacion_servicio,true);
+		$criteria->compare('codigo_serv',$this->codigo_serv,true);
+		$criteria->compare('nombre_serv',$this->nombre_serv,true);
+		$criteria->compare('unidad_serv',$this->unidad_serv,true);
+		$criteria->compare('fecha_creacion',$this->fecha_creacion,true);
+		$criteria->compare('fecha_actualizacion',$this->fecha_actualizacion,true);
+		$criteria->compare('id_insti',$this->id_insti);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -99,11 +125,8 @@ class Servicio extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-
-    protected function beforeValidate(){
-        $this->fecha_modificacion_servicio=new CDbExpression('NOW()');
-        if($this->isNewRecord)
-            $this->fecha_creacion_servicio=new CDbExpression('NOW()');
-        return parent::beforeValidate();
+    public function getInstitucion()
+    {
+        return CHtml::listData(Institucion::model()->findAll(),'id_insti','nombre');
     }
 }

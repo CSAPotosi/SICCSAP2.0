@@ -27,11 +27,11 @@ class PersonaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper'),
+				'actions'=>array('index','view','Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper',),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','buscarPersonaAjax','updatepa'),
+				'actions'=>array('create','update','buscarPersonaAjax','updatepa','buscarContactoAjax'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -316,5 +316,16 @@ class PersonaController extends Controller
         return $this->renderPartial('_listaPersonas',array(
             'listaPersonas'=>$listaPersonas,
         ));
+    }
+    public function actionBuscarContactoAjax(){
+        $nombres= $_POST['cadena'];
+        $listaContactos=Persona::model()->findAll(array(
+           'condition'=>"nombres like '%{$nombres}%'",
+            'order'=>'id DESC',
+        ));
+        if($listaContactos==null){
+            echo 'No se han encontrado resultados';
+        }
+        return $this->renderPartial('_listaContactos',array('listaContactos'=>$listaContactos));
     }
 }

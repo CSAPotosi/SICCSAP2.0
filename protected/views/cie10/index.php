@@ -97,7 +97,6 @@ $this->breadcrumbs=array(
                 }
             });
         });
-
         function clickRow(){
             $("#Items>tr").removeClass("bg-blue");
             $(this).toggleClass("bg-blue");

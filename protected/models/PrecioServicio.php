@@ -1,26 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "servicio_medico".
+ * This is the model class for table "precio_servicio".
  *
- * The followings are the available columns in table 'servicio_medico':
- * @property integer $id_servicio_medico
- * @property string $nombre_servicio
- * @property string $descripcion_servicio
- * @property integer $id_categoria_serv
+ * The followings are the available columns in table 'precio_servicio':
+ * @property integer $id_servicio
+ * @property string $fecha_inicio
+ * @property string $fecha_fin
+ * @property double $monto
  *
  * The followings are the available model relations:
- * @property Servicio $idServicioMedico
- * @property CategoriaServicio $idCategoriaServ
+ * @property Servicio $idServicio
  */
-class ServicioMedico extends CActiveRecord
+class PrecioServicio extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'servicio_medico';
+		return 'precio_servicio';
 	}
 
 	/**
@@ -31,12 +30,13 @@ class ServicioMedico extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre_servicio, id_categoria_serv', 'required'),
-			array('id_servicio_medico, id_categoria_serv', 'numerical', 'integerOnly'=>true),
-			array('nombre_servicio, descripcion_servicio', 'length', 'max'=>128),
+			array('id_servicio, fecha_inicio', 'required'),
+			array('id_servicio', 'numerical', 'integerOnly'=>true),
+			array('monto', 'numerical'),
+			array('fecha_fin', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_servicio_medico, nombre_servicio, descripcion_servicio, id_categoria_serv', 'safe', 'on'=>'search'),
+			array('id_servicio, fecha_inicio, fecha_fin, monto', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +48,7 @@ class ServicioMedico extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idServicioMedico' => array(self::BELONGS_TO, 'Servicio', 'id_servicio_medico'),
-			'idCategoriaServ' => array(self::BELONGS_TO, 'CategoriaServicio', 'id_categoria_serv'),
+			'idServicio' => array(self::BELONGS_TO, 'Servicio', 'id_servicio'),
 		);
 	}
 
@@ -59,10 +58,10 @@ class ServicioMedico extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_servicio_medico' => 'Codigo',
-			'nombre_servicio' => 'Nombre',
-			'descripcion_servicio' => 'Descripcion',
-			'id_categoria_serv' => 'Id Categoria Serv',
+			'id_servicio' => 'Id Servicio',
+			'fecha_inicio' => 'Fecha Inicio',
+			'fecha_fin' => 'Fecha Fin',
+			'monto' => 'Monto',
 		);
 	}
 
@@ -84,10 +83,10 @@ class ServicioMedico extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_servicio_medico',$this->id_servicio_medico);
-		$criteria->compare('nombre_servicio',$this->nombre_servicio,true);
-		$criteria->compare('descripcion_servicio',$this->descripcion_servicio,true);
-		$criteria->compare('id_categoria_serv',$this->id_categoria_serv);
+		$criteria->compare('id_servicio',$this->id_servicio);
+		$criteria->compare('fecha_inicio',$this->fecha_inicio,true);
+		$criteria->compare('fecha_fin',$this->fecha_fin,true);
+		$criteria->compare('monto',$this->monto);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,19 +97,10 @@ class ServicioMedico extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ServicioMedico the static model class
+	 * @return PrecioServicio the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
-    protected function beforeSave(){
-        if($this->isNewRecord){
-            $servicio=new Servicio;
-            $servicio->save();
-            $this->id_servicio_medico =$servicio->id_servicio;
-        }
-        return parent::beforeSave();
-    }
 }

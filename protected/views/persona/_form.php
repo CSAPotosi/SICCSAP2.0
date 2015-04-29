@@ -65,6 +65,13 @@
             <div class="col-md-12">
                 <div class="form-group">
                     <?php echo $form->labelEx($model,'fecha_nacimiento'); ?>
+                    <div class="input-group date" id="datetimepicker1">
+                        <input class="form-control" type="text"/>
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar">
+                            </span>
+                        </span>
+                    </div>
                     <?php echo $form->error($model,'fecha_nacimiento',array('class'=>'label label-danger')); ?>
                 </div>
                 <div class="form-group">
@@ -93,9 +100,7 @@
                 </div>
                 <div class="form-group">
                     <?php echo $form->labelEx($model,'nivel_estudio'); ?>
-
-                        <?php echo $form->dropDownList($model,'nivel_estudio',$model->getNivelestudio(),array('class'=>'form-control')); ?>
-
+                    <?php echo $form->dropDownList($model,'nivel_estudio',$model->getNivelestudio(),array('class'=>'form-control')); ?>
                     <?php echo $form->error($model,'nivel_estudio',array('class'=>'label label-danger')); ?>
                 </div>
 
@@ -149,3 +154,18 @@
 
 
 </div><!-- form -->
+<?php
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/moment.js',CClientScript::POS_END);
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/bootstrap-datetimepicker.min.js',CClientScript::POS_END);
+
+Yii::app()->clientScript->registerScript('datetime','
+    $(function(){
+        $("#datetimepicker1").datetimepicker({
+        	locale:"es",
+        	defaultDate:"04/27/2015",
+        	format:"DD-MM-YYYY HH:mm A",
+        	maxDate:"04/27/2015"
+        });
+    });
+',CClientScript::POS_END);
+?>
