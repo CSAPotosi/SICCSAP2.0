@@ -1,3 +1,11 @@
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Servicios Disponibles</h3>
+        <div class="box-tools pull-right">
+            <button class="btn btn-primary btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+        </div>
+    </div>
+    <div class="box-body">
     <div class="row">
         <div class="col-lg-4 col-xs-12">
             <div class="small-box bg-red">
@@ -84,3 +92,5 @@
             </div>
         </div>
     </div>
+</div>
+</div>
