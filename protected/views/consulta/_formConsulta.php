@@ -1,6 +1,6 @@
 
 <?php echo CHtml::beginForm(CHtml::normalizeUrl(array('consulta/prueba')),'post',array('id'=>'form-consulta'));?>
-    <?php echo CHtml::activeHiddenField($consultaModel,'id_historia'); ?>
+    <?php echo CHtml::activeHiddenField($consultaModel,'id_historia'); ?>s
 
     <?php $this->renderPartial('_formSV',array('listaSV'=>$listaSV));?>
     <div class="row">

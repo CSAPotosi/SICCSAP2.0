@@ -43,7 +43,9 @@
             <div role="tabpanel" class="tab-pane fade especial <?php echo ($consulta_id==0)?'hide':''; ?>" id="receta" aria-labelledby="receta-tab">
                 <div class="box box-solid">
                     <div class="box-body">
-                        hola mundo 12312
+                        <?php
+                            $this->renderPartial('_form_tratamiento',array('tratamientoModel'=>$tratamientoModel,'recetaModel'=>$recetaModel));
+                        ?>
                     </div>
                 </div>
             </div>
