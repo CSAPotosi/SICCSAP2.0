@@ -10,14 +10,6 @@
             'Horarios'=>array('index'),
             $model->id_horario,
         );
-
-        $this->menu=array(
-            array('label'=>'List Horario', 'url'=>array('index')),
-            array('label'=>'Create Horario', 'url'=>array('create')),
-            array('label'=>'Update Horario', 'url'=>array('update', 'id'=>$model->id_horario)),
-            array('label'=>'Delete Horario', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id_horario),'confirm'=>'Are you sure you want to delete this item?')),
-            array('label'=>'Manage Horario', 'url'=>array('admin')),
-        );
         ?>
 
         <div class="box-body">
@@ -79,3 +71,6 @@
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 </div>
+
+
+

@@ -5,7 +5,6 @@
  *
  * The followings are the available columns in table 'tipo_sala':
  * @property integer $id_tipo_sala
- * @property string $nombre_tipo_sala
  * @property string $descripcion_tipo_sala
  *
  * The followings are the available model relations:
@@ -30,12 +29,8 @@ class TipoSala extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre_tipo_sala', 'required'),
 			array('id_tipo_sala', 'numerical', 'integerOnly'=>true),
-			array('nombre_tipo_sala, descripcion_tipo_sala', 'length', 'max'=>128),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id_tipo_sala, nombre_tipo_sala, descripcion_tipo_sala', 'safe', 'on'=>'search'),
+			array(' descripcion_tipo_sala', 'length', 'max'=>128),
 		);
 	}
 
@@ -48,7 +43,7 @@ class TipoSala extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'salas' => array(self::HAS_MANY, 'Sala', 'id_tipo_sala'),
-			'idTipoSala' => array(self::BELONGS_TO, 'Servicio', 'id_tipo_sala'),
+			'servicio' => array(self::BELONGS_TO, 'Servicio', 'id_tipo_sala'),
 		);
 	}
 
@@ -59,7 +54,6 @@ class TipoSala extends CActiveRecord
 	{
 		return array(
 			'id_tipo_sala' => 'Codigo',
-			'nombre_tipo_sala' => 'Nombre Tipo Sala',
 			'descripcion_tipo_sala' => 'Descripcion',
 		);
 	}
@@ -83,7 +77,6 @@ class TipoSala extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id_tipo_sala',$this->id_tipo_sala);
-		$criteria->compare('nombre_tipo_sala',$this->nombre_tipo_sala,true);
 		$criteria->compare('descripcion_tipo_sala',$this->descripcion_tipo_sala,true);
 
 		return new CActiveDataProvider($this, array(
@@ -101,13 +94,4 @@ class TipoSala extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-
-    protected function beforeSave(){
-        if($this->isNewRecord){
-            $servicio=new Servicio;
-            $servicio->save();
-            $this->id_tipo_sala=$servicio->id_servicio;
-        }
-        return parent::beforeSave();
-    }
 }

@@ -33,7 +33,7 @@ class SalaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createSala'),
+				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -50,82 +50,84 @@ class SalaController extends Controller
 	 * Displays a particular model.
 	 * @param integer $id the ID of the model to be displayed
 	 */
-	public function actionView($id)
+	public function actionView($id=0)
 	{
-        $salas=new CActiveDataProvider('Sala',array(
-            'criteria'=>array(
-                'condition'=>"id_tipo_sala={$id}",
-                'order'=>'id_tipo_sala DESC',
-            ),
-            'pagination'=>array(
-                'pageSize'=>10,
-            ),
-        ));
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-            'costo'=>$this->loadCosto($id),
-            'salas'=>$salas,
-		));
+		$this->renderPartial('view');
 	}
 
 	/**
 	 * Creates a new model.
 	 * If creation is successful, the browser will be redirected to the 'view' page.
 	 */
-	public function actionCreate()
+	public function actionCreate($id=0)
 	{
-		$model=new TipoSala;
-        $modelCosto= new Costos;
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
+		$modelTipoSala=new TipoSala;
+        $modelPrecio= new PrecioServicio;
+        $modelServicio= new Servicio;
 
-		if(isset($_POST['TipoSala'],$_POST['Costos']))
-		{
-			$model->attributes=$_POST['TipoSala'];
-            $modelCosto->attributes=$_POST['Costos'];
-            if($model->validate()&&$modelCosto->validate()){
-                $model->save();
-                $modelCosto->id_servicio=$model->id_tipo_sala;
-                $modelCosto->save();
-                $this->redirect(array('view','id'=>$model->id_tipo_sala));
-            }
-		}
+        if($id!=0){
+            $modelTipoSala=TipoSala::model()->findByPk($id);
+            $modelServicio=$modelTipoSala->servicio;
+            $modelPrecio=$modelServicio->precioServicio;
+            if($modelPrecio==null)
+                $modelPrecio=new PrecioServicio;
+        }
 
-		$this->render('create',array(
-			'model'=>$model,
-            'modelCosto'=>$modelCosto,
+		$this->renderPartial('create',array(
+            'modelServicio'=>$modelServicio,
+			'modelTipoSala'=>$modelTipoSala,
+            'modelPrecio'=>$modelPrecio
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-	public function actionUpdate($id)
+    public function actionCreateTipoSalaAjax(){
+        $modelTipoSala=new TipoSala;
+        $modelPrecio= new PrecioServicio;
+        $modelServicio= new Servicio;
+
+        $modelTipoSala->attributes=$_POST['TipoSala'];
+        $modelPrecio->attributes=$_POST['PrecioServicio'];
+        $modelServicio->attributes=$_POST['Servicio'];
+
+        $val=$this->validar(array($modelServicio,$modelTipoSala,$modelPrecio));
+
+
+        if($val){
+            $modelServicio->save(false);
+            $modelTipoSala->id_tipo_sala=$modelServicio->id_servicio; $modelTipoSala->save(false);
+            $modelPrecio->id_servicio=$modelServicio->id_servicio; $modelPrecio->save(false);
+            $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
+            $this->renderPartial('_rowTipoSala',array('listaTipoSala'=>$listaTipoSala));
+            return ;
+        }
+        $this->renderPartial('create',array(
+            'modelServicio'=>$modelServicio,
+            'modelTipoSala'=>$modelTipoSala,
+            'modelPrecio'=>$modelPrecio
+        ));
+    }
+
+	public function actionUpdateTipoSalaAjax()
 	{
-		$model=$this->loadModel($id);
+        if(isset($_POST['Servicio'],$_POST['TipoSala'],$_POST['PrecioServicio'])){
+            $modelServicio=Servicio::model()->findByPk($_POST['Servicio']['id_servicio']);
+            $modelServicio->attributes=$_POST['Servicio'];
+            $modelTipoSala=$modelServicio->tipoSala;
+            $modelTipoSala->attributes=$_POST['TipoSala'];
+            $modelPrecio= new PrecioServicio;
+            $modelPrecio->attributes=$_POST['PrecioServicio'];
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['TipoSala']))
-		{
-			$model->attributes=$_POST['TipoSala'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_tipo_sala));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
+            $val=$this->validar(array($modelServicio,$modelTipoSala,$modelPrecio));
+            return $this->renderPartial('create',array(
+                'modelServicio'=>$modelServicio,
+                'modelTipoSala'=>$modelTipoSala,
+                'modelPrecio'=>$modelPrecio
+            ));
+        }
+        else
+            throw new CHttpException(404,'The requested page does not exist.');
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
@@ -140,26 +142,11 @@ class SalaController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('TipoSala');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
+        $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
+		$this->render('index',array('listaTipoSala'=>$listaTipoSala));
 	}
 
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new TipoSala('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['TipoSala']))
-			$model->attributes=$_GET['TipoSala'];
 
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
 
     public function actionCreateSala(){
         $itemSala=new Sala;
@@ -175,25 +162,6 @@ class SalaController extends Controller
         ));
     }
 
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return TipoSala the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel($id)
-	{
-		$model=TipoSala::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
-	}
-
-	/**
-	 * Performs the AJAX validation.
-	 * @param TipoSala $model the model to be validated
-	 */
 	protected function performAjaxValidation($model)
 	{
 		if(isset($_POST['ajax']) && $_POST['ajax']==='tipo-sala-form')
@@ -202,15 +170,6 @@ class SalaController extends Controller
 			Yii::app()->end();
 		}
 	}
-
-    public function loadCosto($id=0){
-        return Costos::model()->find(
-            'id_servicio=:id and fecha_fin is null',
-            array(
-                ':id'=>$id
-            )
-        );
-    }
 
     public function filterTipoSalaContext($filterChain){
         $tiposalaid=null;
@@ -232,5 +191,14 @@ class SalaController extends Controller
             }
         }
         return $this->_tipoSala;
+    }
+
+
+    public function validar($vector=array()){
+        $flag=true;
+        foreach($vector as $item){
+            $flag=$flag && $item->validate();
+        }
+        return $flag;
     }
 }

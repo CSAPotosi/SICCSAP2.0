@@ -1,5 +1,7 @@
 <?php $this->pageTitle="Listado de Personas"; ?>
 
+
+
 <div class="row">
     <div class="col-md-12">
         <div class="box box-solid">
@@ -69,7 +71,7 @@
 
 <?php
 
-    Yii::app()->clientScript->registerScript('buscadorAjax','
+    Yii::apsp()->clientScript->registerScript('buscadorAjax','
         $("#buscaPersona").keyup(function(){buscarPersona($(this))});
         function buscarPersona(control){
             var cad=control.val();

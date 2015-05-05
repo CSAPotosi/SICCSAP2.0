@@ -39,14 +39,11 @@ class Servicio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_creacion, fecha_actualizacion, id_insti', 'required'),
+			array('fecha_creacion, fecha_actualizacion, id_insti,nombre_serv', 'required'),
 			array('id_insti', 'numerical', 'integerOnly'=>true),
 			array('codigo_serv', 'length', 'max'=>16),
 			array('nombre_serv', 'length', 'max'=>128),
 			array('unidad_serv', 'length', 'max'=>64),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id_servicio, codigo_serv, nombre_serv, unidad_serv, fecha_creacion, fecha_actualizacion, id_insti', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -64,7 +61,7 @@ class Servicio extends CActiveRecord
 			'idInsti' => array(self::BELONGS_TO, 'Institucion', 'id_insti'),
 			'atencionMedica' => array(self::HAS_ONE, 'AtencionMedica', 'id_servicio'),
 			'tipoSala' => array(self::HAS_ONE, 'TipoSala', 'id_tipo_sala'),
-			'precioServicios' => array(self::HAS_MANY, 'PrecioServicio', 'id_servicio'),
+			'precioServicio' => array(self::HAS_ONE, 'PrecioServicio', 'id_servicio','condition'=>'fecha_fin is null'),
 		);
 	}
 
@@ -75,9 +72,9 @@ class Servicio extends CActiveRecord
 	{
 		return array(
 			'id_servicio' => 'Id Servicio',
-			'codigo_serv' => 'Codigo Serv',
-			'nombre_serv' => 'Nombre Serv',
-			'unidad_serv' => 'Unidad Serv',
+			'codigo_serv' => 'Codigo',
+			'nombre_serv' => 'Nombre',
+			'unidad_serv' => 'Unidad',
 			'fecha_creacion' => 'Fecha Creacion',
 			'fecha_actualizacion' => 'Fecha Actualizacion',
 			'id_insti' => 'Id Insti',
@@ -128,5 +125,14 @@ class Servicio extends CActiveRecord
     public function getInstitucion()
     {
         return CHtml::listData(Institucion::model()->findAll(),'id_insti','nombre');
+    }
+
+    protected function beforeValidate(){
+        $this->fecha_actualizacion=date('d-m-Y H:i:s');
+        if($this->isNewRecord)
+            $this->fecha_creacion=date('d-m-Y H:i:s');
+        if($this->id_insti==null||$this->id_insti=='')
+            $this->id_insti=1;
+        return parent::beforeValidate();
     }
 }

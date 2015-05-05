@@ -1,53 +1,36 @@
-<?php
-/* @var $this SalaController */
-/* @var $model TipoSala */
-/* @var $form CActiveForm */
-?>
-
-<div class="form">
-
-<?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'tipo-sala-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
-	'enableAjaxValidation'=>false,
-
-)); ?>
+<?php echo CHtml::beginForm(array('sala/createTipoSalaAjax'),'post',array('id'=>($modelServicio->isNewRecord)?'form-create-tipo_sala':'form-update-tipo_sala'));?>
 <div class="box-body">
+
     <p class="callout callout-danger">Los campos con <span class="required">*</span> son obligatorios.</p>
 
-    <?php echo $form->errorSummary(array($model,$modelCosto),null,null,array('class'=>'alert alert-danger')); ?>
+    <?php echo CHtml::errorSummary(array($modelServicio,$modelTipoSala,$modelPrecio),null,null,array('class'=>'alert alert-danger')) ; ?>
+    <?php
+        if(!$modelServicio->isNewRecord)
+            echo CHtml::activeHiddenField($modelServicio,'id_servicio');
+    ?>
+
+    <div class="form-group">
+        <?php echo CHtml::activeLabel($modelServicio,'nombre_serv');?>
+        <?php echo CHtml::activeTextField($modelServicio,'nombre_serv',array('class'=>'form-control','placeholder'=>'Escribe un nombre')); ?>
+        <?php echo CHtml::error($modelServicio,'nombre_serv',array('class'=>'label label-danger'));?>
+    </div>
 
 	<div class="form-group">
-		<?php echo $form->labelEx($model,'nombre_tipo_sala'); ?>
-		<?php echo $form->textField($model,'nombre_tipo_sala',array('class'=>'form-control','placeholder'=>'Escribe el nombre del tipo de sala')); ?>
-		<?php echo $form->error($model,'nombre_tipo_sala',array('class'=>'label label-danger')); ?>
-	</div>
-
-	<div class="form-group">
-		<?php echo $form->labelEx($model,'descripcion_tipo_sala'); ?>
-		<?php echo $form->textArea($model,'descripcion_tipo_sala',array('class'=>'form-control','placeholder'=>'Escribe una breve descripcion')); ?>
-		<?php echo $form->error($model,'descripcion_tipo_sala',array('class'=>'label label-danger')); ?>
+		<?php echo CHtml::activeLabel($modelTipoSala,'descripcion_tipo_sala'); ?>
+		<?php echo CHtml::activeTextArea($modelTipoSala,'descripcion_tipo_sala',array('class'=>'form-control','placeholder'=>'Escribe una breve descripcion')); ?>
+		<?php echo CHtml::error($modelTipoSala,'descripcion_tipo_sala',array('class'=>'label label-danger')); ?>
 	</div>
 
     <div class="form-group">
-        <?php echo $form->labelEx($modelCosto,'monto'); ?>
+        <?php echo CHtml::activeLabel($modelPrecio,'monto');?>
         <div class="input-group">
-            <span class="input-group-addon"><b>Bs.-</b></span>
-            <?php echo $form->textField($modelCosto,'monto',array('class'=>'form-control','placeholder'=>'0.00')); ?>
+            <span class="input-group-addon">
+                <b>Bs.- </b>
+            </span>
+            <?php echo CHtml::activeTextField($modelPrecio,'monto',array('class'=>'form-control','placeholder'=>'0.00')); ?>
         </div>
-        <?php echo $form->error($modelCosto,'monto',array('class'=>'label label-danger')); ?>
+        <?php echo CHtml::error($modelPrecio,'monto',array('class'=>'label label-danger'));?>
     </div>
 </div>
-	<div class="box-footer">
-        <div class="form-group">
-            <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary btn-lg')); ?>
-        </div>
 
-    </div>
-
-<?php $this->endWidget(); ?>
-
-</div><!-- form -->
+<?php echo CHtml::endForm(); ?>

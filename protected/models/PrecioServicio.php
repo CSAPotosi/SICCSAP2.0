@@ -30,13 +30,9 @@ class PrecioServicio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_servicio, fecha_inicio', 'required'),
+			array('monto', 'required'),
 			array('id_servicio', 'numerical', 'integerOnly'=>true),
 			array('monto', 'numerical'),
-			array('fecha_fin', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id_servicio, fecha_inicio, fecha_fin, monto', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -61,7 +57,7 @@ class PrecioServicio extends CActiveRecord
 			'id_servicio' => 'Id Servicio',
 			'fecha_inicio' => 'Fecha Inicio',
 			'fecha_fin' => 'Fecha Fin',
-			'monto' => 'Monto',
+			'monto' => 'Costo',
 		);
 	}
 
@@ -103,4 +99,9 @@ class PrecioServicio extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    protected function beforeValidate(){
+        if($this->isNewRecord)
+            $this->fecha_inicio=date('d-m-Y H:i:s');
+        return parent::beforeValidate();
+    }
 }

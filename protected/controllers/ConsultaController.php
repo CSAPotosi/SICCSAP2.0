@@ -109,13 +109,7 @@ class ConsultaController extends Controller{
 
     }
     public function actionCreateConsultaAjax(){
-        /*if(isset($_POST['CIE10'])){
-            foreach($_POST['CIE10'] as $item)
-                var_dump($item);
-            Yii::app()->end();
-        }
-        else
-            echo 'nada';*/
+
         $consulta= new Consulta;
         $listaSV=array();
         if(isset($_POST['Consulta'])){

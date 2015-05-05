@@ -58,9 +58,7 @@
                 <div class="icon">
                     <i class="fa fa-bed"></i>
                 </div>
-                <a class="small-box-footer" href="#">
-                    <b>Nuevo Servicio de Salas</b>
-                </a>
+                <?php echo CHtml::link('<b>Ver detalles</b>',array('sala/'),array('class'=>'small-box-footer'))?>
             </div>
         </div>
         <div class="col-lg-4 col-xs-12">

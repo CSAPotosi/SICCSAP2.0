@@ -3,10 +3,26 @@
 /* @var $model HistorialPaciente */
 
 $this->breadcrumbs=array(
-	'Historial Pacientes'=>array('index'),
+	'Historial Medico'=>array('index'),
 	$model->id_historial,
 );
 ?>
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-solid">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <a class="btn btn-block btn-social btn-bitbucket">
+                            <i class="fa fa-ambulance"></i>Internacion
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-12">
         <div class="box">

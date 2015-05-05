@@ -10,3 +10,7 @@ input{
 .pintar{
     background: #000099;
 }
+
+tr>td:last-child>a{
+    color: #333;
+}

@@ -1,16 +1,9 @@
-<?php
-/* @var $this Cie10Controller */
-
-$this->breadcrumbs=array(
-	'Cie10',
-);
-?>
-
 <style>
     select,tr>td{
         font-family: 'Courier New', Courier, monospace;
     }
 </style>
+
 <div class="row">
     <form>
     <div class="col-md-12">
