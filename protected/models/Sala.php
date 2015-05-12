@@ -32,10 +32,8 @@ class Sala extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('numero_sala, id_tipo_sala', 'required'),
-			array('numero_sala, id_tipo_sala', 'numerical', 'integerOnly'=>true),
+			array('numero_sala, id_tipo_sala,estado_sala', 'numerical', 'integerOnly'=>true),
 			array('ubicacion_sala', 'length', 'max'=>128),
-			array('estado_sala', 'length', 'max'=>32),
-			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_sala, numero_sala, ubicacion_sala, estado_sala, id_tipo_sala', 'safe', 'on'=>'search'),
 		);
@@ -107,11 +105,14 @@ class Sala extends CActiveRecord
 		return parent::model($className);
 	}
 
-    protected function beforeValidate(){
-        if($this->isNewRecord)
-            $this->estado_sala='ACTIVO';
-        return parent::beforeValidate();
+    public function getStateString(){
+        $states=array(1=>'ACTIVO',2=>'EN USO',3=>'MANTENIMIENTO',4=>'INACTIVO');
+        return $states[$this->estado_sala];
     }
 
-
+    protected function beforeValidate(){
+        if($this->isNewRecord)
+            $this->estado_sala=1;
+        return parent::beforeValidate();
+    }
 }

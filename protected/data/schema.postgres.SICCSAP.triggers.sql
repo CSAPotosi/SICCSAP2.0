@@ -83,3 +83,21 @@ language 'plpgsql';
 create trigger trigger_new_persona
 before insert or update on persona
 for each row execute procedure generarCodigoPersona();
+
+
+create or replace function actualizarPrecio() returns trigger as $$
+declare
+  id_servicio int;
+begin
+  insert into precio_servicio values (NEW.id_servicio,now(),null,NEW.monto);
+  NEW.monto=OLD.monto;
+  NEW.fecha_fin=now();
+  return NEW;
+end;
+$$
+language 'plpgsql';
+
+create trigger trigger_update_precio
+  before update on precio_servicio
+  for each row when (OLD.monto is distinct from NEW.monto)
+execute procedure actualizarPrecio();

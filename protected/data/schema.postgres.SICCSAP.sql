@@ -238,7 +238,7 @@ create table if not exists antecedente_medico(
 );
 
 
-//parte cie 10
+--parte cie 10
 
 create table if not exists capitulo_cie10(
   num_capitulo varchar(8) primary key not null,
@@ -306,7 +306,7 @@ create table if not exists sala(
   id_sala serial not null primary key,
   numero_sala int not null,
   ubicacion_sala varchar(128),
-  estado_sala varchar(32),
+  estado_sala int,
   id_tipo_sala int not null,
   foreign key (id_tipo_sala) references tipo_sala(id_tipo_sala)
 );
@@ -409,7 +409,7 @@ create table if not exists diagnostico_internacion(
   id_diag_int serial not null primary key ,
   tipo_diag varchar (16) not null --de ingreso, de egreso o de valoracion
 );
-
+/*
 create table if not exists internacion(
   id_inter serial not null primary key ,
   id_historial int not null ,
@@ -424,7 +424,7 @@ create table if not exists internacion(
   observacion_alta varchar (256),
   --referencias
   foreign key (id_historial) references historial_paciente(id_historial),
-  foreign key (id_diagnostico_egreso) references diagnostico_internacion(id_diag_int),
+  foreign key (id_diagnostico_egreso) references diagnostico_internacion(id_diag_int)
 );
 
 create table if not exists referencia_internacion(
@@ -434,7 +434,9 @@ create table if not exists referencia_internacion(
   foreign key (id_inter) references internacion(id_inter),
   foreign key (id_insti)references institucion(id_insti)
 );
+*/
 
+/*
 insert into persona (dni, nombres, primer_apellido) values ('3434242','Juan','Perez');
 insert into empleado(id) values (1);
-insert into usuario( nombre, clave, id_empleado) values ('admin',md5('admin'),1);
+insert into usuario( nombre, clave, id_empleado) values ('admin',md5('admin'),1);*/

@@ -8,9 +8,9 @@ $this->breadcrumbs=array(
     <div class="col-md-6">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Tipos de Sala</h3>
+                <h3 class="box-title">Tipos de salas</h3>
             </div>
-            <div class="box-body" id="contenido_tipo_sala">
+            <div class="box-body table-responsive" id="contenido_tipo_sala">
                 <?php $this->renderPartial('_rowTipoSala',array('listaTipoSala'=>$listaTipoSala));?>
             </div>
             <div class="box-footer">
@@ -18,14 +18,21 @@ $this->breadcrumbs=array(
             </div>
         </div>
     </div>
+
     <div class="col-md-6">
         <div class="box box-primary">
             <div class="box-header">
-                <h3 class="box-title">Salas existentes</h3>
+                <h3 class="box-title">Salas <small id="title-sala">Seleccione un tipo</small></h3>
             </div>
-            <div class="box-body">
+            <div class="box-body" id="contenido_sala">
+                <?php $this->renderPartial('_tableSala',array('listaSala'=>$listaSala));?>
             </div>
+
             <div class="box-footer">
+                <?php echo CHtml::link('Nuevo',array('#'),array('class'=>'btn btn-primary','data-toggle'=>'modal','data-target'=>'#modalCreateSala'));?>
+                <button type="button" id="popover" class="btn btn-default" data-html="true" data-container="body" data-toggle="popover" data-placement="top" data-content="<a href='#' class='btn btn-primary btn-xs'>ACTIVO</a><a href='#' class='btn btn-primary btn-xs'>INACTIVO</a>">
+                    Popover on top
+                </button>
             </div>
         </div>
     </div>
@@ -83,8 +90,26 @@ $this->breadcrumbs=array(
     </div>
 </div>
 
+
+<div class="modal fade" id="modalCreateSala" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Nueva Sala</h4>
+            </div>
+            <div class="modal-body" id="modalContenedorCreateSala">
+            </div>
+            <div class="modal-footer clearfix">
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php
 Yii::app()->clientScript->registerScript('ajax','
+
+  $("#popover").popover();
+
     cargarEventosClick();
     $("#btnAddTipoSala").on("click",ajaxConsulta);
     function ajaxConsulta(){
@@ -98,6 +123,7 @@ Yii::app()->clientScript->registerScript('ajax','
             type:"post",
             data:$("#form-create-tipo_sala").serialize(),
             success:function(datos){
+
                 var contenido=$("<div>").html(datos);
                 if(contenido.children("#flag").val()==null){
                     $("#contenido_tipo_sala").html(datos);
@@ -121,10 +147,19 @@ Yii::app()->clientScript->registerScript('ajax','
             data:$("#form-update-tipo_sala").serialize(),
             type:"post",
             success:function(datos){
-                $("#modal_contenedorUpdate").html(datos);
+                var contenido=$("<div>").html(datos);
+                if(contenido.children("#flagUpdate").val()==null){
+                    $("#contenido_tipo_sala").html(datos);
+                    $("#modalUpdateTipoSala").modal("hide");
+                }
+                else{
+                    $("#modal_contenedorUpdate").html(datos);
+                }
+                cargarEventosClick();
             }
         });
     }
+
     $(document).ajaxComplete(function(){
         $(".overlay").remove();
         $(".loading-img").remove();
@@ -176,11 +211,53 @@ Yii::app()->clientScript->registerScript('ajax','
         });
 
         $(".btnDelTipoSala").on("click",function(){
-            alert("cerrar");
+            if(confirm("¿Estas seguro de eliminar este elemento?")){
+                $.ajax({
+                    url:$(this).attr("href"),
+                    type:"post",
+                    success:function(datos){
+                        $("#contenido_tipo_sala").html(datos);
+                    }
+                });
+            }
+            return false;
+        });
+        $(".btnListSala").on("click",function(){
+            $.ajax({
+                url:$(this).attr("href"),
+                type:"post",
+                success:function(datos){
+                    $("#contenido_sala").html(datos);
+                    cargaEventosSala();
+                }
+            });
+            $("#title-sala").text($(this).parent("td").siblings().eq(0).text());
             return false;
         });
     }
 
+    function cargaEventosSala(){
+        $(".btnStatusSala").popover({
+            content:"contenido",
+            placement:"top",
+        });
+
+        $(".btnStatusSala").on("shown.bs.popover",function(){
+            $(".changeStateSala").on("click",function(){
+                $.ajax({
+                    url:$(this).attr("href"),
+                    success:function(datos){
+                        $("#contenido_sala").html(datos);
+                        cargaEventosSala();
+                    }
+                });
+                return false;
+            });
+        });
+
+        $(".btnStatusSala").on("click",function(){ return false;});
+
+    }
 
 ',CClientScript::POS_END);
 ?>

@@ -33,7 +33,7 @@ class SalaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax'),
+				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -46,19 +46,6 @@ class SalaController extends Controller
 		);
 	}
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id=0)
-	{
-		$this->renderPartial('view');
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
 	public function actionCreate($id=0)
 	{
 		$modelTipoSala=new TipoSala;
@@ -114,10 +101,23 @@ class SalaController extends Controller
             $modelServicio->attributes=$_POST['Servicio'];
             $modelTipoSala=$modelServicio->tipoSala;
             $modelTipoSala->attributes=$_POST['TipoSala'];
-            $modelPrecio= new PrecioServicio;
+            $modelPrecio= $modelServicio->precioServicio;
+            if($modelPrecio==null){
+                $modelPrecio=new PrecioServicio;
+                $modelPrecio->id_servicio=$modelServicio->id_servicio;
+            }
+
             $modelPrecio->attributes=$_POST['PrecioServicio'];
 
             $val=$this->validar(array($modelServicio,$modelTipoSala,$modelPrecio));
+            if($val){
+                $modelServicio->save(false);
+                $modelTipoSala->save(false);
+                $modelPrecio->save(false);
+                $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
+                return $this->renderPartial('_rowTipoSala',array('listaTipoSala'=>$listaTipoSala));
+            }
+
             return $this->renderPartial('create',array(
                 'modelServicio'=>$modelServicio,
                 'modelTipoSala'=>$modelTipoSala,
@@ -130,11 +130,14 @@ class SalaController extends Controller
 
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        $modelServicio=Servicio::model()->findByPk($id);
+        if($modelServicio->tipoSala->salas==null){
+            $modelServicio->tipoSala->delete();
+            PrecioServicio::model()->deleteAll("id_servicio = {$modelServicio->id_servicio}");
+            $modelServicio->delete();
+        }
+        $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
+        return $this->renderPartial('_rowTipoSala',array('listaTipoSala'=>$listaTipoSala));
 	}
 
 	/**
@@ -143,10 +146,18 @@ class SalaController extends Controller
 	public function actionIndex()
 	{
         $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
-		$this->render('index',array('listaTipoSala'=>$listaTipoSala));
+        $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = 0","order"=>"id_tipo_sala DESC"));
+        //$listaSala=new CActiveDataProvider('Sala',array('pagination'=>false,'criteria'=>array('order'=>'id_sala DESC','condition'=>'id_tipo_sala =0')));
+		$this->render('index',array('listaTipoSala'=>$listaTipoSala,'listaSala'=>$listaSala));
+
+
 	}
 
+    public function actionListSalasAjax($id=0){
+        $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = $id","order"=>"estado_sala ASC,numero_sala DESC"));
 
+        $this->renderPartial('_tableSala',array('listaSala'=>$listaSala));
+    }
 
     public function actionCreateSala(){
         $itemSala=new Sala;
@@ -191,6 +202,18 @@ class SalaController extends Controller
             }
         }
         return $this->_tipoSala;
+    }
+
+    public function actionChangeStateSalaAjax($id=0,$state=1){
+        $modelSala=Sala::model()->findByPk($id);
+        $id_tipo=0;
+        if($modelSala!=null){
+            $modelSala->estado_sala=$state;
+            $modelSala->save();
+            $id_tipo=$modelSala->id_tipo_sala;
+        }
+        $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = $id_tipo","order"=>"estado_sala ASC,numero_sala DESC"));
+        $this->renderPartial('_tableSala',array('listaSala'=>$listaSala));
     }
 
 
