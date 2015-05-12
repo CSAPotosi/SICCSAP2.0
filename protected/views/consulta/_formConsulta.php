@@ -34,7 +34,6 @@
     </div>
 
     <div class="row">
-
         <div class="col-md-10 table-responsive">
             <label for="">Clasificacion CIE10</label>
             <table class="table table-hover table-bordered" name="tabla">
@@ -42,7 +41,6 @@
                 <tr><th style="width: 15%">Codigo</th><th>Titulo</th><th style="width: 10%"></th></tr>
                 </thead>
                 <tbody id="clasificacion_cie10">
-
                 </tbody>
             </table>
         </div>

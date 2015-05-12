@@ -378,12 +378,7 @@
         <!-- bootstrap time picker -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
         <!-- Page script -->
-        <script>
-            $("#search").keyup(function(){
-                if($(this).val().length>3)
-                    alert('estas intentando buscar '+$(this).val());
-            });
-        </script>
+
 
     </body>
 </html>

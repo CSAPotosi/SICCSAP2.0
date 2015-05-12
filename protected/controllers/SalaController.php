@@ -71,14 +71,10 @@ class SalaController extends Controller
         $modelTipoSala=new TipoSala;
         $modelPrecio= new PrecioServicio;
         $modelServicio= new Servicio;
-
         $modelTipoSala->attributes=$_POST['TipoSala'];
         $modelPrecio->attributes=$_POST['PrecioServicio'];
         $modelServicio->attributes=$_POST['Servicio'];
-
         $val=$this->validar(array($modelServicio,$modelTipoSala,$modelPrecio));
-
-
         if($val){
             $modelServicio->save(false);
             $modelTipoSala->id_tipo_sala=$modelServicio->id_servicio; $modelTipoSala->save(false);
@@ -93,7 +89,6 @@ class SalaController extends Controller
             'modelPrecio'=>$modelPrecio
         ));
     }
-
 	public function actionUpdateTipoSalaAjax()
 	{
         if(isset($_POST['Servicio'],$_POST['TipoSala'],$_POST['PrecioServicio'])){

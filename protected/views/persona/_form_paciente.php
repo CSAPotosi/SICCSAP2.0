@@ -16,7 +16,7 @@
 
         <?php echo $form->errorSummary($paciente,null,null,array('class'=>'alert alert-error')); ?>
 
-        <input type="hidden" value="<?php echo $lastid?>" name="Paciente[id_paciente]">
+        <input type="hidden" value="<?php echo $lastid;?>" name="Paciente[id_paciente]">
         <div class="form-group">
             <?php echo $form->labelEx($paciente,'ocupacion_paciente',array('class'=>'col-md-2 control-label')); ?>
             <div class="col-sm-8">
@@ -75,105 +75,25 @@
                 </h4>
             </div>
             <div class="modal-body">
-                <div class="buscador">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="input-group margin">
-                                <input class="form-control" type="text" id="buscacontacto" placeholder="CI - Nombres - Fecha de Naciemiento">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-info btn-float" type="button"><i class="fa fa-fw fa-search"></i></button>
-                                </span>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box box-solid">
+                            <div class="box-body" id="contenedormodalcontacto">
+                                <?php $this->renderPartial('_form_contacto',array('contacto'=>new Persona,'valorcontacto'=>"0",'id_persona_contacto'=>"",'nombre_completo'=>"")); ?>
                             </div>
                         </div>
                     </div>
-                </div>
-                <button class="btn btn-primary" id="activarformulario">Nuevo Contacto</button>
-                <div id="contenidoListaContactos">
-                </div>
-                <div id="formulario_contacto">
-                    <?php $form=$this->beginWidget('CActiveForm', array(
-                        'id'=>'persona-form-contacto',
-                        // Please note: When you enable ajax validation, make sure the corresponding
-                        // controller action is handling ajax validation correctly.
-                        // There is a call to performAjaxValidation() commented in generated controller code.
-                        // See class documentation of CActiveForm for details on this.
-                        'enableAjaxValidation'=>false,
-                        'htmlOptions'=>array('class'=>'form-horizontal'),
-                    )); ?>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <?php echo $form->textField($contacto,'dni',array('class'=>'form-control text-center','placeholder'=>'dni')); ?>
-                        </div>
-                        <?php echo $form->error($contacto,'dni',array('class'=>'label label-danger')); ?>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <?php echo $form->textField($contacto,'nombres',array('class'=>'form-control text-center','placeholder'=>'nombres')); ?>
-                        </div>
-                        <?php echo $form->error($contacto,'nombres',array('class'=>'label label-danger')); ?>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <?php echo $form->textField($contacto,'primer_apellido',array('class'=>'form-control text-center','placeholder'=>'Primer Apellido')); ?>
-                        </div>
-                        <?php echo $form->error($contacto,'primer_apellido',array('class'=>'label label-danger')); ?>
-                    </div>
-                    <div class="form-group">
-
-                        <div class="col-sm-12">
-                            <?php echo $form->textField($contacto,'segundo_apellido',array('class'=>'form-control text-center','placeholder'=>'Segundo Apellido')); ?>
-                        </div>
-                        <?php echo $form->error($contacto,'segundo_apellido',array('class'=>'label label-danger')); ?>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <div class="input-group">
-                                <span class="input-group-addon"><b>Fecha de Nacimiento:</b></span>
-                                <?php echo $form->dateField($contacto,'fecha_nacimiento',array('class'=>'form-control text-center','for')); ?>
-                            </div>
-                        </div>
-                        <?php echo $form->error($contacto,'fecha_nacimiento',array('class'=>'label label-danger')); ?>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <?php echo $form->textField($contacto,'direccion',array('class'=>'form-control text-center','placeholder'=>'Direccion')); ?>
-                        </div>
-                        <?php echo $form->error($contacto,'direccion',array('class'=>'label label-danger')); ?>
-                    </div>
-
-                    <div class="form-group">
-
-                        <div class="col-sm-12">
-                            <?php echo $form->textField($contacto,'telefono',array('class'=>'form-control text-center','placeholder'=>'Telefono')); ?>
-                        </div>
-                        <?php echo $form->error($contacto,'telefono',array('class'=>'label label-danger')); ?>
-                    </div>
-                    <input id="Persona_fotogradia" name="Persona[fotografia]" type="hidden" value="no-photo.png">
-                    <?php echo CHtml::Button('Guardar',
-                        array('id'=>'btncontacto','class'=>'btn btn-primary pull-left')); ?>
-                    <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</button>
-                    <?php $this->endWidget(); ?>
                 </div>
             </div>
-            <div class="modal-footer clearfix">
+            <div class="modal-footer clearfix" id="btnfootercontacto">
+                <?php echo CHtml::Button('Guardar',array('id'=>'btncontacto','class'=>'btn btn-primary pull-left')); ?>
+                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal" id="cancelarcontacto">Cancelar</button>
             </div>
         </div>
     </div>
 </div>
-<script>
+<?php Yii::app()->clientScript->registerScript('Controlcontacto','
     $(document).ready(function(){
-        $('#btncontacto').click(function(){
-            $('#contacto').modal('toggle');
-            $('#persona-form')[0].reset();
-        })
-    })
-</script>
-<?php Yii::app()->clientScript->registerScript('ControlAntecedentes','
-    $(document).ready(function(){
-         $("#formulario_contacto").hide();
-         $("#activarformulario").click(function(){
-            $("#formulario_contacto").show();
-         });
          $(\'#btncontacto\').click(function(){
              var data=$("#persona-form-contacto").serialize();
              $.ajax({
@@ -182,40 +102,68 @@
                  data: data,
                  success: function(datos)
                  {
-                 $("#id_cont").val(""+datos.id_contacto+"");
-                 $("#nomcont").val(""+datos.nombre_contacto+"");
+                    $("#contenedormodalcontacto").html(datos);
+                    if($("#campocontacto").val()==1){
+                        $(\'#contacto\').modal(\'toggle\');
+                        $("#persona-form-contacto")[0].reset();
+                        $("#id_cont").val($("#id_persona_contacto").val());
+                        $("#nomcont").val($("#nombre_completo").val());
+                    }
+                    $("#buscacontacto").on("keyup",buscarContacto);
                  }
              });
              return false;
          });
-         $(\'#btncontacto\').click(function(){
-            $(\'#contacto\').modal(\'toggle\');
-            $(\'#persona-form\')[0].reset();
-        })
-        $("#buscacontacto").keyup(function(){
-        buscarContacto($(this))
-        });
+         $(\'#cancelarcontacto\').click(function(){
+             var data=$("#persona-form-contacto").serialize();
+             $.ajax({
+                 url: \''.CHtml::normalizeUrl(array("/Persona/Nc",)).'\',
+                 type: \'post\',
+                 data: data,
+                 success: function(datos)
+                 {
+                    $("#contenedormodalcontacto").html(datos);
+                    $(\'#contacto\').modal(\'toggle\');
+                    $("#buscacontacto").on("keyup",buscarContacto);
+                 }
+             });
+             return false;
+         });
 
-        function buscarContacto(control){
+        $("#buscacontacto").on("keyup",buscarContacto);
+        function buscarContacto(){
+            var control=$(this);
             var cad=control.val();
-            if(cad.length>4||cad.length==0){
-                ajaxBuscaContacto(control);
-            }
+               if(cad.length>4||cad.length==0){
+                    ajaxBuscaContacto(control);
+               }
         };
         function ajaxBuscaContacto(control){
             $.ajax({
-                url:"'.CHtml::normalizeUrl(array('persona/buscarContactoAjax')).'",
-                type:"post",
-                data:{cadena:control.val()},
-                success:function(datos){
-                    $("#contenidoListaContactos").html(datos);
-                },
-                complete:function(){
-                    $(".overlay").remove();
-                    $(".loading-img").remove();
-                }
+               beforeSend:function(){
+                $("#contenidoListaContactos").append($("<div class=\'overlay\'>"));
+                $("#contenidoListaContactos").append($("<div class=\'loading-img\'>"));
+               },
+               url:"'.CHtml::normalizeUrl(array('persona/buscarContactoAjax')).'",
+               type:"post",
+               data:{cadena:control.val()},
+               success:function(datos){
+                  $("#contenidoListaContactos").html(datos);
+                  $("tr").on("click",function(){
+                      var id = $(this).attr("data");
+                      var nombre = $(this).attr("datanom");
+                      $("#id_cont").val(id);
+                      $("#nomcont").val(nombre);
+                      $(\'#contacto\').modal(\'toggle\');
+                  });
+
+               },
+               complete:function(){
+                  $(".overlay").remove();
+                  $(".loading-img").remove();
+               }
             });
             return false;
         }
-    });
+        });
 ');?>

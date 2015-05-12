@@ -70,7 +70,6 @@ $this->pageTitle="Pagina Principal";
         </div>
     </div>
 </div>
-
 <?php
 
 Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/moment.js',CClientScript::POS_END);

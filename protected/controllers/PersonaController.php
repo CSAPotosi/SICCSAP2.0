@@ -27,7 +27,7 @@ class PersonaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper',),
+				'actions'=>array('index','view','Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper','Nc'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -83,13 +83,9 @@ class PersonaController extends Controller
                 $filename = $_POST['Persona']['dni'].'.png';
                 $filepath = YiiBase::getPathOfAlias("webroot").'/fotografias/'.$filename;
                 $writeToDisk = file_put_contents($filepath, $data_foto);
-
-                //var_dump($cadena_foto);
-                //Yii::app()->end();
             }
 			$model->attributes=array_map('strtoupper',$_POST['Persona']);
             $model->fotografia=$filename;
-
 			if($model->save())
 				$this->redirect(array('update','id'=>$model->id));
 
@@ -112,10 +108,16 @@ class PersonaController extends Controller
         if(isset($_POST['Persona']))
         {
             $Percontacto->attributes=array_map('strtoupper',$_POST['Persona']);
-            $Percontacto->save();
+            if($Percontacto->save()){
+                $this->renderPartial('_form_contacto',array('contacto'=>$Percontacto,'valorcontacto'=>"1",'id_persona_contacto'=>$Percontacto->id,'nombre_completo'=>$Percontacto->getNombreCompleto()));
+                return;
+            }
         }
-        header('Content-Type:application/json;');
-        echo CJSON::encode(array('success'=>true,'nombre_contacto'=>$Percontacto->GetNombreCompleto(),'id_contacto'=>$Percontacto->id));
+        $this->renderPartial('_form_contacto',array('contacto'=>$Percontacto,'valorcontacto'=>"0",'id_persona_contacto'=>"",'nombre_completo'=>""));
+    }
+    public function actionNc(){
+        $contacto=new Persona;
+        $this->renderPartial('_form_contacto',array('contacto'=>$contacto,'valorcontacto'=>"0"));
     }
     public function actionCrearpaciente()
     {
@@ -162,7 +164,6 @@ class PersonaController extends Controller
                     $this->redirect(array('index'));
             }
 		}
-
 		$this->render('update',array(
 			'model'=>$model,
             'paciente'=>$paciente,
@@ -268,14 +269,6 @@ class PersonaController extends Controller
 			'model'=>$model,
 		));
 	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Persona the loaded model
-	 * @throws CHttpException
-	 */
 	public function loadModel($id)
 	{
 		$model=Persona::model()->findByPk($id);

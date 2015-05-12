@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade active in" id="paciente">>
+            <div class="tab-pane fade active in" id="paciente">
                 <div class="box box-solid">
                     <div class="box-body">
                         <div class="row">

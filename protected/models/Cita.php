@@ -1,24 +1,29 @@
 <?php
 
 /**
- * This is the model class for table "categoria_ex_laboratorio".
+ * This is the model class for table "cita".
  *
- * The followings are the available columns in table 'categoria_ex_laboratorio':
- * @property integer $id_cat_lab
- * @property string $codigo_cat_lab
- * @property string $nombre_cat_lab
+ * The followings are the available columns in table 'cita':
+ * @property integer $id_cita
+ * @property integer $id_historial
+ * @property string $descripcion
+ * @property string $tipo_cita
+ * @property string $nota_cita
+ * @property string $fecha
+ * @property string $hora
+ * @property string $duracion
  *
  * The followings are the available model relations:
- * @property ExamenLaboratorio[] $examenLaboratorios
+ * @property HistorialPaciente $idHistorial
  */
-class CategoriaExLaboratorio extends CActiveRecord
+class Cita extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'categoria_ex_laboratorio';
+		return 'cita';
 	}
 
 	/**
@@ -29,12 +34,13 @@ class CategoriaExLaboratorio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre_cat_lab', 'required'),
-			array('codigo_cat_lab', 'length', 'max'=>8),
-			array('nombre_cat_lab', 'length', 'max'=>32),
+			array('id_historial', 'numerical', 'integerOnly'=>true),
+			array('descripcion, nota_cita', 'length', 'max'=>256),
+			array('tipo_cita', 'length', 'max'=>64),
+			array('fecha, hora, duracion', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_cat_lab, codigo_cat_lab, nombre_cat_lab', 'safe', 'on'=>'search'),
+			array('id_cita, id_historial, descripcion, tipo_cita, nota_cita, fecha, hora, duracion', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,7 +52,7 @@ class CategoriaExLaboratorio extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'examenLaboratorios' => array(self::HAS_MANY, 'ExamenLaboratorio', 'id_cat_lab'),
+			'idHistorial' => array(self::BELONGS_TO, 'HistorialPaciente', 'id_historial'),
 		);
 	}
 
@@ -56,9 +62,14 @@ class CategoriaExLaboratorio extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_cat_lab' => 'Id Cat Lab',
-			'codigo_cat_lab' => 'Codigo Cat Lab',
-			'nombre_cat_lab' => 'Nombre Cat Lab',
+			'id_cita' => 'Id Cita',
+			'id_historial' => 'Id Historial',
+			'descripcion' => 'Descripcion',
+			'tipo_cita' => 'Tipo Cita',
+			'nota_cita' => 'Nota Cita',
+			'fecha' => 'Fecha',
+			'hora' => 'Hora',
+			'duracion' => 'Duracion',
 		);
 	}
 
@@ -80,9 +91,14 @@ class CategoriaExLaboratorio extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_cat_lab',$this->id_cat_lab);
-		$criteria->compare('codigo_cat_lab',$this->codigo_cat_lab,true);
-		$criteria->compare('nombre_cat_lab',$this->nombre_cat_lab,true);
+		$criteria->compare('id_cita',$this->id_cita);
+		$criteria->compare('id_historial',$this->id_historial);
+		$criteria->compare('descripcion',$this->descripcion,true);
+		$criteria->compare('tipo_cita',$this->tipo_cita,true);
+		$criteria->compare('nota_cita',$this->nota_cita,true);
+		$criteria->compare('fecha',$this->fecha,true);
+		$criteria->compare('hora',$this->hora,true);
+		$criteria->compare('duracion',$this->duracion,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -93,7 +109,7 @@ class CategoriaExLaboratorio extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return CategoriaExLaboratorio the static model class
+	 * @return Cita the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

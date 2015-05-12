@@ -174,15 +174,12 @@ Yii::app()->clientScript->registerScript('ajax','
             }
         });
     }
-
     $("#modalTipoSala").on("hidden.bs.modal",nuevoFormTipoSala);
-
     function cargarEventosClick(){
         $(".btnVerTipoSala").on("click",function(){
             $.ajax({
                 beforeSend:function(){
                     console.log("hola");
-
                 },
                 url:$(this).attr("href"),
                 type:"post",
@@ -209,7 +206,6 @@ Yii::app()->clientScript->registerScript('ajax','
             $("#modalUpdateTipoSala").modal("show");
             return false;
         });
-
         $(".btnDelTipoSala").on("click",function(){
             if(confirm("¿Estas seguro de eliminar este elemento?")){
                 $.ajax({
