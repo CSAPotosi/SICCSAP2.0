@@ -28,7 +28,7 @@ class ServicioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','Crearlab','Categorialab','CrearcategorialabAjax','Updatecatlab','UpdatecategoriaAjax','DeletecategoriaAjax','Deletecatlab','Itemcatlab','CreateItemlabAjax','Nuevoitemlab','Nuevocatlab','Updateitemcatlab'),
+				'actions'=>array('index','view','Crearlab','Categorialab','CrearcategorialabAjax','Updatecatlab','UpdatecategoriaAjax','DeletecategoriaAjax','Deletecatlab','Itemcatlab','CreateItemlabAjax','Nuevoitemlab','Nuevocatlab','Updateitemcatlab','Upditemlabc','Detalleitemcatlab','Deleteitemcatlab','BuscarItemlabAjax'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -172,56 +172,56 @@ class ServicioController extends Controller
     }
     public function actionUpdateitemcatlab($id){
         $servicio=Servicio::model()->findByPk($id);
-
-
-
+        $precio=$servicio->precioServicio;
         $this->renderPartial('_form_cat_lab_item',array('servicio'=>$servicio,'precio'=>$precio));
-        return;
     }
-	public function actionUpdate($id)
-	{
-		$model=$this->loadModel($id);
-		if(isset($_POST['Servicio']))
-		{
-            $model->attributes=array_map('strtoupper',$_POST['Servicio']);
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_servicio));
-		}
-		$this->render('update',array(
-			'model'=>$model,
-		));
-	}
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
+    public function actionUpditemlabc(){
+            if(isset($_POST['Servicio'],$_POST['PrecioServicio'])){
+            $servicio=Servicio::model()->findByPk($_POST['Servicio']['id_servicio']);
+            $servicio->attributes=$_POST['Servicio'];
+            $precio=$servicio->precioServicio;
+            $precio->attributes=$_POST['PrecioServicio'];
+            $val=$this->validar(array($servicio,$precio));
+            if($val){
+                $servicio->save(false);
+                $precio->id_servicio=$servicio->id_servicio;
+                $precio->save(false);
+                $exlab=$servicio->examenLaboratorio;
+                $listaitem=ExamenLaboratorio::model()->findAll(array('order'=>'id_servicio ASC'));
+                $this->renderPartial('_form_item_cat_lab_row',array('listitemlab'=>$listaitem,'cat_btn_item'=>$exlab->id_cat_lab));
+                return;
+            }
+            }
+        $this->renderPartial('_form_cat_lab_item',array('servicio'=>$servicio,'precio'=>$precio));
+    }
+    public function actionDetalleitemcatlab($id){
+        $servicio=Servicio::model()->findByPk($id);
+        $precio=$servicio->precioServicio;
+        $this->renderPartial('_form_detalle_items',array('servicio'=>$servicio,'precio'=>$precio));
+    }
+    public function actionDeleteitemcatlab($id){
+        $servicio=Servicio::model()->findByPk($id);
+        $precio=$servicio->precioServicio;
+        $exlab=$servicio->examenLaboratorio;
+        $cat_btn_item=$servicio->examenLaboratorio->id_cat_lab;
+        $precio->delete();
+        $exlab->delete();
+        $servicio->delete();
+        $listitemlab=ExamenLaboratorio::model()->findAll();
+        $this->renderPartial('_form_item_cat_lab_row',array('listitemlab'=>$listitemlab,'cat_btn_item'=>$cat_btn_item));
+    }
+    public function actionBuscarItemlabAjax(){
+        $nombre= $_POST['cadena'];
+        $catitem= $_POST['catitem'];
+        $listaitemcat=Servicio::model()->findAll(array(
+            'condition'=>"nombre_serv like '%{$nombre}%'",
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	/**
-	 * Lists all models.
-	 */
-	public function actionIndex()
-	{
-		$dataProvider=new CActiveDataProvider('Servicio');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));
-	}
-	public function actionAdmin()
-	{
-		$model=new Servicio('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Servicio']))
-			$model->attributes=$_GET['Servicio'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
-
+        ));
+        foreach($listaitemcat as $list):
+            $listitemlab[]=$list->examenLaboratorio;
+        endforeach;
+        $this->renderPartial('_form_item_cat_lab_row',array('listitemlab'=>$listitemlab,'cat_btn_item'=>$catitem));
+    }
 	public function loadModel($id)
 	{
 		$model=Servicio::model()->findByPk($id);

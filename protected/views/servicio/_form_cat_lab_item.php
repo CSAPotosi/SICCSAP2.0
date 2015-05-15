@@ -4,11 +4,15 @@
         <div class="box box-solid">
             <div class="box-body">
                 <div class="contenedorformcatlab" id="contenedorformcatlab">
-                    <?php $form=$this->beginWidget('CActiveForm',array('id'=>'form-cat-lab-item','enableAjaxValidation'=>false,'htmlOptions'=>array('class'=>'form-horizontal'),)); ?>
+                    <?php $form=$this->beginWidget('CActiveForm',array('id'=>($servicio->isNewRecord ?'form-cat-lab-item':'form-upd-cat-lab-item'),'enableAjaxValidation'=>false,'htmlOptions'=>array('class'=>'form-horizontal'),)); ?>
                         <div class="box-body">
                             <?php echo CHtml::errorSummary($servicio,null,null,array('class'=>'alert alert-error')); ?>
                             <input id="cat_lab_item_campo" type="hidden" value="" name="ExamenLaboratorio[id_cat_lab]" id="ExamenLaboratorio_id_cat_lab">
+                            <?php if($servicio->isNewRecord){}else{?>
+                            <input type="hidden" value="<?php echo $servicio->id_servicio;?>" name="Servicio[id_servicio]" id="Servicio_id_servicio">
+                            <?php }?>
                             <div class="form-group">
+
                                 <?php echo CHtml::activelabelEx($servicio,'Codigo de Servicio'); ?>
                                 <?php echo CHtml::activetextField($servicio,'codigo_serv',array('class'=>'form-control','placeholder'=>'Codigo Servicio')); ?>
                                 <?php echo CHtml::error($servicio,'codigo_serv',array('class'=>'label label-danger')); ?>

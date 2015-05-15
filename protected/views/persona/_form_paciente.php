@@ -140,10 +140,6 @@
         };
         function ajaxBuscaContacto(control){
             $.ajax({
-               beforeSend:function(){
-                $("#contenidoListaContactos").append($("<div class=\'overlay\'>"));
-                $("#contenidoListaContactos").append($("<div class=\'loading-img\'>"));
-               },
                url:"'.CHtml::normalizeUrl(array('persona/buscarContactoAjax')).'",
                type:"post",
                data:{cadena:control.val()},
@@ -158,10 +154,6 @@
                   });
 
                },
-               complete:function(){
-                  $(".overlay").remove();
-                  $(".loading-img").remove();
-               }
             });
             return false;
         }
