@@ -27,11 +27,13 @@
                 <div class="box box-primary">
                     <div class="box-header">
                         <h3 class="box-title">Items de Categoria</h3>
-                        <div class="box-tools pull-right">
-                            <button type="button" class="btn bg-aqua" data-target="#itemlab" data-toggle="modal">
-                                <b>Nuevo</b>
-                            </button>
+                        <div class="input-group margin">
+                        <input class="form-control" type="text" id="buscaitemlab" placeholder="Nombre de Item de Laboratorio">
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-float" type="button"><i class="fa fa-fw fa-search"></i></button>
+                        </span>
                         </div>
+
                     </div>
                     <div class="contenedor" id="contenedor_cat_item">
 
@@ -103,8 +105,8 @@
             <div class="modal-body" id="contenedormodalitemlabUpdate">
             </div>
             <div class="modal-footer clearfix">
-                <?php echo CHtml::tag('button',array('id'=>'btnCrecatitemlab','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Guardar',true)?>
-                <?php echo CHtml::tag('button',array('id'=>'btnCloseUpdTipoSala','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cancelar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnUpdateitemlab','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Guardar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnCloseUpditemlab','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cancelar',true)?>
             </div>
         </div>
     </div>
@@ -200,6 +202,7 @@
             return false;
         }
         $("#btnCrecatitemlab").on("click",clickitem);
+        $("#btnUpdateitemlab").on("click",updateitem);
         function clickitem(){
         $("#cat_lab_item_campo").val($("#campo_item_cat_lab").val());
            $.ajax({
@@ -214,6 +217,7 @@
                         Nuevoitemlab();
                         Nuevocatlab();
                         CargarEventosClickItem();
+
                     }
                     else{
                     $(\'#contenedormodalitemlabCreate\').html(datos);
@@ -243,18 +247,85 @@
         }
         function CargarEventosClickItem(){
             $(".btnitemUpdcatlab").on("click",function(){
-                alert("holaa");
                 $.ajax({
                     url:$(this).attr("href"),
                     type:"post",
                     success:function(datos){
                         $("#contenedormodalitemlabUpdate").html(datos);
-                        alert("hola");
                     }
                 });
                 $("#itemlabUpd").modal("show");
                 return false;
             });
+            $(".btndeItemcatlab").on("click",function(){
+                $.ajax({
+                    url:$(this).attr("href"),
+                    type:"post",
+                    success:function(datos){
+                        $("#contenedormodalitemlabUpdate").html(datos);
+                    }
+                });
+                $("#itemlabUpd").modal("show");
+                return false;
+            });
+            $(".btnitemDelcatlab").on("click",function(){
+                if(confirm("¿Estas seguro de eliminar este elemento?")){
+                $.ajax({
+                    url:$(this).attr("href"),
+                    type:"post",
+                    success:function(datos){
+                        $("#contenedor_cat_item").html(datos);
+                        Nuevocatlab();
+                        CargarEventosClickItem();
+                    }
+                 });
+                 }
+                return false;
+            })
+
         }
+        function updateitem(){
+            $("#cat_lab_item_campo").val($("#campo_item_cat_lab").val());
+            $.ajax({
+                    url:"'.CHtml::normalizeUrl(array('servicio/Upditemlabc')).'",
+                    data:$("#form-upd-cat-lab-item").serialize(),
+                    type:"post",
+                    success:function(datos){
+                    var contenido=$("<div>").html(datos);
+                        if(contenido.children("#flag").val()==null){
+                            $("#contenedor_cat_item").html(datos);
+                            $("#itemlabUpd").modal("hide");
+                            Nuevoitemlab();
+                            Nuevocatlab();
+                            CargarEventosClickItem();
+                        }
+                        else{
+                            $("#contenedormodalitemlabUpdate").html(datos);
+                        }
+                    }
+            });
+            return false;
+        }
+        $("#buscaitemlab").on("keyup",buscarItemlab);
+        function buscarItemlab(){
+            var control=$(this);
+            var cad=control.val();
+            if(cad.length>4||cad.length==0){
+                ajaxBuscaitemlab(control);
+            }
+        };
+        function ajaxBuscaitemlab(control){
+            $.ajax({
+               url:"'.CHtml::normalizeUrl(array('servicio/BuscarItemlabAjax')).'",
+               type:"post",
+               data:{cadena:control.val(),catitem:$("#campo_item_cat_lab").val()},
+               success:function(datos){
+                   $("#contenedor_cat_item").html(datos);
+                   CargarEventosClickItem();
+               }
+            });
+            return false;
+        }
+
     });
 ');

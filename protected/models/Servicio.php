@@ -62,6 +62,7 @@ class Servicio extends CActiveRecord
 			'atencionMedica' => array(self::HAS_ONE, 'AtencionMedica', 'id_servicio'),
 			'tipoSala' => array(self::HAS_ONE, 'TipoSala', 'id_tipo_sala'),
 			'precioServicio' => array(self::HAS_ONE, 'PrecioServicio', 'id_servicio','condition'=>'fecha_fin is null'),
+            'precioServicio1' => array(self::HAS_ONE, 'PrecioServicio', 'id_servicio','condition'=>'fecha_fin is not null'),
             'examenLaboratorios' => array(self::HAS_MANY, 'ExamenLaboratorio', 'id_cat_lab'),
 		);
 	}
@@ -78,7 +79,7 @@ class Servicio extends CActiveRecord
 			'unidad_serv' => 'Unidad',
 			'fecha_creacion' => 'Fecha Creacion',
 			'fecha_actualizacion' => 'Fecha Actualizacion',
-			'id_insti' => 'Id Insti',
+			'id_insti' => 'Institucion',
 		);
 	}
 
