@@ -25,14 +25,11 @@ $this->breadcrumbs=array(
                 <h3 class="box-title">Salas <small id="title-sala">Seleccione un tipo</small></h3>
             </div>
             <div class="box-body" id="contenido_sala">
-                <?php $this->renderPartial('_tableSala',array('listaSala'=>$listaSala));?>
+                <?php $this->renderPartial('_tableSala',array('listaSala'=>$listaSala,'id_tipo_sala'=>0));?>
             </div>
 
             <div class="box-footer">
-                <?php echo CHtml::link('Nuevo',array('#'),array('class'=>'btn btn-primary','data-toggle'=>'modal','data-target'=>'#modalCreateSala'));?>
-                <button type="button" id="popover" class="btn btn-default" data-html="true" data-container="body" data-toggle="popover" data-placement="top" data-content="<a href='#' class='btn btn-primary btn-xs'>ACTIVO</a><a href='#' class='btn btn-primary btn-xs'>INACTIVO</a>">
-                    Popover on top
-                </button>
+                <?php echo CHtml::link('Nuevo',array('#'),array('id'=>'btnCreateSala','class'=>'btn btn-primary disabled','data-toggle'=>'modal','data-target'=>'#modalSala'));?>
             </div>
         </div>
     </div>
@@ -68,7 +65,7 @@ $this->breadcrumbs=array(
             <div class="modal-body" id="modal_contenedorUpdate">
             </div>
             <div class="modal-footer clearfix">
-                <?php echo CHtml::tag('button',array('id'=>'btnUpdTipoSala','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Actualizar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnUpdTipoSala','class'=>'btn btn-primary pull-left'),'Actualizar',true)?>
                 <?php echo CHtml::tag('button',array('id'=>'btnCloseUpdTipoSala','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cancelar',true)?>
             </div>
         </div>
@@ -91,19 +88,22 @@ $this->breadcrumbs=array(
 </div>
 
 
-<div class="modal fade" id="modalCreateSala" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="modalSala" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Nueva Sala</h4>
             </div>
-            <div class="modal-body" id="modalContenedorCreateSala">
+            <div class="modal-body" id="modalContenedorSala">
             </div>
             <div class="modal-footer clearfix">
+                <?php echo CHtml::tag('button',array('id'=>'btnSala','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Agregar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnCloseSala','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cerrar',true)?>
             </div>
         </div>
     </div>
 </div>
+
 
 <?php
 Yii::app()->clientScript->registerScript('ajax','
@@ -225,6 +225,8 @@ Yii::app()->clientScript->registerScript('ajax','
                 success:function(datos){
                     $("#contenido_sala").html(datos);
                     cargaEventosSala();
+                    if($("#id_tipo_sala").val()!=0)
+                        $("#btnCreateSala").removeClass("disabled");
                 }
             });
             $("#title-sala").text($(this).parent("td").siblings().eq(0).text());
@@ -253,7 +255,86 @@ Yii::app()->clientScript->registerScript('ajax','
 
         $(".btnStatusSala").on("click",function(){ return false;});
 
+        $(".btnUpdSala").on("click",function(){
+            $("#modalSala").find(".modal-title").eq(0).text("Actualizar Sala");
+            $("#btnSala").html("Actualizar");
+            $.ajax({
+                beforeSend:function(){
+                    $(".box-salas").append($("<div class=\'overlay\'>"));
+                    $(".box-salas").append($("<div class=\'loading-img\'>"));
+                },
+                url:$(this).attr("href"),
+                success:function(datos){
+                    $("#modalContenedorSala").html(datos);
+                }
+            });
+            $("#modalSala").modal("show");
+            return false;
+        });
+
     }
+
+    $("#btnCreateSala").on("click",function(){
+        $("#btnSala").html("<i class=\"fa fa-plus\"></i> Agregar");
+        $("#modalSala").find(".modal-title").eq(0).text("Nueva Sala");
+        $.ajax({
+            beforeSend:function(){
+                $(".box-salas").append($("<div class=\'overlay\'>"));
+                $(".box-salas").append($("<div class=\'loading-img\'>"));
+            },
+            url:"'.CHtml::normalizeUrl(array('sala/renderFormSalaAjax')).'",
+            data:{id_tipo_sala:$("#id_tipo_sala").val()},
+            success:function(datos){
+                $("#modalContenedorSala").html(datos);
+            }
+        });
+    });
+
+    $("#btnSala").on("click",function(){
+        if($("#nuevaSala").val()==1){
+            $.ajax({
+
+                beforeSend:function(){
+                    $(".box-salas").append($("<div class=\'overlay\'>"));
+                    $(".box-salas").append($("<div class=\'loading-img\'>"));
+                },
+                url:"'.CHtml::normalizeUrl(array('sala/createSalaAjax')).'",
+                type:"post",
+                data:$("#form-sala").serialize(),
+                success:function(datos){
+                    var contenido=$("<div>").html(datos);
+                    if(contenido.find("#nuevaSala").length)
+                        $("#modalContenedorSala").html(datos);
+                    else{
+                        $("#contenido_sala").html(datos);
+                        cargaEventosSala();
+                        $("#modalSala").modal("hide");
+                    }
+                }
+            });
+        }
+        else{
+            $.ajax({
+                beforeSend:function(){
+                    $(".box-salas").append($("<div class=\'overlay\'>"));
+                    $(".box-salas").append($("<div class=\'loading-img\'>"));
+                },
+                url:"'.CHtml::normalizeUrl(array('sala/updateSalaAjax')).'",
+                type:"post",
+                data:$("#form-sala").serialize(),
+                success:function(datos){
+                    var contenido=$("<div>").html(datos);
+                    if(contenido.find("#nuevaSala").length)
+                        $("#modalContenedorSala").html(datos);
+                    else{
+                        $("#contenido_sala").html(datos);
+                        cargaEventosSala();
+                        $("#modalSala").modal("hide");
+                    }
+                }
+            });
+        }
+    });
 
 ',CClientScript::POS_END);
 ?>

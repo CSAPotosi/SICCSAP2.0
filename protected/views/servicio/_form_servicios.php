@@ -7,7 +7,7 @@
     </div>
     <div class="box-body">
     <div class="row">
-        <div class="col-lg-4 col-xs-12">
+        <div class="col-md-4 col-xs-6">
             <div class="small-box bg-red">
                 <div class="inner">
                     <h3>Laboratorio</h3>
@@ -17,11 +17,11 @@
                     <i class="ion ion-beaker"></i>
                 </div>
                 <a class="small-box-footer" href="http://localhost/SICCSAP2.0/index.php?r=Servicio/Crearlab" id="laboratorio">
-                    <b>Registrar nuevo laboratorio</b>
+                    <b>Ver detalle</b>
                 </a>
             </div>
         </div>
-        <div class="col-lg-4 col-xs-12">
+        <div class="col-md-4 col-xs-6">
             <div class="small-box bg-light-blue">
                 <div class="inner">
                     <h3>Gabinete</h3>
@@ -31,11 +31,11 @@
                     <i class="ion ion-monitor"></i>
                 </div>
                 <a class="small-box-footer"  id="gabinete" href="Servicio/Create">
-                    <b>Nuevo Examen de Gabinete</b>
+                    <b>Ver detalle</b>
                 </a>
             </div>
         </div>
-        <div class="col-lg-4 col-xs-12">
+        <div class="col-md-4 col-xs-6">
             <div class="small-box bg-yellow">
                 <div class="inner">
                     <h3>At. Medicos</h3>
@@ -45,11 +45,11 @@
                     <i class="fa fa-stethoscope"></i>
                 </div>
                 <a class="small-box-footer" href="#">
-                    <b>Nueva Atencion Medica</b>
+                    <b>Ver detalle</b>
                 </a>
             </div>
         </div>
-        <div class="col-lg-4 col-xs-12">
+        <div class="col-md-4 col-xs-6">
             <div class="small-box bg-purple">
                 <div class="inner">
                     <h3>Salas</h3>
@@ -58,10 +58,10 @@
                 <div class="icon">
                     <i class="fa fa-bed"></i>
                 </div>
-                <?php echo CHtml::link('<b>Ver detalles</b>',array('sala/'),array('class'=>'small-box-footer'))?>
+                <?php echo CHtml::link('<b>Ver detalle</b>',array('sala/'),array('class'=>'small-box-footer'))?>
             </div>
         </div>
-        <div class="col-lg-4 col-xs-12">
+        <div class="col-md-4 col-xs-6">
             <div class="small-box bg-green">
                 <div class="inner">
                     <h3>Enfermeria</h3>
@@ -71,11 +71,11 @@
                     <i class="ion ion-thermometer"></i>
                 </div>
                 <a class="small-box-footer" href="#">
-                    <b>Nuevo Servicio Clinico</b>
+                    <b>Ver detalle</b>
                 </a>
             </div>
         </div>
-        <div class="col-lg-4 col-xs-12">
+        <div class="col-md-4 col-xs-6">
             <div class="small-box bg-maroon">
                 <div class="inner">
                     <h3>Otros Servicios</h3>
@@ -85,7 +85,7 @@
                     <i class="fa fa-ambulance"></i>
                 </div>
                 <a class="small-box-footer" href="#">
-                    <b>Nuevo Servicio Clinico</b>
+                    <b>Ver detalle</b>
                 </a>
             </div>
         </div>

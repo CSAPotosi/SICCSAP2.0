@@ -1,7 +1,7 @@
 <?php
     $colors=array('','blue','green','yellow','red');
 ?>
-
+<?php echo CHtml::hiddenField('id_tipo_sala',$id_tipo_sala);?>
 <table class="table table-hover table-bordered dataTable ">
     <thead>
     <th>Nro.</th>
@@ -15,8 +15,8 @@
                 <td><?php echo $item->numero_sala; ?></td>
                 <td class="text-center"> <span class="badge bg-<?php echo $colors[$item->estado_sala];?>"><?php echo $item->stateString;?></span></td>
                 <td class="button-column text-center">
-                    <?php echo CHtml::link('<i class="fa fa-folder-open"></i>',array(''),array('title'=>'Ver detalle'));?>
-                    <?php echo ($item->estado_sala!=4)?CHtml::link('<i class="fa fa-edit"></i>',array(''),array('title'=>'editar sala')):'';?>
+                    <?php echo CHtml::link('<i class="fa fa-th-list"></i>',array(''),array('title'=>'Ver detalle'));?>
+                    <?php echo ($item->estado_sala!=4)?CHtml::link('<i class="fa fa-edit"></i>',array('sala/renderFormSalaAjax',"id_sala"=>$item->id_sala),array('class'=>'btnUpdSala','title'=>'editar sala')):'';?>
                     <?php
                         $actives=array("","","","");
                         $actives[$item->estado_sala-1]="disabled";
@@ -26,7 +26,7 @@
                             CHtml::link("I",array('sala/changeStateSalaAjax','id'=>$item->id_sala,'state'=>4),array('class'=>'changeStateSala btn btn-danger btn-xs '.$actives[3],'title'=>'Inactivar')).
                             '</div>';
                     ?>
-                    <?php echo ($item->estado_sala!=2)?CHtml::link('<i class="fa fa-toggle-up"></i>',array(''),array('class'=>'btnStatusSala','data-html'=>'true','data-content'=>"$buttonGroup")):'';?>
+                    <?php echo ($item->estado_sala!=2)?CHtml::link('<i class="fa fa-toggle-up"></i>',array(''),array('class'=>'btnStatusSala','data-trigger'=>'focus','data-html'=>'true','data-content'=>"$buttonGroup")):'';?>
                 </td>
             </tr>
         <?php endforeach;?>

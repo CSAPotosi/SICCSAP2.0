@@ -33,7 +33,7 @@ class SalaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax'),
+				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax','renderFormSalaAjax','createSalaAjax','updateSalaAjax'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -46,7 +46,17 @@ class SalaController extends Controller
 		);
 	}
 
-	public function actionCreate($id=0)
+    public function actionIndex()
+    {
+        $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
+        $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = 0","order"=>"id_tipo_sala DESC"));
+        //$listaSala=new CActiveDataProvider('Sala',array('pagination'=>false,'criteria'=>array('order'=>'id_sala DESC','condition'=>'id_tipo_sala =0')));
+        $this->render('index',array('listaTipoSala'=>$listaTipoSala,'listaSala'=>$listaSala));
+
+
+    }
+
+    public function actionCreate($id=0)
 	{
 		$modelTipoSala=new TipoSala;
         $modelPrecio= new PrecioServicio;
@@ -138,44 +148,70 @@ class SalaController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
-	{
-        $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
-        $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = 0","order"=>"id_tipo_sala DESC"));
-        //$listaSala=new CActiveDataProvider('Sala',array('pagination'=>false,'criteria'=>array('order'=>'id_sala DESC','condition'=>'id_tipo_sala =0')));
-		$this->render('index',array('listaTipoSala'=>$listaTipoSala,'listaSala'=>$listaSala));
 
-
-	}
 
     public function actionListSalasAjax($id=0){
         $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = $id","order"=>"estado_sala ASC,numero_sala DESC"));
-
-        $this->renderPartial('_tableSala',array('listaSala'=>$listaSala));
+        $this->renderPartial('_tableSala',array('listaSala'=>$listaSala,'id_tipo_sala'=>$id));
     }
 
-    public function actionCreateSala(){
-        $itemSala=new Sala;
-        $itemSala->id_tipo_sala=$this->_tipoSala->id_tipo_sala;
-
-        if(isset($_POST['Sala'])){
-            $itemSala->attributes=$_POST['Sala'];
-            if($itemSala->save())
-                $this->redirect(array('view','id'=>$itemSala->id_tipo_sala));
+    public function actionChangeStateSalaAjax($id=0,$state=1){
+        $modelSala=Sala::model()->findByPk($id);
+        $id_tipo=0;
+        if($modelSala!=null){
+            $modelSala->estado_sala=$state;
+            $modelSala->save();
+            $id_tipo=$modelSala->id_tipo_sala;
         }
-        $this->render('createSala',array(
-            'itemSala'=>$itemSala,
-        ));
+        $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = $id_tipo","order"=>"estado_sala ASC,numero_sala DESC"));
+        $this->renderPartial('_tableSala',array('listaSala'=>$listaSala,'id_tipo_sala'=>$id_tipo));
     }
 
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='tipo-sala-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
+    public function actionRenderFormSalaAjax($id_tipo_sala=0,$id_sala=0){
+        $modelSala= new Sala();
+        $modelSala->id_tipo_sala=$id_tipo_sala;
+        if($id_sala!=0)
+            $modelSala=Sala::model()->findByPk($id_sala);
+        $this->renderPartial('createSala',array('modelSala'=>$modelSala));
+    }
+
+    public function actionCreateSalaAjax(){
+        $modelSala=new Sala;
+        echo "estamos en create";
+        if(isset($_POST['Sala'])){
+            echo "has posteado";
+            $modelSala->attributes=$_POST['Sala'];
+            if($modelSala->validate()){
+                $modelSala->save(false);
+                $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = {$modelSala->id_tipo_sala}","order"=>"estado_sala ASC,numero_sala DESC"));
+                return $this->renderPartial('_tableSala',array('listaSala'=>$listaSala,'id_tipo_sala'=>$modelSala->id_tipo_sala));
+            }
+        }
+        return $this->renderPartial('createSala',array('modelSala'=>$modelSala));
+    }
+
+    public function actionUpdateSalaAjax(){
+        $modelSala= new Sala();
+        if(isset($_POST['Sala'])){
+            $modelSala=Sala::model()->findByPk($_POST['Sala']['id_sala']);
+            $modelSala->attributes=$_POST['Sala'];
+            if($modelSala->validate()){
+                $modelSala->save(false);
+                $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = {$modelSala->id_tipo_sala}","order"=>"estado_sala ASC,numero_sala DESC"));
+                return $this->renderPartial('_tableSala',array('listaSala'=>$listaSala,'id_tipo_sala'=>$modelSala->id_tipo_sala));
+            }
+        }
+        return $this->renderPartial('createSala',array('modelSala'=>$modelSala));
+    }
+
+    protected function performAjaxValidation($model)
+    {
+        if(isset($_POST['ajax']) && $_POST['ajax']==='tipo-sala-form')
+        {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
 
     public function filterTipoSalaContext($filterChain){
         $tiposalaid=null;
@@ -198,19 +234,6 @@ class SalaController extends Controller
         }
         return $this->_tipoSala;
     }
-
-    public function actionChangeStateSalaAjax($id=0,$state=1){
-        $modelSala=Sala::model()->findByPk($id);
-        $id_tipo=0;
-        if($modelSala!=null){
-            $modelSala->estado_sala=$state;
-            $modelSala->save();
-            $id_tipo=$modelSala->id_tipo_sala;
-        }
-        $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = $id_tipo","order"=>"estado_sala ASC,numero_sala DESC"));
-        $this->renderPartial('_tableSala',array('listaSala'=>$listaSala));
-    }
-
 
     public function validar($vector=array()){
         $flag=true;
