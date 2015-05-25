@@ -7,22 +7,36 @@ $this->breadcrumbs=array(
 	$model->id_historial,
 );
 ?>
+
+<?php if($model->paciente->estado_paciente=='INTERNADO'):?>
+    <div class="alert alert-info">
+        <i class="fa fa-info"></i>
+        <b>Atencion!!!</b> Este paciente se encuentra actualmente internado. <br/>
+        <?php echo CHtml::link('Ver detalle de internacion',['internacion/index','id'=>$model->internacionActual->id_inter],['class'=>'btn  btn-info ']);?>
+
+
+    </div>
+<?php endif;?>
+
+<?php $this->renderPartial('_form_datos_paciente',array('model'=>$model))?>
+
 <div class="row">
     <div class="col-md-12">
         <div class="box box-solid">
             <div class="box-body">
                 <div class="row">
                     <div class="col-md-2">
-                        <a class="btn btn-block btn-social btn-bitbucket">
-                            <i class="fa fa-ambulance"></i>Internacion
-                        </a>
+                        <?php
+                            if($model->paciente->estado_paciente!='INTERNADO')
+                                echo CHtml::link('<i class="fa fa-ambulance"></i> Internacion',array('internacion/createInternacion','id'=>$model->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<?php $this->renderPartial('_form_datos_paciente',array('model'=>$model))?>
+
 <div class="row">
     <div class="col-md-6">
         <div class="box">

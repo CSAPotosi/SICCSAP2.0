@@ -1,26 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "historial_paciente".
+ * This is the model class for table "sala_internacion".
  *
- * The followings are the available columns in table 'historial_paciente':
- * @property integer $id_historial
- * @property string $fecha_creacion
- * @property string $fecha_actualizacion
+ * The followings are the available columns in table 'sala_internacion':
+ * @property integer $id_inter
+ * @property integer $id_sala
+ * @property string $fecha_entrada
+ * @property string $fecha_salida
  *
  * The followings are the available model relations:
- * @property AntecedenteMedico[] $antecedenteMedicos
- * @property Paciente $idHistorial
- * @property Consulta[] $consultas
+ * @property Internacion $idInter
+ * @property Sala $idSala
  */
-class HistorialPaciente extends CActiveRecord
+class SalaInternacion extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'historial_paciente';
+		return 'sala_internacion';
 	}
 
 	/**
@@ -31,10 +31,12 @@ class HistorialPaciente extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_creacion, fecha_actualizacion', 'required'),
+			array('id_inter, id_sala, fecha_entrada', 'required'),
+			array('id_inter, id_sala', 'numerical', 'integerOnly'=>true),
+			array('fecha_salida', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_historial, fecha_muerte, fecha_creacion, fecha_actualizacion', 'safe', 'on'=>'search'),
+			array('id_inter, id_sala, fecha_entrada, fecha_salida', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,11 +48,8 @@ class HistorialPaciente extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'antecedenteMedicos' => array(self::HAS_MANY, 'AntecedenteMedico', 'id_historia'),
-			'paciente' => array(self::BELONGS_TO, 'Paciente', 'id_historial'),
-			'consultas' => array(self::HAS_MANY, 'Consulta', 'id_historia'),
-            'internacion'=>array(self::HAS_MANY,'Internacion','id_historial'),
-            'internacionActual'=>array(self::HAS_ONE,'Internacion','id_historial','condition'=>'fecha_egreso is null'),
+			'internacion' => array(self::BELONGS_TO, 'Internacion', 'id_inter'),
+			'sala' => array(self::BELONGS_TO, 'Sala', 'id_sala'),
 		);
 	}
 
@@ -60,9 +59,10 @@ class HistorialPaciente extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_historial' => 'Id Historial',
-			'fecha_creacion' => 'Fecha Creacion',
-			'fecha_actualizacion' => 'Fecha Actualizacion',
+			'id_inter' => 'Id Inter',
+			'id_sala' => 'Id Sala',
+			'fecha_entrada' => 'Fecha Entrada',
+			'fecha_salida' => 'Fecha Salida',
 		);
 	}
 
@@ -84,9 +84,10 @@ class HistorialPaciente extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_historial',$this->id_historial);
-		$criteria->compare('fecha_creacion',$this->fecha_creacion,true);
-		$criteria->compare('fecha_actualizacion',$this->fecha_actualizacion,true);
+		$criteria->compare('id_inter',$this->id_inter);
+		$criteria->compare('id_sala',$this->id_sala);
+		$criteria->compare('fecha_entrada',$this->fecha_entrada,true);
+		$criteria->compare('fecha_salida',$this->fecha_salida,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -97,16 +98,15 @@ class HistorialPaciente extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return HistorialPaciente the static model class
+	 * @return SalaInternacion the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+
     protected function beforeValidate(){
-        $this->fecha_actualizacion=date('d/m/Y h:i:s');
-        if($this->IsNewRecord)
-            $this->fecha_creacion=date('d/m/Y h:i:s');
+        $this->fecha_entrada=date('d-m-Y H:i:s');
         return parent::beforeValidate();
     }
 }

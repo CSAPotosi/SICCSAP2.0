@@ -33,7 +33,7 @@ class SalaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax','renderFormSalaAjax','createSalaAjax','updateSalaAjax'),
+				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax','renderFormSalaAjax','createSalaAjax','updateSalaAjax','viewSalaAjax'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -202,6 +202,15 @@ class SalaController extends Controller
             }
         }
         return $this->renderPartial('createSala',array('modelSala'=>$modelSala));
+    }
+
+    public function actionViewSalaAjax($id=0){
+        $modelTipoSala=TipoSala::model()->findByPk($id);
+        if($id==0)
+            $modelTipoSala=TipoSala::model()->find();
+
+        $listaSalas=Sala::model()->findAll(['condition'=>"id_tipo_sala ={$modelTipoSala->id_tipo_sala} and estado_sala <> 4",'order'=>'numero_sala ASC']);
+        $this->renderPartial('viewSala',['modelTipoSala'=>$modelTipoSala,'listaSalas'=>$listaSalas]);
     }
 
     protected function performAjaxValidation($model)

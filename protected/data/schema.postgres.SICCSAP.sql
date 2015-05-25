@@ -405,28 +405,38 @@ create table if not exists servicio_internacion(
 );
 */
 
-create table if not exists diagnostico_internacion(
-  id_diag_int serial not null primary key ,
-  tipo_diag varchar (16) not null --de ingreso, de egreso o de valoracion
-);
-/*
+
 create table if not exists internacion(
   id_inter serial not null primary key ,
   id_historial int not null ,
-  --internacion de paciente
   fecha_ingreso timestamp not null,
   motivo_ingreso varchar(32) not null,--accidente,enfermedad, parto
   observacion_ingreso varchar(256),
   procedencia_ingreso varchar(16),--consulta exterma,emergencia, referido
-  --alta medica
+  id_diagnostico_ingreso int,
+
   fecha_alta timestamp,
   tipo_alta varchar(16),--medica, fuga, solicitada,transferencia
+  id_diagnostico_alta int,
   observacion_alta varchar (256),
-  --referencias
+
+  fecha_egreso timestamp,
+
   foreign key (id_historial) references historial_paciente(id_historial),
-  foreign key (id_diagnostico_egreso) references diagnostico_internacion(id_diag_int)
+  foreign key (id_diagnostico_ingreso) references consulta(id_consulta),
+  foreign key (id_diagnostico_alta) references consulta(id_consulta)
 );
 
+create table if not exists sala_internacion(
+  id_inter int not null,
+  id_sala int not null,
+  fecha_entrada timestamp not null,
+  fecha_salida timestamp,
+  foreign key(id_inter) references internacion (id_inter),
+  foreign key(id_sala) references sala(id_sala),
+  primary key(id_inter,id_sala,fecha_entrada)
+);
+/*
 create table if not exists referencia_internacion(
   id_inter int not null,
   id_insti int not null,

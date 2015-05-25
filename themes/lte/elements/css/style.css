@@ -14,3 +14,7 @@ input{
 tr>td:last-child>a{
     color: #333;
 }
+
+.borde{
+    border: solid 1px #000000;
+}
