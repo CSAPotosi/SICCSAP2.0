@@ -257,6 +257,7 @@
                 $("#itemlabUpd").modal("show");
                 return false;
             });
+
             $(".btndeItemcatlab").on("click",function(){
                 $.ajax({
                     url:$(this).attr("href"),
@@ -269,7 +270,6 @@
                 return false;
             });
             $(".btnitemDelcatlab").on("click",function(){
-                if(confirm("¿Estas seguro de eliminar este elemento?")){
                 $.ajax({
                     url:$(this).attr("href"),
                     type:"post",
@@ -279,7 +279,6 @@
                         CargarEventosClickItem();
                     }
                  });
-                 }
                 return false;
             })
 
@@ -310,15 +309,21 @@
         function buscarItemlab(){
             var control=$(this);
             var cad=control.val();
-            if(cad.length>4||cad.length==0){
-                ajaxBuscaitemlab(control);
+
+            if(cad.length>1){
+                var valor=control.val();
+                ajaxBuscaitemlab(valor);
+            }
+            if(cad.length==0){
+            var valor="";
+                ajaxBuscaitemlab(valor);
             }
         };
-        function ajaxBuscaitemlab(control){
+        function ajaxBuscaitemlab(valor){
             $.ajax({
                url:"'.CHtml::normalizeUrl(array('servicio/BuscarItemlabAjax')).'",
                type:"post",
-               data:{cadena:control.val(),catitem:$("#campo_item_cat_lab").val()},
+               data:{cadena:valor,catitem:$("#campo_item_cat_lab").val()},
                success:function(datos){
                    $("#contenedor_cat_item").html(datos);
                    CargarEventosClickItem();
@@ -326,6 +331,5 @@
             });
             return false;
         }
-
     });
 ');

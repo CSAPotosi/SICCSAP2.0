@@ -55,7 +55,7 @@ $this->menu=array(
                 )); ?>
             </div>
             <div class="box-footer">
-                <?php echo ($model->paciente!=null ? CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Datos Personales",array('Persona/_form_updatepa','id'=>$model->id),array('class'=>'btn btn-social bg-blue')):CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Datos Personales2",array('Persona/_form_updateper','id'=>$model->id),array('class'=>'btn btn-social bg-blue')))?>
+                <?php echo CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Datos Personales",array('Persona/_form_updateper','id'=>$model->id),array('class'=>'btn btn-social bg-blue'))?>
             </div>
         </div>
         <?php if($model->paciente!=null){?>
@@ -83,9 +83,37 @@ $this->menu=array(
                 ?>
             </div>
             <div class="box-footer">
-                <?php echo CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Informacion de Paciente",array('Persona/'),array('class'=>'btn btn-social bg-blue'))?>
+                <?php echo CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Informacion de Paciente",array('Persona/_form_updatepa','id'=>$model->id),array('class'=>'btn btn-social bg-blue'))?>
+                <?php echo CHtml::link('Ver Historia',array('historialPaciente/view','id'=>$model->id),array('class'=>'btn bg-green'))?>
             </div>
         </div>
+        <?php }?>
+        <?php if($model->empleado!=null){?>
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><b>Informacion de Empleado</b></h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <?php
+                    $this->widget('zii.widgets.CDetailView', array(
+                        'data'=>$model->empleado,
+                        'attributes'=>array(
+                            'fecha_contratacion',
+                            'profesion',
+                            'estado',
+                        ),
+                        'htmlOptions'=>array('class'=>'table table-condensed'),
+                    ));
+
+                    ?>
+                </div>
+                <div class="box-footer">
+                    <?php echo CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Informacion de Empleado",array('Persona/Updempleadoper','id'=>$model->id),array('class'=>'btn btn-social bg-blue'))?>
+                </div>
+            </div>
         <?php }?>
     </div>
 </div>

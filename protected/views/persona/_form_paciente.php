@@ -1,21 +1,11 @@
-<?php
-/* @var $this HistorialPacienteController */
-/* @var $paciente HistorialPaciente */
-/* @var $form CActiveForm */
-?>
-
 <div class="form">
-
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'historial-paciente-form','action'=>($paciente->isNewRecord ? yii::app()->createUrl("persona/Crearpaciente"):yii::app()->createUrl("persona/_form_updatepa&id=".$paciente->id_paciente)),
         'enableAjaxValidation'=>false,
         'htmlOptions'=>array('class'=>'form-horizontal'),
     )); ?>
     <div class="box-body">
-
-
         <?php echo $form->errorSummary($paciente,null,null,array('class'=>'alert alert-error')); ?>
-
         <input type="hidden" value="<?php echo $lastid;?>" name="Paciente[id_paciente]">
         <div class="form-group">
             <?php echo $form->labelEx($paciente,'ocupacion_paciente',array('class'=>'col-md-2 control-label')); ?>
@@ -24,7 +14,6 @@
             </div>
             <?php echo $form->error($paciente,'ocupacion_paciente',array('class'=>'label label-danger')); ?>
         </div>
-
         <div class="form-group">
             <?php echo $form->labelEx($paciente,'grupo_sanguineo_paciente',array('class'=>'col-md-2 control-label')); ?>
             <div class="col-sm-8">

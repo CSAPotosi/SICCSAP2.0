@@ -16,9 +16,7 @@
                 <div class="icon">
                     <i class="ion ion-beaker"></i>
                 </div>
-                <a class="small-box-footer" href="http://localhost/SICCSAP2.0/index.php?r=Servicio/Crearlab" id="laboratorio">
-                    <b>Ver detalle</b>
-                </a>
+                <?php echo CHtml::link('<b>Ver detalle</b>',array('Servicio/Crearlab'),array('class'=>'small-box-footer'))?>
             </div>
         </div>
         <div class="col-md-4 col-xs-6">
@@ -30,9 +28,7 @@
                 <div class="icon">
                     <i class="ion ion-monitor"></i>
                 </div>
-                <a class="small-box-footer"  id="gabinete" href="Servicio/Create">
-                    <b>Ver detalle</b>
-                </a>
+                <?php echo CHtml::link('<b>Ver detalle</b>',array('Servicio/Creargab'),array('class'=>'small-box-footer'))?>
             </div>
         </div>
         <div class="col-md-4 col-xs-6">
@@ -70,9 +66,7 @@
                 <div class="icon">
                     <i class="ion ion-thermometer"></i>
                 </div>
-                <a class="small-box-footer" href="#">
-                    <b>Ver detalle</b>
-                </a>
+                <?php echo CHtml::link('<b>Ver detalle</b>',array('Servicio/CrearEnf'),array('class'=>'small-box-footer'))?>
             </div>
         </div>
         <div class="col-md-4 col-xs-6">
@@ -84,9 +78,7 @@
                 <div class="icon">
                     <i class="fa fa-ambulance"></i>
                 </div>
-                <a class="small-box-footer" href="#">
-                    <b>Ver detalle</b>
-                </a>
+                <?php echo CHtml::link('<b>Ver detalle</b>',array('Servicio/CrearSer'),array('class'=>'small-box-footer'))?>
             </div>
         </div>
     </div>

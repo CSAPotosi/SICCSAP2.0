@@ -27,7 +27,7 @@ class PersonaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper','Nc'),
+				'actions'=>array('index','view','Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper','Nc','CrearEmpleado','Updateempleado','Updempleadoper'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -158,10 +158,7 @@ class PersonaController extends Controller
             $model->attributes=array_map('strtoupper',$_POST['Persona']);
             $model->fotografia=$filename;
 			if($model->save()){
-                if($model->paciente!=null)
                    $this->redirect(array('update','id'=>$model->id));
-                else
-                    $this->redirect(array('index'));
             }
 		}
 		$this->render('update',array(
@@ -203,7 +200,7 @@ class PersonaController extends Controller
         {
             $paciente->attributes=array_map('strtoupper',$_POST['Paciente']);
             if($paciente->save()){
-                $this->redirect(array('HistorialPaciente/view','id'=>$paciente->id_paciente));
+                $this->redirect(array('view','id'=>$paciente->id_paciente));
             }
         }
         $this->render('_form_updatepa',array(
@@ -231,7 +228,7 @@ class PersonaController extends Controller
             $model->attributes=array_map('strtoupper',$_POST['Persona']);
             $model->fotografia=$filename;
             if($model->save()){
-                    $this->redirect(array('index'));
+                    $this->redirect(array('view','id'=>$model->id));
             }
         }
         $this->render('_form_updateper',array(
@@ -320,5 +317,113 @@ class PersonaController extends Controller
             echo 'No se han encontrado resultados';
         }
         return $this->renderPartial('_listaContactos',array('listaContactos'=>$listaContactos));
+    }
+    public function actionCrearEmpleado(){
+        $model=new Persona;
+        if(isset($_POST['Persona']))
+        {
+            $filename="no-photo.png";
+            if (!empty($_POST['Persona']['fotografia']))
+            {
+                $foto = $_POST['Persona']['fotografia'];
+                $foto = str_replace('data:image/png;base64,', '', $foto);
+                $foto = str_replace(' ', '+', $foto);
+                $data_foto = base64_decode($foto);
+                $filename = $_POST['Persona']['dni'].'.png';
+                $filepath = YiiBase::getPathOfAlias("webroot").'/fotografias/'.$filename;
+            }
+            $model->attributes=array_map('strtoupper',$_POST['Persona']);
+            $model->fotografia=$filename;
+            if($model->save())
+
+                $this->redirect(array('updateempleado','id'=>$model->id));
+
+        }
+        $this->render('create',array(
+            'model'=>$model,
+        ));
+    }
+    public function actionUpdateempleado($id=0)
+    {
+        $empleado=new empleado;
+        if($id!=0){
+        $model=$this->loadModel($id);
+        // Uncomment the following line if AJAX validation is needed
+        // $this->performAjaxValidation($model);
+        if(isset($_POST['Persona']))
+        {
+            $filename=$_POST['Persona']['fotografia'];
+            if(strlen($_POST['Persona']['fotografia'])>128)
+            {
+                $foto = $_POST['Persona']['fotografia'];
+                $foto = str_replace('data:image/png;base64,', '', $foto);
+                $foto = str_replace(' ', '+', $foto);
+                $data_foto = base64_decode($foto);
+                //Set photo filename
+                $filename = $_POST['Persona']['dni'].'.png';
+                $filepath = YiiBase::getPathOfAlias("webroot").'/fotografias/'.$filename;
+                $writeToDisk = file_put_contents($filepath, $data_foto);
+            }
+            $model->attributes=array_map('strtoupper',$_POST['Persona']);
+            $model->fotografia=$filename;
+            if($model->save()){
+                if($model->empleado!=null){
+                    $this->redirect(array('Updempleadoper','id'=>$model->id));
+                }
+                else{
+                    $this->redirect(array('updateempleado','id'=>$model->id));
+                }
+            }
+        }
+            $this->render('_index_empleado',array(
+                'model'=>$model,
+                'empleado'=>$empleado,
+            ));
+        }
+        else{
+        if(isset($_POST['Empleado']))
+        {
+            $empleado->attributes=array_map('strtoupper',$_POST['Empleado']);
+            if($empleado->save()){
+                $this->redirect(array('index'));
+            }
+        }
+        }
+
+    }
+    public function actionUpdempleadoper($id){
+        $model=$this->loadModel($id);
+        $empleado=Empleado::model()->findByPk($id);
+        if(isset($_POST['Persona']))
+        {
+            $filename=$_POST['Persona']['fotografia'];
+            if(strlen($_POST['Persona']['fotografia'])>128)
+            {
+                $foto = $_POST['Persona']['fotografia'];
+                $foto = str_replace('data:image/png;base64,', '', $foto);
+                $foto = str_replace(' ', '+', $foto);
+                $data_foto = base64_decode($foto);
+                //Set photo filename
+                $filename = $_POST['Persona']['dni'].'.png';
+                $filepath = YiiBase::getPathOfAlias("webroot").'/fotografias/'.$filename;
+                $writeToDisk = file_put_contents($filepath, $data_foto);
+            }
+            $model->attributes=array_map('strtoupper',$_POST['Persona']);
+            $model->fotografia=$filename;
+            if($model->save()){
+                    $this->redirect(array('Updempleadoper','id'=>$model->id));
+            }
+        }
+        if(isset($_POST['Empleado']))
+        {
+            $empleado->attributes=array_map('strtoupper',$_POST['Empleado']);
+            if($empleado->save()){
+                $this->redirect(array('view','id'=>$model->id));
+            }
+        }
+        $this->render('_form_empleadoper',array(
+            'model'=>$model,
+            'empleado'=>$empleado,
+        ));
     }
 }

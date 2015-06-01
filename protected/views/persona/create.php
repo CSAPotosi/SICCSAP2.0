@@ -1,15 +1,12 @@
 <div class="row">
     <div class="col-md-12">
-
         <?php
         /* @var $this PersonaController */
         /* @var $model Persona */
-
         $this->breadcrumbs=array(
             'Personas'=>array('index'),
             'Nueva Persona',
         );
-
         ?>
         <ul class="nav nav-tabs" id="padre">
             <li class="active"><a href="#persona"  data-toggle="tab">Datos Personales</a></li>
@@ -26,11 +23,6 @@
                         </div>
                     </div>
                     <?php $this->renderPartial('_form', array('model'=>$model)); ?>
-                </div>
-            </div>
-            <div class="tab-pane fade" id="paciente">
-                <div class="box box-solid">
-
                 </div>
             </div>
         </div>

@@ -39,8 +39,8 @@
                                         <b>Bs.- </b>
                                     </span>
                                     <?php echo CHtml::activetextField($precio,'monto',array('class'=>'form-control','placeholder'=>'0.00')); ?>
-                                    <?php echo CHtml::error($precio,'monto',array('class'=>'label label-danger')); ?>
                                 </div>
+                                <?php echo CHtml::error($precio,'monto',array('class'=>'label label-danger')); ?>
                             </div>
                         </div>
                     <?php $this->endWidget(); ?>

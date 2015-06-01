@@ -54,7 +54,6 @@ create table if not exists empleado(
   estado varchar (16),
   foreign key (id) references persona(id)
 );
-
 create table if not exists usuario(
   id_usuario serial primary key not null ,
   nombre varchar (64) unique not null ,
@@ -267,7 +266,6 @@ create table if not exists item_cie10(
   foreign key (codigo_item_padre) references item_cie10(codigo),
   foreign key (id_cat_cie10) references categoria_cie10(id_cat_cie10)
 );
-
 create table if not exists consulta_cie10(
   id_consulta int not null ,
   codigo_cie10 varchar(8) not null ,
@@ -275,10 +273,6 @@ create table if not exists consulta_cie10(
   foreign key (codigo_cie10) references item_cie10(codigo),
   primary key (id_consulta,codigo_cie10)
 );
-
-
-
-
 create table if not exists servicio(
   id_servicio serial not null primary key,
   codigo_serv varchar(16),
@@ -330,33 +324,28 @@ create table if not exists examen_laboratorio(
   foreign key(id_servicio) references servicio(id_servicio),
   foreign key(id_cat_lab) references categoria_ex_laboratorio(id_cat_lab)
 );
-
 create table if not exists categoria_ex_gabinete(
   id_cat_gab serial not null primary key,
   codigo_cat_gab varchar(8) unique,
   nombre_cat_gab varchar(32) not null
 );
-
 create table if not exists examen_gabinete(
   id_servicio int not null primary key,
   id_cat_gab int not null,
   foreign key(id_servicio) references servicio(id_servicio),
   foreign key(id_cat_gab) references categoria_ex_gabinete(id_cat_gab)
 );
-
 create table if not exists categoria_servicio_clinico(
   id_cat_cli serial not null primary key,
   codigo_cat_cli varchar(8) unique,
   nombre_cat_cli varchar(32) not null
 );
-
 create table if not exists servicio_clinico(
   id_servicio int not null primary key,
   id_cat_cli int not null,
   foreign key (id_servicio) references servicio(id_servicio),
   foreign key (id_cat_cli) references categoria_servicio_clinico(id_cat_cli)
 );
-
 create table if not exists orden_examen(
   id_orden serial not null primary key,
   id_historial int not null,
@@ -378,18 +367,93 @@ create table if not exists solicitud_servicios(
   id_solicitud serial not null primary key,
   id_historial int not null,
   fecha_solicitud timestamp,
+  estado_dinero varchar(32),
+  estado_permiso varchar(32),
+  observaciones varchar(256),
   total float,
   foreign key(id_historial) references historial_paciente(id_historial)
 );
-
 create table if not exists detalle_solicitud_servicio(
   id_solicitud int not null,
   id_servicio int not null,
   cantidad float not null,
-  total_bruto float not null,
-  total_neto float not null,
+  precio_servicio float not null,
   foreign key (id_solicitud) references solicitud_servicios(id_solicitud),
   foreign key (id_servicio) references servicio(id_servicio)
+);
+create table if not exists unidad(
+  id_unidad serial primary key ,
+  nombre_unidad varchar(32) not null unique,
+  descripcion_unidad varchar(128),
+  estado varchar(16)
+);
+create table if not exists cargo(
+  id_cargo serial primary key ,
+  nombre_cargo varchar (32) not null unique ,
+  descripcion_cargo varchar(128),
+  id_unidad int,
+  estado varchar(16),
+  foreign key (id_unidad) references unidad(id_unidad)
+);
+create table if not exists horario(
+  id_horario serial primary key ,
+  nombre_horario varchar(32) not null unique,
+  tipo_horario varchar (32),
+  estado varchar(16)
+);
+create table if not exists turno(
+  id_turno serial primary key ,
+  nombre_turno varchar(32) not null unique ,
+  tipo_turno varchar(8),
+  hora_entrada time not null,
+  inicio_entrada int,
+  fin_entrada int,
+  hora_salida time not null,
+  inicio_salida int,
+  fin_salida int,
+  tolerancia int default 0,
+  dias varchar(7),
+  id_horario int,
+  foreign key (id_horario) references  horario(id_horario)
+);
+create table if not exists asignacion_empleado(
+  id_asignacion serial primary key,
+  fecha_inicio date,
+  fecha_fin date,
+  id_empleado int,
+  id_cargo int,
+  id_horario int,
+  foreign key (id_empleado) references empleado(id),
+  foreign key (id_cargo) references cargo(id_cargo),
+  foreign key (id_horario) references horario(id_horario)
+);
+create table if not exists registro(
+  id_asignacion int not null,
+  fecha date not null,
+  hora_asistencia time not null,
+  observaciones varchar(128),
+  estado bool,
+  primary key(fecha,hora_asistencia,id_asignacion),
+  foreign key (id_asignacion) references asignacion_empleado(id_asignacion)
+);
+create table if not exists medico(
+  id int not null primary key,
+  matricula varchar(32) unique not null,
+  colegiatura varchar(64),
+  estado varchar(16),
+  foreign key (id) references persona (id)
+);
+CREATE TABLE if not exists especialidad(
+  id_especialidad SERIAL primary key not null,
+  nombre_especialidad  varchar(50) not null,
+  descripcion varchar(128)
+);
+create table if not exists medico_especialidad(
+  id_M_E serial not null primary key,
+  id_medico int ,
+  id_especialidad int,
+  foreign key (id_medico)references medico(id),
+  foreign key(id_especialidad) references especialidad(id_especialidad)
 );
 /*
 create table if not exists servicio_internacion(
@@ -414,19 +478,15 @@ create table if not exists internacion(
   observacion_ingreso varchar(256),
   procedencia_ingreso varchar(16),--consulta exterma,emergencia, referido
   id_diagnostico_ingreso int,
-
   fecha_alta timestamp,
   tipo_alta varchar(16),--medica, fuga, solicitada,transferencia
   id_diagnostico_alta int,
   observacion_alta varchar (256),
-
   fecha_egreso timestamp,
-
   foreign key (id_historial) references historial_paciente(id_historial),
   foreign key (id_diagnostico_ingreso) references consulta(id_consulta),
   foreign key (id_diagnostico_alta) references consulta(id_consulta)
 );
-
 create table if not exists sala_internacion(
   id_inter int not null,
   id_sala int not null,

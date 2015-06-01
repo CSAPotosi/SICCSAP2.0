@@ -9,7 +9,7 @@
 * --------------------------------------------------------------------------------
 * @author Muhammad Khayat - khayat@infest.or.id
 * Blog: http://yat.my.id
-* 
+*
 */
 //Yii::app()->baseUrl.'/fotografias/123.png'
 /**
@@ -51,7 +51,7 @@ class XPhoto extends CWidget{
 	/**
 	* attribut of model
 	*/
-	public $attribute;	
+	public $attribute;
 	/**
 	* width of photo canvas : in pixel
 	*/
@@ -95,16 +95,16 @@ class XPhoto extends CWidget{
 
 		echo CHtml::openTag('div', $this->htmlOptions);
 		echo '<div id="xphoto-modal-container" style="position:absolute;"></div>';
-		
+
 		$videoOptions = array(
 			'id'=>$this->videoID,
 			'width'=>$this->width,
-			'height'=>$this->height,				
+			'height'=>$this->height,
 		);
 		$canvasOptions = array(
 			'id'=>$this->canvasID,
 			'width'=>$this->width,
-			'height'=>$this->height,				
+			'height'=>$this->height,
 		);
 		$videoContainerOptions = array(
 			'class'=>'xphoto-video-container',
@@ -117,24 +117,24 @@ class XPhoto extends CWidget{
 		if($this->capture){
 			echo CHtml::openTag('video', $videoOptions);
 			echo CHtml::closeTag('video');
-		}			
+		}
 		echo CHtml::closeTag('div');
 
 		echo CHtml::openTag('canvas', $canvasOptions);
 		echo CHtml::closeTag('canvas');
-		
+
 		if($this->upload){
 			$photoOptions = array(
 				'id'=>$this->photoID,
 				'width'=>$this->width,
-				'height'=>$this->height,				
+				'height'=>$this->height,
 			);
 			echo CHtml::openTag('div', $photoOptions);
 			echo CHtml::closeTag('div');
 			echo '<input type="file" id="xphoto-input-file" name="xphoto-input-file" style="display:none;">';
-		}							
+		}
 		echo '<div class="xphoto-buttons"></div>';
-		echo CHtml::activeHiddenField($this->model,$this->attribute);			
+		echo CHtml::activeHiddenField($this->model,$this->attribute);
 		echo CHtml::closeTag('div');
 
 		$this->registerScript();
@@ -143,7 +143,7 @@ class XPhoto extends CWidget{
 	{
 		if(defined('YII_DEBUG') && YII_DEBUG==true)$baseScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.xphoto.assets'),false,1,YII_DEBUG);
 		else $baseScriptUrl = Yii::app()->getAssetManager()->publish(Yii::getPathOfAlias('ext.xphoto.assets'));
-		
+
 		$cs=Yii::app()->getClientScript();
 		$cs->registerCssFile($baseScriptUrl.'/css/xphoto.css');
 		$cs->registerScriptFile($baseScriptUrl.'/js/xphoto.js', CClientScript::POS_HEAD);
@@ -159,7 +159,7 @@ class XPhoto extends CWidget{
 			'photoUrl'=> $this->photoUrl,
 			//'autostart'=> true,
 		);
-		$cs->registerScript($this->id.'_xphoto',"			
+		$cs->registerScript($this->id.'_xphoto',"
 			var xphoto = new XPhoto(".CJavaScript::encode($options).");			
 		");
 	}

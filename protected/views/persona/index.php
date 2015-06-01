@@ -47,9 +47,7 @@
                     </div>
 
                     <div class="col-md-2">
-                        <a class="btn btn-block btn-social btn-tumblr">
-                            <i class="fa fa-medkit"></i>Nuevo Personal
-                        </a>
+                        <?php echo CHtml::link("<i class='fa fa-medkit'></i>Nuevo Personal",array('Persona/CrearEmpleado'),array('class'=>'btn btn-block btn-social btn-tumblr'))?>
                     </div>
 
                 </div>

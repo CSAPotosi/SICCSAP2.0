@@ -1,4 +1,4 @@
-
+<?php if($listitemlab!=null){?>
 <table class="table table-hover bordered" id="tablalab">
     <input type="hidden" value="<?php echo $cat_btn_item;?>" id="campo_item_cat_lab" name="ExamenLaboratorio[id_cat_lab]">
     <tr>
@@ -8,9 +8,7 @@
         <th>Intitucion</th>
         <th></th>
     </tr>
-    <?php foreach($listitemlab as $list):
-        if($list->id_cat_lab==$cat_btn_item){
-        ?>
+    <?php foreach($listitemlab as $list):?>
             <tr>
                 <td><?php echo $list->serviciodelab->codigo_serv;?></td>
                 <td><?php echo $list->serviciodelab->nombre_serv;?></td>
@@ -25,10 +23,17 @@
                     <?php }?>
                 </td>
             </tr>
-    <?php
-        }
-    endforeach?>
+    <?php endforeach?>
 </table>
 <button type="button" class="btn bg-aqua" data-target="#itemlab" data-toggle="modal">
     <b>Nuevo</b>
 </button>
+<?php }else{?>
+    <div class="callout callout-danger">
+        <h2>No Se Encontaron Resultados</h2>
+    </div>
+    <input type="hidden" value="<?php echo $cat_btn_item;?>" id="campo_item_cat_lab">
+    <button type="button" class="btn bg-aqua" data-target="#itemlab" data-toggle="modal">
+        <b>Nuevo</b>
+    </button>
+<?php }?>

@@ -1,8 +1,8 @@
 <div class="col-md-12">
-	<div class="box box-primary">
+    <div class="box box-primary">
         <ul class="nav nav-tabs" id="pesta_persona">
             <li><a href="#persona"  data-toggle="tab">Datos Personales</a></li>
-            <li class="active"><a href="#paciente"  data-toggle="tab">Datos Complementarios</a></li>
+            <li class="active"><a href="#empleado"  data-toggle="tab">Datos Empleado</a></li>
         </ul>
         <div class="tab-content" id="content_persona">
             <div class="tab-pane fade" id="persona">
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="tab-pane fade active in" id="paciente">
+            <div class="tab-pane fade active in" id="empleado">
                 <div class="box box-solid">
                     <div class="box-body">
                         <div class="row">
@@ -37,9 +37,9 @@
                                 </div>
                             </div>
                         </div>
-                        <?php $this->renderPartial('_form_paciente', array('paciente'=>$paciente,'model'=>$model,'lastid'=>$model->id,'contacto'=>$contacto)); ?>
+                        <?php $this->renderPartial('_form_empleado', array('empleado'=>$empleado,'lastid'=>$model->id)); ?>
                     </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>

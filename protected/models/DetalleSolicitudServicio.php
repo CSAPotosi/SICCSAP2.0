@@ -1,24 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "categoria_servicio".
+ * This is the model class for table "detalle_solicitud_servicio".
  *
- * The followings are the available columns in table 'categoria_servicio':
- * @property integer $id_categoria_serv
- * @property string $nombre_categoria
- * @property string $descripcion_categoria_serv
+ * The followings are the available columns in table 'detalle_solicitud_servicio':
+ * @property integer $id_solicitud
+ * @property integer $id_servicio
+ * @property double $cantidad
+ * @property double $precio_servicio
  *
  * The followings are the available model relations:
- * @property ServicioMedico[] $servicioMedicos
+ * @property SolicitudServicios $idSolicitud
+ * @property Servicio $idServicio
  */
-class CategoriaServicio extends CActiveRecord
+class DetalleSolicitudServicio extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'categoria_servicio';
+		return 'detalle_solicitud_servicio';
 	}
 
 	/**
@@ -29,11 +31,12 @@ class CategoriaServicio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre_categoria', 'required'),
-			array('nombre_categoria, descripcion_categoria_serv', 'length', 'max'=>128),
+			array('id_solicitud, id_servicio, cantidad, precio_servicio', 'required'),
+			array('id_solicitud, id_servicio', 'numerical', 'integerOnly'=>true),
+			array('cantidad, precio_servicio', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_categoria_serv, nombre_categoria, descripcion_categoria_serv', 'safe', 'on'=>'search'),
+			array('id_solicitud, id_servicio, cantidad, precio_servicio', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -45,7 +48,8 @@ class CategoriaServicio extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'servicioMedicos' => array(self::HAS_MANY, 'ServicioMedico', 'id_categoria_serv'),
+			'idSolicitud' => array(self::BELONGS_TO, 'SolicitudServicios', 'id_solicitud'),
+			'idServicio' => array(self::BELONGS_TO, 'Servicio', 'id_servicio'),
 		);
 	}
 
@@ -55,9 +59,10 @@ class CategoriaServicio extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_categoria_serv' => 'Codigo',
-			'nombre_categoria' => 'Nombre',
-			'descripcion_categoria_serv' => 'Descripcion',
+			'id_solicitud' => 'Id Solicitud',
+			'id_servicio' => 'Id Servicio',
+			'cantidad' => 'Cantidad',
+			'precio_servicio' => 'Precio Servicio',
 		);
 	}
 
@@ -79,9 +84,10 @@ class CategoriaServicio extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_categoria_serv',$this->id_categoria_serv);
-		$criteria->compare('nombre_categoria',$this->nombre_categoria,true);
-		$criteria->compare('descripcion_categoria_serv',$this->descripcion_categoria_serv,true);
+		$criteria->compare('id_solicitud',$this->id_solicitud);
+		$criteria->compare('id_servicio',$this->id_servicio);
+		$criteria->compare('cantidad',$this->cantidad);
+		$criteria->compare('precio_servicio',$this->precio_servicio);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -92,7 +98,7 @@ class CategoriaServicio extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return CategoriaServicio the static model class
+	 * @return DetalleSolicitudServicio the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

@@ -111,9 +111,7 @@ class SalaController extends Controller
                 $modelPrecio=new PrecioServicio;
                 $modelPrecio->id_servicio=$modelServicio->id_servicio;
             }
-
             $modelPrecio->attributes=$_POST['PrecioServicio'];
-
             $val=$this->validar(array($modelServicio,$modelTipoSala,$modelPrecio));
             if($val){
                 $modelServicio->save(false);

@@ -51,6 +51,9 @@
             <div class="timeline-footer">
                 <?php echo CHtml::link('Ver Detalle',array('persona/view','id'=>$personaModel->id),array('class'=>'btn btn-primary btn-xs'));?>
                 <?php echo ($personaModel->paciente)?CHtml::link('Ver Historia',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn bg-green btn-xs')):CHtml::link('Agregar Info. de Paciente',array('persona/update','id'=>$personaModel->id),array('class'=>'btn bg-green btn-xs'));?>
+                <?php echo ($personaModel->empleado)?CHtml::link('Ver Empleado',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs')):CHtml::link('Agregar Info. Empleado',array('persona/Updateempleado','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs'));?>
+                <?php echo ($personaModel->paciente?CHtml::link('Hacer Solicitud de Servicios',array('SolicitudServicios/Create','id'=>$personaModel->id),array('class'=>'btn btn-warning btn-xs pull-right')):'');?>
+
             </div>
         </div>
     </li>
