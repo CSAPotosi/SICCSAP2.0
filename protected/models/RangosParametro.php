@@ -1,26 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "sala_internacion".
+ * This is the model class for table "rangos_parametro".
  *
- * The followings are the available columns in table 'sala_internacion':
- * @property integer $id_inter
- * @property integer $id_sala
- * @property string $fecha_entrada
- * @property string $fecha_salida
+ * The followings are the available columns in table 'rangos_parametro':
+ * @property integer $id_rango
+ * @property double $valor_min
+ * @property double $valor_max
+ * @property integer $sexo_rango
+ * @property integer $id_par_lab
  *
  * The followings are the available model relations:
- * @property Internacion $idInter
- * @property Sala $idSala
+ * @property ParametroLaboratorio $idParLab
  */
-class SalaInternacion extends CActiveRecord
+class RangosParametro extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'sala_internacion';
+		return 'rangos_parametro';
 	}
 
 	/**
@@ -31,12 +31,12 @@ class SalaInternacion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_inter, id_sala, fecha_entrada', 'required'),
-			array('id_inter, id_sala', 'numerical', 'integerOnly'=>true),
-			array('fecha_salida', 'safe'),
+			array('id_par_lab', 'required'),
+			array('sexo_rango, id_par_lab', 'numerical', 'integerOnly'=>true),
+			array('valor_min, valor_max', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_inter, id_sala, fecha_entrada, fecha_salida', 'safe', 'on'=>'search'),
+			array('id_rango, valor_min, valor_max, sexo_rango, id_par_lab', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +48,7 @@ class SalaInternacion extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'internacion' => array(self::BELONGS_TO, 'Internacion', 'id_inter'),
-			'sala' => array(self::BELONGS_TO, 'Sala', 'id_sala'),
+			'idParLab' => array(self::BELONGS_TO, 'ParametroLaboratorio', 'id_par_lab'),
 		);
 	}
 
@@ -59,10 +58,11 @@ class SalaInternacion extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_inter' => 'Id Inter',
-			'id_sala' => 'Id Sala',
-			'fecha_entrada' => 'Fecha Entrada',
-			'fecha_salida' => 'Fecha Salida',
+			'id_rango' => 'Id Rango',
+			'valor_min' => 'Valor Min',
+			'valor_max' => 'Valor Max',
+			'sexo_rango' => 'Sexo Rango',
+			'id_par_lab' => 'Id Par Lab',
 		);
 	}
 
@@ -84,10 +84,11 @@ class SalaInternacion extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_inter',$this->id_inter);
-		$criteria->compare('id_sala',$this->id_sala);
-		$criteria->compare('fecha_entrada',$this->fecha_entrada,true);
-		$criteria->compare('fecha_salida',$this->fecha_salida,true);
+		$criteria->compare('id_rango',$this->id_rango);
+		$criteria->compare('valor_min',$this->valor_min);
+		$criteria->compare('valor_max',$this->valor_max);
+		$criteria->compare('sexo_rango',$this->sexo_rango);
+		$criteria->compare('id_par_lab',$this->id_par_lab);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,16 +99,10 @@ class SalaInternacion extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return SalaInternacion the static model class
+	 * @return RangosParametro the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
-
-    protected function beforeValidate(){
-        if($this->isNewRecord)
-            $this->fecha_entrada=date('d-m-Y H:i:s');
-        return parent::beforeValidate();
-    }
 }

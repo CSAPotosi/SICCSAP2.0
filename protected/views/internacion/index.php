@@ -36,13 +36,27 @@ $this->pageTitle='Internacion';
                     </div>
 
                     <div class="col-md-2">
-                        <?php echo CHtml::link('Alta de paciente',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
+                        <?php echo CHtml::link('Alta de paciente',array('internacion/altaMedica','id'=>$modelInternacion->id_inter),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
                     </div>
 
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-
+<div class="row">
+    <div class="col-md-6">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Historial de salas</h3>
+            </div>
+            <div class="box-body">
+                <?php $this->renderPartial('_tablaSala',['listaSalas'=>$modelInternacion->salas]);?>
+            </div>
+            <div class="box-footer">
+                <?php echo CHtml::link('Cambio de sala',['internacion/viewHistorialSalas','id'=>$modelInternacion->id_inter],['class'=>'btn btn-primary']);?>
+            </div>
+        </div>
+    </div>
 </div>

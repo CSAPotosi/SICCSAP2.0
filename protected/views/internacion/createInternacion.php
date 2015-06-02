@@ -138,6 +138,6 @@ Yii::app()->clientScript->registerScript('datetime','
                 }
             }
             $("#modalViewSala").modal("hide");
-        })
+        });
     ');
 ?>

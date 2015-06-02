@@ -101,3 +101,5 @@ create trigger trigger_update_precio
   before update on precio_servicio
   for each row when (OLD.monto is distinct from NEW.monto)
 execute procedure actualizarPrecio();
+
+

@@ -496,6 +496,31 @@ create table if not exists sala_internacion(
   foreign key(id_sala) references sala(id_sala),
   primary key(id_inter,id_sala,fecha_entrada)
 );
+
+create table if not exists parametro_laboratorio(
+  id_par_lab serial not null primary key,
+  nombre_par_lab varchar(64) unique not null,
+  unidad_par_lab varchar(8),
+  estado_par_lab int not null default 1
+);
+
+create table if not exists rangos_parametro(
+  id_rango serial not null primary key,
+  valor_min float,
+  valor_max float,
+  sexo_rango int default 0,--0 indefinido, 1 masculino, 2, femenino,
+  id_par_lab int not null,
+  foreign key (id_par_lab) references parametro_laboratorio(id_par_lab)
+);
+
+create table if not exists examen_parametros(
+  id_serv int not null,
+  id_par_lab int not null,
+  foreign key (id_serv) references servicio(id_servicio),
+  foreign key (id_par_lab) references parametro_laboratorio(id_par_lab),
+  primary key (id_serv,id_par_lab)
+);
+
 /*
 create table if not exists referencia_internacion(
   id_inter int not null,

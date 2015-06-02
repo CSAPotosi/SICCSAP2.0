@@ -64,6 +64,7 @@ class Internacion extends CActiveRecord
 			'idDiagnosticoIngreso' => array(self::BELONGS_TO, 'Consulta', 'id_diagnostico_ingreso'),
 			'idDiagnosticoAlta' => array(self::BELONGS_TO, 'Consulta', 'id_diagnostico_alta'),
             'salaActual' => array(self::HAS_ONE, 'SalaInternacion', 'id_inter','condition'=>'fecha_salida is null'),
+            'salas'=>array(self::HAS_MANY,'SalaInternacion','id_inter','order'=>'fecha_entrada DESC'),
 		);
 	}
 
@@ -151,5 +152,13 @@ class Internacion extends CActiveRecord
         ];
     }
 
+    public function getTipoAlta(){
+        return [
+            'MEDICA'=>'MEDICA',
+            'SOLICITADA'=>'SOLICITADA',
+            'MUERTE'=>'MUERTE',
+            'FUGA'=>'FUGA'
+        ];
+    }
 
 }

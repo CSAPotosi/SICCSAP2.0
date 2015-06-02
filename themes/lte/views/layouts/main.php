@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <title><?php echo CHtml::encode(Yii::app()->name); ?></title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-        <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/style.css" rel="stylesheet" type="text/css"/>
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
         <link href="<?php echo Yii::app()->theme->baseUrl; ?>/elements/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
         <!-- Ionicons -->
@@ -23,7 +22,7 @@
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/timepicker/bootstrap-timepicker.min.css" rel="stylesheet"/>
         <!-- Theme style -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/AdminLTE.css" rel="stylesheet" type="text/css" />
-        <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/elements/css/style.css" rel="stylesheet" type="text/css" >
 
         <!-- Date time picker -->
