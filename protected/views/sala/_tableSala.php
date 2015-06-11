@@ -21,10 +21,10 @@
                         $actives=array("","","","");
                         $actives[$item->estado_sala-1]="disabled";
                         $buttonGroup= '<div class="btn-group-vertical btn-group-xs">'.
-                            CHtml::link("A",array('sala/changeStateSalaAjax','id'=>$item->id_sala,'state'=>1),array('class'=>'changeStateSala btn btn-primary btn-xs '.$actives[0],'title'=>'Activar')).
-                            CHtml::link("M",array('sala/changeStateSalaAjax','id'=>$item->id_sala,'state'=>3),array('class'=>'changeStateSala btn bg-yellow btn-xs '.$actives[2],'title'=>'Mantenimiento')).
-                            CHtml::link("I",array('sala/changeStateSalaAjax','id'=>$item->id_sala,'state'=>4),array('class'=>'changeStateSala btn btn-danger btn-xs '.$actives[3],'title'=>'Inactivar')).
-                            '</div>';
+                        CHtml::link("A",array('sala/changeStateSalaAjax','id'=>$item->id_sala,'state'=>1),array('class'=>'changeStateSala btn btn-primary btn-xs '.$actives[0],'title'=>'Activar')).
+                        CHtml::link("M",array('sala/changeStateSalaAjax','id'=>$item->id_sala,'state'=>3),array('class'=>'changeStateSala btn bg-yellow btn-xs '.$actives[2],'title'=>'Mantenimiento')).
+                        CHtml::link("I",array('sala/changeStateSalaAjax','id'=>$item->id_sala,'state'=>4),array('class'=>'changeStateSala btn btn-danger btn-xs '.$actives[3],'title'=>'Inactivar')).
+                        '</div>';
                     ?>
                     <?php echo ($item->estado_sala!=2)?CHtml::link('<i class="fa fa-toggle-up"></i>',array(''),array('class'=>'btnStatusSala','data-trigger'=>'focus','data-html'=>'true','data-content'=>"$buttonGroup")):'';?>
                 </td>

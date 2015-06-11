@@ -6,7 +6,9 @@
     <div class="col-md-12">
         <div class="box box-primary">
             <div class="box-body">
-                <?php echo CHtml::beginForm();?>
+                <?php echo CHtml::beginForm((!$modelParametro->isNewRecord)?['updateParametro','id_par'=>$modelParametro->id_par_lab]:null,'post');?>
+                    <?php echo CHtml::activeHiddenField($modelParametro,'id_par_lab');?>
+
                     <div class="form-group">
                         <?php echo CHtml::activeLabelEx($modelParametro,'nombre_par_lab');?>
                         <?php echo CHtml::activeTextField($modelParametro,'nombre_par_lab',['class'=>'form-control']);?>

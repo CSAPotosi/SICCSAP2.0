@@ -10,7 +10,7 @@ return array(
 	'name'=>'SICCSAP',
     'timeZone'=>'America/La_Paz',
     'language'=>'es',
-	'theme'=>'lte',
+	'theme'=>'lte2',
 	// preloading 'log' component
 	'preload'=>array('log'),
     //'language'=>'es', //Lenguaje destino

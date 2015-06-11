@@ -47,6 +47,7 @@ class ExamenLaboratorio extends CActiveRecord
 		return array(
 			'serviciodelab' => array(self::BELONGS_TO, 'Servicio', 'id_servicio'),
 			'idCatLab' => array(self::BELONGS_TO, 'CategoriaExLaboratorio', 'id_cat_lab'),
+            'parametros'=>array(self::MANY_MANY,'ParametroLaboratorio','examen_parametros(id_serv,id_par_lab)')
 		);
 	}
 

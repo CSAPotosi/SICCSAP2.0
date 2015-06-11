@@ -32,6 +32,7 @@ class ParametroLaboratorio extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre_par_lab', 'required'),
+            array('nombre_par_lab', 'unique'),
 			array('estado_par_lab', 'numerical', 'integerOnly'=>true),
 			array('nombre_par_lab', 'length', 'max'=>64),
 			array('unidad_par_lab', 'length', 'max'=>8),
@@ -49,7 +50,7 @@ class ParametroLaboratorio extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'servicios' => array(self::MANY_MANY, 'Servicio', 'examen_parametros(id_par_lab, id_serv)'),
+			'laboratorios' => array(self::MANY_MANY, 'Servicio', 'examen_parametros(id_par_lab, id_serv)'),
 			'rangosParametros' => array(self::HAS_MANY, 'RangosParametro', 'id_par_lab'),
 		);
 	}

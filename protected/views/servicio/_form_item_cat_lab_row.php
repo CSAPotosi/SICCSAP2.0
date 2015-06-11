@@ -21,7 +21,7 @@
                     <?php if($list->serviciodelab->precioServicio1==null){?>
                     <?php echo CHtml::link('<i class="glyphicon glyphicon-remove"></i>',array('servicio/deleteitemcatlab','id'=>$list->serviciodelab->id_servicio),array('title'=>'Eliminar','class'=>'btnitemDelcatlab'))?>
                     <?php }?>
-                    <?php echo CHtml::link('<i class="fa fa-file-text"></i>',null,['title'=>'Asignar plantilla de laboratorio']);?>
+                    <?php echo CHtml::link('<i class="fa fa-file-text"></i>',['laboratorio/asignarParametros','id_examen'=>$list->id_servicio],['title'=>'Asignar plantilla de laboratorio']);?>
                 </td>
             </tr>
     <?php endforeach?>

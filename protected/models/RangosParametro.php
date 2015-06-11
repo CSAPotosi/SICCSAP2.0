@@ -48,7 +48,7 @@ class RangosParametro extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idParLab' => array(self::BELONGS_TO, 'ParametroLaboratorio', 'id_par_lab'),
+			'parametro' => array(self::BELONGS_TO, 'ParametroLaboratorio', 'id_par_lab'),
 		);
 	}
 
@@ -59,9 +59,9 @@ class RangosParametro extends CActiveRecord
 	{
 		return array(
 			'id_rango' => 'Id Rango',
-			'valor_min' => 'Valor Min',
-			'valor_max' => 'Valor Max',
-			'sexo_rango' => 'Sexo Rango',
+			'valor_min' => 'Valor minimo',
+			'valor_max' => 'Valor maximo',
+			'sexo_rango' => 'Sexo aplicado al rango',
 			'id_par_lab' => 'Id Par Lab',
 		);
 	}
@@ -105,4 +105,12 @@ class RangosParametro extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function getSexo(){
+        return [
+            0=>'Ambos Sexos',
+            1=>'Masculino',
+            2=>'Femenino'
+        ];
+    }
 }

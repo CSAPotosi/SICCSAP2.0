@@ -1,8 +1,7 @@
 <?php
-/* @var $this SiteController */
-
-$this->pageTitle="Pagina Principal";
+    $this->pageTitle="Pagina Principal";
 ?>
+
 <div class="row">
     <div class="col-md-12">
         <div class="box box-solid">
@@ -70,20 +69,17 @@ $this->pageTitle="Pagina Principal";
         </div>
     </div>
 </div>
+
 <?php
-
-Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/moment.js',CClientScript::POS_END);
-Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/bootstrap-datetimepicker.min.js',CClientScript::POS_END);
-
-Yii::app()->clientScript->registerScript('datetime','
-    $(function(){
-        $("#datetimepicker1").datetimepicker({
-        	locale:"es",
-        	defaultDate:"04/20/2015",
-        	format:"DD-MM-YYYY HH:mm A",
-        	maxDate:"04/24/2015"
+    Yii::app()->clientScript->registerScript('datetime','
+        $(function(){
+            $("#datetimepicker1").datetimepicker({
+                locale:"es",
+                defaultDate:"04/20/2015",
+                format:"DD-MM-YYYY HH:mm A",
+                maxDate:"04/24/2015"
+            });
         });
-    });
-',CClientScript::POS_END);
+    ',CClientScript::POS_END);
 ?>
 
