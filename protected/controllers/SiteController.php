@@ -6,7 +6,7 @@ class SiteController extends Controller
 	/**
 	 * Declares class-based actions.
 	 */
-    public $layout='login';
+
 	public function actions()
 	{
 		return array(
@@ -80,7 +80,10 @@ class SiteController extends Controller
 	 */
 	public function actionLogin()
 	{
-		$model=new LoginForm;
+        $this->layout='login';
+
+
+        $model=new LoginForm;
 
 		// if it is ajax validation request
 		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')

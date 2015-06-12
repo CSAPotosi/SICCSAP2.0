@@ -54,6 +54,7 @@ create table if not exists empleado(
   estado varchar (16),
   foreign key (id) references persona(id)
 );
+
 create table if not exists usuario(
   id_usuario serial primary key not null ,
   nombre varchar (64) unique not null ,
@@ -63,6 +64,7 @@ create table if not exists usuario(
   id_persona int,
   foreign key (id_persona) references persona(id)
 );
+
 create table if not exists unidad(
   id_unidad serial primary key ,
   nombre_unidad varchar(32) not null unique,
