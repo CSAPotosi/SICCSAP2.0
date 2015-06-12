@@ -58,8 +58,10 @@ create table if not exists usuario(
   id_usuario serial primary key not null ,
   nombre varchar (64) unique not null ,
   clave varchar (128) not null,
-  id_empleado int,
-  foreign key (id_empleado) references empleado(id)
+  estado int,
+  fecha_ingreso date,
+  id_persona int,
+  foreign key (id_persona) references persona(id)
 );
 create table if not exists unidad(
   id_unidad serial primary key ,
@@ -536,3 +538,43 @@ create table if not exists referencia_internacion(
 insert into persona (dni, nombres, primer_apellido) values ('3434242','Juan','Perez');
 insert into empleado(id) values (1);
 insert into usuario( nombre, clave, id_empleado) values ('admin',md5('admin'),1);*/
+
+
+
+
+
+
+create table if not exists moneda(
+  id_moneda serial not null primary key,
+  sigla varchar(4) not null ,
+  moneda varchar(20) not null
+);
+
+create table if not exists tipo_de_cambio(
+  id_tipo_cambio serial not null primary key,
+  moneda int not null ,
+  fecha_inicio date not null ,
+  fecha_fin date,
+  valor float not null ,
+  foreign key (moneda) references moneda(id_moneda)
+);
+
+create table if not exists cuenta(
+  id_cuenta serial not null primary key,
+  codigo varchar(12) not null,
+  nombre varchar(120) not null,
+  descripcion varchar(200),
+  moneda int,
+  nivel char(1),
+  estado char(1),
+  foreign key (moneda) references moneda(id_moneda)
+);
+/****        array_ma()                ****/
+create table if not exists ciclocontable(
+  id_ciclo serial not null primary key,
+  anio int,
+  fecha_inicio date not null,
+  fecha_fin date not null
+
+);
+
