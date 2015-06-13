@@ -31,7 +31,7 @@ class SiteController extends Controller
 	{
         $this->layout='column2';
 		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main.php'
+		// using the default layout 'protected/views/layouts/main3.php'
 		$this->render('index');
 	}
 

@@ -8,18 +8,17 @@
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- Font Awesome Icons -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-
         <!-- Ionicons -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/font-ionicons/css/ionicons.min.css" rel="stylesheet" />
-        <!-- Theme style -->
-        <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-        <!-- AdminLTE Skins. -->
-        <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/css/skins/skin-red.min.css" rel="stylesheet" type="text/css" />
-        <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/css/BreadCrumb.css" rel="stylesheet" />
-
         <!-- Datetimepicker-->
         <link rel="stylesheet" href="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/datetimepicker/css/bootstrap-datetimepicker.min.css"/>
 
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/iCheck/all.css" rel="stylesheet" type="text/css" />
+        <!-- Theme style -->
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/css/skins/skin-red.min.css" rel="stylesheet" type="text/css" />
+        <!-- Theme style -->
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/iCheck/all.css" rel="stylesheet" type="text/css" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -98,7 +97,7 @@
                                                 <!-- The message -->
                                                 <p>Why not buy a new awesome theme?</p>
                                             </a>
-                                         </li><!-- end message -->
+                                        </li><!-- end message -->
                                     </ul><!-- /.menu -->
                                 </li>
                                 <li class="footer"><a href="#">See All Messages</a></li>
@@ -327,20 +326,26 @@
         <div class='control-sidebar-bg'></div>
     </div><!-- ./wrapper -->
 
-    <!-- REQUIRED JS SCRIPTS -->
-
-    <!-- jQuery 2.1.4 -->
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/jQueryUI/jquery-ui-1.10.3.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+    <!-- SlimScroll 1.3.0 -->
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <!-- iCheck 1.0.1 -->
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/iCheck/icheck.js" type="text/javascript"></script>
+
     <!-- AdminLTE App -->
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/js/app.min.js" type="text/javascript"></script>
-    <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/js/pages/dashboard.js" type="text/javascript"></script>
+    <!-- bootstrap datetime picker -->
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/moment/moment-with-locales.min.js" type="text/javascript"></script>
+    <!-- bootstrap datetime picker -->
+    <!-- bootstrap datetime picker -->
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/moment/moment-with-locales.min.js" type="text/javascript"></script>
+    <!-- bootstrap datetime picker -->
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
-    <!-- Optionally, you can add Slimscroll and FastClick plugins.
-          Both of these plugins are recommended to enhance the
-          user experience. Slimscroll is required when using the
-          fixed layout. -->
+
     </body>
 </html>

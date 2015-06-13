@@ -41,7 +41,7 @@
                                 <i class="fa fa-ellipsis-v"></i>
                                 <i class="fa fa-ellipsis-v"></i>
                                 </span>
-                                <?php echo CHtml::checkBox('Parametro[item][]',false,[($itemP->estado_par_lab==0)?'disabled':'flag'=>'disabled','value'=>$itemP->id_par_lab]);?>
+                                <?php echo CHtml::checkBox('Parametro[item][]',false,[($itemP->estado_par_lab==0)?'disabled':'flag'=>'disabled','value'=>$itemP->id_par_lab,'class'=>'minimal-red']);?>
                                 <span class="text"><?php echo $itemP->nombre_par_lab;?></span>
                                 <small class="label label-primary"><?php echo $itemP->unidad_par_lab;?></small>
                             </li>
@@ -75,7 +75,7 @@
                         <i class="fa fa-ellipsis-v"></i>
                         <i class="fa fa-ellipsis-v"></i>
                         </span>
-                            <?php echo CHtml::checkBox('Parametro[item][]',false,['value'=>$itemP->id_par_lab,'checked'=>true]);?>
+                            <?php echo CHtml::checkBox('Parametro[item][]',false,['value'=>$itemP->id_par_lab,'checked'=>true,'class'=>'minimal-red']);?>
                             <span class="text"><?php echo $itemP->nombre_par_lab;?></span>
                             <small class="label label-primary"><?php echo $itemP->unidad_par_lab;?></small>
                         </li>
@@ -96,10 +96,12 @@
 
 
 <?php
-Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/plugins/iCheck/icheck.min.js',CClientScript::POS_END);
-Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/AdminLTE/dashboard.js',CClientScript::POS_END);
 
 Yii::app()->clientScript->registerScript('changeList','
+    $("input[type=\'checkbox\']").iCheck({
+        checkboxClass: "icheckbox_minimal-blue"
+    });
+
     $("#target-list input").iCheck("check");
     $("#source-list input").on("ifChecked",toTargetList);
 
