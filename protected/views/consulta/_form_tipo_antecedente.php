@@ -27,7 +27,7 @@
             <div class="form-group">
                 <?php echo $form->labelEx($TipoAntecedente,'genero_aplicado',array('class'=>'col-md-2 control-label')); ?>
                 <div class="col-sm-8">
-                    <?php echo $form->dropDownList($TipoAntecedente,'genero_aplicado',array('G'=>'General',$genero->sexo[0]=>$genero->sexo),array('options'=>array($genero->sexo[0]=>array('selected'=>true)))); ?>
+                    <?php echo $form->dropDownList($TipoAntecedente,'genero_aplicado',array('G'=>'General',$genero->sexo=>$genero->sexo),array('options'=>array($genero->sexo=>array('selected'=>true)))); ?>
 
                 </div>
                 <?php echo $form->error($TipoAntecedente,'genero_aplicado',array('class'=>'label label-danger')); ?>

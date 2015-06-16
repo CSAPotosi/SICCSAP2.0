@@ -49,6 +49,8 @@ class ConsultaController extends Controller{
         $listaAntecedentesMedico=AntecedenteMedico::model()->FindAll();
         $svModel= SignosVitales::model()->findAll();
         $listaante=TipoAntecedente::model()->FindAll();
+        $detalle=new DetalleSolicitudServicio;
+        $solicitud=new SolicitudServicios;
         $listaSV=array();
         $genero='';
         $his="";
@@ -78,6 +80,8 @@ class ConsultaController extends Controller{
             'TipoAntecente'=>$TipoAntecente,
             'listaante'=>$listaante,
             'his'=>$his,
+            'detsolser'=>$detalle,
+            'solicitud'=>$solicitud,
         ));
     }
     public function actionCrearAntecedente()
@@ -165,7 +169,6 @@ class ConsultaController extends Controller{
         $this->loadHistoria($historia_id);
         $filterChain->run();
     }
-
     public function loadHistoria($id_historia){
         if($this->_historia===null){
             $this->_historia=HistorialPaciente::model()->findByPk($id_historia);
@@ -174,7 +177,6 @@ class ConsultaController extends Controller{
         }
         return $this->_historia;
     }
-
     public function actionLoadConsultaAjax(){
         $listaConsulta=Consulta::model()->findAll("fecha_diagnostico between '{$_POST['inicio']}' and (timestamp '{$_POST['fin']}'+ time '23:59:59') order by fecha_diagnostico DESC");
         if($listaConsulta==null)
@@ -192,8 +194,6 @@ class ConsultaController extends Controller{
                 echo '</tr>';
 
             }
-
         }
-
     }
 }

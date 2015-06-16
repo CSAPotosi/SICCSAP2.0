@@ -72,6 +72,7 @@ class Persona extends CActiveRecord
 			'paisVive' => array(self::BELONGS_TO, 'Pais', 'pais_vive'),
             'paciente'=>array(self::HAS_ONE,'Paciente','id_paciente'),
             'empleado'=>array(self::HAS_ONE,'Empleado','id'),
+            'medico'=>array(self::HAS_ONE,'Medico','id'),
             'contacto_paciente'=>array(self::BELONGS_TO,'Paciente','id'),
             'usuario'=>array(self::HAS_ONE,'Usuario','id'),
 		);

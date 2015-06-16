@@ -9,7 +9,6 @@ $this->pageTitle='Internacion';
 ?>
 
 <?php $this->renderPartial('/historialPaciente/_form_datos_paciente',array('model'=>$modelInternacion->historial));?>
-
 <div class="row">
     <div class="col-md-12">
         <div class="box box-solid">
@@ -18,27 +17,24 @@ $this->pageTitle='Internacion';
                     <div class="col-md-2">
                         <?php echo CHtml::link('Datos Generales',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-bitbucket'));?>
                     </div>
-
                     <div class="col-md-2">
                         <?php echo CHtml::link('Diagnosticos',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
                     </div>
-
                     <div class="col-md-2">
                         <?php echo CHtml::link('Tratamientos',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
                     </div>
-
                     <div class="col-md-2">
                         <?php echo CHtml::link('Salas',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-bitbucket'));?>
                     </div>
-
                     <div class="col-md-2">
-                        <?php echo CHtml::link('Servicios',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
+                        <?php echo CHtml::link('Orden de Servicio',array('SolicitudServicios/OrdenInternacion','id'=>$modelInternacion->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
                     </div>
-
+                    <div class="col-md-2">
+                        <?php echo CHtml::link('Ver Servicios',array('SolicitudServicios/VerServiciosInternacion','id'=>$modelInternacion->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
+                    </div>
                     <div class="col-md-2">
                         <?php echo CHtml::link('Alta de paciente',array('internacion/altaMedica','id'=>$modelInternacion->id_inter),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
                     </div>
-
                 </div>
             </div>
         </div>

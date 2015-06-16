@@ -96,13 +96,15 @@ class MedicoController extends Controller
     }
     public function actionCrearEspecialidad()
     {
-        $modelE=new Especialidad;
-        if(isset($_POST['Especialidad']))
-        {
-            $modelE->attributes=$_POST['Especialidad'];
-            $modelE->save();
-
+        $especialidad= new Especialidad;
+        if(isset($_POST['Especialidad'])){
+            $especialidad->attributes=$_POST['Especialidad'];
+            if($especialidad->save()){
+                $listaespecialidad=Especialidad::model()->findAll();
+                $this->renderPartial('_form_especialidad',array('listaespecialidad'=>$listaespecialidad,));return;
+            }
         }
+        $this->renderPartial('_especialidad_formulario',array('especialidad'=>$especialidad));
     }
     public function actionActualizarEs()
     {
@@ -234,4 +236,5 @@ class MedicoController extends Controller
 			Yii::app()->end();
 		}
 	}
+
 }

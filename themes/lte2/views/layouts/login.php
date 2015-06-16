@@ -27,6 +27,7 @@
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/html5shiv/html5shiv.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/html5shiv/html5shiv-printshiv.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/respond/respond.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/iCheck/icheck.min.js"></script>
         <![endif]-->
     </head>
     <body class="login-page">
@@ -35,10 +36,10 @@
             <a href="../../index2.html"><b>SICCSAP</b> 3.0</a>
         </div><!-- /.login-logo -->
         <div class="login-box-body">
+            <center><img src="images/logoCSA.png" class="img-responsive"></center>
             <?php echo $content;?>
         </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
-
     <!-- jQuery 2.1.4 -->
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->

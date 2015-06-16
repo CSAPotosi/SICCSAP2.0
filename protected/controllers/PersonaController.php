@@ -27,7 +27,7 @@ class PersonaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper','Nc','CrearEmpleado','Updateempleado','Updempleadoper'),
+				'actions'=>array('index','view','Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper','Nc','CrearEmpleado','Updateempleado','Updempleadoper','Medicos','Empleado','CrearMedico','MedicoInformacion'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -235,6 +235,14 @@ class PersonaController extends Controller
             'model'=>$model,
         ));
     }
+    public function actionMedicos(){
+        $listaPersonas=Persona::model()->findAll(array(
+            'order'=>'id DESC',
+        ));
+        $this->render('indexmedicos',array(
+            'listaPersonas'=>$listaPersonas,'tipo_persona'=>'medico',
+        ));
+    }
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
@@ -245,13 +253,20 @@ class PersonaController extends Controller
 	public function actionIndex()
 	{
         $listaPersonas=Persona::model()->findAll(array(
-            'order'=>'id DESC'
+            'order'=>'id DESC',
         ));
 		$this->render('index',array(
-            'listaPersonas'=>$listaPersonas,
+            'listaPersonas'=>$listaPersonas,'tipo_persona'=>'paciente',
 		));
 	}
-
+    public function actionEmpleado(){
+        $listaPersonas=Persona::model()->findAll(array(
+            'order'=>'id DESC',
+        ));
+        $this->render('indexEmpleado',array(
+            'listaPersonas'=>$listaPersonas,'tipo_persona'=>'empleado',
+        ));
+    }
 	/**
 	 * Manages all models.
 	 */
@@ -424,6 +439,36 @@ class PersonaController extends Controller
         $this->render('_form_empleadoper',array(
             'model'=>$model,
             'empleado'=>$empleado,
+        ));
+    }
+    public function actionCrearMedico(){
+        $model=new Persona;
+        if(isset($_POST['Persona']))
+        {
+            $filename="no-photo.png";
+            if (!empty($_POST['Persona']['fotografia']))
+            {
+                $foto = $_POST['Persona']['fotografia'];
+                $foto = str_replace('data:image/png;base64,', '', $foto);
+                $foto = str_replace(' ', '+', $foto);
+                $data_foto = base64_decode($foto);
+                $filename = $_POST['Persona']['dni'].'.png';
+                $filepath = YiiBase::getPathOfAlias("webroot").'/fotografias/'.$filename;
+            }
+            $model->attributes=array_map('strtoupper',$_POST['Persona']);
+            $model->fotografia=$filename;
+            if($model->save())
+                $this->redirect(array('MedicoInformacion','id'=>$model->id));
+        }
+        $this->render('datosmedico',array(
+            'model'=>$model,
+        ));
+    }
+    public function actionMedicoInformacion($id){
+        $listaespecialidades=Especialidad::model()->findAll();
+        $this->render('infoMedico',array(
+            'id'=>$id,
+            'listaespecialidades'=>$listaespecialidades
         ));
     }
 }

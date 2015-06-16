@@ -4,7 +4,7 @@
         $color=($personaModel->paciente)?'bg-green':'bg-blue';
         $icono=(($personaModel->paciente)?'fa-wheelchair':'fa-male');
         ?>
-    <li >
+    <li>
         <i class="fa fa-fw fa-<?php echo ($personaModel->sexo=='FEMENINO')?'female':'male';?> <?php echo $color;?>"></i>
         <div class="timeline-item">
             <span class="time text-bold">CSA-<?php echo $personaModel->codigo;?></span>
@@ -50,10 +50,20 @@
             </div>
             <div class="timeline-footer">
                 <?php echo CHtml::link('Ver Detalle',array('persona/view','id'=>$personaModel->id),array('class'=>'btn btn-primary btn-xs'));?>
-                <?php echo ($personaModel->paciente)?CHtml::link('Ver Historia',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn bg-green btn-xs')):CHtml::link('Agregar Info. de Paciente',array('persona/update','id'=>$personaModel->id),array('class'=>'btn bg-green btn-xs'));?>
-                <?php echo ($personaModel->empleado)?CHtml::link('Ver Empleado',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs')):CHtml::link('Agregar Info. Empleado',array('persona/Updateempleado','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs'));?>
-                <?php echo ($personaModel->paciente?CHtml::link('Hacer Solicitud de Servicios',array('SolicitudServicios/Create','id'=>$personaModel->id),array('class'=>'btn btn-warning btn-xs pull-right')):'');?>
 
+                <?php
+                if($tipo_persona=='paciente'){
+                echo ($personaModel->paciente)?CHtml::link('Ver Historia',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn bg-green btn-xs')):CHtml::link('Agregar Info. de Paciente',array('persona/update','id'=>$personaModel->id),array('class'=>'btn bg-green btn-xs'));
+                echo ($personaModel->paciente?CHtml::link('Hacer Solicitud de Servicios',array('SolicitudServicios/Create','id'=>$personaModel->id),array('class'=>'btn btn-warning btn-xs pull-right')):'');
+                }?>
+                <?php
+                if($tipo_persona=='empleado')
+                echo ($personaModel->empleado)?CHtml::link('Ver Empleado',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs')):CHtml::link('Agregar Info. Empleado',array('persona/Updateempleado','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs'));
+                ?>
+                <?php if($tipo_persona=='medico'){
+                echo ($personaModel->medico)?CHtml::link('Ver medico',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs')):CHtml::link('Agregar Info. de Medico',array('persona/update','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs'));
+                }
+                ?>
             </div>
         </div>
     </li>

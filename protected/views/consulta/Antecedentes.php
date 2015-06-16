@@ -17,7 +17,6 @@
             ?>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg"><h8><span class="glyphicon glyphicon-plus"></span></h8></i></button>
         </ul>
-
         <div class="tab-content" id="padrecont">
             <?php
             $v=1;
@@ -89,11 +88,9 @@
             <?php
             }
             ?>
-
         </div>
         <button id="insertar" class="btn btn-primary btn-lg" type="button">Agregar</button>
     </div>
-
     <?php Yii::app()->clientScript->registerScript('RegistroAntecedente','
     $(document).ready(function(){
         $("#insertar").on("click",function(){

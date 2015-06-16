@@ -7,9 +7,9 @@
  * @property integer $id_solicitud
  * @property integer $id_historial
  * @property string $fecha_solicitud
- * @property string $estado_dinero
- * @property string $estado_permiso
+ * @property string $estado
  * @property string $observaciones
+ * @property double $descuento
  * @property double $total
  *
  * The followings are the available model relations:
@@ -36,13 +36,13 @@ class SolicitudServicios extends CActiveRecord
 		return array(
 			array('id_historial', 'required'),
 			array('id_historial', 'numerical', 'integerOnly'=>true),
-			array('total', 'numerical'),
-			array('estado_dinero, estado_permiso', 'length', 'max'=>32),
+			array('descuento, total', 'numerical'),
+			array('estado', 'length', 'max'=>32),
 			array('observaciones', 'length', 'max'=>256),
 			array('fecha_solicitud', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_solicitud, id_historial, fecha_solicitud, estado_dinero, estado_permiso, observaciones, total', 'safe', 'on'=>'search'),
+			array('id_solicitud, id_historial, fecha_solicitud, estado, observaciones, descuento, total', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,8 +54,8 @@ class SolicitudServicios extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'detalleSolicitudServicios' => array(self::HAS_MANY, 'DetalleSolicitudServicio', 'id_solicitud'),
-			'idHistorial' => array(self::BELONGS_TO, 'HistorialPaciente', 'id_historial'),
+            'detalleSolicitudServicios' => array(self::HAS_MANY, 'DetalleSolicitudServicio', 'id_solicitud'),
+            'idHistorial' => array(self::BELONGS_TO, 'HistorialPaciente', 'id_historial'),
 		);
 	}
 
@@ -68,9 +68,9 @@ class SolicitudServicios extends CActiveRecord
 			'id_solicitud' => 'Id Solicitud',
 			'id_historial' => 'Id Historial',
 			'fecha_solicitud' => 'Fecha Solicitud',
-			'estado_dinero' => 'Estado Dinero',
-			'estado_permiso' => 'Estado Permiso',
+			'estado' => 'Estado',
 			'observaciones' => 'Observaciones',
+			'descuento' => 'Descuento',
 			'total' => 'Total',
 		);
 	}
@@ -96,9 +96,9 @@ class SolicitudServicios extends CActiveRecord
 		$criteria->compare('id_solicitud',$this->id_solicitud);
 		$criteria->compare('id_historial',$this->id_historial);
 		$criteria->compare('fecha_solicitud',$this->fecha_solicitud,true);
-		$criteria->compare('estado_dinero',$this->estado_dinero,true);
-		$criteria->compare('estado_permiso',$this->estado_permiso,true);
+		$criteria->compare('estado',$this->estado,true);
 		$criteria->compare('observaciones',$this->observaciones,true);
+		$criteria->compare('descuento',$this->descuento);
 		$criteria->compare('total',$this->total);
 
 		return new CActiveDataProvider($this, array(
@@ -118,7 +118,7 @@ class SolicitudServicios extends CActiveRecord
 	}
     protected function beforeValidate(){
         if($this->IsNewRecord)
-            $this->fecha_solicitud=date('d/m/Y h:i:s');
+            $this->fecha_solicitud=date('d/m/Y h:i:s A');
         return parent::beforeValidate();
     }
 }

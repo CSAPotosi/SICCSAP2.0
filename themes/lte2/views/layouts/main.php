@@ -26,6 +26,7 @@
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/html5shiv/html5shiv.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/html5shiv/html5shiv-printshiv.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/respond/respond.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/iCheck/icheck.min.js"></script>
         <![endif]-->
     </head>
     <!--
@@ -86,8 +87,8 @@
                                         <li><!-- start message -->
                                             <a href="#">
                                                 <div class="pull-left">
-                                                    <!-- User Image -->
-                                                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>
+                                                    <!-- User Image
+                                                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"/>-->
                                                 </div>
                                                 <!-- Message title and timestamp -->
                                                 <h4>
@@ -130,35 +131,22 @@
                         <li class="dropdown tasks-menu">
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <?php
+                                $valor=DetalleSolicitudServicio::model()->findAll(array(
+                                    'condition'=>"estado_realizado='no realizado'",
+                                ));
+                                $cont=0;
+                                foreach($valor as $val):
+                                    $cont++;
+                                endforeach?>
                                 <i class="fa fa-flag-o"></i>
-                                <span class="label label-danger">9</span>
+                                <span class="label label-danger"><?php echo $cont?></span>
                             </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">You have 9 tasks</li>
-                                <li>
-                                    <!-- Inner menu: contains the tasks -->
-                                    <ul class="menu">
-                                        <li><!-- Task item -->
-                                            <a href="#">
-                                                <!-- Task title and progress text -->
-                                                <h3>
-                                                    Design some buttons
-                                                    <small class="pull-right">20%</small>
-                                                </h3>
-                                                <!-- The progress bar -->
-                                                <div class="progress xs">
-                                                    <!-- Change the css width attribute to simulate progress -->
-                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                                        <span class="sr-only">20% Complete</span>
-                                                    </div>
-                                                </div>
-                                            </a>
-                                        </li><!-- end task item -->
-                                    </ul>
-                                </li>
-                                <li class="footer">
-                                    <a href="#">View all tasks</a>
-                                </li>
+                            <ul class="dropdown-menu" id="listardetalleservicios">
+                                <div id="Layer1" style="height:350px;  overflow: scroll;">
+                                    <?php $this->renderPartial('/solicitudServicios/listardetallesolicitud')?>
+                                </div>
+                                <li class="footer"><?php echo CHtml::link("Ver Todo",Yii::app()->createUrl('SolicitudServicios/listasolicitudser'),array()); ?></li>
                             </ul>
                         </li>
                         <!-- User Account Menu -->
@@ -173,7 +161,7 @@
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+                                    <!--<img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />-->
                                     <p>
                                         <?php echo Yii::app()->user->getState('nombre'); ?>
                                         <small>Member since Nov. 2012</small>
@@ -216,12 +204,14 @@
                         <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                     </div>
                 </div>
-
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
                     <li class="header">OPCIONES</li>
                     <!-- Optionally, you can add icons to the links -->
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/']);?>" ><i class="fa fa-home"></i> <span>Inicio</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/index'])?>" ><i class="fa fa-user"></i> <span>Paciente</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Medicos'])?>" ><i class="fa fa-fw fa-stethoscope"></i> <span>Medicos</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Empleado'])?>" ><i class="fa fa-suitcase"></i> <span>Empleado</span></a></li>
                     <li><a href="#"><i class='fa fa-link'></i> <span>Another Link</span></a></li>
                     <li class="treeview">
                         <a href="#"><i class='fa fa-link'></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>

@@ -371,9 +371,9 @@ create table if not exists solicitud_servicios(
   id_solicitud serial not null primary key,
   id_historial int not null,
   fecha_solicitud timestamp,
-  estado_dinero varchar(32),
-  estado_permiso varchar(32),
+  estado varchar(32),
   observaciones varchar(256),
+  descuento float,
   total float,
   foreign key(id_historial) references historial_paciente(id_historial)
 );
@@ -382,6 +382,9 @@ create table if not exists detalle_solicitud_servicio(
   id_servicio int not null,
   cantidad float not null,
   precio_servicio float not null,
+  estado_pago varchar(32) not null,
+  estado_realizado varchar(32) not null,
+  autorizacion varchar(32) not null,
   foreign key (id_solicitud) references solicitud_servicios(id_solicitud),
   foreign key (id_servicio) references servicio(id_servicio)
 );
@@ -472,8 +475,6 @@ create table if not exists servicio_internacion(
 	foreign key (id_servicio) references servicio(id_servicio)
 );
 */
-
-
 create table if not exists internacion(
   id_inter serial not null primary key ,
   id_historial int not null ,
@@ -500,7 +501,6 @@ create table if not exists sala_internacion(
   foreign key(id_sala) references sala(id_sala),
   primary key(id_inter,id_sala,fecha_entrada)
 );
-
 create table if not exists parametro_laboratorio(
   id_par_lab serial not null primary key,
   nombre_par_lab varchar(64) unique not null,

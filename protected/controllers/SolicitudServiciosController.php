@@ -28,7 +28,7 @@ class SolicitudServiciosController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','CrearSolDetSer','Detalleservicios'),
+				'actions'=>array('index','view','CrearSolDetSer','Detalleservicios','reporteSolicitud','Listasolicitudser','Detalleserviciosconsulta','reporteOrdenlab','reporteOrdenGab','OrdenInternacion','DetalleServiciosInternacion','Verdetallesolicitud','ListaDetalleSolicitudInternacion','VerServiciosInternacion'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -72,6 +72,9 @@ class SolicitudServiciosController extends Controller
             'historial'=>$histo,
 		));
 	}
+    public function actionListasolicitudser(){
+         $this->render('listardetallesolicitud1');
+    }
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
@@ -101,13 +104,98 @@ class SolicitudServiciosController extends Controller
     }
     public function actionDetalleservicios(){
         $detalles=array();
+        $detalle=null;
         $detalles=$_POST['DetalleSolicitudServicio'];
         foreach($detalles as $det):
             $detalle=new DetalleSolicitudServicio;
             $detalle->attributes=$det;
             $detalle->save();
         endforeach;
-        $this->redirect(array('Persona/index'));
+        $solicitud=SolicitudServicios::model()->findByPk($detalle->id_solicitud);
+        $this->render('solicitudcompleto',array('solicitud'=>$solicitud,));
+    }
+    public function actionDetalleserviciosconsulta(){
+        $detalles=array();
+        $detalles=null;
+        $detalles=$_POST['DetalleSolicitudServicio'];
+        foreach($detalles as $det):
+            $detalle=new DetalleSolicitudServicio;
+            $detalle->attributes=$det;
+            $detalle->save();
+        endforeach;
+        $solicitud=SolicitudServicios::model()->findByPk($detalle->id_solicitud);
+        $this->render('ordencompleto',array('solicitud'=>$solicitud,));
+    }
+    public function actionreporteSolicitud($id){
+        $solicitud=SolicitudServicios::model()->findByPk($id);
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->render('/reportesolicitudservicios/comprobantedetallesolicitud',['solicitud'=>$solicitud],true));
+        $mPDF1->Output();
+    }
+    public function actionreporteOrdenlab($id){
+        $solicitud=SolicitudServicios::model()->findByPk($id);
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->render('/reportesolicitudservicios/comprobantedetalleorden',['solicitud'=>$solicitud],true));
+        $mPDF1->Output();
+    }
+    public function actionreporteOrdenGab($id,$ser){
+        $solicitud=SolicitudServicios::model()->findByPk($id);
+        $detalle=DetalleSolicitudServicio::model()->findAll(array(
+           'condition'=>"id_solicitud='{$id}' and id_servicio='{$ser}'"
+        ));
+        foreach($detalle as $det):
+            $deta=$det;
+        endforeach;
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->render('/reportesolicitudservicios/comprobantedetalleordengab',['solicitud'=>$solicitud,'detalle'=>$deta],true));
+        $mPDF1->Output();
+    }
+    public function actionOrdenInternacion($id){
+        $historial=HistorialPaciente::model()->findByPk($id);
+        $detalle=new DetalleSolicitudServicio;
+        $solicitud=new SolicitudServicios;
+        $this->render('solicitudInternacion',array(
+            'historial'=>$historial->id_historial,
+            'detsolser'=>$detalle,
+            'solicitud'=>$solicitud,
+        ));
+    }
+    public  function actionDetalleServiciosInternacion(){
+        $detalles=array();
+        $detalles=null;
+        $detalles=$_POST['DetalleSolicitudServicio'];
+        foreach($detalles as $det):
+            $detalle=new DetalleSolicitudServicio;
+            $detalle->attributes=$det;
+            $detalle->save();
+        endforeach;
+        $sol=SolicitudServicios::model()->findByPk($detalle->id_solicitud);
+        $this->redirect(array('ListaDetalleSolicitudInternacion','sol'=>$sol->id_solicitud));
+    }
+    public function actionListaDetalleSolicitudInternacion($sol){
+        $sol=SolicitudServicios::model()->findByPk($sol);
+        $var=$sol->idHistorial->internacionActual->fecha_ingreso;
+
+        $varhis=$sol->idHistorial->id_historial;
+        $historial=$sol->idHistorial;
+        $solicitud=SolicitudServicios::model()->findAll(array(
+            'condition'=>"fecha_solicitud>='{$var}'",
+        ));
+        $this->render('listadetallesolicitudservicio',array('solicitud'=>$solicitud,'historial'=>$historial));
+    }
+    public function actionVerdetallesolicitud($id){
+        $solicitud=SolicitudServicios::model()->findByPk($id);
+        if($solicitud!=null)
+        $this->render('versolicituddetalleinteenacion',array('solicitud'=>$solicitud));
+
+    }
+    public function actionVerServiciosInternacion($id){
+        $historial=HistorialPaciente::model()->findByPk($id);
+        $var=$historial->internacionActual->fecha_ingreso;
+        $solicitud=SolicitudServicios::model()->findAll(array(
+            'condition'=>"fecha_solicitud>='{$var}' and id_historial='{$historial->id_historial}'",
+        ));
+       $this->render('listadetallesolicitudservicio',array('solicitud'=>$solicitud,'historial'=>$historial));
     }
 	public function actionDelete($id)
 	{

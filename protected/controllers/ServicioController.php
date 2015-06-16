@@ -608,6 +608,7 @@ class ServicioController extends Controller
                 'condition'=>"id_cat_cli ='{$catitem}'",
             ));
         }
+
         else{
             $listitemcli=array();
             foreach($listaitemcat as $list):
