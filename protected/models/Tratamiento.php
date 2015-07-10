@@ -4,14 +4,16 @@
  * This is the model class for table "tratamiento".
  *
  * The followings are the available columns in table 'tratamiento':
- * @property integer $id_tratamiento
- * @property string $fecha_tratamiento
- * @property string $indicaciones
+ * @property integer $id_trat
+ * @property string $fecha_trat
+ * @property string $instrucciones_trat
+ * @property string $observaciones_trat
  * @property integer $id_consulta
  *
  * The followings are the available model relations:
- * @property Receta[] $recetas
  * @property Consulta $idConsulta
+ * @property Medicamento[] $medicamentos
+ * @property Evolucion[] $evolucions
  */
 class Tratamiento extends CActiveRecord
 {
@@ -31,12 +33,12 @@ class Tratamiento extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_tratamiento', 'required'),
+			array('fecha_trat, id_consulta', 'required'),
 			array('id_consulta', 'numerical', 'integerOnly'=>true),
-			array('indicaciones', 'safe'),
+			array('instrucciones_trat, observaciones_trat', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_tratamiento, fecha_tratamiento, indicaciones, id_consulta', 'safe', 'on'=>'search'),
+			array('id_trat, fecha_trat, instrucciones_trat, observaciones_trat, id_consulta', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -48,8 +50,9 @@ class Tratamiento extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'recetas' => array(self::HAS_MANY, 'Receta', 'id_tratamiento'),
-			'idConsulta' => array(self::BELONGS_TO, 'Consulta', 'id_consulta'),
+			'consulta' => array(self::BELONGS_TO, 'Consulta', 'id_consulta'),
+			'medicamentos' => array(self::MANY_MANY, 'Medicamento', 'receta(id_trat, id_med)'),
+			'evolucions' => array(self::HAS_MANY, 'Evolucion', 'id_trat'),
 		);
 	}
 
@@ -59,9 +62,10 @@ class Tratamiento extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_tratamiento' => 'Id Tratamiento',
-			'fecha_tratamiento' => 'Fecha Tratamiento',
-			'indicaciones' => 'Indicaciones',
+			'id_trat' => 'Id Trat',
+			'fecha_trat' => 'Fecha Trat',
+			'instrucciones_trat' => 'INTRUCCIONES',
+			'observaciones_trat' => 'OBSERVACIONES',
 			'id_consulta' => 'Id Consulta',
 		);
 	}
@@ -84,9 +88,10 @@ class Tratamiento extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_tratamiento',$this->id_tratamiento);
-		$criteria->compare('fecha_tratamiento',$this->fecha_tratamiento,true);
-		$criteria->compare('indicaciones',$this->indicaciones,true);
+		$criteria->compare('id_trat',$this->id_trat);
+		$criteria->compare('fecha_trat',$this->fecha_trat,true);
+		$criteria->compare('instrucciones_trat',$this->instrucciones_trat,true);
+		$criteria->compare('observaciones_trat',$this->observaciones_trat,true);
 		$criteria->compare('id_consulta',$this->id_consulta);
 
 		return new CActiveDataProvider($this, array(
@@ -104,4 +109,11 @@ class Tratamiento extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    public function beforeValidate(){
+        if($this->isNewRecord){
+            $this->fecha_trat=date('d-m-Y h:i A');
+        }
+        return parent::beforeValidate();
+    }
 }

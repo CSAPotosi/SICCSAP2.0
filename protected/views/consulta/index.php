@@ -3,8 +3,7 @@
         <ul id="tabsPersona" class="nav nav-tabs" role="tab-panel">
             <li role="presentation" ><a href="#antecedente" id="antecedente-tab" role="tab" data-toggle="tab" aria-controls="antecedente" aria-expanded="false">Antecedentes Medicos</a></li>
             <li role="presentation" class="active"><a href="#consulta" id="consulta-tab" role="tab" data-toggle="tab" aria-controls="consulta" aria-expanded="false">Consulta</a></li>
-            <li role="presentation" class="especial <?php echo ($consulta_id==0)?'hide':'show'; ?>"><a href="#reconsulta"  id="reconsulta-tab" role="tab" data-toggle="tab" aria-controls="reconsulta" aria-expanded="false">Reconsultas</a></li>
-            <li role="presentation" class="especial <?php echo ($consulta_id==0)?'hide':'show'; ?>"><a href="#receta" id="receta-tab" role="tab" data-toggle="tab" aria-controls="receta" aria-expanded="false">Recetas</a></li>
+            <li role="presentation" class="especial <?php echo ($consulta_id==0)?'hide':'show'; ?>"><a href="#receta" id="receta-tab" role="tab" data-toggle="tab" aria-controls="receta" aria-expanded="false">Tratamientos y evolucion</a></li>
         </ul>
         <div id="tabcontent" class="tab-content">
             <div role="tabpanel" class="tab-pane fade" id="antecedente" aria-labelledby="antecedente-tab">
@@ -33,18 +32,13 @@
                     </div>
                 </div>
             </div>
-            <div role="tabpanel" class="tab-pane fade especial <?php echo ($consulta_id==0)?'hide':''; ?>" id="reconsulta" aria-labelledby="reconsulta-tab">
-                <div class="box box-solid">
-                    <div class="box-body">
-                        <?php $this->renderPartial('_reconsulta');?>
-                    </div>
-                </div>
-            </div>
+
             <div role="tabpanel" class="tab-pane fade especial <?php echo ($consulta_id==0)?'hide':''; ?>" id="receta" aria-labelledby="receta-tab">
                 <div class="box box-solid">
                     <div class="box-body">
                         <?php
-                            $this->renderPartial('_form_tratamiento',array('tratamientoModel'=>$tratamientoModel,'recetaModel'=>$recetaModel));
+                            if($consulta_id!=0)
+                                $this->renderPartial('_tratamiento',['modelConsulta'=>Consulta::model()->findByPk($consulta_id)]);
                         ?>
                     </div>
                 </div>

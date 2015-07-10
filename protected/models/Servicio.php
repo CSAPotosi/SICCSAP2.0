@@ -11,6 +11,7 @@
  * @property string $fecha_creacion
  * @property string $fecha_actualizacion
  * @property integer $id_insti
+ * @property integer $estado_serv
  *
  * The followings are the available model relations:
  * @property ServicioClinico $servicioClinico
@@ -132,8 +133,10 @@ class Servicio extends CActiveRecord
 
     protected function beforeValidate(){
         $this->fecha_actualizacion=date('d-m-Y H:i:s');
-        if($this->isNewRecord)
+        if($this->isNewRecord){
             $this->fecha_creacion=date('d-m-Y H:i:s');
+            $this->estado_serv=1;
+        }
         if($this->id_insti==null||$this->id_insti=='')
             $this->id_insti=1;
         return parent::beforeValidate();

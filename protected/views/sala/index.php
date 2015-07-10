@@ -2,11 +2,15 @@
 $this->breadcrumbs=array(
     'Salas',
 );
+
+$this->pageTitle='Servicios - Salas';
+
 ?>
+
 <?php $this->renderPartial('/servicio/_form_servicios'); ?>
 <div class="row">
     <div class="col-md-6">
-        <div class="box box-primary">
+        <div class="box box-primary box-solid">
             <div class="box-header">
                 <h3 class="box-title">Tipos de salas</h3>
             </div>
@@ -14,7 +18,7 @@ $this->breadcrumbs=array(
                 <?php $this->renderPartial('_rowTipoSala',array('listaTipoSala'=>$listaTipoSala));?>
             </div>
             <div class="box-footer">
-                <?php echo CHtml::link('Nuevo',array('#'),array('class'=>'btn btn-primary','data-toggle'=>'modal','data-target'=>'#modalTipoSala','id'=>'btnpruebita'));?>
+                <?php echo CHtml::link('Nuevo tipo',array('#'),array('class'=>'btn btn-primary','data-toggle'=>'modal','data-target'=>'#modalTipoSala','id'=>'btnpruebita'));?>
             </div>
         </div>
     </div>
@@ -29,7 +33,7 @@ $this->breadcrumbs=array(
             </div>
 
             <div class="box-footer">
-                <?php echo CHtml::link('Nuevo',array('#'),array('id'=>'btnCreateSala','class'=>'btn btn-primary disabled','data-toggle'=>'modal','data-target'=>'#modalSala'));?>
+                <?php echo CHtml::link('Nueva sala',array('#'),array('id'=>'btnCreateSala','class'=>'btn btn-primary disabled','data-toggle'=>'modal','data-target'=>'#modalSala'));?>
             </div>
         </div>
     </div>
@@ -39,34 +43,34 @@ $this->breadcrumbs=array(
 
 
 
-<div class="modal fade" id="modalTipoSala" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade modal-primary" id="modalTipoSala" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Nuevo Tipo</h4>
+                <h4 class="modal-title">Nuevo tipo de sala</h4>
             </div>
             <div class="modal-body" id="modal_contenedor">
                 <?php $this->renderPartial('/sala/create',array('modelServicio'=>new Servicio,'modelTipoSala'=>new TipoSala,'modelPrecio'=>new PrecioServicio)); ?>
             </div>
             <div class="modal-footer clearfix">
-                <?php echo CHtml::tag('button',array('id'=>'btnAddTipoSala','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Agregar',true)?>
-                <?php echo CHtml::tag('button',array('id'=>'btnCloseTipoSala','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cancelar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnAddTipoSala','class'=>'btn btn-outline btn-primary pull-left'),'<i class="fa fa-plus"></i> Agregar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnCloseTipoSala','class'=>'btn btn-outline btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cancelar',true)?>
             </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="modalUpdateTipoSala" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade modal-primary" id="modalUpdateTipoSala" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Actualizar Tipo</h4>
+                <h4 class="modal-title">Actualizar tipo de sala</h4>
             </div>
             <div class="modal-body" id="modal_contenedorUpdate">
             </div>
             <div class="modal-footer clearfix">
-                <?php echo CHtml::tag('button',array('id'=>'btnUpdTipoSala','class'=>'btn btn-primary pull-left'),'Actualizar',true)?>
-                <?php echo CHtml::tag('button',array('id'=>'btnCloseUpdTipoSala','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cancelar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnUpdTipoSala','class'=>'btn btn-outline btn-primary pull-left'),'Actualizar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnCloseUpdTipoSala','class'=>'btn btn-outline btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cancelar',true)?>
             </div>
         </div>
     </div>
@@ -106,6 +110,8 @@ $this->breadcrumbs=array(
 
 
 <?php
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.js',CClientScript::POS_END);
 Yii::app()->clientScript->registerScript('ajax','
 
   $("#popover").popover();
@@ -176,6 +182,14 @@ Yii::app()->clientScript->registerScript('ajax','
     }
     $("#modalTipoSala").on("hidden.bs.modal",nuevoFormTipoSala);
     function cargarEventosClick(){
+        $(".btnChangeStateTipoSala").on("change",function(){
+            $.ajax({
+                url:$(this).attr("data-url"),
+                type:"get",
+                data:{estado:Number($(this).prop("checked"))}
+            });
+        });
+
         $(".btnVerTipoSala").on("click",function(){
             $.ajax({
                 beforeSend:function(){
@@ -213,6 +227,7 @@ Yii::app()->clientScript->registerScript('ajax','
                     type:"post",
                     success:function(datos){
                         $("#contenido_tipo_sala").html(datos);
+                        cargarEventosClick();
                     }
                 });
             }

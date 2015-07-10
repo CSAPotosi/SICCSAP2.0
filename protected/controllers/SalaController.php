@@ -33,7 +33,7 @@ class SalaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax','renderFormSalaAjax','createSalaAjax','updateSalaAjax','viewSalaAjax'),
+				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax','renderFormSalaAjax','createSalaAjax','updateSalaAjax','viewSalaAjax','changeStateTipoSalaAjax'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -48,7 +48,7 @@ class SalaController extends Controller
 
     public function actionIndex()
     {
-        $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
+        $listaTipoSala= TipoSala::model()->findAll();
         $listaSala=Sala::model()->findAll(array('condition'=>"id_tipo_sala = 0","order"=>"id_tipo_sala DESC"));
         //$listaSala=new CActiveDataProvider('Sala',array('pagination'=>false,'criteria'=>array('order'=>'id_sala DESC','condition'=>'id_tipo_sala =0')));
         $this->render('index',array('listaTipoSala'=>$listaTipoSala,'listaSala'=>$listaSala));
@@ -81,24 +81,26 @@ class SalaController extends Controller
         $modelTipoSala=new TipoSala;
         $modelPrecio= new PrecioServicio;
         $modelServicio= new Servicio;
-        $modelTipoSala->attributes=$_POST['TipoSala'];
-        $modelPrecio->attributes=$_POST['PrecioServicio'];
-        $modelServicio->attributes=$_POST['Servicio'];
+        $modelTipoSala->attributes=array_map('strtoupper',$_POST['TipoSala']);
+        $modelPrecio->attributes=array_map('strtoupper',$_POST['PrecioServicio']);
+        $modelServicio->attributes=array_map('strtoupper',$_POST['Servicio']);
         $val=$this->validar(array($modelServicio,$modelTipoSala,$modelPrecio));
         if($val){
             $modelServicio->save(false);
             $modelTipoSala->id_tipo_sala=$modelServicio->id_servicio; $modelTipoSala->save(false);
             $modelPrecio->id_servicio=$modelServicio->id_servicio; $modelPrecio->save(false);
-            $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
+            $listaTipoSala= TipoSala::model()->findAll();
             $this->renderPartial('_rowTipoSala',array('listaTipoSala'=>$listaTipoSala));
             return ;
         }
+
         $this->renderPartial('create',array(
             'modelServicio'=>$modelServicio,
             'modelTipoSala'=>$modelTipoSala,
             'modelPrecio'=>$modelPrecio
         ));
     }
+
 	public function actionUpdateTipoSalaAjax()
 	{
         if(isset($_POST['Servicio'],$_POST['TipoSala'],$_POST['PrecioServicio'])){
@@ -117,7 +119,7 @@ class SalaController extends Controller
                 $modelServicio->save(false);
                 $modelTipoSala->save(false);
                 $modelPrecio->save(false);
-                $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
+                $listaTipoSala= TipoSala::model()->findAll();
                 return $this->renderPartial('_rowTipoSala',array('listaTipoSala'=>$listaTipoSala));
             }
 
@@ -139,7 +141,7 @@ class SalaController extends Controller
             PrecioServicio::model()->deleteAll("id_servicio = {$modelServicio->id_servicio}");
             $modelServicio->delete();
         }
-        $listaTipoSala= new CActiveDataProvider('TipoSala',array('pagination'=>false,'criteria'=>array('order'=>'id_tipo_sala DESC')));
+        $listaTipoSala= TipoSala::model()->findAll();
         return $this->renderPartial('_rowTipoSala',array('listaTipoSala'=>$listaTipoSala));
 	}
 
@@ -240,6 +242,14 @@ class SalaController extends Controller
             }
         }
         return $this->_tipoSala;
+    }
+
+    public function actionChangeStateTipoSalaAjax($id_tipo=0,$estado=0){
+        $modelServicio=Servicio::model()->findByPk($id_tipo);
+        if($modelServicio!=null){
+            $modelServicio->estado_serv=$estado;
+            $modelServicio->save();
+        }
     }
 
     public function validar($vector=array()){

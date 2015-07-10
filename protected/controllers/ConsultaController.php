@@ -18,7 +18,7 @@ class ConsultaController extends Controller{
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('index','createConsultaAjax','listConsulta','loadConsultaAjax','NuevoAntecedente','CrearAntecedente'),
+                'actions'=>array('index','createConsultaAjax','listConsulta','loadConsultaAjax','NuevoAntecedente','CrearAntecedente','loadFormTratamientoAjax','createTratamientoAjax','loadDetalleTratamientoAjax'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
@@ -196,4 +196,35 @@ class ConsultaController extends Controller{
             }
         }
     }
+
+    public function actionLoadFormTratamientoAjax($id=0,$id_con=0){
+        $modelTratamiento= Tratamiento::model()->findByPk($id);
+        if($modelTratamiento==null){
+            $modelTratamiento= new Tratamiento();
+            $modelTratamiento->id_consulta=$id_con;
+        }
+        $this->renderPartial('_formTratamiento',['modelTratamiento'=>$modelTratamiento]);
+    }
+
+    public function actionLoadTableTratamiento($id_con=0){
+        $listaTratamiento=Tratamiento::model()->findAll(['condition'=>"id_consulta={$id_con}"]);
+        $this->renderPartial('_tableTratamiento',['listaTratamiento'=>$listaTratamiento]);
+    }
+
+    public function actionCreateTratamientoAjax(){
+        $modelTratamiento= new Tratamiento();
+        $modelTratamiento->id_consulta=1;
+        $modelTratamiento->attributes=$_POST['Tratamiento'];
+        if($modelTratamiento->validate()){
+            $modelTratamiento->save(false);
+            return $this->renderPartial('_tableTratamiento',['listaTratamiento'=>Tratamiento::model()->findAll(['condition'=>'id_consulta=1'])]);
+        }
+        return $this->renderPartial('_formTratamiento',['modelTratamiento'=>$modelTratamiento]);
+    }
+
+    public function actionLoadDetalleTratamientoAjax($id_trat=0){
+        $modelTratamiento=Tratamiento::model()->findByPk($id_trat);
+        return $this->renderPartial('_detalleTratamiento',['modelTratamiento'=>$modelTratamiento]);
+    }
+
 }

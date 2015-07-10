@@ -94,4 +94,5 @@ class TipoSala extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
 }

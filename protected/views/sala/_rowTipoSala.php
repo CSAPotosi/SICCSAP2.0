@@ -1,38 +1,25 @@
-<?php
-$this->widget('zii.widgets.grid.CGridView',array(
-    'id'=>'gridTipoSala',
-    'dataProvider'=>$listaTipoSala,
-    'itemsCssClass'=>'table table-hover table-bordered dataTable',
-    'columns'=>array(
-        array('name'=>'Nombre','value'=>'$data->servicio->nombre_serv'),
-        array('name'=>'Costo','value'=>'$data->servicio->precioServicio->monto'),
-        array(
-            'class'=>'CButtonColumn',
-            'template'=>'{detalle} {actualizar} {verSalas} {eliminar}',
-            'buttons'=>array(
-                'detalle'=>array(
-                    'label'=>'<i class="fa fa-th-list"></i>',
-                    'options'=>array('title'=>'Ver Detalle','class'=>'btnVerTipoSala'),
-                    'url'=>'Yii::app()->createUrl("sala/view",array("id"=>$data->id_tipo_sala))',
-                ),
-                'actualizar'=>array(
-                    'label'=>'<i class="fa fa-edit"></i>',
-                    'options'=>array('title'=>'Editar','class'=>'btnUpdTipoSala'),
-                    'url'=>'Yii::app()->createUrl("sala/create",array("id"=>$data->id_tipo_sala))',
-                ),
-                'eliminar'=>array(
-                    'label'=>'<span class="glyphicon glyphicon-remove"></span>',
-                    'options'=>array('title'=>'Eliminar','class'=>'btnDelTipoSala'),
-                    'url'=>'Yii::app()->createUrl("sala/delete",array("id"=>$data->id_tipo_sala))',
-                    'visible'=>'(!$data->salas)'
-                ),
-                'verSalas'=>array(
-                    'label'=>'<i class="fa fa-folder-open"></i>',
-                    'options'=>array('title'=>'mostrar salas','class'=>'btnListSala'),
-                    'url'=>'Yii::app()->createUrl("sala/listSalasAjax",array("id"=>$data->id_tipo_sala))',
-                ),
-            )
-        )
-    ),
-));
-?>
+<table class="table table-hover table-bordered dataTable">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Costo</th>
+            <th>Estado</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($listaTipoSala as $itemTipo):?>
+            <tr>
+                <td><?php echo $itemTipo->servicio->nombre_serv;?></td>
+                <td><?php echo $itemTipo->servicio->precioServicio->monto;?></td>
+                <td><input type="checkbox" class="btnChangeStateTipoSala" <?php echo ($itemTipo->servicio->estado_serv==1)?'checked':''; ?> data-toggle="toggle" data-size="mini" data-on="ACTIVO" data-onstyle="primary" data-offstyle="danger" data-off="INACTIVO" data-url="<?php echo CHtml::normalizeUrl(['sala/changeStateTipoSalaAjax','id_tipo'=>$itemTipo->servicio->id_servicio])?>"></td>
+                <td>
+                    <?php echo CHtml::link('<i class="fa fa-th-list"></i>',['sala/view','id'=>$itemTipo->id_tipo_sala],['title'=>'Ver detalle','class'=>'btnVerTipoSala']);?>
+                    <?php echo CHtml::link('<i class="fa fa-edit"></i>',['sala/create','id'=>$itemTipo->id_tipo_sala],['title'=>'Editar','class'=>'btnUpdTipoSala']);?>
+                    <?php if(!$itemTipo->salas) echo CHtml::link('<span class="glyphicon glyphicon-remove"></span>',['sala/delete','id'=>$itemTipo->id_tipo_sala],['title'=>'Eliminar','class'=>'btnDelTipoSala']);?>
+                    <?php echo CHtml::link('<i class="fa fa-folder-open"></i>',['sala/listSalasAjax','id'=>$itemTipo->id_tipo_sala],['title'=>'mostrar salas','class'=>'btnListSala']);?>
+                </td>
+            </tr>
+        <?php endforeach;?>
+    </tbody>
+</table>

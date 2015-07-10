@@ -1,24 +1,21 @@
 <?php
 
 /**
- * This is the model class for table "medicamento".
+ * This is the model class for table "detalle_resultado_laboratorio".
  *
- * The followings are the available columns in table 'medicamento':
- * @property integer $id_med
- * @property string $nombre_med
- * @property string $unidad_med
- *
- * The followings are the available model relations:
- * @property Receta[] $recetas
+ * The followings are the available columns in table 'detalle_resultado_laboratorio':
+ * @property integer $id_res_lab
+ * @property integer $id_parametro
+ * @property string $valor_resultado
  */
-class Medicamento extends CActiveRecord
+class DetalleResultadoLaboratorio extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'medicamento';
+		return 'detalle_resultado_laboratorio';
 	}
 
 	/**
@@ -29,12 +26,12 @@ class Medicamento extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre_med', 'required'),
-			array('nombre_med', 'length', 'max'=>128),
-			array('unidad_med', 'length', 'max'=>8),
+			array('id_parametro, valor_resultado', 'required'),
+			array('id_res_lab, id_parametro', 'numerical', 'integerOnly'=>true),
+			array('valor_resultado', 'length', 'max'=>20),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_med, nombre_med, unidad_med', 'safe', 'on'=>'search'),
+			array('id_res_lab, id_parametro, valor_resultado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,7 +43,8 @@ class Medicamento extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'recetas' => array(self::HAS_MANY, 'Receta', 'id_med'),
+            'parametro'=>array(self::BELONGS_TO,'ParametroLaboratorio','id_parametro'),
+            'resultadoLab'=>array(self::BELONGS_TO,'ResultadoLaboratorio','id_res_lab'),
 		);
 	}
 
@@ -56,9 +54,9 @@ class Medicamento extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_med' => 'Id Med',
-			'nombre_med' => 'Nombre Med',
-			'unidad_med' => 'Unidad Med',
+			'id_res_lab' => 'Id Res Lab',
+			'id_parametro' => 'Id Parametro',
+			'valor_resultado' => 'Valor Resultado',
 		);
 	}
 
@@ -80,9 +78,9 @@ class Medicamento extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_med',$this->id_med);
-		$criteria->compare('nombre_med',$this->nombre_med,true);
-		$criteria->compare('unidad_med',$this->unidad_med,true);
+		$criteria->compare('id_res_lab',$this->id_res_lab);
+		$criteria->compare('id_parametro',$this->id_parametro);
+		$criteria->compare('valor_resultado',$this->valor_resultado,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -93,7 +91,7 @@ class Medicamento extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Medicamento the static model class
+	 * @return DetalleResultadoLaboratorio the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

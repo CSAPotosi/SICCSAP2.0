@@ -96,9 +96,49 @@ class LaboratorioController extends Controller
     }
 
 
-    public function actionCreateExamenLab(){
-        return $this->render('createExamenLab');
+    public function actionCreateExamenLab($id_serv=0,$id_historial=0){
+        $modelServicio=Servicio::model()->findByPk($id_serv);
+        $listaParametros=array();
+        $resultado= new ResultadoLaboratorio();
+        $resultado->id_historial=$id_historial;
+
+        if(isset($_POST['ResultadoLaboratorio'],$_POST['DetalleResultadoLaboratorio'])){
+            $resultado->attributes=array_map('strtoupper',$_POST['ResultadoLaboratorio']);
+            foreach($_POST['DetalleResultadoLaboratorio'] as $itemDetalle){
+                $modelAux= new DetalleResultadoLaboratorio();
+                $modelAux->attributes=array_map('strtoupper',$itemDetalle);
+                $listaParametros[]=$modelAux;
+            }
+            $flag=$this->validar([$resultado])&&$this->validar($listaParametros);
+            if($flag&&$resultado->save(false)){
+                foreach($listaParametros as $itemL){
+                    $itemL->id_res_lab=$resultado->id_res_lab;
+                    $itemL->save(false);
+                }
+                return $this->redirect(['site/index']);
+            }
+        }else{
+            if($modelServicio->examenLaboratorio!=null){
+                foreach($modelServicio->examenLaboratorio->parametros as $item){
+                    $nuevo=new DetalleResultadoLaboratorio();
+                    $nuevo->id_parametro=$item->id_par_lab;
+                    $listaParametros[]=$nuevo;
+                }
+            }
+        }
+        return $this->render('createExamenLab',['listaParametros'=>$listaParametros,'resultado'=>$resultado]);
     }
+
+
+    public function validar($lista=array()){
+        $flag=true;
+
+        foreach($lista as $item){
+            $flag=($flag && $item->validate());
+        }
+        return $flag;
+    }
+
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()

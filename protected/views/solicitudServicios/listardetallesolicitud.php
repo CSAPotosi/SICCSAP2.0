@@ -16,6 +16,7 @@
             <?php if($lis->autorizacion=="autorizado"){?>
                 <td align="center">
                     <?php echo $servicio->nombre_serv?><br>
+                    <?php echo CHtml::link('Examen',['laboratorio/createExamenLab','id_serv'=>$servicio->id_servicio,'id_historial'=>$sol->idHistorial->id_historial])?>
                     <span class="badge bg-blue">autorizado</span>
                 </td>
             <?php }else{?>

@@ -32,7 +32,6 @@
         <!--[if lt IE 9]>
           <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-
         <![endif]-->
 	</head>
     <body class="skin-blue fixed">
@@ -95,7 +94,28 @@
                                     <ul class="menu">
                                         <li>
                                             <a href="#">
-                                                <i class="fa fa-fw fa-archive"></i> 5 new members joined today
+                                                <i class="ion ion-ios7-people info"></i> 5 new members joined today
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-warning danger"></i> Very long description here that may not fit into the page and may cause design problems
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="fa fa-users warning"></i> 5 new members joined
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-cart success"></i> 25 sales made
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="ion ion-ios7-person danger"></i> You changed your username
                                             </a>
                                         </li>
                                     </ul>
@@ -107,22 +127,33 @@
                         <li class="dropdown tasks-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <i class="fa fa-tasks"></i>
-                                <?php
-                                $valor=DetalleSolicitudServicio::model()->findAll();
-                                $cont=0;
-                                foreach($valor as $val):
-                                    $cont++;
-                                endforeach?>
-                                <span class="label label-danger"><?php echo $cont?></span>
+                                <span class="label label-danger">9</span>
                             </a>
-                            <ul class="dropdown-menu" id="listardetalleservicios">
-                                <div id="Layer1" style="height:350px;  overflow: scroll;">
-                                <?php $this->renderPartial('/solicitudServicios/listardetallesolicitud')?>
-                                </div>
-                                <li class="footer"><?php echo CHtml::link("Ver Todo",Yii::app()->createUrl('SolicitudServicios/listasolicitudser'),array()); ?></li>
+                            <ul class="dropdown-menu">
+                                <li class="header">Ud. Tiene X Citas pendientes</li>
+                                <li>
+                                    <!-- inner menu: contains the actual data -->
+                                    <ul class="menu">
+                                        <li><!-- Task item -->
+                                            <a href="#">
+                                                <h3>
+                                                    Design some buttons
+                                                    <small class="pull-right">20%</small>
+                                                </h3>
+                                                <div class="progress xs">
+                                                    <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="sr-only">20% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li><!-- end task item -->
+                                    </ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">Ver todas las citas</a>
+                                </li>
                             </ul>
                         </li>
-
                         <!-- User Account: style can be found in dropdown.less -->
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -342,7 +373,7 @@
         <!-- datepicker -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
         <!-- Bootstrap WYSIHTML5 -->
-        <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/eleme	nts/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
 
         <!-- AdminLTE App -->
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/elements/js/AdminLTE/app.js" type="text/javascript"></script>

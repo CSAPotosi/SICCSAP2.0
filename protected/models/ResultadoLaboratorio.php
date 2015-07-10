@@ -1,30 +1,27 @@
 <?php
 
 /**
- * This is the model class for table "receta".
+ * This is the model class for table "resultado_laboratorio".
  *
- * The followings are the available columns in table 'receta':
- * @property integer $id_receta
- * @property integer $id_med
- * @property integer $cantidad
- * @property string $duracion_tratamiento
- * @property string $indicaciones
- * @property string $via
- * @property string $info_adicional
- * @property integer $id_tratamiento
+ * The followings are the available columns in table 'resultado_laboratorio':
+ * @property integer $id_res_lab
+ * @property string $diagnostico
+ * @property string $observaciones
+ * @property string $fecha_examen
+ * @property integer $id_historial
  *
  * The followings are the available model relations:
- * @property Medicamento $idMed
- * @property Tratamiento $idTratamiento
+ * @property ParametroLaboratorio[] $parametroLaboratorios
+ * @property HistorialPaciente $idHistorial
  */
-class Receta extends CActiveRecord
+class ResultadoLaboratorio extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'receta';
+		return 'resultado_laboratorio';
 	}
 
 	/**
@@ -35,13 +32,12 @@ class Receta extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_med, cantidad, id_tratamiento', 'required'),
-			array('id_med, cantidad, id_tratamiento', 'numerical', 'integerOnly'=>true),
-			array('duracion_tratamiento, via', 'length', 'max'=>128),
-			array('indicaciones, info_adicional', 'safe'),
+			array('id_historial', 'required'),
+			array('id_historial', 'numerical', 'integerOnly'=>true),
+			array('diagnostico, observaciones, fecha_examen', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_receta, id_med, cantidad, duracion_tratamiento, indicaciones, via, info_adicional, id_tratamiento', 'safe', 'on'=>'search'),
+			array('id_res_lab, diagnostico, observaciones, fecha_examen, id_historial', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,8 +49,9 @@ class Receta extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idMed' => array(self::BELONGS_TO, 'Medicamento', 'id_med'),
-			'idTratamiento' => array(self::BELONGS_TO, 'Tratamiento', 'id_tratamiento'),
+			'parametroLaboratorios' => array(self::MANY_MANY, 'ParametroLaboratorio', 'detalle_resultado_laboratorio(id_res_lab, id_parametro)'),
+			'historial' => array(self::BELONGS_TO, 'HistorialPaciente', 'id_historial'),
+            'detalleResultados'=>array(self::HAS_MANY,'DetalleResultadoLaboratorio','id_res_lab'),
 		);
 	}
 
@@ -64,14 +61,11 @@ class Receta extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_receta' => 'Id Receta',
-			'id_med' => 'Id Med',
-			'cantidad' => 'Cantidad',
-			'duracion_tratamiento' => 'Duracion Tratamiento',
-			'indicaciones' => 'Indicaciones',
-			'via' => 'Via',
-			'info_adicional' => 'Info Adicional',
-			'id_tratamiento' => 'Id Tratamiento',
+			'id_res_lab' => 'Id Res Lab',
+			'diagnostico' => 'DIAGNOSTICO PRESUNTIVO',
+			'observaciones' => 'OBSERVACIONES',
+			'fecha_examen' => 'Fecha Examen',
+			'id_historial' => 'Id Historial',
 		);
 	}
 
@@ -93,14 +87,11 @@ class Receta extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_receta',$this->id_receta);
-		$criteria->compare('id_med',$this->id_med);
-		$criteria->compare('cantidad',$this->cantidad);
-		$criteria->compare('duracion_tratamiento',$this->duracion_tratamiento,true);
-		$criteria->compare('indicaciones',$this->indicaciones,true);
-		$criteria->compare('via',$this->via,true);
-		$criteria->compare('info_adicional',$this->info_adicional,true);
-		$criteria->compare('id_tratamiento',$this->id_tratamiento);
+		$criteria->compare('id_res_lab',$this->id_res_lab);
+		$criteria->compare('diagnostico',$this->diagnostico,true);
+		$criteria->compare('observaciones',$this->observaciones,true);
+		$criteria->compare('fecha_examen',$this->fecha_examen,true);
+		$criteria->compare('id_historial',$this->id_historial);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -111,10 +102,17 @@ class Receta extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Receta the static model class
+	 * @return ResultadoLaboratorio the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
+
+    public function beforeValidate(){
+        if($this->isNewRecord){
+            $this->fecha_examen=date('d/m/Y h:i:s A');
+        }
+        return parent::beforeValidate();
+    }
 }

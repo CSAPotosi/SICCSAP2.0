@@ -30,9 +30,8 @@ class SiteController extends Controller
 	public function actionIndex()
 	{
         $this->layout='column2';
-		// renders the view file 'protected/views/site/index.php'
-		// using the default layout 'protected/views/layouts/main3.php'
-		$this->render('index');
+		$listaTipoSala=TipoSala::model()->findAll();
+		$this->render('index',['listaTipoSala'=>$listaTipoSala]);
 	}
 
 	/**
