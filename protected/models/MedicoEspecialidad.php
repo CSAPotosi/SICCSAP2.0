@@ -4,11 +4,13 @@
  * This is the model class for table "medico_especialidad".
  *
  * The followings are the available columns in table 'medico_especialidad':
- * @property integer $id
+ * @property integer $id_m_e
+ * @property integer $id_medico
  * @property integer $id_especialidad
  *
  * The followings are the available model relations:
- * @property Medico $id0
+ * @property AtencionMedica[] $atencionMedicas
+ * @property Medico $idMedico
  * @property Especialidad $idEspecialidad
  */
 class MedicoEspecialidad extends CActiveRecord
@@ -29,10 +31,10 @@ class MedicoEspecialidad extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id, id_especialidad', 'numerical', 'integerOnly'=>true),
+			array('id_medico, id_especialidad', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, id_especialidad', 'safe', 'on'=>'search'),
+			array('id_m_e, id_medico, id_especialidad', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -44,8 +46,9 @@ class MedicoEspecialidad extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'id0' => array(self::BELONGS_TO, 'Medico', 'id'),
-			'idEspecialidad' => array(self::BELONGS_TO, 'Especialidad', 'id_especialidad'),
+            'atencionMedicas' => array(self::HAS_MANY, 'AtencionMedica', 'id_m_e'),
+            'idMedico' => array(self::BELONGS_TO, 'Medico', 'id_medico'),
+            'idEspecialidad' => array(self::BELONGS_TO, 'Especialidad', 'id_especialidad'),
 		);
 	}
 
@@ -55,7 +58,8 @@ class MedicoEspecialidad extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'id_m_e' => 'Id M E',
+			'id_medico' => 'Id Medico',
 			'id_especialidad' => 'Id Especialidad',
 		);
 	}
@@ -78,7 +82,8 @@ class MedicoEspecialidad extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->compare('id_m_e',$this->id_m_e);
+		$criteria->compare('id_medico',$this->id_medico);
 		$criteria->compare('id_especialidad',$this->id_especialidad);
 
 		return new CActiveDataProvider($this, array(

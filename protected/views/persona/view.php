@@ -115,5 +115,32 @@ $this->menu=array(
                 </div>
             </div>
         <?php }?>
+        <?php if($model->medico!=null){?>
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><b>Informacion de Medico</b></h3>
+                    <div class="box-tools pull-right">
+                        <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body">
+                    <?php
+                    $this->widget('zii.widgets.CDetailView', array(
+                        'data'=>$model->medico,
+                        'attributes'=>array(
+                            'matricula',
+                            'colegiatura',
+                            'estado',
+                        ),
+                        'htmlOptions'=>array('class'=>'table table-condensed'),
+                    ));
+
+                    ?>
+                </div>
+                <div class="box-footer">
+                    <?php echo CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Informacion de Medico",array('medico/UpdateMedicoEspe','id'=>$model->id),array('class'=>'btn btn-social bg-blue'))?>
+                </div>
+            </div>
+        <?php }?>
     </div>
 </div>

@@ -14,7 +14,6 @@
                     <th>Realizado</th>
                     <th>Autorizacion</th>
                 </tr>
-                <>
                 <?php foreach($detalles as $sol):?>
                     <?php $servicio=Servicio::model()->findByPk($sol->id_servicio)?>
                     <tr>

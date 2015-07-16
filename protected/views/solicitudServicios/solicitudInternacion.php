@@ -151,6 +151,10 @@
 
 <?php Yii::app()->clientScript->registerScript('controlsolicitudserviciosinternacion','
     $(document).ready(function(){
+        $("input[type=\'checkbox\'],input[type=\'radio\']").iCheck({
+                checkboxClass:"icheckbox_minimal-red",
+                radioClass:"iradio_minimal-blue"
+        });
         $("#buscasolser").on("keyup",function(){
             var texto=$(this).val();
             if(texto.length>0){
@@ -200,7 +204,6 @@
                data:$("#solicitud-servicios-form").serialize(),
                success:function(datos){
                     darsolicitud(datos.id_solicitud_j);
-                    alert("la");
                     autorizar();
                     detallesolicitud();
                }
@@ -218,7 +221,6 @@
             lista.each(function( index ) {
                 $(this).children().children(".autorizacion").val("autorizado");
             });
-            alert("ka");
         }
         function detallesolicitud(){
             $("#solicitud-servicios-detalle-int").submit();

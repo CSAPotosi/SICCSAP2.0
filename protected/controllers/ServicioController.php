@@ -28,7 +28,7 @@ class ServicioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','Crearlab','Categorialab','CrearcategorialabAjax','Updatecatlab','UpdatecategoriaAjax','DeletecategoriaAjax','Deletecatlab','Itemcatlab','CreateItemlabAjax','Nuevoitemlab','Nuevocatlab','Updateitemcatlab','Upditemlabc','Detalleitemcatlab','Deleteitemcatlab','BuscarItemlabAjax','Creargab','CreargabineteAjax','Updategab','Deletegab','Itemgab','CrearGabItem','Updateitemcatgab','Deleteitemcatgab','Nuevocatgab','BuscarItemgabAjax','CrearSer','CrearclinicoAjax','Updatecli','Deletecli','Itemcli','CrearCliItem','NueCliRow','Updateitemcatcli','Deleteitemcatcli','BuscarItemcliAjax','CrearEnf','CrearCliItemenf','Updateitemcatenf','Deleteitemcatenf','BuscarItemenfAjax'),
+				'actions'=>array('index','view','Crearlab','Categorialab','CrearcategorialabAjax','Updatecatlab','UpdatecategoriaAjax','DeletecategoriaAjax','Deletecatlab','Itemcatlab','CreateItemlabAjax','Nuevoitemlab','Nuevocatlab','Updateitemcatlab','Upditemlabc','Detalleitemcatlab','Deleteitemcatlab','BuscarItemlabAjax','Creargab','CreargabineteAjax','Updategab','Deletegab','Itemgab','CrearGabItem','Updateitemcatgab','Deleteitemcatgab','Nuevocatgab','BuscarItemgabAjax','CrearSer','CrearclinicoAjax','Updatecli','Deletecli','Itemcli','CrearCliItem','NueCliRow','Updateitemcatcli','Deleteitemcatcli','BuscarItemcliAjax','CrearEnf','CrearCliItemenf','Updateitemcatenf','Deleteitemcatenf','BuscarItemenfAjax','IndexAtencion','CrearServicioAtencion','RegistrarAtencion','ListarEspecialidad','ActualizarAtencionMedica','EliminarAtencionMedica'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -321,7 +321,6 @@ class ServicioController extends Controller
             }
         }
         $this->renderPartial('_form_gabinete_ex',array('servicio'=>$servicio,'precio'=>$precio));
-
     }
     public function actionUpdateitemcatgab($id=0){
         $servicio=new Servicio;
@@ -675,4 +674,102 @@ class ServicioController extends Controller
         }
         return $flag;
     }
+    public function actionIndexAtencion(){
+        $medicoEspecialidad=MedicoEspecialidad::model()->findAll();
+        $atencionmedica=AtencionMedica::model()->findAll();
+        $this->render('_form_aten',array('medicoEspecialidadlista'=>$medicoEspecialidad,'atencionmedica'=>$atencionmedica));
+    }
+    public function actionCrearServicioAtencion($id){
+        $servicio=new Servicio;
+        $precio=new PrecioServicio;
+        $atencion= new AtencionMedica;
+        $medicoEspecialidad=MedicoEspecialidad::model()->findByPk($id);
+        $medico=Medico::model()->findByPk($medicoEspecialidad->id_medico);
+        $especialidad=Especialidad::model()->findByPk($medicoEspecialidad->id_especialidad);
+        $this->renderPartial('_form_atencionservicio',array('servicio'=>$servicio,'precio'=>$precio,'medico'=>$medico,'especialidad'=>$especialidad,'id_m_e'=>$medicoEspecialidad->id_m_e,'atencion'=>$atencion));
+    }
+    public function actionRegistrarAtencion(){
+        $servicio=new Servicio;
+        $precio=new PrecioServicio;
+        $atencion= new AtencionMedica;
+        if(isset($_POST['Servicio'],$_POST['PrecioServicio'],$_POST['AtencionMedica'],$_POST['MedicoEspecialidad'])){
+            $medicoEspecialidad=MedicoEspecialidad::model()->findByPk($_POST['MedicoEspecialidad']['id_m_e']);
+            $servicio->attributes=$_POST['Servicio'];
+            $precio->attributes=$_POST['PrecioServicio'];
+            $atencion->attributes=$_POST['AtencionMedica'];
+            $val=$this->validar(array($servicio,$precio,$atencion));
+            if($val){
+                $servicio->save(false);
+                $precio->id_servicio=$servicio->id_servicio;
+                $precio->save(false);
+                $atencion->id_servicio=$servicio->id_servicio;
+                $atencion->id_m_e=$medicoEspecialidad->id_m_e;
+                $atencion->save(false);
+                $atencionmedica=AtencionMedica::model()->findAll(array('order'=>'id_servicio ASC'));
+                return $this->renderPartial('_form_lista_servicio_atencion',array('atencionmedica'=>$atencionmedica));
+            }
+            else{
+                $medico=Medico::model()->findByPk($medicoEspecialidad->id_medico);
+                $especialidad=Especialidad::model()->findByPk($medicoEspecialidad->id_especialidad);
+                $this->renderPartial('_form_atencionservicio',array('servicio'=>$servicio,'precio'=>$precio,'medico'=>$medico,'especialidad'=>$especialidad,'id_m_e'=>$medicoEspecialidad->id_m_e,'atencion'=>$atencion));
+            }
+        }
+    }
+    public function actionListarEspecialidad(){
+        $medicoEspecialidad=MedicoEspecialidad::model()->findAll();
+        $this->renderPartial('_form_lista_medesp',array('medicoEspecialidadlista'=>$medicoEspecialidad));
+        return;
+    }
+    public function actionActualizarAtencionMedica($id=0){
+        $servicio=new Servicio;
+        $precio=new PrecioServicio;
+        $AtencionMedica=new AtencionMedica;
+        if($id!=0){
+            $servicio=Servicio::model()->findByPk($id);
+            $precio=$servicio->precioServicio;
+            $AtencionMedica=$servicio->atencionMedica;
+            $medico=$AtencionMedica->idME->idMedico;
+            $especialidad=$AtencionMedica->idME->idEspecialidad;
+            $medicoEspecialidad=$AtencionMedica->idME->id_m_e;
+            $this->renderPartial('_form_atencionservicio',array('servicio'=>$servicio,'precio'=>$precio,'medico'=>$medico,'especialidad'=>$especialidad,'id_m_e'=>$medicoEspecialidad,'atencion'=>$AtencionMedica));
+            return;
+        }
+        else{
+                $servicio=Servicio::model()->findByPk($_POST['Servicio']['id_servicio']);
+                $medicoEspecialidad=MedicoEspecialidad::model()->findByPk($_POST['MedicoEspecialidad']['id_m_e']);
+                $servicio->attributes=$_POST['Servicio'];
+                $precio=$servicio->precioServicio;
+                $precio->attributes=$_POST['PrecioServicio'];
+                $AtencionMedica=$servicio->atencionMedica;
+                $AtencionMedica->attributes=$_POST['AtencionMedica'];
+                $val=$this->validar(array($servicio,$precio,$AtencionMedica));
+                if($val){
+                    $servicio->save(false);
+                    $precio->id_servicio=$servicio->id_servicio;
+                    $precio->save(false);
+                    $AtencionMedica->id_servicio=$servicio->id_servicio;
+                    $AtencionMedica->id_m_e=$medicoEspecialidad->id_m_e;
+                    $AtencionMedica->save(false);
+                    $AtencionMedica=AtencionMedica::model()->findAll(array('order'=>'id_servicio ASC'));
+                    return $this->renderPartial('_form_lista_servicio_atencion',array('atencionmedica'=>$AtencionMedica));
+                }
+                else{
+                    $medico=Medico::model()->findByPk($medicoEspecialidad->id_medico);
+                    $especialidad=Especialidad::model()->findByPk($medicoEspecialidad->id_especialidad);
+                    $this->renderPartial('_form_atencionservicio',array('servicio'=>$servicio,'precio'=>$precio,'medico'=>$medico,'especialidad'=>$especialidad,'id_m_e'=>$medicoEspecialidad->id_m_e,'atencion'=>$AtencionMedica));
+                return;
+                }
+        }
+    }
+    public function actionEliminarAtencionMedica($id){
+        $servicio=Servicio::model()->findByPk($id);
+        $precio=$servicio->precioServicio;
+        $atencion=$servicio->atencionMedica;
+        $precio->delete();
+        $atencion->delete();
+        $servicio->delete();
+        $AtencionMedica=AtencionMedica::model()->findAll(array('order'=>'id_servicio ASC'));
+        return $this->renderPartial('_form_lista_servicio_atencion',array('atencionmedica'=>$AtencionMedica));
+    }
 }
+

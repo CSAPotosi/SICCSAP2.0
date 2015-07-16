@@ -5,16 +5,15 @@
  *
  * The followings are the available columns in table 'cita':
  * @property integer $id_cita
- * @property integer $id_historial
- * @property string $descripcion
- * @property string $tipo_cita
- * @property string $nota_cita
  * @property string $fecha
- * @property string $hora
- * @property string $duracion
+ * @property string $hora_cita
+ * @property integer $estado_cita
+ * @property integer $id_paciente
+ * @property integer $medico_consulta_servicio
  *
  * The followings are the available model relations:
- * @property HistorialPaciente $idHistorial
+ * @property Paciente $idPaciente
+ * @property MedicoEspecialidad $medicoConsultaServicio
  */
 class Cita extends CActiveRecord
 {
@@ -34,13 +33,11 @@ class Cita extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_historial', 'numerical', 'integerOnly'=>true),
-			array('descripcion, nota_cita', 'length', 'max'=>256),
-			array('tipo_cita', 'length', 'max'=>64),
-			array('fecha, hora, duracion', 'safe'),
+			array('estado_cita, id_paciente, medico_consulta_servicio', 'numerical', 'integerOnly'=>true),
+			array('fecha, hora_cita', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_cita, id_historial, descripcion, tipo_cita, nota_cita, fecha, hora, duracion', 'safe', 'on'=>'search'),
+			array('id_cita, fecha, hora_cita, estado_cita, id_paciente, medico_consulta_servicio', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,7 +49,8 @@ class Cita extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idHistorial' => array(self::BELONGS_TO, 'HistorialPaciente', 'id_historial'),
+			'idPaciente' => array(self::BELONGS_TO, 'Paciente', 'id_paciente'),
+			'medicoConsultaServicio' => array(self::BELONGS_TO, 'MedicoEspecialidad', 'medico_consulta_servicio'),
 		);
 	}
 
@@ -63,13 +61,11 @@ class Cita extends CActiveRecord
 	{
 		return array(
 			'id_cita' => 'Id Cita',
-			'id_historial' => 'Id Historial',
-			'descripcion' => 'Descripcion',
-			'tipo_cita' => 'Tipo Cita',
-			'nota_cita' => 'Nota Cita',
 			'fecha' => 'Fecha',
-			'hora' => 'Hora',
-			'duracion' => 'Duracion',
+			'hora_cita' => 'Hora Cita',
+			'estado_cita' => 'Estado Cita',
+			'id_paciente' => 'Id Paciente',
+			'medico_consulta_servicio' => 'Medico Consulta Servicio',
 		);
 	}
 
@@ -92,13 +88,11 @@ class Cita extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id_cita',$this->id_cita);
-		$criteria->compare('id_historial',$this->id_historial);
-		$criteria->compare('descripcion',$this->descripcion,true);
-		$criteria->compare('tipo_cita',$this->tipo_cita,true);
-		$criteria->compare('nota_cita',$this->nota_cita,true);
 		$criteria->compare('fecha',$this->fecha,true);
-		$criteria->compare('hora',$this->hora,true);
-		$criteria->compare('duracion',$this->duracion,true);
+		$criteria->compare('hora_cita',$this->hora_cita,true);
+		$criteria->compare('estado_cita',$this->estado_cita);
+		$criteria->compare('id_paciente',$this->id_paciente);
+		$criteria->compare('medico_consulta_servicio',$this->medico_consulta_servicio);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

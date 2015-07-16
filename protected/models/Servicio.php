@@ -41,7 +41,7 @@ class Servicio extends CActiveRecord
         // will receive user inputs.
         return array(
             array('fecha_creacion, fecha_actualizacion, id_insti,nombre_serv', 'required'),
-            array('id_insti', 'numerical', 'integerOnly'=>true),
+            array('id_insti', 'numerical','estado_serv', 'integerOnly'=>true),
             array('codigo_serv', 'length', 'max'=>16),
             array('nombre_serv', 'length', 'max'=>128),
             array('unidad_serv', 'length', 'max'=>64),
@@ -82,6 +82,7 @@ class Servicio extends CActiveRecord
             'fecha_creacion' => 'Fecha Creacion',
             'fecha_actualizacion' => 'Fecha Actualizacion',
             'id_insti' => 'Institucion',
+            'estado_serv'=>'Estado Servicio',
         );
     }
 
@@ -110,6 +111,8 @@ class Servicio extends CActiveRecord
         $criteria->compare('fecha_creacion',$this->fecha_creacion,true);
         $criteria->compare('fecha_actualizacion',$this->fecha_actualizacion,true);
         $criteria->compare('id_insti',$this->id_insti);
+        $criteria->compare('estado_serv',$this->estado_serv);
+
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

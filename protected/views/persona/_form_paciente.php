@@ -141,7 +141,6 @@
                       $("#nomcont").val(nombre);
                       $(\'#contacto\').modal(\'toggle\');
                   });
-
                },
             });
             return false;

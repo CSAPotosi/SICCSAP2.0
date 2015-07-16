@@ -28,7 +28,7 @@ class MedicoController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','CrearEspecialidad','ActualizarEs'),
+				'actions'=>array('index','view','CrearEspecialidadAjax','ActualizarEs','VerEspecialidad','UpdateEspecialidadAjax','CrearMedicoEspe','CrearMedico','CrearMedicoComplementarios','UpdateMedicoEspe','QuitarEspecialidad'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -44,136 +44,22 @@ class MedicoController extends Controller
 			),
 		);
 	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
-    public function actionCreate()
-    {
-        $modelM=new Medico;
-        $items=$this->getItems();
-        $modelE=new Especialidad();
-        //$modelME= new MedicoEspecialidad;
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        if(isset($_POST['Medico']))
-        {
-
-            $modelM->attributes=$_POST['Medico'];
-            if($modelM->save()){
-                foreach($items as $i=>$item)
-                {
-                    if(isset($_POST['MedicoEspecialidad'][$i])){
-                        $item->attributes=$_POST['MedicoEspecialidad'][$i];
-                        $item->id_medico=$modelM->id;
-
-                        $item->save();
-
-                    }
-                }
-                $this->redirect(array('view','id'=>$modelM->id));
-            }
-        }
-
-        $this->render('create',array(
-            'modelM'=>$modelM,
-            'items'=>$items,
-            'modelE'=>$modelE,
-        ));
-    }
-    public function actionCrearEspecialidad()
+    public function actionCrearEspecialidadAjax($id=0)
     {
         $especialidad= new Especialidad;
-        if(isset($_POST['Especialidad'])){
-            $especialidad->attributes=$_POST['Especialidad'];
-            if($especialidad->save()){
-                $listaespecialidad=Especialidad::model()->findAll();
-                $this->renderPartial('_form_especialidad',array('listaespecialidad'=>$listaespecialidad,));return;
-            }
-        }
-        $this->renderPartial('_especialidad_formulario',array('especialidad'=>$especialidad));
-    }
-    public function actionActualizarEs()
-    {
-        $model=new Especialidad();
-        $lista=CHtml::listData($model,'id_especialidad','nombre_especialidad');
-        foreach($lista as $valor=> $descripcion)
-        {
-            echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );
-        }
-    }
-    public function getItems(){
-        $items=array();
-        if(isset($_POST['MedicoEspecialidad'])&&is_array($_POST['MedicoEspecialidad'])){
-            foreach($_POST['MedicoEspecialidad'] as $item){
-                if ( array_key_exists('id_medico', $item) ){
-                    $items[] = MedicoEspecialidad::model()->findByPk($item['id_medico']);
-                }
-                // Otherwise create a new record
-                else {
-                    $items[] = new MedicoEspecialidad;
+            if(isset($_POST['Especialidad'])){
+                $especialidad->attributes=$_POST['Especialidad'];
+                if($especialidad->save()){
+                    $listaespecialidad=Especialidad::model()->findAll(array(
+                        'order'=>'id_especialidad ASC',
+                    ));
+                    $this->renderPartial('_form_especialidades',array('listaespecialidad'=>$listaespecialidad));
+                    return;
                 }
             }
-
-        }
-        return $items;
+        $this->renderPartial('especialidad_formulario',array('especialidad'=>$especialidad));
     }
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
-    public function actionUpdate($id)
-    {
-        $model=$this->loadModel($id);
-        $items=$this->getItems();
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
-        if(isset($_POST['Medico']))
-        {
-            $model->attributes=$_POST['Medico'];
-            if($model->save()){
-                foreach($items as $i=>$item)
-                {
-                    if(isset($_POST['MedicoEspecialidad'][$i])){
-                        $item->attributes=$_POST['MedicoEspecialidad'][$i];
-                        $item->id_medico=$id;
-                        $item->save();
-                    }
-                }
-                $this->redirect(array('view','id'=>$model->id_medico));
-            }
-        }
-        else{
-            $items=MedicoEspecialidad::model()->find('id_medico=:idmedico',array(':idmedico'=>$id));
-        }
-
-        $this->render('update',array(
-            'modelM'=>$model,
-            'items'=>$items,
-        ));
-    }
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
@@ -236,5 +122,89 @@ class MedicoController extends Controller
 			Yii::app()->end();
 		}
 	}
-
+    public function actionVerEspecialidad($id){
+        $especialidad=Especialidad::model()->findByPk($id);
+        $this->renderPartial('especialidad_formulario',array('especialidad'=>$especialidad));
+        return;
+    }
+    public function actionUpdateEspecialidadAjax(){
+        $especialidad=Especialidad::model()->findByPk($_POST['Especialidad']['id_especialidad']);
+        if(isset($_POST['Especialidad'])){
+            $especialidad->attributes=$_POST['Especialidad'];
+            if($especialidad->save()){
+                $listaespecialidad=Especialidad::model()->findAll(array(
+                    'order'=>'id_especialidad ASC',
+                ));
+                $this->renderPartial('_form_especialidades',array('listaespecialidad'=>$listaespecialidad));
+                return;
+            }
+        }
+        $this->renderPartial('especialidad_formulario',array('especialidad'=>$especialidad));
+    }
+    public function actionCrearMedicoEspe(){
+        $medico=new Medico;
+        if(isset($_POST['Medico'])){
+            $medico->attributes=$_POST['Medico'];
+            if($medico->save()){
+                if(isset($_POST['MedicoEspecialidad'])){
+                $listaespecialidades=$_POST['MedicoEspecialidad'];
+                    foreach($listaespecialidades as $MeEs):
+                        $espemedi=new MedicoEspecialidad;
+                        $espemedi->attributes=$MeEs;
+                        $espemedi->id_medico=$medico->id;
+                        $espemedi->save();
+                    endforeach;
+                }
+                $this->redirect(array('persona/view','id'=>$medico->id));
+            }
+            $listaespecialidad=Especialidad::model()->findAll(array(
+                'order'=>'id_especialidad ASC',
+            ));
+            $this->render('/persona/infoMedico',array('medico'=>$medico,'id'=>$_POST['Medico']['id'],'listaespecialidades'=>$listaespecialidad,'medico_especialidad'=>new MedicoEspecialidad));
+        }
+    }
+    public function actionCrearMedicoComplementarios($id){
+        $medico=new Medico;
+        $medico_especialidad=new MedicoEspecialidad;
+        $listaespecialidad=Especialidad::model()->findAll(array(
+            'order'=>'id_especialidad ASC',
+        ));
+        $this->render('/persona/infoMedico',array('medico'=>$medico,'id'=>$id,'listaespecialidades'=>$listaespecialidad,'medico_especialidad'=>$medico_especialidad));
+    }
+    public function actionUpdateMedicoEspe($id=0){
+        if($id==0){
+            $medico=Medico::model()->findByPk($_POST['Medico']['id']);
+        }
+        else{
+            $medico=Medico::model()->findByPk($id);
+        }
+        if(isset($_POST['Medico'])){
+            $medico->attributes=$_POST['Medico'];
+            if($medico->save()){
+                if(isset($_POST['MedicoEspecialidad'])){
+                $listaespecialidades=$_POST['MedicoEspecialidad'];
+                    foreach($listaespecialidades as $MeEs):
+                        $espemedi=new MedicoEspecialidad;
+                        $espemedi->attributes=$MeEs;
+                        $espemedi->id_medico=$medico->id;
+                        $espemedi->save();
+                    endforeach;
+                }
+                $this->redirect(array('persona/view','id'=>$medico->id));
+            }
+        }
+        $listaespecialidad=Especialidad::model()->findAll(array(
+            'order'=>'id_especialidad ASC',
+        ));
+        $this->render('/persona/infoMedico',array('medico'=>$medico,'id'=>($id==0? $_POST['Medico']['id']:$id),'listaespecialidades'=>$listaespecialidad,'medico_especialidad'=>new MedicoEspecialidad));
+    }
+    public function actionQuitarEspecialidad($id,$id_medico){
+        $MedicoEspeci=MedicoEspecialidad::model()->findByPk($id);
+        $MedicoEspeci->delete();
+        $medico=Medico::model()->findByPk($id_medico);
+        $listaespecialidad=Especialidad::model()->findAll(array(
+            'order'=>'id_especialidad ASC',
+        ));
+        $this->render('/persona/infoMedico',array('medico'=>$medico,'id'=>$id_medico,'listaespecialidades'=>$listaespecialidad,'medico_especialidad'=>new MedicoEspecialidad));
+    }
 }

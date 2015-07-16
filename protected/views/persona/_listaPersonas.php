@@ -61,7 +61,10 @@
                 echo ($personaModel->empleado)?CHtml::link('Ver Empleado',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs')):CHtml::link('Agregar Info. Empleado',array('persona/Updateempleado','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs'));
                 ?>
                 <?php if($tipo_persona=='medico'){
-                echo ($personaModel->medico)?CHtml::link('Ver medico',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs')):CHtml::link('Agregar Info. de Medico',array('persona/update','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs'));
+                    $listaespecialidad=Especialidad::model()->findAll(array(
+                        'order'=>'id_especialidad ASC',
+                    ));
+                echo ($personaModel->medico)?CHtml::link('Ver medico',array('infoMedicos','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs')):CHtml::link('Agregar Info. de Medico',array('/medico/CrearMedicoComplementarios','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs'));
                 }
                 ?>
             </div>

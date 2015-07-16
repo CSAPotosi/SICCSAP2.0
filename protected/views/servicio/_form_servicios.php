@@ -40,9 +40,7 @@
                 <div class="icon">
                     <i class="fa fa-stethoscope"></i>
                 </div>
-                <a class="small-box-footer" href="#">
-                    <b>Ver detalle</b>
-                </a>
+                <?php echo CHtml::link('<b>Ver detalle</b>',array('/servicio/IndexAtencion'),array('class'=>'small-box-footer'))?>
             </div>
         </div>
         <div class="col-md-4 col-xs-6">

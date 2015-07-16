@@ -286,22 +286,22 @@
         function updateitem(){
             $("#cat_lab_item_campo").val($("#campo_item_cat_lab").val());
             $.ajax({
-                    url:"'.CHtml::normalizeUrl(array('servicio/Upditemlabc')).'",
-                    data:$("#form-upd-cat-lab-item").serialize(),
-                    type:"post",
-                    success:function(datos){
-                    var contenido=$("<div>").html(datos);
-                        if(contenido.children("#flag").val()==null){
-                            $("#contenedor_cat_item").html(datos);
-                            $("#itemlabUpd").modal("hide");
-                            Nuevoitemlab();
-                            Nuevocatlab();
-                            CargarEventosClickItem();
-                        }
-                        else{
-                            $("#contenedormodalitemlabUpdate").html(datos);
-                        }
+                url:"'.CHtml::normalizeUrl(array('servicio/Upditemlabc')).'",
+                data:$("#form-upd-cat-lab-item").serialize(),
+                type:"post",
+                success:function(datos){
+                var contenido=$("<div>").html(datos);
+                    if(contenido.children("#flag").val()==null){
+                       $("#contenedor_cat_item").html(datos);
+                       $("#itemlabUpd").modal("hide");
+                       Nuevoitemlab();
+                       Nuevocatlab();
+                       CargarEventosClickItem();
                     }
+                    else{
+                       $("#contenedormodalitemlabUpdate").html(datos);
+                    }
+                }
             });
             return false;
         }

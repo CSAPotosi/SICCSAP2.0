@@ -465,8 +465,12 @@ class PersonaController extends Controller
         ));
     }
     public function actionMedicoInformacion($id){
+        $medico=new Medico;
+        $medico_especialidad=new MedicoEspecialidad;
         $listaespecialidades=Especialidad::model()->findAll();
         $this->render('infoMedico',array(
+            'medico_especialidad'=>$medico_especialidad,
+            'medico'=>$medico,
             'id'=>$id,
             'listaespecialidades'=>$listaespecialidades
         ));

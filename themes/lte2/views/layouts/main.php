@@ -20,6 +20,10 @@
         <!-- Theme style -->
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/iCheck/all.css" rel="stylesheet" type="text/css" />
 
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+
+
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -27,6 +31,8 @@
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/html5shiv/html5shiv-printshiv.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/respond/respond.min.js"></script>
         <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/iCheck/icheck.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/fullcalendar/fullcalendar.min.js"></script>
+        <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/moment/moment-with-locales.min.js"></script>
         <![endif]-->
     </head>
     <!--
@@ -212,6 +218,8 @@
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/index'])?>" ><i class="fa fa-user"></i> <span>Paciente</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Medicos'])?>" ><i class="fa fa-fw fa-stethoscope"></i> <span>Medicos</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Empleado'])?>" ><i class="fa fa-suitcase"></i> <span>Empleado</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/servicio'])?>" ><i class="fa fa-fw fa-plus-square"></i> <span>Servicios</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/agenda'])?>" ><i class="fa fa-fw fa-plus-square"></i> <span>Agenda Medica</span></a></li>
                     <li><a href="#"><i class='fa fa-link'></i> <span>Another Link</span></a></li>
                     <li class="treeview">
                         <a href="#"><i class='fa fa-link'></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -336,6 +344,8 @@
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/moment/moment-with-locales.min.js" type="text/javascript"></script>
     <!-- bootstrap datetime picker -->
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/fullcalendar/lang-all.js" type="text/javascript"></script>
 
     </body>
 </html>
