@@ -1,21 +1,27 @@
 <?php
     $colors=array('','blue','green','yellow','red');
 ?>
+<div class="form-group">
+    <div class="input-group">
+        <input type="text" class="form-control input-sm" placeholder="Buscar sala" id="searchSala"/>
+        <span class="input-group-addon bg-blue-gradient"><i class="fa fa-search"></i></span>
+    </div>
+</div>
 <?php echo CHtml::hiddenField('id_tipo_sala',$id_tipo_sala);?>
-<table class="table table-hover table-bordered dataTable ">
+<?php if($listaSala != null):?>
+<table class="table table-hover table-bordered dataTable" id="tableSala">
     <thead>
     <th>Nro.</th>
     <th class="text-center">Estado</th>
-    <th class="button-column"></th>
+    <th class="button-column">Opciones</th>
     </thead>
     <tbody>
-    <?php if($listaSala != null):?>
         <?php foreach($listaSala as $item):?>
             <tr class="<?php echo ($item->estado_sala==4)?'danger':'';?>">
                 <td><?php echo $item->numero_sala; ?></td>
                 <td class="text-center"> <span class="badge bg-<?php echo $colors[$item->estado_sala];?>"><?php echo $item->stateString;?></span></td>
                 <td class="button-column text-center">
-                    <?php echo CHtml::link('<i class="fa fa-th-list"></i>',array(''),array('title'=>'Ver detalle'));?>
+                    <?php echo CHtml::link('<i class="fa fa-th-list"></i>',array('sala/viewDetailSalaAjax',"id_sala"=>$item->id_sala),array('class'=>'btnVerSala','title'=>'Ver detalle'));?>
                     <?php echo ($item->estado_sala!=4)?CHtml::link('<i class="fa fa-edit"></i>',array('sala/renderFormSalaAjax',"id_sala"=>$item->id_sala),array('class'=>'btnUpdSala','title'=>'editar sala')):'';?>
                     <?php
                         $actives=array("","","","");
@@ -30,8 +36,8 @@
                 </td>
             </tr>
         <?php endforeach;?>
-    <?php else:?>
-        <tr><td colspan="10">No se Encontraron resultados</td></tr>
-    <?php endif;?>
     </tbody>
 </table>
+<?php else:?>
+    No se Encontraron resultados
+<?php endif;?>

@@ -18,7 +18,7 @@ class ConsultaController extends Controller{
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('index','createConsultaAjax','listConsulta','loadConsultaAjax','NuevoAntecedente','CrearAntecedente','loadFormTratamientoAjax','createTratamientoAjax','loadDetalleTratamientoAjax'),
+                'actions'=>array('index','createConsultaAjax','listConsulta','loadConsultaAjax','NuevoAntecedente','CrearAntecedente','loadFormTratamientoAjax','createTratamientoAjax','loadDetalleTratamientoAjax','loadMedicamento','createEvolucionAjax'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
@@ -46,9 +46,9 @@ class ConsultaController extends Controller{
     {
         $AntecedenteMedico=new AntecedenteMedico;
         $TipoAntecente=new TipoAntecedente;
-        $listaAntecedentesMedico=AntecedenteMedico::model()->FindAll();
+        $listaAntecedentesMedico=AntecedenteMedico::model()->findAll();
         $svModel= SignosVitales::model()->findAll();
-        $listaante=TipoAntecedente::model()->FindAll();
+        $listaante=TipoAntecedente::model()->findAll();
         $detalle=new DetalleSolicitudServicio;
         $solicitud=new SolicitudServicios;
         $listaSV=array();
@@ -203,23 +203,35 @@ class ConsultaController extends Controller{
             $modelTratamiento= new Tratamiento();
             $modelTratamiento->id_consulta=$id_con;
         }
-        $this->renderPartial('_formTratamiento',['modelTratamiento'=>$modelTratamiento]);
+        $this->renderPartial('_formTratamiento',['modelTratamiento'=>$modelTratamiento,'listaReceta'=>array()]);
     }
 
     public function actionLoadTableTratamiento($id_con=0){
-        $listaTratamiento=Tratamiento::model()->findAll(['condition'=>"id_consulta={$id_con}"]);
+        $listaTratamiento=Tratamiento::model()->findAll(['condition'=>"id_consulta={$id_con}",'order'=>'fecha_trat DESC']);
         $this->renderPartial('_tableTratamiento',['listaTratamiento'=>$listaTratamiento]);
     }
 
     public function actionCreateTratamientoAjax(){
         $modelTratamiento= new Tratamiento();
-        $modelTratamiento->id_consulta=1;
-        $modelTratamiento->attributes=$_POST['Tratamiento'];
-        if($modelTratamiento->validate()){
-            $modelTratamiento->save(false);
-            return $this->renderPartial('_tableTratamiento',['listaTratamiento'=>Tratamiento::model()->findAll(['condition'=>'id_consulta=1'])]);
+        $modelTratamiento->attributes=array_map('strtoupper',$_POST['Tratamiento']);
+        $listaReceta=array();
+        foreach($_POST['Receta'] as $item){
+            $auxR=new Receta();
+            $auxR->attributes=array_map('strtoupper',$item);
+            if($auxR->id_med!=""||$auxR->id_med!=null)
+                $listaReceta[]=$auxR;
         }
-        return $this->renderPartial('_formTratamiento',['modelTratamiento'=>$modelTratamiento]);
+
+        $flag=$this->validar(array_merge([$modelTratamiento],$listaReceta));
+        if($flag){
+            $modelTratamiento->save(false);
+            foreach($listaReceta as $itemR){
+                $itemR->id_trat=$modelTratamiento->id_trat;
+                $itemR->save(false);
+            }
+            return $this->renderPartial('_tableTratamiento',['listaTratamiento'=>Tratamiento::model()->findAll(['condition'=>"id_consulta={$modelTratamiento->id_consulta}",'order'=>'fecha_trat DESC'])]);
+        }
+        return $this->renderPartial('_formTratamiento',['modelTratamiento'=>$modelTratamiento,'listaReceta'=>$listaReceta]);
     }
 
     public function actionLoadDetalleTratamientoAjax($id_trat=0){
@@ -227,4 +239,34 @@ class ConsultaController extends Controller{
         return $this->renderPartial('_detalleTratamiento',['modelTratamiento'=>$modelTratamiento]);
     }
 
+
+    public function actionLoadMedicamento(){
+        //$jsonLista=['juan perez','pedro rodriguwz','maria marque','asdqwe qwewq','jose ro'];
+        $jsonLista=Medicamento::model()->findAll();
+        header('Content-Type:application/json');
+        echo CJSON::encode($jsonLista);
+    }
+
+
+    public function actionCreateEvolucionAjax($id_trat=0){
+        $modelEvo= new Evolucion();
+        $modelEvo->id_trat=$id_trat;
+        if(isset($_POST['Evolucion'])){
+            $modelEvo->attributes=$_POST['Evolucion'];
+            if($modelEvo->validate()){
+                $modelEvo->save(false);
+                echo $modelEvo->id_trat;
+                return;
+            }
+        }
+        return $this->renderPartial('_formEvolucion',['modelEvo'=>$modelEvo]);
+    }
+
+    public function validar($lista=array()){
+        $flag=true;
+        foreach($lista as $item){
+            $flag=$flag&&$item->validate();
+        }
+        return $flag;
+    }
 }

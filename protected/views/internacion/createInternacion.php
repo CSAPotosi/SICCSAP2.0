@@ -1,25 +1,33 @@
 <?php
-    $this->pageTitle="Formulario de internacion";
+    $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPaciente/view','id'=>$modelInternacion->historial->id_historial])." Nueva internacion";
 
     $this->breadcrumbs=array(
-        'a','b'
+        'Pacientes'=>array('persona/index'),
+        'CSA-'.$modelInternacion->historial->paciente->personapa->codigo=>['historialPaciente/view','id'=>$modelInternacion->historial->id_historial],
+        'Nueva internacion',
     );
 ?>
 
 <?php $this->renderPartial('/historialPaciente/_form_datos_paciente',array('model'=>$model));?>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="box">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="box box-solid box-success">
             <div class="box-body">
                 <?php echo CHtml::beginForm();?>
+                <div class="alert alert-info alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                    Los datos marcados con <b>*</b> son obligatorios.
+                </div>
+
+                <?php echo CHtml::errorSummary([$modelInternacion],'Para poder continuar debe corregir los siguientes problemas:',null,['class'=>'alert alert-danger']);?>
 
                 <div class="form-group">
                     <?php echo CHtml::label('Sala','NumSala');?>
                     <div class="input-group">
                         <?php echo CHtml::textField('NumSala',null,['class'=>'form-control disabled','placeholder'=>'Elija una sala','disabled'=>'disabled']);?>
                         <span class="input-group-btn">
-                            <button class="btn btn-info btn-flat" type="button" data-toggle='modal' data-target='#modalViewSala'>Elegir sala</button>
+                            <button class="btn btn-success btn-flat" type="button" data-toggle='modal' data-target='#modalViewSala'>Elegir sala</button>
                         </span>
                     </div>
                 </div>
@@ -27,30 +35,32 @@
                 <?php echo CHtml::activeHiddenField($modelInternacion,'id_historial');?>
 
                 <div class="form-group">
-                    <?php echo CHtml::activeLabel($modelInternacion,'fecha_ingreso');?>
+                    <?php echo CHtml::activeLabelEx($modelInternacion,'fecha_ingreso');?>
                     <?php echo CHtml::activeTextField($modelInternacion,'fecha_ingreso',['class'=>'form-control']); ?>
                     <?php echo CHtml::error($modelInternacion,'fecha_ingreso',array('class'=>'label label-danger'));?>
                 </div>
 
                 <div class="form-group">
-                    <?php echo CHtml::activeLabel($modelInternacion,'motivo_ingreso');?>
-                    <?php echo CHtml::activeDropDownList($modelInternacion,'motivo_ingreso',Internacion::model()->getMotivo(),['class'=>'form-control']);?>
+                    <?php if($modelInternacion->motivo_ingreso==null)$modelInternacion->motivo_ingreso='ENFERMEDAD';?>
+                    <?php echo CHtml::activeLabelEx($modelInternacion,'motivo_ingreso');?>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <?php echo CHtml::activeRadioButtonList($modelInternacion,'motivo_ingreso',Internacion::model()->getMotivo(),['separator'=>"&nbsp;&nbsp; "])?>
                     <?php echo CHtml::error($modelInternacion,'motivo_ingreso',array('class'=>'label label-danger'));?>
                 </div>
 
                 <div class="form-group">
-                    <?php echo CHtml::activeLabel($modelInternacion,'observacion_ingreso');?>
+                    <?php echo CHtml::activeLabelEx($modelInternacion,'observacion_ingreso');?>
                     <?php echo CHtml::activeTextArea($modelInternacion,'observacion_ingreso',['class'=>'form-control']); ?>
                     <?php echo CHtml::error($modelInternacion,'observacion_ingreso',array('class'=>'label label-danger'));?>
                 </div>
 
                 <div class="form-group">
-                    <?php echo CHtml::activeLabel($modelInternacion,'procedencia_ingreso');?>
-                    <?php echo CHtml::activeDropDownList($modelInternacion,'procedencia_ingreso',Internacion::model()->getProcedencia(),['class'=>'form-control']);?>
+                    <?php if($modelInternacion->procedencia_ingreso==null)$modelInternacion->procedencia_ingreso='CLINICA';?>
+                    <?php echo CHtml::activeLabelEx($modelInternacion,'procedencia_ingreso');?>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <?php echo CHtml::activeRadioButtonList($modelInternacion,'procedencia_ingreso',Internacion::model()->getProcedencia(),['separator'=>"&nbsp;&nbsp;"])?>
                     <?php echo CHtml::error($modelInternacion,'procedencia_ingreso',array('class'=>'label label-danger'));?>
                 </div>
 
-                <?php echo CHtml::submitButton('Guardar',['class'=>'btn btn-primary'])?>
+                <?php echo CHtml::submitButton('Guardar',['class'=>'btn btn-success'])?>
                 <?php echo CHtml::endForm();?>
             </div>
         </div>
@@ -67,7 +77,7 @@
 
             </div>
             <div class="modal-footer clearfix">
-                <?php echo CHtml::tag('button',array('id'=>'btnSala','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Agregar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnSala','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Seleccionar',true)?>
                 <?php echo CHtml::tag('button',array('id'=>'btnCloseSala','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cerrar',true)?>
             </div>
         </div>
@@ -100,6 +110,14 @@ Yii::app()->clientScript->registerScript('datetime','
 
 <?php
     Yii::app()->clientScript->registerScript('mostrarSala','
+        $("input[name=\'Internacion[motivo_ingreso]\']").iCheck({
+            radioClass:"iradio_flat-green"
+        });
+
+        $("input[name=\'Internacion[procedencia_ingreso]\']").iCheck({
+            radioClass:"iradio_flat-green"
+        });
+
         $("#modalViewSala").on("show.bs.modal",ajaxMostrarSala);
         $("#tipoSala").on("change",ajaxMostrarSala);
         function ajaxMostrarSala(){

@@ -33,7 +33,7 @@ class Tratamiento extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_trat, id_consulta', 'required'),
+			array('fecha_trat, id_consulta, instrucciones_trat', 'required'),
 			array('id_consulta', 'numerical', 'integerOnly'=>true),
 			array('instrucciones_trat, observaciones_trat', 'safe'),
 			// The following rule is used by search().
@@ -51,8 +51,9 @@ class Tratamiento extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'consulta' => array(self::BELONGS_TO, 'Consulta', 'id_consulta'),
+            'recetas'=>array(self::HAS_MANY,'Receta','id_trat'),
 			'medicamentos' => array(self::MANY_MANY, 'Medicamento', 'receta(id_trat, id_med)'),
-			'evolucions' => array(self::HAS_MANY, 'Evolucion', 'id_trat'),
+			'evolucions' => array(self::HAS_MANY, 'Evolucion', 'id_trat','order'=>'fecha_evo DESC'),
 		);
 	}
 

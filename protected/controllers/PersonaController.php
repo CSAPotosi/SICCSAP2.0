@@ -312,14 +312,14 @@ class PersonaController extends Controller
     public function actionBuscarPersonaAjax(){
         $codigo= $_POST['cadena'];
         $listaPersonas=Persona::model()->findAll(array(
-            'condition'=>"codigo like '%{$codigo}%'",
+            'condition'=>"codigo like '%{$codigo}%' or dni like '%{$codigo}%' or concat_ws(' ',primer_apellido,segundo_apellido,nombres) like '%{$codigo}%'",
             'order'=>'id DESC'
         ));
         if($listaPersonas==null){
             echo 'No se han encontrado resultados';
         }
         return $this->renderPartial('_listaPersonas',array(
-            'listaPersonas'=>$listaPersonas,
+            'listaPersonas'=>$listaPersonas,'tipo_persona'=>'paciente'
         ));
     }
     public function actionBuscarContactoAjax(){
@@ -333,6 +333,7 @@ class PersonaController extends Controller
         }
         return $this->renderPartial('_listaContactos',array('listaContactos'=>$listaContactos));
     }
+
     public function actionCrearEmpleado(){
         $model=new Persona;
         if(isset($_POST['Persona']))

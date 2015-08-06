@@ -3,46 +3,47 @@
 /* @var $model HistorialPaciente */
 
 $this->breadcrumbs=array(
-    'Historial Medico'=>array('index'),
-    $model->id_historial,
+	'Pacientes'=>array('persona/index'),
+	'CSA-'.$model->paciente->personapa->codigo,
 );
-?>
 
-<?php if($model->paciente->estado_paciente=='INTERNADO'):?>
-    <div class="alert alert-info">
-        <i class="fa fa-info"></i>
-        <b>Atencion!!!</b> Este paciente se encuentra actualmente internado. <br/>
-        <?php echo CHtml::link('Ver detalle de internacion',['internacion/index','id'=>$model->internacionActual->id_inter],['class'=>'btn  btn-info ']);?>
-    </div>
-<?php endif;?>
+$this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index']).' Historia clinica';
+?>
 
 <?php $this->renderPartial('_form_datos_paciente',array('model'=>$model))?>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="box box-solid">
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-2">
-                        <?php
-                        if($model->paciente->estado_paciente!='INTERNADO')
-                            echo CHtml::link('<i class="fa fa-ambulance"></i> Internacion',array('internacion/createInternacion','id'=>$model->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));
-                        ?>
-                    </div>
-                    <div class="col-md-2">
-                        <?php echo CHtml::link('<i class="fa fa-book"></i> Agendar',array('agenda/index','id'=>$model->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
-                    </div>
-                </div>
-            </div>
+<nav class="navbar navbar-menu">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menuHistoria" aria-expanded="false">
+                <span class="sr-only">Opciones de historia</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="menuHistoria">
+            <ul class="nav navbar-nav">
+                <li class="active"><?php echo CHtml::link("<i class='fa fa-list'></i> Historia clinica",array('historialPaciente/view','id'=>$model->id_historial))?></li>
+                <li><?php echo ($model->paciente->estado_paciente!='INTERNADO')?CHtml::link("<i class='fa fa-wheelchair'></i> Nueva internacion",['internacion/createInternacion','id'=>$model->id_historial]):CHtml::link("<i class='fa fa-wheelchair'></i> Internacion actual",['internacion/index','id'=>$model->internacionActual->id_inter]); ?></li>
+                <li class="dropdown">
+                    <?php echo CHtml::link('Quirofanos <span class="caret"></span>',['#'],['class'=>'dropdown-toggle animate','data-toggle'=>'dropdown']);?>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><?php echo CHtml::link('Programar cirugia',['cirugia/programarCirugia','id_h'=>$model->id_historial]);?></li>
+                        <li><?php echo CHtml::link('Registrar cirugia',['cirugia/createCirugia','id_h'=>$model->id_historial]);?></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </div>
-</div>
+</nav>
+
 
 <div class="row">
     <div class="col-md-6">
-        <div class="box">
+        <div class="box box-solid box-primary">
             <div class="box-header">
-                <h3 class="box-title">Consultas Medicas Realizadas</h3>
+                <h3 class="box-title">Consultas medicas realizadas</h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
                 </div>
@@ -165,6 +166,7 @@ $this->breadcrumbs=array(
                         'fecha_actualizacion',
                     ),
                 )); ?>
+
             </div>
         </div>
     </div>

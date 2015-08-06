@@ -64,7 +64,7 @@
                     $listaespecialidad=Especialidad::model()->findAll(array(
                         'order'=>'id_especialidad ASC',
                     ));
-                echo ($personaModel->medico)?CHtml::link('Ver medico',array('infoMedicos','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs')):CHtml::link('Agregar Info. de Medico',array('/medico/CrearMedicoComplementarios','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs'));
+                    echo ($personaModel->medico)?CHtml::link('Ver medico',array('infoMedicos','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs')):CHtml::link('Agregar Info. de Medico',array('/medico/CrearMedicoComplementarios','id'=>$personaModel->id),array('class'=>'btn bg-red btn-xs'));
                 }
                 ?>
             </div>

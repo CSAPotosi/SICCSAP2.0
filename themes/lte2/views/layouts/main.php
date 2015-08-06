@@ -22,6 +22,8 @@
 
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
 
+        <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/css/Mystyle.css" rel="stylesheet" type="text/css" />
+
 
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -340,6 +342,7 @@
     <!-- AdminLTE App -->
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/js/app.min.js" type="text/javascript"></script>
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/js/pages/dashboard.js" type="text/javascript"></script>
+    <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/js/MyStyle.js" type="text/javascript"></script>
     <!-- bootstrap datetime picker -->
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/moment/moment-with-locales.min.js" type="text/javascript"></script>
     <!-- bootstrap datetime picker -->

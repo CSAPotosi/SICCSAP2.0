@@ -2,7 +2,7 @@
 
     <div class="alert alert-info alert-dismissable">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <h4>Los campos con <span class="required">*</span> son obligatorios.</h4>
+        Los campos con <span class="required">*</span> son obligatorios.
     </div>
     <?php echo CHtml::errorSummary(array($modelServicio,$modelTipoSala,$modelPrecio),null,null,array('class'=>'alert alert-danger')) ; ?>
     <?php

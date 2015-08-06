@@ -1,4 +1,4 @@
-<div class="box box-primary">
+<div class="box box-primary collapsed-box box-solid">
     <div class="box-header">
         <h3 class="box-title">Servicios Disponibles</h3>
         <div class="box-tools pull-right">

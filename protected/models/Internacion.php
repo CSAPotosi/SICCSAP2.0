@@ -40,11 +40,13 @@ class Internacion extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_historial, fecha_ingreso, motivo_ingreso', 'required'),
+			array('id_historial, fecha_ingreso, motivo_ingreso, procedencia_ingreso', 'required'),
+            array('fecha_alta','required','on'=>'update'),
 			array('id_historial, id_diagnostico_ingreso, id_diagnostico_alta', 'numerical', 'integerOnly'=>true),
 			array('motivo_ingreso', 'length', 'max'=>32),
 			array('observacion_ingreso, observacion_alta', 'length', 'max'=>256),
 			array('procedencia_ingreso, tipo_alta', 'length', 'max'=>16),
+            array('fecha_ingreso, fecha_alta','date','format'=>'dd-mm-yyyy HH:mm'),
 			array('fecha_alta, fecha_egreso', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -65,6 +67,7 @@ class Internacion extends CActiveRecord
 			'idDiagnosticoAlta' => array(self::BELONGS_TO, 'Consulta', 'id_diagnostico_alta'),
             'salaActual' => array(self::HAS_ONE, 'SalaInternacion', 'id_inter','condition'=>'fecha_salida is null'),
             'salas'=>array(self::HAS_MANY,'SalaInternacion','id_inter','order'=>'fecha_entrada DESC'),
+            'evolucion'=>array(self::HAS_MANY,'EvolucionEnfermeria','id_inter','order'=>'fecha_evo_enf DESC'),
 		);
 	}
 
@@ -139,14 +142,15 @@ class Internacion extends CActiveRecord
     public function getMotivo(){
         return [
             'ENFERMEDAD'=>'ENFERMEDAD',
-            'ACCIDENTE'=>'ACCIDENTE',
-            'EMBARAZO'=>'EMBARAZO'
+            'CIRUGIA'=>'CIRUGIA',
+            'EMBARAZO/PARTO'=>'EMBARAZO/PARTO',
+            'ACCIDENTE'=>'ACCIDENTE'
         ];
     }
 
     public function getProcedencia(){
         return [
-            'CONSULTA EXTERNA'=>'CONSULTA EXTERNA',
+            'CLINICA'=>'CLINICA',
             'EMERGENCIA'=>'EMERGENCIA',
             'REFERIDO'=>'REFERIDO'
         ];

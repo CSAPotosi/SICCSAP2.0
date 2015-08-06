@@ -562,3 +562,46 @@ create table if not exists receta(
   foreign key(id_med) references medicamento(id_med),
   primary key(id_trat,id_med)
 );
+
+create table if not EXISTS evolucion_enfermeria(
+  id_evo_enf serial not null primary key,
+  id_inter int not null,
+  fecha_evo_enf timestamp,
+  respuesta_tratamiento varchar,
+  dieta varchar,
+  foreign key (id_inter) REFERENCES internacion(id_inter)
+);
+
+create table if NOT EXISTS quirofano(
+  id_q serial not NULL primary KEY ,
+  nombre_q varchar not null unique,
+  descripcion varchar,
+  costo float not null,
+  estado_q bool default true
+);
+
+
+create table if NOT EXISTS cirugia(
+  id_c serial not NULL primary key,
+  fecha_hora_prog TIMESTAMP,
+  duracion_aprox int,
+  fecha_hora_ent timestamp,
+  fecha_hora_sal TIMESTAMP,
+  detalle_instru varchar,
+  tipo_anestesia varchar(32),
+  estado_cirugia varchar(10), -- programada/en proceso/terminada/
+  id_historial int not null,
+  id_q int not null,
+  foreign KEY (id_historial) references historial_paciente(id_historial),
+  foreign key (id_q) REFERENCES quirofano(id_q)
+);
+
+create table if not EXISTS participante_cirugia(
+  id_c int not null,
+  id_per int not null,
+  rol_cirugia varchar(16) not null,
+  es_responsable BOOL DEFAULT false,
+  foreign KEY (id_c) REFERENCES cirugia (id_c),
+  FOREIGN KEY (id_per) REFERENCES persona(id),
+  primary KEY (id_c,id_per)
+);

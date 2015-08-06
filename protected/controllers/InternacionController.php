@@ -47,13 +47,13 @@ class InternacionController extends Controller
             if($modelInternacion->salaActual!=null){
                 $modelInternacion->salaActual->sala->estado_sala=1;$modelInternacion->salaActual->sala->save();
                 $modelInternacion->salaActual->fecha_salida=date('d-m-Y h:i A');$modelInternacion->salaActual->save();
-                $modelSalaInter= new SalaInternacion();
-                $modelSalaInter->id_sala=$_POST['Sala']['id_sala'];
-                $modelSalaInter->id_inter=$modelInternacion->id_inter;
-                if($modelSalaInter->validate()&&$modelSalaInter->save(false)){
-                    $modelSalaInter->sala->estado_sala=2;
-                    $modelSalaInter->sala->save();
-                }
+            }
+            $modelSalaInter= new SalaInternacion();
+            $modelSalaInter->id_sala=$_POST['Sala']['id_sala'];
+            $modelSalaInter->id_inter=$modelInternacion->id_inter;
+            if($modelSalaInter->validate()&&$modelSalaInter->save(false)){
+                $modelSalaInter->sala->estado_sala=2;
+                $modelSalaInter->sala->save();
             }
         }
         return $this->redirect(['viewHistorialSalas','id'=>$id]);

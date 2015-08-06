@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-12">
-        <div class="box collapsed-box">
+        <div class="box collapsed-box box-solid box-primary">
             <div class="box-header">
-                <h3 class="box-title"><b><?php echo $model->paciente->personapa->nombreCompleto;?><small> Datos personales</small></b></h3>
+                <h3 class="box-title"><b><?php echo $model->paciente->personapa->nombreCompleto;?><small class="label label-primary"> Datos personales</small></b></h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-plus"></i></button>
                 </div>

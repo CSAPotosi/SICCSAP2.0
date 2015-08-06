@@ -33,7 +33,7 @@ class SalaController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax','renderFormSalaAjax','createSalaAjax','updateSalaAjax','viewSalaAjax','changeStateTipoSalaAjax'),
+				'actions'=>array('create','listSala','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax','renderFormSalaAjax','createSalaAjax','updateSalaAjax','viewSalaAjax','changeStateTipoSalaAjax','viewTipoSalaAjax','viewDetailSalaAjax','simpleChangeStateSala'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -54,6 +54,16 @@ class SalaController extends Controller
         $this->render('index',array('listaTipoSala'=>$listaTipoSala,'listaSala'=>$listaSala));
 
 
+    }
+
+    public function actionViewTipoSalaAjax($id=0){
+        $tipoSalaModel=TipoSala::model()->findByPk($id);
+        $this->renderPartial('view',['tipoSalaModel'=>$tipoSalaModel]);
+    }
+
+    public function actionViewDetailSalaAjax($id_sala=0){
+        $salaModel=Sala::model()->findByPk($id_sala);
+        $this->renderPartial('viewDetailSala',['salaModel'=>$salaModel]);
     }
 
     public function actionCreate($id=0)
@@ -105,15 +115,15 @@ class SalaController extends Controller
 	{
         if(isset($_POST['Servicio'],$_POST['TipoSala'],$_POST['PrecioServicio'])){
             $modelServicio=Servicio::model()->findByPk($_POST['Servicio']['id_servicio']);
-            $modelServicio->attributes=$_POST['Servicio'];
+            $modelServicio->attributes=array_map('strtoupper',$_POST['Servicio']);
             $modelTipoSala=$modelServicio->tipoSala;
-            $modelTipoSala->attributes=$_POST['TipoSala'];
+            $modelTipoSala->attributes=array_map('strtoupper',$_POST['TipoSala']);
             $modelPrecio= $modelServicio->precioServicio;
             if($modelPrecio==null){
                 $modelPrecio=new PrecioServicio;
                 $modelPrecio->id_servicio=$modelServicio->id_servicio;
             }
-            $modelPrecio->attributes=$_POST['PrecioServicio'];
+            $modelPrecio->attributes=array_map('strtoupper',$_POST['PrecioServicio']);
             $val=$this->validar(array($modelServicio,$modelTipoSala,$modelPrecio));
             if($val){
                 $modelServicio->save(false);
@@ -249,6 +259,22 @@ class SalaController extends Controller
         if($modelServicio!=null){
             $modelServicio->estado_serv=$estado;
             $modelServicio->save();
+        }
+    }
+
+    public function actionListSala($id_tipo=0,$ajax=0){
+        if($ajax==0)
+            return $this->render('listSala');
+        else{
+            return $this->renderPartial('_detailSala',['listaSalas'=>Sala::model()->findAll(["condition"=>"id_tipo_sala={$id_tipo} and estado_sala<>4","order"=>"numero_sala ASC"])]);
+        }
+    }
+
+    public function actionSimpleChangeStateSala($id_sala=0,$estado=0){
+        $salaModel=Sala::model()->findByPk($id_sala);
+        if($salaModel!=null&&$estado!=0){
+            $salaModel->estado_sala=$estado;
+            $salaModel->save();
         }
     }
 

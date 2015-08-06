@@ -1,9 +1,9 @@
 <?php
 $this->breadcrumbs=array(
-    'Salas',
+    'Administrar salas',
 );
 
-$this->pageTitle='Servicios - Salas';
+$this->pageTitle= CHtml::link('<i class="fa fa-arrow-left"></i>',['/']).' Servicios - Salas';
 
 ?>
 
@@ -24,9 +24,9 @@ $this->pageTitle='Servicios - Salas';
     </div>
 
     <div class="col-md-6">
-        <div class="box box-primary">
+        <div class="box box-primary box-solid">
             <div class="box-header">
-                <h3 class="box-title">Salas <small id="title-sala">Seleccione un tipo</small></h3>
+                <h3 class="box-title">Salas <small id="title-sala" class="label label-primary">Seleccione un tipo</small></h3>
             </div>
             <div class="box-body" id="contenido_sala">
                 <?php $this->renderPartial('_tableSala',array('listaSala'=>$listaSala,'id_tipo_sala'=>0));?>
@@ -76,23 +76,23 @@ $this->pageTitle='Servicios - Salas';
     </div>
 </div>
 
-<div class="modal fade" id="modalVerTipoSala" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade modal-primary" id="modalVerTipoSala" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Detalle de Tipo</h4>
+                <h4 class="modal-title">Detalle de tipo de sala</h4>
             </div>
             <div class="modal-body" id="modal_contenedorDetalle">
             </div>
             <div class="modal-footer clearfix">
-                <?php echo CHtml::tag('button',array('id'=>'btnCloseUpdTipoSala','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cerrar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnCloseUpdTipoSala','class'=>'btn btn-outline btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cerrar',true)?>
             </div>
         </div>
     </div>
 </div>
 
 
-<div class="modal fade" id="modalSala" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade modal-primary" id="modalSala" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -103,6 +103,21 @@ $this->pageTitle='Servicios - Salas';
             <div class="modal-footer clearfix">
                 <?php echo CHtml::tag('button',array('id'=>'btnSala','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Agregar',true)?>
                 <?php echo CHtml::tag('button',array('id'=>'btnCloseSala','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cerrar',true)?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-primary" id="modalVerSala" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Detalle de sala</h4>
+            </div>
+            <div class="modal-body" id="modal_contenedorDetalleSala">
+            </div>
+            <div class="modal-footer clearfix">
+                <?php echo CHtml::tag('button',array('id'=>'btnCloseSala','class'=>'btn btn-outline btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cerrar',true)?>
             </div>
         </div>
     </div>
@@ -182,6 +197,8 @@ Yii::app()->clientScript->registerScript('ajax','
     }
     $("#modalTipoSala").on("hidden.bs.modal",nuevoFormTipoSala);
     function cargarEventosClick(){
+        $(".btnChangeStateTipoSala").bootstrapToggle();
+
         $(".btnChangeStateTipoSala").on("change",function(){
             $.ajax({
                 url:$(this).attr("data-url"),
@@ -220,6 +237,7 @@ Yii::app()->clientScript->registerScript('ajax','
             $("#modalUpdateTipoSala").modal("show");
             return false;
         });
+
         $(".btnDelTipoSala").on("click",function(){
             if(confirm("¿Estas seguro de eliminar este elemento?")){
                 $.ajax({
@@ -247,12 +265,26 @@ Yii::app()->clientScript->registerScript('ajax','
             $("#title-sala").text($(this).parent("td").siblings().eq(0).text());
             return false;
         });
+
+        $("#searchTipoSala").on("keyup",function(){
+            if($(this).val().length>=3||$(this).val().length==0){
+                var cadena=$(this).val().toUpperCase();
+                $("#tableTipoSala tbody>tr:has(td)").addClass("hide");
+                $("#tableTipoSala tbody>tr:has(td:first-child:contains("+cadena+"))").removeClass("hide");
+            }
+        });
     }
 
     function cargaEventosSala(){
         $(".btnStatusSala").popover({
             content:"contenido",
             placement:"top",
+        });
+
+        $("#searchSala").on("keyup",function(){
+            var cadena=$(this).val().toUpperCase();
+            $("#tableSala tbody>tr:has(td)").addClass("hide");
+            $("#tableSala tbody>tr:has(td:first-child:contains("+cadena+"))").removeClass("hide");
         });
 
         $(".btnStatusSala").on("shown.bs.popover",function(){
@@ -287,6 +319,20 @@ Yii::app()->clientScript->registerScript('ajax','
             return false;
         });
 
+        $(".btnVerSala").on("click",function(){
+            $.ajax({
+                beforeSend:function(){
+                    console.log("hola");
+                },
+                url:$(this).attr("href"),
+                type:"post",
+                success:function(datos){
+                    $("#modal_contenedorDetalleSala").html(datos);
+                }
+            });
+            $("#modalVerSala").modal("show");
+            return false;
+        });
     }
 
     $("#btnCreateSala").on("click",function(){
@@ -350,6 +396,5 @@ Yii::app()->clientScript->registerScript('ajax','
             });
         }
     });
-
 ',CClientScript::POS_END);
 ?>

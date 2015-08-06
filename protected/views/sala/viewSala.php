@@ -17,7 +17,7 @@
                     <form class="form-inline">
                         <div class="form-group">
                             <?php echo CHtml::label('Tipo de Sala: ','tipoSala');?>
-                            <?php echo CHtml::dropDownList('tipoSala',$modelTipoSala->id_tipo_sala,CHtml::listData(TipoSala::model()->findAll(),'id_tipo_sala','servicio.nombre_serv'),['class'=>'form-control input-sm']);?>
+                            <?php echo CHtml::dropDownList('tipoSala',$modelTipoSala->id_tipo_sala,CHtml::listData(TipoSala::model()->with(['servicio'=>['condition'=>'estado_serv=1']])->findAll(),'id_tipo_sala','servicio.nombre_serv'),['empty'=>'Seleccione','class'=>'form-control input-sm']);?>
                         </div>
                     </form>
                 </div>

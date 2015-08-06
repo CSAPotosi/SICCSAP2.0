@@ -57,7 +57,7 @@ class Consulta extends CActiveRecord
 			'recetas' => array(self::HAS_MANY, 'Receta', 'id_consulta'),
 			'idHistoria' => array(self::BELONGS_TO, 'HistorialPaciente', 'id_historia'),
 			'consultaSignosVitales' => array(self::HAS_MANY, 'ConsultaSignosVitales', 'id_consulta'),
-			'tratamientos' => array(self::HAS_MANY, 'Tratamiento', 'id_consulta'),
+			'tratamientos' => array(self::HAS_MANY, 'Tratamiento', 'id_consulta','order'=>'fecha_trat DESC'),
 		);
 	}
 

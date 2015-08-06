@@ -51,6 +51,7 @@ class HistorialPaciente extends CActiveRecord
 			'consultas' => array(self::HAS_MANY, 'Consulta', 'id_historia'),
             'internacion'=>array(self::HAS_MANY,'Internacion','id_historial'),
             'internacionActual'=>array(self::HAS_ONE,'Internacion','id_historial','condition'=>'fecha_egreso is null'),
+            'cirugiaProgramada'=>array(self::HAS_MANY,'Cirugia','id_historial','condition'=>"estado_cirugia = 'PROGRAMADA'",'order'=>'fecha_hora_prog DESC'),
 		);
 	}
 

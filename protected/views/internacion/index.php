@@ -1,49 +1,40 @@
 <?php
-/* @var $this InternacionController */
-
-$this->breadcrumbs=array(
-	'Internacion',
-);
-
-$this->pageTitle='Internacion';
+    $this->breadcrumbs=array(
+        'Pacientes'=>array('persona/index'),
+        'CSA-'.$modelInternacion->historial->paciente->personapa->codigo=>['historialPaciente/view','id'=>$modelInternacion->historial->id_historial],
+        'Historia de internacion',
+    );
+    $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPaciente/view','id'=>$modelInternacion->historial->id_historial]).' Historial de internacion';
 ?>
 
 <?php $this->renderPartial('/historialPaciente/_form_datos_paciente',array('model'=>$modelInternacion->historial));?>
-<div class="row">
-    <div class="col-md-12">
-        <div class="box box-solid">
-            <div class="box-body">
-                <div class="row">
-                    <div class="col-md-2">
-                        <?php echo CHtml::link('Datos Generales',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-bitbucket'));?>
-                    </div>
-                    <div class="col-md-2">
-                        <?php echo CHtml::link('Diagnosticos',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
-                    </div>
-                    <div class="col-md-2">
-                        <?php echo CHtml::link('Tratamientos',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
-                    </div>
-                    <div class="col-md-2">
-                        <?php echo CHtml::link('Salas',array('internacion/createInternacion'),array('class'=>'btn btn-block btn-bitbucket'));?>
-                    </div>
-                    <div class="col-md-2">
-                        <?php echo CHtml::link('Orden de Servicio',array('SolicitudServicios/OrdenInternacion','id'=>$modelInternacion->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
-                    </div>
-                    <div class="col-md-2">
-                        <?php echo CHtml::link('Ver Servicios',array('SolicitudServicios/VerServiciosInternacion','id'=>$modelInternacion->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
-                    </div>
-                    <div class="col-md-2">
-                        <?php echo CHtml::link('Alta de paciente',array('internacion/altaMedica','id'=>$modelInternacion->id_inter),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
-                    </div>
-                </div>
-            </div>
+<nav class="navbar navbar-menu">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#menuHistoria" aria-expanded="false">
+                <span class="sr-only">Opciones de historia</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="collapse navbar-collapse" id="menuHistoria">
+            <ul class="nav navbar-nav">
+                <li class="active"><?php echo CHtml::link('Datos generales',['internacion/index','id'=>$modelInternacion->id_inter]);?></li>
+                <li><?php echo CHtml::link('Nuevo diagnostico',['qweqw']);?></li>
+                <li><?php echo CHtml::link('Kardex de enfermeria',['evolucionEnfermeria/showKardex','id'=>$modelInternacion->id_inter]);?></li>
+                <li><?php echo CHtml::link('Cambio de sala',['internacion/viewHistorialSalas','id'=>$modelInternacion->id_inter]);?></li>
+                <li><?php echo CHtml::link('Servicios',['qweqw']);?></li>
+                <li><?php echo CHtml::link('Examenes',['qweqw']);?></li>
+                <li><?php echo CHtml::link('Alta',['internacion/altaMedica','id'=>$modelInternacion->id_inter]);?></li>
+            </ul>
         </div>
     </div>
-</div>
+</nav>
 
 <div class="row">
     <div class="col-md-6">
-        <div class="box box-primary">
+        <div class="box box-solid box-success">
             <div class="box-header">
                 <h3 class="box-title">Historial de salas</h3>
             </div>
@@ -51,7 +42,7 @@ $this->pageTitle='Internacion';
                 <?php $this->renderPartial('_tablaSala',['listaSalas'=>$modelInternacion->salas]);?>
             </div>
             <div class="box-footer">
-                <?php echo CHtml::link('Cambio de sala',['internacion/viewHistorialSalas','id'=>$modelInternacion->id_inter],['class'=>'btn btn-primary']);?>
+                <?php echo CHtml::link('Cambio de sala',['internacion/viewHistorialSalas','id'=>$modelInternacion->id_inter],['class'=>'btn btn-success']);?>
             </div>
         </div>
     </div>
