@@ -138,18 +138,7 @@
                         <!-- Tasks Menu -->
                         <li class="dropdown tasks-menu">
                             <!-- Menu Toggle Button -->
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <?php
-                                $valor=DetalleSolicitudServicio::model()->findAll(array(
-                                    'condition'=>"estado_realizado='no realizado'",
-                                ));
-                                $cont=0;
-                                foreach($valor as $val):
-                                    $cont++;
-                                endforeach?>
-                                <i class="fa fa-flag-o"></i>
-                                <span class="label label-danger"><?php echo $cont?></span>
-                            </a>
+
                             <ul class="dropdown-menu" id="listardetalleservicios">
                                 <div id="Layer1" style="height:350px;  overflow: scroll;">
                                     <?php $this->renderPartial('/solicitudServicios/listardetallesolicitud')?>

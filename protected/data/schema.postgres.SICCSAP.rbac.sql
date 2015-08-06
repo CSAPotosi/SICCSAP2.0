@@ -8,11 +8,11 @@
  * @since 1.0
  */
 
-drop table if exists "AuthAssignment";
-drop table if exists "AuthItemChild";
-drop table if exists "AuthItem";
+drop table if exists "rol";
+drop table if exists "subrol";
+drop table if exists "asignacion_rol";
 
-create table "AuthItem"
+create table rol
 (
   "name"                 varchar(64) not null,
   "type"                 integer not null,
@@ -22,21 +22,21 @@ create table "AuthItem"
   primary key ("name")
 );
 
-create table "AuthItemChild"
+create table subrol
 (
   "parent"               varchar(64) not null,
   "child"                varchar(64) not null,
   primary key ("parent","child"),
-  foreign key ("parent") references "AuthItem" ("name") on delete cascade on update cascade,
-  foreign key ("child") references "AuthItem" ("name") on delete cascade on update cascade
+  foreign key ("parent") references "rol" ("name") on delete cascade on update cascade,
+  foreign key ("child") references "rol" ("name") on delete cascade on update cascade
 );
 
-create table "AuthAssignment"
+create table asignacion_rol
 (
   "itemname"             varchar(64) not null,
   "userid"               varchar(64) not null,
   "bizrule"              text,
   "data"                 text,
   primary key ("itemname","userid"),
-  foreign key ("itemname") references "AuthItem" ("name") on delete cascade on update cascade
+  foreign key ("itemname") references "rol" ("name") on delete cascade on update cascade
 );
