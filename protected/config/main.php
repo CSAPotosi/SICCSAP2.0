@@ -58,7 +58,16 @@ return array(
             'password' => 'root',
             'charset' => 'utf8',
         ),
-		// uncomment the following to use a MySQL database
+        'authManager'=>array(
+            'class'=>'CDbAuthManager',
+            'connectionID'=>'db',
+            'itemTable'=>'rol',
+            'itemChildTable'=>'subrol',
+            'assignmentTable'=>'asignacion_rol',
+        ),
+
+
+        // uncomment the following to use a MySQL database
 		/*
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=testdrive',
