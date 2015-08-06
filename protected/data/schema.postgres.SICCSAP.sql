@@ -147,22 +147,28 @@ create table if not exists institucion(
   direccion varchar(128),
   telefono int
 );
-create table if not exists convenio(
-  id_convenio serial primary key not null,
-  nombre varchar(128)
-);
+
 create table if not exists asegurado(
-  id_asegurado varchar(16) primary key not null,
-  id_convenio int,
-  foreign key (id_convenio) references convenio(id_convenio)
+  id_asegurado int primary key not null,
+  tipo_asegurado varchar(32) not null,
+  id_paciente_titular int,
+  foreign key (id_asegurado) references  paciente(id_paciente),
+  foreign key (id_paciente_titular) references paciente(id_paciente)
 );
 create table if not exists convenio_institucion(
+  id_convenio serial not null primary key,
+  nombre_convenio varchar (128) not null,
+  id_insti int not null,
+  foreign key (id_insti) references institucion(id_insti)
+);
+create table if not exists seguro_convenio(
+  id_convenio serial primary key not null,
   fecha_inicio date not null,
   fecha_fin date,
-  id_insti int not null,
-  id_convenio int not null,
-  foreign key (id_insti) references institucion(id_insti),
-  foreign key (id_convenio) references convenio(id_convenio)
+  id_asegurado int,
+  id_convenio_institucion int,
+  foreign key (id_asegurado) references asegurado(id_asegurado),
+  foreign key (id_convenio_institucion) references convenio_institucion(id_convenio)
 );
 
 create table if not exists consulta(
@@ -269,6 +275,18 @@ create table if not exists precio_servicio(
   primary key(id_servicio,fecha_inicio),
   foreign key(id_servicio) references servicio(id_servicio)
 );
+create table if not exists convenio_servicios(
+  id_con_ser serial not null primary key,
+  fecha_creacion timestamp not null,
+  fecha_actualizacion timestamp not null,
+  descuento_servicio float not null,
+  estado int,
+  descripcion varchar(128),
+  id_convenio_institucion int not null,
+  id_servicio int not null,
+  foreign key (id_convenio_institucion) references convenio_institucion(id_convenio),
+  foreign key (id_servicio) references  servicio(id_servicio)
+);
 create table if not EXISTS tipo_sala(
   id_tipo_sala int not null primary key,
   descripcion_tipo_sala varchar(128) ,
@@ -285,9 +303,9 @@ create table if not exists sala(
 create table if not exists atencion_medica(
   id_servicio int primary key,
   tipo_atencion varchar(16) not null,
-  id_M_E int not null,
+  id_m_e int not null,
   foreign key (id_servicio) references servicio(id_servicio),
-  foreign key (id_M_E) references medico_especialidad(id_M_E)
+  foreign key (id_m_e) references medico_especialidad(id_M_E)
 );
 
 create table if not exists categoria_ex_laboratorio(
@@ -364,16 +382,14 @@ create table if not exists detalle_solicitud_servicio(
 );
 create table if not exists cita(
   id_cita serial not null primary key,
-  fecha date,
-  hora_cita time,
-  estado_cita int,
-  id_paciente int,
-  medico_consulta_servicio int,
+  fecha date not null,
+  hora_cita time not null,
+  estado_cita int not null,
+  id_paciente int not null,
+  medico_consulta_servicio int not null,
   foreign key (id_paciente) references paciente(id_paciente),
-  foreign key (medico_consulta_servicio) references medico_especialidad(id_M_E)
+  foreign key (medico_consulta_servicio) references atencion_medica(id_servicio)
 );
-
-
 /*
 create table if not exists servicio_internacion(
 	id_internacion int not null,

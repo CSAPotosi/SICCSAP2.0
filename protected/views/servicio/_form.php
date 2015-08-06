@@ -36,6 +36,11 @@
             <?php echo $form->textField($model,'unidad_serv',array('class'=>'form-control','placeholder'=>'Unidad de Servicios')); ?>
             <?php echo $form->error($model,'unidad_serv',array('class'=>'label label-danger')); ?>
         </div>
+        <div class="input-group">
+            <?php echo $form->labelEx($model,'Estado del servicio',array('class'=>'input-group-addon')); ?>
+            <?php echo $form->textField($model,'estado_serv',array('class'=>'form-control','placeholder'=>'Unidad de Servicios')); ?>
+            <?php echo $form->error($model,'estado_serv',array('class'=>'label label-danger')); ?>
+        </div>
 	</div>
 	<div class="form-group">
         <div class="input-group">

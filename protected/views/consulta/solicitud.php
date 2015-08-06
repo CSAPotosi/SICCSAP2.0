@@ -183,7 +183,6 @@
             $("#"+conte+"").append($("#"+valor+""));
             $("#"+valor+"").children("[name=\'ocultar\']").addClass("hide");
             $("#"+valor+"").prop("class","val");
-
         }
         $("#btnsolicitudconsulta").on("click",solicitudservicios);
         function solicitudservicios(){

@@ -219,7 +219,10 @@
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Medicos'])?>" ><i class="fa fa-fw fa-stethoscope"></i> <span>Medicos</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Empleado'])?>" ><i class="fa fa-suitcase"></i> <span>Empleado</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/servicio'])?>" ><i class="fa fa-fw fa-plus-square"></i> <span>Servicios</span></a></li>
-                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/agenda'])?>" ><i class="fa fa-fw fa-plus-square"></i> <span>Agenda Medica</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/agenda/atencionesmedicas'])?>" ><i class="fa fa-fw fa-medkit"></i><span>Atenciones medicas</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/historialpaciente/PacienteEmergencia'])?>" ><i class="fa fa-fw fa-plus-circle"></i><span>Paciente de Emergencia</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Index'])?>" ><i class="fa fa-fw fa-shield"></i><span>Seguros Clinicos</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Principal_Institucion'])?>" ><i class="fa fa-fw fa-building-o"></i><span>Institucion</span></a></li>
                     <li><a href="#"><i class='fa fa-link'></i> <span>Another Link</span></a></li>
                     <li class="treeview">
                         <a href="#"><i class='fa fa-link'></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>

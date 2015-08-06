@@ -24,7 +24,6 @@
                     <?php echo $form->textField($model,'dni',array('class'=>'form-control','placeholder'=>'dni')); ?>
                     <?php echo $form->error($model,'dni',array('class'=>'label label-danger')); ?>
                 </div>
-
                 <div class="form-group">
                     <?php echo $form->labelEx($model,'nombres'); ?>
                     <?php echo $form->textField($model,'nombres',array('class'=>'form-control','placeholder'=>'nombres')); ?>

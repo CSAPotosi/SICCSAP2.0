@@ -28,7 +28,7 @@ class AgendaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','BuscarAtencionMedica','RegistrarCita','ActualizarEstadoCita','ComprobanteAtencionMedica','atencionesmedicas','detalleAtencionesMedicas','BuscarAtencionMedicaRapida'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -94,8 +94,10 @@ class AgendaController extends Controller
 		if(isset($_POST['Cita']))
 		{
             $model->attributes=array_map('strtoupper',$_POST['Cita']);
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_cita));
+
+			if($model->save()){
+
+            }
 		}
 
 		$this->render('update',array(
@@ -120,19 +122,17 @@ class AgendaController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+	public function actionIndex($id)
 	{
         $cita= new Cita;
         $atencionmedica=AtencionMedica::model()->findAll();
+        $persona=Persona::model()->findByPk($id);
 		$this->render('index',array(
 			'atencionmedica'=>$atencionmedica,
             'cita'=>$cita,
+            'persona'=>$persona,
 		));
 	}
-
-	/**
-	 * Manages all models.
-	 */
 	public function actionAdmin()
 	{
 		$model=new Cita('search');
@@ -159,7 +159,21 @@ class AgendaController extends Controller
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
-
+    public function actionBuscarAtencionMedica(){
+        $nombre= $_POST['cadena'];
+        $listaServicio=Servicio::model()->findAll(array(
+            'condition'=>"nombre_serv like '%{$nombre}%'",
+        ));
+        $atencionmedica=array();
+        if($listaServicio!=null){
+            foreach($listaServicio as $list):
+                if($list->atencionMedica!=null){
+                    $atencionmedica[]=$list->atencionMedica;
+                }
+            endforeach;
+        }
+        $this->renderPartial('atencionesdisponibles',array('atencionmedica'=>$atencionmedica));
+    }
 	/**
 	 * Performs the AJAX validation.
 	 * @param Cita $model the model to be validated
@@ -172,4 +186,57 @@ class AgendaController extends Controller
 			Yii::app()->end();
 		}
 	}
+    public function actionRegistrarCita(){
+        $cita=new Cita;
+        $persona=Persona::model()->findByPk($_POST['Persona']['id']);
+        if(isset($_POST['Cita'])){
+            $cita->attributes=$_POST['Cita'];
+            $cita->id_paciente=$_POST['Persona']['id'];
+            $datetime=$cita->fecha." ".$cita->hora_cita;
+            $datefin=date("Y-m-d H:i",strtotime("+15 minute",strtotime($datetime)));
+            $titulo=$persona->nombreCompleto;
+            $atencion=$cita->medicoConsultaServicio->idServicio->nombre_serv;
+            if($cita->save()){
+                header('Content-Type:application/json;');
+                echo CJSON::encode(array('id'=>$cita->id_cita,'start'=>$datetime,'end'=>$datefin,'title'=>$titulo,'editable'=>false,'estado'=>$cita->estado_cita,'servinombre'=>$atencion,'paciente'=>$cita->id_paciente,'className'=>'popoverclass'));
+                return;
+            }
+        }
+        $this->renderPartial('_form',array('cita'=>$cita,'persona'=>$persona));
+        return;
+    }
+    public function actionActualizarEstadoCita(){
+        $cita=Cita::model()->findByPk($_GET['cita']);
+        $cita->estado_cita=1;
+        $cita->save();
+        $citas= new Cita;
+        $atencionmedica=AtencionMedica::model()->findAll();
+        $persona=Persona::model()->findByPk($_GET['idpaciente']);
+        $this->render('index',array(
+            'atencionmedica'=>$atencionmedica,
+            'cita'=>$citas,
+            'persona'=>$persona,
+        ));
+    }
+    public function actionComprobanteAtencionMedica(){
+        $cita=Cita::model()->findByPk($_GET['id']);
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->render('/agenda/comprobanteatencionmedica',['cita'=>$cita],true));
+        $mPDF1->Output();
+    }
+    public function actionatencionesmedicas(){
+        $atencion=AtencionMedica::model()->findAll();
+        $this->render('atencionesmedicas',array('atencion'=>$atencion));
+    }
+    public function actiondetalleAtencionesMedicas($id){
+        $servicio=Servicio::model()->findByPk($id);
+        $atencion=AtencionMedica::model()->findAll(array(
+            'condition'=>"id_servicio='{$servicio->id_servicio}'",
+        ));
+        foreach($atencion as $ate):
+            $atencionmedica=$ate;
+        endforeach;
+        $this->renderPartial('detalleatencionmedica',array('servicio'=>$servicio,'atencionmedica'=>$atencionmedica));
+        return;
+    }
 }

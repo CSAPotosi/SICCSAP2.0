@@ -66,12 +66,17 @@
 <?php Yii::app()->clientScript->registerScript('pruebagabineteatencion ','
     $(document).ready(function(){
         EventosClick();
+        eventosEspe();
         function EventosClick(){
+            $(".btnAtencionEspecialidad").on("click",verServicioMedico);
+            $(".btnagregarprecio").on("click",CrearServicioAtencion);
             $(".btnagregarprecio").on("click",CrearServicioAtencion);
             $("#btncrearatencionmedica").on("click",enviarServicioAtencion);
-            $(".btnAtencionEspecialidad").on("click",verServicioMedico);
             $("#btnactualizarAtencion").on("click",ActualizarAtencion);
             $(".btnEliminarAtencion").on("click",EliminarAtencion);
+        }
+        function eventosEspe(){
+
         }
         function CrearServicioAtencion(){
             $.ajax({
@@ -106,11 +111,10 @@
                         $("#servicioatencion").modal("hide");
                         $("#contenedoratencionmedica").html(datos);
                         listEspecialidad();
-                        EventosClick();
+
                     }
                     else{
                         $("#contenedorservicioatencion").html(datos);
-
                     }
                 }
             });
@@ -137,8 +141,6 @@
                     if(contenido.children("#flag").val()==null){
                         $("#updservicioatencion").modal("hide");
                         $("#contenedoratencionmedica").html(datos);
-                        listEspecialidad();
-                        EventosClick();
                     }
                     else{
                         $("#contenedorservicioatencionupd").html(datos);
@@ -147,7 +149,6 @@
             });
         }
         function EliminarAtencion(){
-            alert("kola");
             $.ajax({
                 url:$(this).attr("href"),
                 type:"post",
@@ -155,7 +156,6 @@
                     $("#contenedoratencionmedica").html(datos);
                     EventosClick();
                     listEspecialidad();
-
                 }
             });
             return false;

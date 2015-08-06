@@ -3,8 +3,8 @@
 /* @var $model HistorialPaciente */
 
 $this->breadcrumbs=array(
-	'Historial Medico'=>array('index'),
-	$model->id_historial,
+    'Historial Medico'=>array('index'),
+    $model->id_historial,
 );
 ?>
 
@@ -13,8 +13,6 @@ $this->breadcrumbs=array(
         <i class="fa fa-info"></i>
         <b>Atencion!!!</b> Este paciente se encuentra actualmente internado. <br/>
         <?php echo CHtml::link('Ver detalle de internacion',['internacion/index','id'=>$model->internacionActual->id_inter],['class'=>'btn  btn-info ']);?>
-
-
     </div>
 <?php endif;?>
 
@@ -27,9 +25,12 @@ $this->breadcrumbs=array(
                 <div class="row">
                     <div class="col-md-2">
                         <?php
-                            if($model->paciente->estado_paciente!='INTERNADO')
-                                echo CHtml::link('<i class="fa fa-ambulance"></i> Internacion',array('internacion/createInternacion','id'=>$model->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));
+                        if($model->paciente->estado_paciente!='INTERNADO')
+                            echo CHtml::link('<i class="fa fa-ambulance"></i> Internacion',array('internacion/createInternacion','id'=>$model->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));
                         ?>
+                    </div>
+                    <div class="col-md-2">
+                        <?php echo CHtml::link('<i class="fa fa-book"></i> Agendar',array('agenda/index','id'=>$model->id_historial),array('class'=>'btn btn-block btn-social btn-bitbucket'));?>
                     </div>
                 </div>
             </div>
@@ -164,7 +165,6 @@ $this->breadcrumbs=array(
                         'fecha_actualizacion',
                     ),
                 )); ?>
-
             </div>
         </div>
     </div>

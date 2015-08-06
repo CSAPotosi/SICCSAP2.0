@@ -10,7 +10,6 @@
                 <div class="contenedorformcatlab" id="contenedorformcatlab">
                     <?php $form=$this->beginWidget('CActiveForm',array(
                         'id'=>($servicio->isNewRecord ?'form-servicioatencion':'form-servicioatencion-update'),
-                        /*'action'=>($servicio->isNewRecord ? yii::app()->createUrl("servicio/RegistrarAtencion"):""),*/
                         'enableAjaxValidation'=>false,'htmlOptions'=>array('class'=>'form-horizontal'),)); ?>
                     <div class="box-body">
                         <?php echo CHtml::errorSummary($servicio,null,null,array('class'=>'alert alert-error')); ?>
@@ -20,7 +19,7 @@
                         <input type="hidden" value="<?php echo $id_m_e;?>" name="MedicoEspecialidad[id_m_e]">
                         <div class="form-group">
                             <?php echo CHtml::activelabelEx($atencion,'Tipo de Atencion'); ?>
-                            <?php echo CHtml::activetextField($atencion,'tipo_atencion',array('class'=>'form-control','placeholder'=>'Codigo Servicio')); ?>
+                            <?php echo CHtml::activeDropDownList($atencion,'tipo_atencion',array('general'=>'general','especialidad'=>'especialidad'),array('class'=>'form-control')); ?>
                             <?php echo CHtml::error($atencion,'tipo_atencion',array('class'=>'label label-danger')); ?>
                         </div>
                         <div class="form-group">

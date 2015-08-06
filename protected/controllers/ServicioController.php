@@ -697,7 +697,7 @@ class ServicioController extends Controller
             $servicio->attributes=$_POST['Servicio'];
             $precio->attributes=$_POST['PrecioServicio'];
             $atencion->attributes=$_POST['AtencionMedica'];
-            $val=$this->validar(array($servicio,$precio,$atencion));
+            $val=$this->validar(array($servicio,$precio));
             if($val){
                 $servicio->save(false);
                 $precio->id_servicio=$servicio->id_servicio;

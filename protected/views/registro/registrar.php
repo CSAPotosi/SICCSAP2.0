@@ -36,8 +36,8 @@
                                     'update'=>'#'.CHtml::activeId($model,'id2'),
                                 ),
                             'class'=>'form-control','prompt'=>'seleccione',
-                        )
-                );?>
+                            )
+                        );?>
             </div>
         </div>
         <div class="form-group">

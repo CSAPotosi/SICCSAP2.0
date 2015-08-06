@@ -217,7 +217,6 @@
             }
         })
         $(".checked").on("ifChecked",function(){
-
             $("#labo").show();$("#gabi").show();$("#otros").show();
             switch($(this).val()){
                 case "1": $("#gabi").hide();$("#otros").hide();break;

@@ -28,7 +28,7 @@ class HistorialPacienteController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view','PacienteEmergencia','CrearPacienteEmergencia'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -98,27 +98,16 @@ class HistorialPacienteController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['HistorialPaciente']))
 		{
 			$model->attributes=$_POST['HistorialPaciente'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id_historial));
 		}
-
 		$this->render('update',array(
 			'model'=>$model,
 		));
 	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
@@ -138,17 +127,12 @@ class HistorialPacienteController extends Controller
 			'dataProvider'=>$dataProvider,
 		));
 	}
-
-	/**
-	 * Manages all models.
-	 */
 	public function actionAdmin()
 	{
 		$model=new HistorialPaciente('search');
 		$model->unsetAttributes();  // clear any default values
 		if(isset($_GET['HistorialPaciente']))
 			$model->attributes=$_GET['HistorialPaciente'];
-
 		$this->render('admin',array(
 			'model'=>$model,
 		));
@@ -181,4 +165,32 @@ class HistorialPacienteController extends Controller
 			Yii::app()->end();
 		}
 	}
+    public function actionPacienteEmergencia(){
+        $persona=new Persona;
+        $paciente=new Paciente;
+        $historial=new HistorialPaciente;
+        $this->render('form_emergencia',array(
+            'persona'=>$persona,
+            'paciente'=>$paciente,
+            'historial'=>$historial,
+        ));
+    }
+    public function actionCrearPacienteEmergencia(){
+        $persona=new Persona;
+        $paciente=new Paciente;
+        $historial=new HistorialPaciente;
+        if(isset($_POST['Persona'])){
+            $persona->attributes=array_map('strtoupper',$_POST['Persona']);
+            if($persona->save()){
+                $paciente->id_paciente=$persona->id;
+                $paciente->save();
+                $historial->id_historial=$persona->id;
+                $historial->save();
+                $this->redirect(array('view','id'=>$persona->id));
+            }
+            $this->render('form_emergencia',array(
+                'persona'=>$persona,
+            ));
+        }
+    }
 }

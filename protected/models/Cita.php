@@ -13,7 +13,7 @@
  *
  * The followings are the available model relations:
  * @property Paciente $idPaciente
- * @property MedicoEspecialidad $medicoConsultaServicio
+ * @property AtencionMedica $medicoConsultaServicio
  */
 class Cita extends CActiveRecord
 {
@@ -33,8 +33,8 @@ class Cita extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			array('fecha, hora_cita, estado_cita, id_paciente, medico_consulta_servicio', 'required'),
 			array('estado_cita, id_paciente, medico_consulta_servicio', 'numerical', 'integerOnly'=>true),
-			array('fecha, hora_cita', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_cita, fecha, hora_cita, estado_cita, id_paciente, medico_consulta_servicio', 'safe', 'on'=>'search'),
@@ -50,13 +50,9 @@ class Cita extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'idPaciente' => array(self::BELONGS_TO, 'Paciente', 'id_paciente'),
-			'medicoConsultaServicio' => array(self::BELONGS_TO, 'MedicoEspecialidad', 'medico_consulta_servicio'),
+			'medicoConsultaServicio' => array(self::BELONGS_TO, 'AtencionMedica', 'medico_consulta_servicio'),
 		);
 	}
-
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
 	public function attributeLabels()
 	{
 		return array(
@@ -109,4 +105,5 @@ class Cita extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
 }

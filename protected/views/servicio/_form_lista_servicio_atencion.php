@@ -21,7 +21,9 @@
             <td><?php echo $list->tipo_atencion?></td>
             <td>
                 <?php echo CHtml::link('<i class="fa fa-edit"></i>',array('servicio/ActualizarAtencionMedica','id'=>$list->id_servicio),array('title'=>'Actualizar','class'=>'btnAtencionEspecialidad'))?>
+                <?php if($list->idServicio->precioServicio1==null){?>
                 <?php echo CHtml::link('<i class="glyphicon glyphicon-remove"></i>',array('servicio/EliminarAtencionMedica','id'=>$list->id_servicio),array('title'=>'Eliminar','class'=>'btnEliminarAtencion'))?>
+                <?php }?>
             </td>
         </tr>
         <?php endforeach?>
