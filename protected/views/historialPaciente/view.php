@@ -128,12 +128,9 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'
                                     echo CHtml::link('<i class="fa fa-pencil"></i>',['cirugia/createCirugia','id_c'=>$itemC->id_c],['class'=>'btn btn-primary btn-sm','title'=>'Registrar cirugia']);
                                 }
                                 if($itemC->estado_cirugia=='INICIADA'){
-                                    echo CHtml::link('<i class="fa fa-list-alt"></i>',['cirugia/updateCirugia','id_c'=>$itemC->id_c],['class'=>'btn btn-primary btn-sm','title'=>'Finalizar cirugia']);
+                                    echo CHtml::link('<i class="fa fa-list-alt"></i>',['cirugia/finCirugia','id_c'=>$itemC->id_c],['class'=>'btn btn-primary btn-sm','title'=>'Finalizar cirugia']);
                                 }
-                                if($itemC->estado_cirugia=='FINALIZADA'){
-                                    echo CHtml::link('<i class="fa fa-pencil"></i>',['cirugia/createCirugia','id_c'=>$itemC->id_c],['class'=>'btn btn-primary btn-sm','title'=>'Registrar cirugia']);
 
-                                }
 
                                 ?></div>
                             </td>

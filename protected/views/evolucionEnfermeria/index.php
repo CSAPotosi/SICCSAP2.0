@@ -37,6 +37,12 @@ $this->pageTitle='Kardex de enfermeria';
 <div class="row">
     <div class="col-md-12">
         <div class="box box-solid box-success">
+            <div class="box-header">
+                <h3 class="box-title">KARDEX</h3>
+                <div class="box-tools">
+                    <?php echo CHtml::link('<i class="fa fa-print"></i>',['reportes/reporteKardex','id_inter'=>$modelInternacion->id_inter],['class'=>'btn btn-success','target'=>'_blanck']);?>
+                </div>
+            </div>
             <div class="box-body">
                 <?php echo CHtml::beginForm(['evolucionEnfermeria/createEvolucion'],'post',null);?>
                 <table class="table table-hover table-bordered">

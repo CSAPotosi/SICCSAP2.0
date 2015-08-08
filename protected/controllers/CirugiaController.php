@@ -124,6 +124,22 @@ class CirugiaController extends Controller
         return $this->render('_formCreateCirugia',['model'=>$modelCirugia->historial,'modelCirugia'=>$modelCirugia,'listaP'=>$listaParticipes]);
     }
 
+    public function actionFinCirugia($id_c=0){
+        $modelCirugia=new Cirugia();
+        if($id_c!=0)
+            $modelCirugia=Cirugia::model()->findByPk($id_c);
+        $modelCirugia->scenario='fin';
+        if(isset($_POST['Cirugia'])){
+            $modelCirugia->attributes=array_map('strtoupper',$_POST['Cirugia']);
+            if($modelCirugia->validate()){
+                $modelCirugia->save(false);
+                $this->redirect(['historialPaciente/view','id'=>$modelCirugia->id_historial]);
+            }
+        }
+        return $this->render('_formEndCirugia',['modelCirugia'=>$modelCirugia]);
+    }
+
+
 
     public function validar($lista=array()){
         $flag=true;

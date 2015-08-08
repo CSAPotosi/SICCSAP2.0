@@ -18,17 +18,18 @@
     </thead>
     <tbody>
         <tr>
-            <th>NOMBRE:</th>
-            <td><?php echo $modelH->paciente->personapa->nombreCompleto;?></td>
-            <th>CODIGO:</th>
-            <td>CSA-<?php echo $modelH->paciente->personapa->codigo;?> </td>
+            <th width="20%">PACIENTE:</th>
+            <td width="40%"><?php echo $modelH->paciente->personapa->nombreCompleto;?></td>
+            <th width="20%">CODIGO:</th>
+            <td width="20%">CSA-<?php echo $modelH->paciente->personapa->codigo;?> </td>
         </tr>
         <tr>
             <th>NRO. DOC.:</th>
-            <td>443434(CERT. NAC)</td>
+            <td><?php echo $modelH->paciente->personapa->dni?></td>
             <th>FECHA NAC.:</th>
-            <td><?php $modelH->paciente->personapa->fecha_nacimiento;
-
+            <td><?php
+                if(date('Y-m-d',strtotime($modelH->paciente->personapa->fecha_nacimiento))=='0001-01-01')
+                    echo date('Y-m-d',strtotime($modelH->paciente->personapa->fecha_nacimiento));
                 ?>
             </td>
         </tr>
@@ -42,10 +43,9 @@
                        echo 'ASEGURADO'
                 */
                 ?>
-
             </td>
             <th>FECHA:</th>
-            <td><?php date('d-m-Y H:i');?>
+            <td><?php echo date('Y-m-d H:i');?>
             </td>
         </tr>
     </tbody>

@@ -152,7 +152,7 @@ $fecha=($modelCirugia->fecha_hora_prog!=null)?"'{$modelCirugia->fecha_hora_prog}
 Yii::app()->clientScript->registerScript('eventos','
     $("#Cirugia_fecha_hora_ent").datetimepicker({
         locale:"es",
-        defaultDate:'.$fecha.',
+        defaultDate:new Date(),
         format:"YYYY-MM-DD HH:mm",
         minDate:"'.date('m/d/Y',strtotime('+0 day')).'"
     });

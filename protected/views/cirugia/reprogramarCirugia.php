@@ -3,10 +3,10 @@
 
 $this->breadcrumbs=array(
     'Cirugia'=>array('/cirugia'),
-    'ProgramarCirugia',
+    'Reprogramar',
 );
 
-$this->pageTitle='Programacion de cirugia';
+$this->pageTitle='Reprogramacion de cirugia';
 ?>
 
 <?php $this->renderPartial('/historialPaciente/_form_datos_paciente',array('model'=>$model))?>
