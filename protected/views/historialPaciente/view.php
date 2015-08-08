@@ -30,7 +30,7 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'
                     <?php echo CHtml::link('Quirofanos <span class="caret"></span>',['#'],['class'=>'dropdown-toggle animate','data-toggle'=>'dropdown']);?>
                     <ul class="dropdown-menu" role="menu">
                         <li><?php echo CHtml::link('Programar cirugia',['cirugia/programarCirugia','id_h'=>$model->id_historial]);?></li>
-                        <li><?php echo CHtml::link('Registrar cirugia',['cirugia/createCirugia','id_h'=>$model->id_historial]);?></li>
+                        <li><?php echo CHtml::link('Registrar cirugia',['cirugia/indexCirugia','id_h'=>$model->id_historial]);?></li>
                     </ul>
                 </li>
             </ul>
@@ -91,20 +91,60 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'
     </div>
 
     <div class="col-md-6">
-        <div class="box">
+        <div class="box box-primary box-solid">
             <div class="box-header">
-                <h3 class="box-title">Mi titulo 2   </h3>
+                <h3 class="box-title">Cirugias y programaciones</h3>
                 <div class="box-tools pull-right">
                     <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
 
-            <div class="box-body">
-                conytenido
+            <div class="box-body table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>FECHA Y HORA</th>
+                        <th>ESTADO</th>
+                        <th>OPCIONES</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php foreach($model->cirugias as $itemC):?>
+                        <tr>
+                            <td><?php
+                                if($itemC->estado_cirugia=='PROGRAMADA')
+                                    echo date('d-m-Y H:i',strtotime($itemC->fecha_hora_prog));
+                                if($itemC->estado_cirugia=='INICIADA')
+                                    echo date('d-m-Y H:i',strtotime($itemC->fecha_hora_ent));
+                                if($itemC->estado_cirugia=='FINALIZADA')
+                                    echo date('d-m-Y H:i',strtotime($itemC->fecha_hora_sal));
+                            ?></td>
+                            <td><?php echo $itemC->estado_cirugia;?></td>
+                            <td><div class="btn-group">
+                                <?php
+
+                                if($itemC->estado_cirugia=='PROGRAMADA'){
+                                    echo CHtml::link('<i class="fa fa-clock-o"></i>',['cirugia/updateCirugia','id_c'=>$itemC->id_c],['class'=>'btn btn-primary btn-sm','title'=>'Reprogramar cirugia']);
+                                    echo CHtml::link('<i class="fa fa-pencil"></i>',['cirugia/createCirugia','id_c'=>$itemC->id_c],['class'=>'btn btn-primary btn-sm','title'=>'Registrar cirugia']);
+                                }
+                                if($itemC->estado_cirugia=='INICIADA'){
+                                    echo CHtml::link('<i class="fa fa-list-alt"></i>',['cirugia/updateCirugia','id_c'=>$itemC->id_c],['class'=>'btn btn-primary btn-sm','title'=>'Finalizar cirugia']);
+                                }
+                                if($itemC->estado_cirugia=='FINALIZADA'){
+                                    echo CHtml::link('<i class="fa fa-pencil"></i>',['cirugia/createCirugia','id_c'=>$itemC->id_c],['class'=>'btn btn-primary btn-sm','title'=>'Registrar cirugia']);
+
+                                }
+
+                                ?></div>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                    </tbody>
+                </table>
             </div>
 
             <div class="box-footer">
-                pie
+                <?php echo CHtml::link('Programar cirugia',array('cirugia/programarCirugia','id_h'=>$model->id_historial),array('class'=>'btn btn-primary pull-right'));?>
             </div>
         </div>
     </div>
@@ -144,29 +184,6 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'
 
             <div class="box-footer">
                 pie
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        <div class="box box-primary">
-            <div class="box-header">
-                <h3 class="box-title">
-                    View HistorialPaciente #<?php echo $model->id_historial; ?>
-                </h3>
-            </div>
-            <div class="box-body">
-                <?php $this->widget('zii.widgets.CDetailView', array(
-                    'data'=>$model,
-                    'attributes'=>array(
-                        'id_historial',
-                        'fecha_muerte',
-                        'fecha_creacion',
-                        'fecha_actualizacion',
-                    ),
-                )); ?>
-
             </div>
         </div>
     </div>

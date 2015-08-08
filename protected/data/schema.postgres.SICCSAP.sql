@@ -438,8 +438,9 @@ create table if not exists parametro_laboratorio(
 
 create table if not exists rangos_parametro(
   id_rango serial not null primary key,
-  valor_min float,
-  valor_max float,
+  valor_normal varchar(30),
+  edad_minima int,
+  edad_maxima int,
   sexo_rango int default 0,--0 indefinido, 1 masculino, 2, femenino,
   id_par_lab int not null,
   foreign key (id_par_lab) references parametro_laboratorio(id_par_lab)

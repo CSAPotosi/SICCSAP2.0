@@ -31,12 +31,12 @@ class RangosParametro extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_par_lab', 'required'),
+			array('id_par_lab,valor_normal', 'required'),
 			array('sexo_rango, id_par_lab', 'numerical', 'integerOnly'=>true),
-			array('valor_min, valor_max', 'numerical'),
+			array('edad_minima, edad_maxima', 'numerical'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_rango, valor_min, valor_max, sexo_rango, id_par_lab', 'safe', 'on'=>'search'),
+			array('id_rango, valor_normal, edad_minima,edad_maxima, sexo_rango, id_par_lab', 'safe', 'on'=>'search'),
 		);
 	}
 

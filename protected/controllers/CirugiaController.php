@@ -46,12 +46,17 @@ class CirugiaController extends Controller
     }
 
     public function actionCreateCirugia($id_h=0,$id_c=0){
-        $model= ($id_h!=0)?HistorialPaciente::model()->findByPk($id_h):new HistorialPaciente();
-        $modelCirugia= ($id_c!=0)?Cirugia::model()->findByPk($id_c):new Cirugia();
-        if($modelCirugia!=null)
+        $model= new HistorialPaciente();
+        $modelCirugia= new Cirugia();
+        if($id_h!=0){
+            $model=HistorialPaciente::model()->findByPk($id_h);
+            $modelCirugia->id_historial=$model->id_historial;
+        }
+        if($id_c!=0){
+            $modelCirugia=Cirugia::model()->findByPk($id_c);
             $model=$modelCirugia->historial;
-
-        return $this->render('_createCirugia',['model'=>$model]);
+        }
+        return $this->render('_formCreateCirugia',['model'=>$model,'modelCirugia'=>$modelCirugia,'listaP'=>$modelCirugia->participantes]);
     }
 
     public function actionAgenda(){
@@ -87,6 +92,45 @@ class CirugiaController extends Controller
             }
         }
         $this->render('reprogramarCirugia',['model'=>$model,'modelCirugia'=>$modelCirugia,'modelParticipe'=>$modelParticipe]);
+    }
+
+    public function actionCreateCirugiaPost($id=0){
+        $modelCirugia=($id==0)?new Cirugia():Cirugia::model()->findByPk($id);
+        $listaParticipes=array();
+        if(isset($_POST['Cirugia'],$_POST['ParticipanteCirugia'])){
+            $modelCirugia->attributes=array_map('strtoupper',$_POST['Cirugia']);
+            foreach($_POST['ParticipanteCirugia'] as $item){
+                $modelo= new ParticipanteCirugia();
+                $modelo->attributes=array_map('strtoupper',$item);
+                if($modelo->id_per!=null)
+                    $listaParticipes[]=$modelo;
+            }
+
+            $modelCirugia->scenario='inicio';
+            $flag=$this->validar(array_merge([$modelCirugia],$listaParticipes));
+            if($flag){
+                $modelCirugia->save(false);
+                foreach($modelCirugia->participantes as $item)
+                    $item->delete();
+                foreach($listaParticipes as $item){
+                    $item->id_c=$modelCirugia->id_c;
+                    $item->save(false);
+                }
+                echo 'hola mundo';
+                return ;
+            }
+
+        }
+        return $this->render('_formCreateCirugia',['model'=>$modelCirugia->historial,'modelCirugia'=>$modelCirugia,'listaP'=>$listaParticipes]);
+    }
+
+
+    public function validar($lista=array()){
+        $flag=true;
+        foreach($lista as $item){
+            $flag=$flag&&$item->validate();
+        }
+        return $flag;
     }
 
 	// Uncomment the following methods and override them if needed

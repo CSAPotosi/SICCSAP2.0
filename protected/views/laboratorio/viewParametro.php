@@ -9,7 +9,7 @@
 ?>
 <div class="row">
     <div class="col-md-12">
-        <div class="box">
+        <div class="box box-primary box-solid">
             <div class="box-header">
                 <h3 class="box-title">Datos del parametro</h3>
                 <div class="box-tools">
@@ -32,7 +32,7 @@
 
 <div class="row">
     <div class="col-md-12">
-        <div class="box">
+        <div class="box box-solid box-primary">
             <div class="box-header">
                 <h3 class="box-title">Rangos asignados</h3>
                 <div class="box-tools">
@@ -44,8 +44,9 @@
                     <table class="table table-hover table-condensed">
                         <thead>
                             <tr>
-                                <th>Val. Min.</th>
-                                <th>Val. Max</th>
+                                <th>Val. Normal</th>
+                                <th>Edad. Min</th>
+                                <th>Edad. Max</th>
                                 <th>Sexo</th>
                                 <th></th>
                             </tr>
@@ -53,8 +54,9 @@
                         <tbody>
                             <?php foreach($modelParametro->rangosParametros as $itemRango):?>
                                 <tr>
-                                    <td><?php echo $itemRango->valor_min;?></td>
-                                    <td><?php echo $itemRango->valor_max;?></td>
+                                    <td><?php echo $itemRango->valor_normal;?></td>
+                                    <td><?php echo $itemRango->edad_minima;?></td>
+                                    <td><?php echo $itemRango->edad_maxima;?></td>
                                     <td><?php echo $options[$itemRango->sexo_rango][0];?></td>
                                     <td class="text-center">
                                         <?php echo CHtml::link('<i class="fa fa-edit"></i>',['updateRango','id_rango'=>$itemRango->id_rango],['title'=>'Editar rango']);?>

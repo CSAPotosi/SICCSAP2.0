@@ -4,8 +4,8 @@
 
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="box">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="box box-primary box-solid">
             <div class="box-header">
                 <h3 class="box-title">NUEVO RANGO PARA <b><?php echo $modelParametro->nombre_par_lab;?></b></h3>
             </div>
@@ -13,15 +13,21 @@
                 <?php echo CHtml::beginForm();?>
                     <?php echo CHtml::activeHiddenField($modelRango,'id_par_lab',['value'=>$modelParametro->id_par_lab]);?>
                     <div class="form-group">
-                        <?php echo CHtml::activeLabelEx($modelRango,'valor_min');?>
-                        <?php echo CHtml::activeTextField($modelRango,'valor_min',['class'=>'form-control']);?>
-                        <?php echo CHtml::error($modelRango,'valor_min',['class'=>'label label-danger']);?>
+                        <?php echo CHtml::activeLabelEx($modelRango,'valor_normal');?>
+                        <?php echo CHtml::activeTextField($modelRango,'valor_normal',['class'=>'form-control']);?>
+                        <?php echo CHtml::error($modelRango,'valor_normal',['class'=>'label label-danger']);?>
                     </div>
 
                     <div class="form-group">
-                        <?php echo CHtml::activeLabelEx($modelRango,'valor_max');?>
-                        <?php echo CHtml::activeTextField($modelRango,'valor_max',['class'=>'form-control']);?>
-                        <?php echo CHtml::error($modelRango,'valor_max',['class'=>'label label-danger']);?>
+                        <?php echo CHtml::activeLabelEx($modelRango,'edad_minima');?>
+                        <?php echo CHtml::activeTextField($modelRango,'edad_minima',['class'=>'form-control']);?>
+                        <?php echo CHtml::error($modelRango,'edad_minima',['class'=>'label label-danger']);?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo CHtml::activeLabelEx($modelRango,'edad_maxima');?>
+                        <?php echo CHtml::activeTextField($modelRango,'edad_maxima',['class'=>'form-control']);?>
+                        <?php echo CHtml::error($modelRango,'edad_maxima',['class'=>'label label-danger']);?>
                     </div>
 
                     <div class="form-group">
@@ -38,3 +44,10 @@
         </div>
     </div>
 </div>
+
+
+<?php
+    Yii::app()->clientScript->registerScript('check','
+        $("input[type=\'radio\']").iCheck({radioClass:"iradio_minimal-blue"});
+    ');
+?>

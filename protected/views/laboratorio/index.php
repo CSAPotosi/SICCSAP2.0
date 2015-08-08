@@ -13,7 +13,7 @@ $options=[
 ?>
 <div class="row">
     <div class="col-md-12">
-        <div class="box">
+        <div class="box box-primary box-solid">
             <div class="box-body table-responsive">
                 <table class="table table-hover">
                     <thead>

@@ -73,12 +73,9 @@ class InternacionController extends Controller
         $modelSala=SalaInternacion::model()->find("id_inter = {$id_inter} and id_sala = {$id_sala} and fecha_entrada='{$fecha_entrada}'");
 
         $mPDF1 = Yii::app()->ePdf->mpdf();
-
-        # renderPartial (only 'view' of current controller)
-        $mPDF1->WriteHTML($this->render('/reportesInternacion/comprobanteSala',['sala'=>$modelSala],true));
-
-        # Outputs ready PDF
+        $mPDF1->WriteHTML($this->renderPartial('/reportesInternacion/comprobanteSala',['sala'=>$modelSala],true));
         $mPDF1->Output();
+        //$mPDF1->Output('archivo.pdf','D'); para descargar
 
     }
 

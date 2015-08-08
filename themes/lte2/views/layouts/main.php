@@ -66,9 +66,9 @@
             <!-- Logo -->
             <a href="<?php echo CHtml::normalizeUrl(['/']);?>" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>A</b>LT</span>
+                <span class="logo-mini"><b>C</b>SA</span>
                 <!-- logo for regular state and mobile devices -->
-                <span class="logo-lg"><b>Admin</b>LTE</span>
+                <span class="logo-lg"><b>SICCSAP</b> v.</span>
             </a>
 
             <!-- Header Navbar -->
@@ -208,7 +208,9 @@
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/']);?>" ><i class="fa fa-home"></i> <span>Inicio</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/index'])?>" ><i class="fa fa-user"></i> <span>Paciente</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Medicos'])?>" ><i class="fa fa-fw fa-stethoscope"></i> <span>Medicos</span></a></li>
+                    <?php if(!Yii::app()->user->checkAccess('ADMIN')):?>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Empleado'])?>" ><i class="fa fa-suitcase"></i> <span>Empleado</span></a></li>
+                    <?php endif; ?>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/servicio'])?>" ><i class="fa fa-fw fa-plus-square"></i> <span>Servicios</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/agenda/atencionesmedicas'])?>" ><i class="fa fa-fw fa-medkit"></i><span>Atenciones medicas</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/historialpaciente/PacienteEmergencia'])?>" ><i class="fa fa-fw fa-plus-circle"></i><span>Paciente de Emergencia</span></a></li>
