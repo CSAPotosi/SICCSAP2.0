@@ -1,30 +1,31 @@
 <?php
 
 /**
- * This is the model class for table "convenio_servicios".
+ * This is the model class for table "seguro_convenio".
  *
- * The followings are the available columns in table 'convenio_servicios':
- * @property integer $id_con_ser
- * @property string $fecha_creacion
- * @property string $fecha_actualizacion
- * @property double $descuento_servicio
- * @property boolean $estado
- * @property string $descripcion
+ * The followings are the available columns in table 'seguro_convenio':
+ * @property integer $id_seg_con
  * @property integer $id_convenio_institucion
- * @property integer $id_servicio
+ * @property integer $id_paciente
+ * @property string $fecha_inicio
+ * @property string $fecha_actualizacion
+ * @property string $tipo_asegurado
+ * @property integer $id_paciente_titular
+ * @property boolean $estado
  *
  * The followings are the available model relations:
+ * @property Paciente $idPaciente
  * @property ConvenioInstitucion $idConvenioInstitucion
- * @property Servicio $idServicio
+ * @property Paciente $idPacienteTitular
  */
-class ConvenioServicios extends CActiveRecord
+class SeguroConvenio extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'convenio_servicios';
+		return 'seguro_convenio';
 	}
 
 	/**
@@ -35,14 +36,13 @@ class ConvenioServicios extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fecha_creacion, fecha_actualizacion, descuento_servicio, id_convenio_institucion, id_servicio', 'required'),
-			array('id_convenio_institucion, id_servicio', 'numerical', 'integerOnly'=>true),
-			array('descuento_servicio', 'numerical','max'=>100,'min'=>0),
-			array('descripcion', 'length', 'max'=>128),
-			array('estado', 'safe'),
+			array('id_convenio_institucion, id_paciente, fecha_inicio', 'required'),
+			array('id_convenio_institucion, id_paciente, id_paciente_titular', 'numerical', 'integerOnly'=>true),
+			array('tipo_asegurado', 'length', 'max'=>16),
+			array('fecha_actualizacion, estado', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_con_ser, fecha_creacion, fecha_actualizacion, descuento_servicio, estado, descripcion, id_convenio_institucion, id_servicio', 'safe', 'on'=>'search'),
+			array('id_seg_con, id_convenio_institucion, id_paciente, fecha_inicio, fecha_actualizacion, tipo_asegurado, id_paciente_titular, estado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,10 +53,11 @@ class ConvenioServicios extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
-		return array(
-			'idConvenioInstitucion' => array(self::BELONGS_TO, 'ConvenioInstitucion', 'id_convenio_institucion'),
-			'idServicio' => array(self::BELONGS_TO, 'Servicio', 'id_servicio'),
-		);
+        return array(
+            'PacienteAsegurado' => array(self::BELONGS_TO, 'Paciente', 'id_paciente'),
+            'ConvenioInstitucional' => array(self::BELONGS_TO, 'ConvenioInstitucion', 'id_convenio_institucion'),
+            'PacienteTitular' => array(self::BELONGS_TO, 'Paciente', 'id_paciente_titular'),
+        );
 	}
 
 	/**
@@ -65,14 +66,14 @@ class ConvenioServicios extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_con_ser' => 'Id Con Ser',
-			'fecha_creacion' => 'Fecha Creacion',
-			'fecha_actualizacion' => 'Fecha Actualizacion',
-			'descuento_servicio' => 'Descuento Servicio',
-			'estado' => 'Estado',
-			'descripcion' => 'Descripcion',
+			'id_seg_con' => 'Id Seg Con',
 			'id_convenio_institucion' => 'Id Convenio Institucion',
-			'id_servicio' => 'Id Servicio',
+			'id_paciente' => 'Id Paciente',
+			'fecha_inicio' => 'Fecha Inicio',
+			'fecha_actualizacion' => 'Fecha Actualizacion',
+			'tipo_asegurado' => 'Tipo Asegurado',
+			'id_paciente_titular' => 'Id Paciente Titular',
+			'estado' => 'Estado',
 		);
 	}
 
@@ -94,14 +95,14 @@ class ConvenioServicios extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_con_ser',$this->id_con_ser);
-		$criteria->compare('fecha_creacion',$this->fecha_creacion,true);
-		$criteria->compare('fecha_actualizacion',$this->fecha_actualizacion,true);
-		$criteria->compare('descuento_servicio',$this->descuento_servicio);
-		$criteria->compare('estado',$this->estado);
-		$criteria->compare('descripcion',$this->descripcion,true);
+		$criteria->compare('id_seg_con',$this->id_seg_con);
 		$criteria->compare('id_convenio_institucion',$this->id_convenio_institucion);
-		$criteria->compare('id_servicio',$this->id_servicio);
+		$criteria->compare('id_paciente',$this->id_paciente);
+		$criteria->compare('fecha_inicio',$this->fecha_inicio,true);
+		$criteria->compare('fecha_actualizacion',$this->fecha_actualizacion,true);
+		$criteria->compare('tipo_asegurado',$this->tipo_asegurado,true);
+		$criteria->compare('id_paciente_titular',$this->id_paciente_titular);
+		$criteria->compare('estado',$this->estado);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -112,17 +113,15 @@ class ConvenioServicios extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return ConvenioServicios the static model class
+	 * @return SeguroConvenio the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
 		return parent::model($className);
 	}
     protected function beforeValidate(){
-        $this->fecha_actualizacion=date('d-m-Y H:i:s');
-        if($this->isNewRecord){
-            $this->fecha_creacion=date('d-m-Y H:i:s');
-        }
+        if(!$this->isNewRecord)
+            $this->fecha_actualizacion=$this->fecha_inicio;
         return parent::beforeValidate();
     }
 }

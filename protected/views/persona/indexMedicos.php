@@ -1,4 +1,4 @@
-<?php $this->pageTitle="Listado de Personas"; ?>
+<?php $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['/'])."Pagina de Inicio"; ?>
     <div class="row">
         <div class="col-md-12">
             <div class="box box-solid">

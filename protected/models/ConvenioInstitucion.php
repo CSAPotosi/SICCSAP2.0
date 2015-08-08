@@ -103,4 +103,7 @@ class ConvenioInstitucion extends CActiveRecord
     {
         return CHtml::listData(Institucion::model()->findAll(),'id_insti','nombre');
     }
+    public function getlistaConvenios(){
+        return CHtml::listData(ConvenioInstitucion::model()->findAll(),'id_insti','nombre');
+    }
 }

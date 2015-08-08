@@ -1,26 +1,21 @@
-<div class="col-md-12">
+<?php
+$this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/view','id'=>$model->id])."Detalle";
+$this->breadcrumbs=array(
+    'Detalle de Perosona'=>array('view','id'=>$model->id),
+    'Actualizacion de datos Perosonales',
+);
+?>
+<div class="row">
+<div class="col-md-offset-2 col-md-8">
     <div class="box box-primary">
-        <?php
-        /* @var $this PersonaController */
-        /* @var $model Persona */
-
-        $this->breadcrumbs=array(
-            'Personas'=>array('index'),
-            $model->id=>array('view','id'=>$model->id),
-            'Update',
-        );
-        ?>
-        <ul class="nav nav-tabs" id="pesta_persona">
-            <li class="active"><a href="#persona"  data-toggle="tab">Datos Personales</a></li>
-        </ul>
-        <div class="tab-content" id="content_persona">
-            <div class="tab-pane fade active in" id="persona">
-                <div class="box box-solid">
-                    <div class="box-body">
-                        <?php $this->renderPartial('_form', array('model'=>$model)); ?>
-                    </div>
-                </div>
+        <div class="box box-primary box-solid">
+            <div class="box-header">
+                Actualizar Datos Personales
+            </div>
+            <div class="box-body">
+                <?php $this->renderPartial('_form', array('model'=>$model)); ?>
             </div>
         </div>
     </div>
+</div>
 </div>

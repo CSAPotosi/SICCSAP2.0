@@ -45,8 +45,10 @@ var XPhoto = XPhotoClass({
     raiseEvents: function(){
     	var obj = this;
     	this.videoContainerElement = $('.xphoto-video-container');
+        $('.xphoto-video-container').addClass("img-responsive");
     	this.videoElement = $('#'+this.options.videoID);
     	this.canvasElement = $('#'+this.options.canvasID);
+        $('#'+this.options.canvasID).addClass('img-responsive')
     	this.canvasElement.hide();
     	this.createButtons();
     	if(this.options.capture === true){
@@ -224,7 +226,7 @@ var XPhoto = XPhotoClass({
 					      +'</div>'
 					      +'<div class="modal-body">'
 					        +'<div class="xphoto-video-container">'
-					        	+'<video id="xphoto-modal-video" width="100%"></video>'				        	
+					        	+'<video id="xphoto-modal-video"></video>'
 					        +'</div>'
 					        +'<div class="xphoto-modal-buttons">'
 					        	+'<button type="button" class="xphoto-modal-button-snap btn btn-primary btn-lg"><i class="fa fa-circle"></i></button>'					        	

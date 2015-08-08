@@ -24,8 +24,6 @@
 
         <link href="<?php echo Yii::app()->theme->baseUrl;?>/resources/lte2theme/css/Mystyle.css" rel="stylesheet" type="text/css" />
 
-
-
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -214,6 +212,8 @@
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/historialpaciente/PacienteEmergencia'])?>" ><i class="fa fa-fw fa-plus-circle"></i><span>Paciente de Emergencia</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Index'])?>" ><i class="fa fa-fw fa-shield"></i><span>Seguros Clinicos</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Principal_Institucion'])?>" ><i class="fa fa-fw fa-building-o"></i><span>Institucion</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/Unidad/index'])?>" ><i class="fa fa-fw fa-cubes"></i><span>Unidad</span></a></li>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/Horario/index'])?>" ><i class="fa fa-fw fa-dashboard"></i><span>Horarios</span></a></li>
                     <li><a href="#"><i class='fa fa-link'></i> <span>Another Link</span></a></li>
                     <li class="treeview">
                         <a href="#"><i class='fa fa-link'></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
@@ -341,6 +341,8 @@
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/datetimepicker/js/bootstrap-datetimepicker.min.js" type="text/javascript"></script>
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/fullcalendar/lang-all.js" type="text/javascript"></script>
+
+
 
     </body>
 </html>

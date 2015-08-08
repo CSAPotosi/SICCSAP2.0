@@ -1,4 +1,4 @@
-<div class="col-md-12">
+<div class="col-md-offset-2 col-md-8">
     <div class="box box-primary">
         <ul class="nav nav-tabs" id="pesta_persona">
             <li><a href="#persona"  data-toggle="tab">Datos Personales</a></li>

@@ -31,16 +31,19 @@
                             <input type="checkbox" checked="true" class="servicio" value="<?php echo $list->idServicio->id_servicio?>">
                         </td>
                         <td class="" name="ocultar" width="20%">
-                            <?php echo CHtml::activeTextField($list,"[".$list->idServicio->id_servicio."]descuento_servicio",array())?>
+                            <div class="input-group">
+                                <?php echo CHtml::activeTextField($list,"[".$list->idServicio->id_servicio."]descuento_servicio",array('class'=>'form-control'))?>
+                                <span class="input-group-addon">%</span>
+                            </div>
                             <?php echo CHtml::error($list,"[".$list->idServicio->id_servicio."]descuento_servicio",array('class'=>'label label-danger')); ?>
+
                         </td>
                         <td class="" name="ocultar" width="20%">
-                            <input type="textArea" name="ConvenioServicios[<?php echo $list->id_servicio?>][descripcion]">
+                            <input type="textArea" class="form-control" name="ConvenioServicios[<?php echo $list->id_servicio?>][descripcion]">
                         </td>
                         <td class="hidden" name="info">
                             <input type="text" value="<?php echo $convenio?>" name="ConvenioServicios[<?php echo $list->idServicio->id_servicio?>][id_convenio_institucion]">
                             <input type="text" value="<?php echo $list->idServicio->id_servicio?>" name="ConvenioServicios[<?php echo $list->idServicio->id_servicio?>][id_servicio]">
-                            <input type="text" value="1" name="ConvenioServicios[<?php echo $list->idServicio->id_servicio?>][estado]">
                         </td>
                     </tr>
                 <?php endforeach;?>

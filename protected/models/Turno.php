@@ -39,6 +39,7 @@ class Turno extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre_turno, hora_entrada, hora_salida', 'required'),
+            array('nombre_turno','unique'),
 			array('inicio_entrada, fin_entrada, inicio_salida, fin_salida, tolerancia, id_horario', 'numerical', 'integerOnly'=>true),
 			array('nombre_turno', 'length', 'max'=>32),
 			array('tipo_turno', 'length', 'max'=>8),
@@ -57,7 +58,7 @@ class Turno extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idHorario' => array(self::BELONGS_TO, 'Horario', 'id_horario'),
+			'HorarioTurno' => array(self::BELONGS_TO, 'Horario', 'id_horario'),
 		);
 	}
 
@@ -130,10 +131,10 @@ class Turno extends CActiveRecord
 	}
     public function getTipoTurno(){
         return array(
+            ''=>'SELECCIONE',
             'MAÑANA'=>'MAÑANA',
             'TARDE'=>'TARDE',
             'NOCHE'=>'NOCHE',
-            'CONTINUO'=>'CONTINUO',
             'DIA COMPLETO'=>'DIA COMPLETO',
         );
     }

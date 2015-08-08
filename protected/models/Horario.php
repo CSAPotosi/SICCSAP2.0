@@ -7,11 +7,7 @@
  * @property integer $id_horario
  * @property string $nombre_horario
  * @property string $tipo_horario
- * @property string $estado
- *
- * The followings are the available model relations:
- * @property AsignacionEmpleado[] $asignacionEmpleados
- * @property Turno[] $turnos
+ * @property boolean $estado
  */
 class Horario extends CActiveRecord
 {
@@ -33,7 +29,7 @@ class Horario extends CActiveRecord
 		return array(
 			array('nombre_horario', 'required'),
 			array('nombre_horario, tipo_horario', 'length', 'max'=>32),
-			array('estado', 'default', 'value'=>'ACTIVO'),
+			array('estado', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_horario, nombre_horario, tipo_horario, estado', 'safe', 'on'=>'search'),
@@ -48,8 +44,6 @@ class Horario extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'asignacionEmpleados' => array(self::HAS_MANY, 'AsignacionEmpleado', 'id_horario'),
-			'turnos' => array(self::HAS_MANY, 'Turno', 'id_horario'),
 		);
 	}
 
@@ -87,7 +81,7 @@ class Horario extends CActiveRecord
 		$criteria->compare('id_horario',$this->id_horario);
 		$criteria->compare('nombre_horario',$this->nombre_horario,true);
 		$criteria->compare('tipo_horario',$this->tipo_horario,true);
-		$criteria->compare('estado',$this->estado,true);
+		$criteria->compare('estado',$this->estado);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

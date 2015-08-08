@@ -28,7 +28,7 @@ class ConvenioInstitucionController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','Principal_Institucion','CrearInstitucion','ActualizarInstitucion','EliminarInstitucion','CrearConvenioInstitucion','ActualizarConvenioInstitucion','EliminarConvenioInstitucion','VerServiciosConvenio','ListaServiciosInstitucion','CrearConveniosServicios'),
+				'actions'=>array('index','view','Principal_Institucion','CrearInstitucion','ActualizarInstitucion','EliminarInstitucion','CrearConvenioInstitucion','ActualizarConvenioInstitucion','EliminarConvenioInstitucion','VerServiciosConvenio','ListaServiciosInstitucion','CrearConveniosServicios','ChangeStateConvenio','SegurospacientesIndex','changeTipoPaciente','CrearSeguroPaciente','ChangeStateAsegurado'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -316,5 +316,65 @@ class ConvenioInstitucionController extends Controller
             $flag=$flag && $item->validate();
         }
         return $flag;
+    }
+    public function actionChangeStateConvenio($id)
+    {
+        $modelQ= ConvenioServicios::model()->findByPk($id);
+        $modelQ->estado=!$modelQ->estado;
+        $modelQ->save();
+    }
+    public function actionSegurospacientesIndex($id){
+        $segurocon=new SeguroConvenio;
+        $tipo_paciente='TITULAR';
+        $paciente=Paciente::model()->findByPk($id);
+        $seguroconvenio=SeguroConvenio::model()->findAll(array(
+            'condition'=>"estado!=false and tipo_asegurado='{$tipo_paciente}' and id_paciente!='{$id}'",
+        ));
+        $listaadquiridos=SeguroConvenio::model()->findAll(array(
+            'condition'=>"id_paciente= '{$id}'",
+        ));
+        $this->render('form_seguros_paciente',array(
+            'seguro'=>$segurocon,
+            'paciente'=>$paciente,
+            'listapacientesasegurados'=>$seguroconvenio,
+            'listaadquiridos'=>$listaadquiridos,
+        ));
+    }
+    public function actionchangeTipoPaciente(){
+        $tipo=$_POST['texto'];
+
+        $paciente=Paciente::model()->findByPk($_POST['paciente']);
+        $seguro=new SeguroConvenio;
+        $listaseguros=CHtml::listData(ConvenioInstitucion::model()->findAll("id_convenio not in (select id_convenio_institucion from seguro_convenio where id_paciente={$paciente->id_paciente})"),'id_convenio','nombre_convenio');
+
+        $this->renderPartial('tiposeguro',array(
+            'tipo_paciente'=>$tipo,
+            'seguro'=>$seguro,
+            'listaseguros'=>$listaseguros,
+
+        ));
+    }
+    public function actionCrearSeguroPaciente(){
+        $seguro=new SeguroConvenio;
+        $seguroconvenio=SeguroConvenio::model()->findAll();
+        if(isset($_POST['SeguroConvenio'])){
+            $seguro->attributes=array_map('strtoupper',$_POST['SeguroConvenio']);
+            $seguro->save();
+        }
+        $listaadquiridos=SeguroConvenio::model()->findAll(array(
+            'condition'=>"id_paciente= '{$seguro->id_paciente}'",
+        ));
+        $this->redirect(array('/ConvenioInstitucion/SegurospacientesIndex','id'=>$seguro->id_paciente));
+    }
+    public function actionChangeStateAsegurado($id){
+        $seguroconvenio= SeguroConvenio::model()->findByPk($id);
+        $seguroconvenio->estado=!$seguroconvenio->estado;
+        $seguroconvenio->save();
+        $tipo_paciente='TITULAR';
+        $listapacientesasegurados=SeguroConvenio::model()->findAll(array(
+            'condition'=>"estado!=false and tipo_asegurado='{$tipo_paciente}' and id_paciente!='{$id}'",
+        ));
+        $this->renderPartial('listapacienteAsegurados',array('listapacientesasegurados'=>$listapacientesasegurados));
+        return;
     }
 }

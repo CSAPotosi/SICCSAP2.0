@@ -126,8 +126,8 @@ class XPhoto extends CWidget{
 		if($this->upload){
 			$photoOptions = array(
 				'id'=>$this->photoID,
-				'width'=>$this->width,
-				'height'=>$this->height,
+				'width'=>'100%',
+				'height'=>'100%',
 			);
 			echo CHtml::openTag('div', $photoOptions);
 			echo CHtml::closeTag('div');

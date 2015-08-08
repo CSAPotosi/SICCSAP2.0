@@ -1,3 +1,10 @@
+<?php
+$this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/Medicos'])." Medicos";
+$this->breadcrumbs=array(
+    'Medicos'=>array('Medico'),
+    'Nuevo Medico',
+);
+?>
 <div class="row">
 <div class="col-md-12">
     <div class="row">

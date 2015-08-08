@@ -1,4 +1,4 @@
-<?php $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['/'])." Listado de Personas"; ?>
+<?php $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['/'])."Pagina de Inicio"; ?>
 
 <nav class="navbar navbar-menu">
     <div class="container">

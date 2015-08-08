@@ -8,11 +8,10 @@
  * @property string $nombre_cargo
  * @property string $descripcion_cargo
  * @property integer $id_unidad
- * @property string $estado
+ * @property boolean $estado
  *
  * The followings are the available model relations:
  * @property Unidad $idUnidad
- * @property AsignacionEmpleado[] $asignacionEmpleados
  */
 class Cargo extends CActiveRecord
 {
@@ -36,7 +35,7 @@ class Cargo extends CActiveRecord
 			array('id_unidad', 'numerical', 'integerOnly'=>true),
 			array('nombre_cargo', 'length', 'max'=>32),
 			array('descripcion_cargo', 'length', 'max'=>128),
-			array('estado', 'length', 'max'=>16),
+			array('estado', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_cargo, nombre_cargo, descripcion_cargo, id_unidad, estado', 'safe', 'on'=>'search'),
@@ -51,8 +50,7 @@ class Cargo extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idUnidad' => array(self::BELONGS_TO, 'Unidad', 'id_unidad'),
-			'asignacionEmpleados' => array(self::HAS_MANY, 'AsignacionEmpleado', 'id_cargo'),
+			'UnidadCargo' => array(self::BELONGS_TO, 'Unidad', 'id_unidad'),
 		);
 	}
 
@@ -92,7 +90,7 @@ class Cargo extends CActiveRecord
 		$criteria->compare('nombre_cargo',$this->nombre_cargo,true);
 		$criteria->compare('descripcion_cargo',$this->descripcion_cargo,true);
 		$criteria->compare('id_unidad',$this->id_unidad);
-		$criteria->compare('estado',$this->estado,true);
+		$criteria->compare('estado',$this->estado);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -109,9 +107,4 @@ class Cargo extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-
-    public function getUnidades()
-    {
-        return CHtml::listData(unidad::model()->findAll(), 'id_unidad','nombre_unidad');
-    }
 }

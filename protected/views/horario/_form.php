@@ -1,45 +1,28 @@
-<?php
-/* @var $this HorarioController */
-/* @var $model Horario */
-/* @var $form CActiveForm */
-?>
-
 
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'horario-form',
-	// Please note: When you enable ajax validation, make sure the corresponding
-	// controller action is handling ajax validation correctly.
-	// There is a call to performAjaxValidation() commented in generated controller code.
-	// See class documentation of CActiveForm for details on this.
 	'enableAjaxValidation'=>false,
     'htmlOptions'=>array('class'=>'form-horizontal'),
+    'action'=>($horario->isNewRecord ? yii::app()->createUrl("/Horario/CrearHorario"):yii::app()->createUrl("/Horario/ActualizarHorario",array('id'=>$horario->id_horario))),
 )); ?>
     <div class="box-body">
-        <p class="note">Fields with <span class="required">*</span> are required.</p>
-
-        <?php echo $form->errorSummary($model); ?>
-
+        <?php echo $form->errorSummary($horario); ?>
         <div class="form-group">
-            <?php echo $form->labelEx($model,'nombre_horario',array('class'=>'col-md-2 control-label')); ?>
-            <div class="col-sm-8">
-                <?php echo $form->textField($model,'nombre_horario',array('class'=>'form-control','placeholder'=>'Escribe un nombre para el horario')); ?>
-            </div>
-            <?php echo $form->error($model,'nombre_horario',array('class'=>'label label-danger')); ?>
+            <?php echo $form->labelEx($horario,'nombre_horario'); ?>
+            <?php echo $form->textField($horario,'nombre_horario',array('class'=>'form-control','placeholder'=>'Escribe un nombre para el horario')); ?>            
+            <?php echo $form->error($horario,'nombre_horario',array('class'=>'label label-danger')); ?>
         </div>
         <div class="form-group">
-            <?php echo $form->labelEx($model,'tipo_horario',array('class'=>'col-md-2 control-label')); ?>
-            <div class="col-sm-8">
-                <?php echo $form->dropDownList($model,'tipo_horario',$model->getTipoHorario(),array('class'=>'form-control','placeholder'=>'Escribe un nombre para el horario')); ?>
-            </div>
-            <?php echo $form->error($model,'tipo_horario',array('class'=>'label label-danger')); ?>
-        </div>
-
-    </div>
-    <div class="box-footer">
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary btn-lg')); ?>
-            </div>
+            <?php echo $form->labelEx($horario,'tipo_horario'); ?>
+            <?php echo $form->dropDownList($horario,'tipo_horario',$horario->getTipoHorario(),array('class'=>'form-control','placeholder'=>'Escribe un nombre para el horario')); ?> 
+            <?php echo $form->error($horario,'tipo_horario',array('class'=>'label label-danger')); ?>
         </div>
     </div>
+    
+    <div class="row">
+        <div class="col-md-12">
+             <?php echo CHtml::submitButton($horario->isNewRecord ? 'Guardar' : 'Actualizar',array('class'=>'btn btn-primary','id'=>'btnhorario')); ?>
+        </div>
+    </div>
+    
 <?php $this->endWidget(); ?>

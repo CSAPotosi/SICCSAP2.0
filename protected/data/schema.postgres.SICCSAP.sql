@@ -11,6 +11,7 @@ create table if not exists persona(
   id serial not null primary key ,
   codigo varchar(16) not null,
   dni varchar(32) not null ,
+  tipo_documento varchar(32),
   nombres varchar(128) not null,
   primer_apellido varchar(64) not null ,
   segundo_apellido varchar(64),
@@ -68,22 +69,21 @@ create table if not exists usuario(
 create table if not exists unidad(
   id_unidad serial primary key ,
   nombre_unidad varchar(32) not null unique,
-  descripcion_unidad varchar(128),
-  estado varchar(16)
+  descripcion_unidad varchar(128)
 );
 create table if not exists cargo(
   id_cargo serial primary key ,
   nombre_cargo varchar (32) not null unique ,
   descripcion_cargo varchar(128),
   id_unidad int,
-  estado varchar(16),
+  estado bool default true,
   foreign key (id_unidad) references unidad(id_unidad)
 );
 create table if not exists horario(
   id_horario serial primary key ,
   nombre_horario varchar(32) not null unique,
   tipo_horario varchar (32),
-  estado varchar(16)
+  estado bool default true
 );
 create table if not exists turno(
   id_turno serial primary key ,
@@ -162,13 +162,17 @@ create table if not exists convenio_institucion(
   foreign key (id_insti) references institucion(id_insti)
 );
 create table if not exists seguro_convenio(
-  id_convenio serial primary key not null,
+  id_seg_con serial not null primary key,
+  id_convenio_institucion int not null,
+  id_paciente int not null,
   fecha_inicio date not null,
-  fecha_fin date,
-  id_asegurado int,
-  id_convenio_institucion int,
-  foreign key (id_asegurado) references asegurado(id_asegurado),
-  foreign key (id_convenio_institucion) references convenio_institucion(id_convenio)
+  fecha_actualizacion date,
+  tipo_asegurado varchar(16),
+  id_paciente_titular int,
+  estado bool default true,
+  foreign key (id_paciente) references paciente(id_paciente),
+  foreign key (id_convenio_institucion) references convenio_institucion(id_convenio),
+  foreign key (id_paciente_titular) references paciente(id_paciente)
 );
 
 create table if not exists consulta(
@@ -280,7 +284,7 @@ create table if not exists convenio_servicios(
   fecha_creacion timestamp not null,
   fecha_actualizacion timestamp not null,
   descuento_servicio float not null,
-  estado int,
+  estado bool default true,
   descripcion varchar(128),
   id_convenio_institucion int not null,
   id_servicio int not null,

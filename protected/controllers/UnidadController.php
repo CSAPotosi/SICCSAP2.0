@@ -28,7 +28,7 @@ class UnidadController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','enabled'),
+				'actions'=>array('index','view','enabled','VerCargosUnidad','formCrearCargo','ChangeStateCargo'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -44,169 +44,78 @@ class UnidadController extends Controller
 			),
 		);
 	}
-
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
-	public function actionView($id)
-	{
-        $criteria=new CDbCriteria;
-        $criteria->addCondition("id_unidad=$id");
-        $dataProvider=new CActiveDataProvider('Cargo',array('criteria'=>$criteria));
-
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-            'dataProvider'=>$dataProvider,
-		));
-	}
-
-	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
-	 */
 	public function actionCreate()
 	{
-		$model=new Unidad;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Unidad']))
-		{
-			$model->attributes=$_POST['Unidad'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_unidad));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
+		$unidad=new Unidad;
+        if(isset($_POST['Unidad'])){
+            $unidad->attributes=array_map('strtoupper',$_POST['Unidad']);
+            if($unidad->save()){
+                $this->redirect(array("/Unidad/index/"));
+            }
+            $listaunidad=Unidad::model()->findAll();
+            $cargo=new Cargo;
+            $this->render('create',array(
+                'cargo'=>$cargo,
+                'unidad'=>$unidad,
+                'listaunidad'=>$listaunidad,
+            ));
+        }
 	}
-    public function actionEnabled($id)
-    {
-        $model=Unidad::model()->findByPk($id);
-        if($model->estado=="ACTIVO")
-            $model->estado="INACTIVO";
-        else
-            $model->estado="ACTIVO";
-        $model->save();
-        $this->redirect(array("index"));
-    }
-
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
 	public function actionUpdate($id)
 	{
-		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Unidad']))
-		{
-			$model->attributes=$_POST['Unidad'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_unidad));
-		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
+		$unidad=Unidad::model()->findByPk($id);
+        if(isset($_POST['Unidad'])){
+            $unidad->attributes=array_map('strtoupper',$_POST['Unidad']);
+            if($unidad->save()){
+                $this->redirect(array('/Unidad/index/'));
+            }
+        }
+        $cargo=new Cargo;
+        $listaunidad=Unidad::model()->findAll();
+        $this->render('create',array(
+            'cargo'=>$cargo,
+            'unidad'=>$unidad,
+            'listaunidad'=>$listaunidad,
+        ));
 	}
-
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
-	public function actionDelete($id)
-	{
-		$this->loadModel($id)->delete();
-
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-	}
-
-	/**
-	 * Lists all models.
-	 */
 	public function actionIndex()
 	{
-		/*$dataProvider=new CActiveDataProvider('Unidad');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));*/
-        $dataProviderActive=new CActiveDataProvider('Unidad',array(
-            'criteria'=>array(
-                'condition'=>"estado='ACTIVO'",
-                'order'=>'id_unidad ASC',
-            ),
-            'pagination'=>array(
-                'pageSize'=>15,
-            ),
+         $unidad=new Unidad;
+         $listaunidad=Unidad::model()->findAll();
+         $cargo=new Cargo;
+         $this->render('create',array(
+             'unidad'=>$unidad,
+             'listaunidad'=>$listaunidad,
+             'cargo'=>$cargo,
+         ));
+    }
+    public function actionVerCargosUnidad($id){
+        $unidad=Unidad::model()->findByPk($id);
+        $listacargos=Cargo::model()->findAll(array(
+            'condition'=>"id_unidad = '{$id}'",
         ));
+        $this->renderPartial('listacargounidad',array('unidad'=>$unidad,'listacargos'=>$listacargos));
+    }
+    public function actionformCrearCargo(){
+        $cargo=new Cargo;
+        if(isset($_POST['Cargo'])){
+            $cargo->attributes=array_map('strtoupper',$_POST['Cargo']);
+            if($cargo->save()){
+                $listacargos=Cargo::model()->findAll(array(
+                    'condition'=>"id_unidad='{$cargo->id_unidad}'"
+                ));
+                $unidad=Unidad::model()->findByPk($cargo->id_unidad);
+                $this->renderPartial('listacargounidad',array('listacargos'=>$listacargos,'unidad'=>$unidad));
+                return;
+            }
+        $this->renderPartial('form_cargo',array('cargo'=>$cargo));
+        return;
+        }
 
-        $dataProviderInactive=new CActiveDataProvider('Unidad',array(
-            'criteria'=>array(
-                'condition'=>"estado='INACTIVO'",
-                'order'=>'id_unidad ASC',
-            ),
-            'pagination'=>array(
-                'pageSize'=>15,
-            ),
-        ));
-
-        $this->render('index',array(
-            'dataProviderActive'=>$dataProviderActive,
-            'dataProviderInactive'=>$dataProviderInactive,
-        ));
-	}
-
-	/**
-	 * Manages all models.
-	 */
-	public function actionAdmin()
-	{
-		$model=new Unidad('search');
-		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['Unidad']))
-			$model->attributes=$_GET['Unidad'];
-
-		$this->render('admin',array(
-			'model'=>$model,
-		));
-	}
-
-	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return Unidad the loaded model
-	 * @throws CHttpException
-	 */
-	public function loadModel($id)
-	{
-		$model=Unidad::model()->findByPk($id);
-		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
-		return $model;
-	}
-
-	/**
-	 * Performs the AJAX validation.
-	 * @param Unidad $model the model to be validated
-	 */
-	protected function performAjaxValidation($model)
-	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='unidad-form')
-		{
-			echo CActiveForm::validate($model);
-			Yii::app()->end();
-		}
-	}
+    }
+    public function actionChangeStateCargo($id){
+        $cargo= Cargo::model()->findByPk($id);
+        $cargo->estado=!$cargo->estado;
+        $cargo->save();
+    }
 }

@@ -85,6 +85,8 @@ $this->menu=array(
             <div class="box-footer">
                 <?php echo CHtml::link("<i class='fa fa-edit'></i></i>Actualizar Informacion de Paciente",array('Persona/_form_updatepa','id'=>$model->id),array('class'=>'btn btn-social bg-blue'))?>
                 <?php echo CHtml::link('Ver Historia',array('historialPaciente/view','id'=>$model->id),array('class'=>'btn bg-green'))?>
+                <?php echo CHtml::link('Seguros de paciente',array('ConvenioInstitucion/SegurospacientesIndex','id'=>$model->id),array('class'=>'btn bg-red'))?>
+
             </div>
         </div>
         <?php }?>

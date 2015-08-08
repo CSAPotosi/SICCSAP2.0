@@ -103,10 +103,10 @@
 Yii::app()->clientScript->registerScript('form_emergencia','
     $(function(){
         $("#datetimepicker1").datetimepicker({
-        locale:"es",
-        defaultDate:'.date("d-m-Y").',
-        format:"DD-MM-YYYY HH:mm A",
-        maxDate:'.$date.'
+            locale:"es",
+            defaultDate:'.date("d-m-Y").',
+            format:"DD-MM-YYYY HH:mm A",
+            maxDate:'.$date.'
         });
         $("input[type=\'radio\'],input[type=\'radio\']").iCheck({
             checkboxClass:"icheckbox_flat-blue",

@@ -1,4 +1,3 @@
-
 <?php if($listaconvenioservicio!=null){?>
 <div class="input-group">
     <div class="col-md-6">
@@ -37,7 +36,7 @@
                 <td><?php echo $list->fecha_creacion?></td>
                 <td><?php echo $list->fecha_actualizacion?></td>
                 <td><?php echo $list->descripcion?></td>
-                <td><?php echo $list->estado?></td>
+                <td><input type="checkbox" class="btnChangeState" <?php echo ($list->estado)?'checked':''; ?> data-toggle="toggle" data-size="mini" data-on="ACTIVO" data-onstyle="primary" data-offstyle="danger" data-off="INACTIVO" data-url="<?php echo CHtml::normalizeUrl(['ConvenioInstitucion/changeStateConvenio','id'=>$list->id_con_ser]);?>"></td>
             </tr>
         <?php endforeach;?>
     </table>
@@ -61,3 +60,10 @@
         </button>
     </div>
 </div>
+<?php
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.js',CClientScript::POS_END);
+?>
+<?php Yii::app()->clientScript->registerScript('convenio_institucion','
+
+');

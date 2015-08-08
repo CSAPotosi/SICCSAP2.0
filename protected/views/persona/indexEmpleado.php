@@ -1,4 +1,4 @@
-<?php $this->pageTitle="Listado de Personas"; ?>
+<?php $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['/'])."Pagina de Inicio"; ?>
     <div class="row">
         <div class="col-md-12">
             <div class="box box-solid">
@@ -10,7 +10,6 @@
                                     <button type="button" class="btn btn-primary btn-flat dropdown-toggle" data-toggle="dropdown">
                                         CSA - <span class="caret"></span>
                                     </button>
-
                                     <ul class="dropdown-menu" role="menu">
                                         <li><a href="#">CSA -</a></li>
                                         <li><a href="#">NOMBRE:</a></li>

@@ -76,6 +76,11 @@
         </div>
     </div>
 </div>
+
+<?php
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.js',CClientScript::POS_END);
+?>
 <?php Yii::app()->clientScript->registerScript('convenio_institucion','
 $(document).ready(function(){
     clickSelector();
@@ -102,6 +107,7 @@ $(document).ready(function(){
             $("#"+valor+"").children("[name=\'ocultar\']").addClass("hidden");
             $("#"+valor+"").children("[name=\'datos\']").removeClass("hidden");
         }
+
     }
     $("#btnConvenioServicio").on("click",CrearServicioConvenio)
     function CrearServicioConvenio(){
@@ -120,6 +126,13 @@ $(document).ready(function(){
                 else{
                     $("#contenedorlistaconvenio").html(datos);
                     clickSelector();
+                    $(".btnChangeState").bootstrapToggle();
+                    $(".btnChangeState").on("change",function(){
+                           $.ajax({
+                             url:$(this).attr("data-url"),
+                                 type:"get"
+                           });
+                      });
                 }
             }
         });
@@ -160,7 +173,14 @@ $(document).ready(function(){
                 data:{convenio:convenio},
                 success:function(datos){
                     $("#contenedorprincipalconvenioservicio").html(datos);
-                    clickSelector();
+                     clickSelector();
+                    $(".btnChangeState").bootstrapToggle();
+                      $(".btnChangeState").on("change",function(){
+                           $.ajax({
+                             url:$(this).attr("data-url"),
+                                 type:"get"
+                           });
+                      });
                 }
             });
             return false;
