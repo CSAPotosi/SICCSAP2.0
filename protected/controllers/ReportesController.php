@@ -1,6 +1,15 @@
 <?php
 class ReportesController extends Controller
 {
+
+
+    public function actionReporteKardex($id_inter=0){
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->renderPartial('/reportes/reporteKardex',['modelInternacion'=>Internacion::model()->findByPk($id_inter)],true));
+        $mPDF1->Output();
+    }
+
+
     public function actionReportegeneral()
     {
         $model=new Reporte(1,'12/12/12','12/12/12');
@@ -8,6 +17,6 @@ class ReportesController extends Controller
     }
     public function actionElegirempleado()
     {
-
+        return;
     }
 }

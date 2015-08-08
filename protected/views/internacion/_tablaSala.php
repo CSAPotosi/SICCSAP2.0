@@ -15,7 +15,7 @@
             <td><?php echo $itemSala->sala->tipoSala->servicio->nombre_serv;?></td>
             <td><?php echo $itemSala->fecha_entrada;?></td>
             <td><?php echo $itemSala->fecha_salida;?></td>
-            <td class="text-center"><?php echo CHtml::link('<i class="fa fa-print"></i>',['internacion/reporteChangeSala','id_inter'=>$itemSala->id_inter,'id_sala'=>$itemSala->id_sala,'fecha_entrada'=>$itemSala->fecha_entrada],['title'=>'Imprimir reporte']);?></td>
+            <td class="text-center"><?php echo CHtml::link('<i class="fa fa-print"></i>',['internacion/reporteChangeSala','id_inter'=>$itemSala->id_inter,'id_sala'=>$itemSala->id_sala,'fecha_entrada'=>$itemSala->fecha_entrada],['title'=>'Imprimir reporte','class'=>'btn btn-success bg-green']);?></td>
         </tr>
     <?php endforeach;?>
     </tbody>

@@ -1,9 +1,19 @@
 <?php
 Yii::app()->clientScript->registerScript('search','
+    $("#usuarios-grid").hide();
     function getusuarios(id){
         $("#idusuario").prop("value",id);
         $("#nombreusuario").prop("value",$("#usuarios-grid tr.selected>td").eq(1).text());
+        $("#usuarios-grid").slideToggle(400);
     };
+    $("#nombreusuario").on("click",function(){
+        $("#usuarios-grid").slideToggle(400);
+        $(this).prop("maxlength","0");
+        $(this).prop("placeholder","Escoger un usuario de la siguiente tabla:");
+    });
+    $("#botonusuario").on("click",function(){
+
+    });
 ');
 
 ?>
@@ -34,11 +44,17 @@ Yii::app()->clientScript->registerScript('search','
                     <?php echo CHtml::beginForm(); ?>
 
                     <div class="form-group">
-
+                        <input type="hidden" name="idusuario" id="idusuario" />
+                        <label> Nombre Usuario</label>
+                        <div class="input-group input-group-sm">
+                            <input type="text" id="nombreusuario" class="form-control"/>
+                            <span class="input-group-btn">
+                                <button class="btn btn-info btn-flat" type="button" id="botonpersona"><i class="fa fa-fw fa-user-plus"></i></button>
+                            </span>
+                        </div>
                         <?php $this->widget('zii.widgets.grid.CGridView', array(
                             'id'=>'usuarios-grid',
                             'dataProvider'=>$usuarios->search(),
-                            'filter'=>$usuarios,
                             'itemsCssClass' => 'table table-bordered table-striped dataTable',
                             'columns'=>array(
                                 'id_usuario',
@@ -46,9 +62,7 @@ Yii::app()->clientScript->registerScript('search','
                             ),
                             'selectionChanged'=>'function(id){getusuarios($.fn.yiiGridView.getSelection(id))}',
                         )); ?>
-                        <input type="hidden" name="idusuario" id="idusuario" />
-                        <label> Nombre Usuario</label>
-                        <input type="text" class="form-control" id="nombreusuario" />
+
                     </div>
 
                     <div class="row">

@@ -66,11 +66,11 @@ $(function() {
 		        });
 
 		        $(".btn-create-event").on("click",function(){
-                    window.location.replace($(this).data("url"));
+                    window.location.href=$(this).data("url");
 		        });
 
 		        $(".btn-reprogram-event").on("click",function(){
-                    window.location.replace($(this).data("url"));
+                    window.location.href=$(this).data("url");
 		        });
 		    });
 		},

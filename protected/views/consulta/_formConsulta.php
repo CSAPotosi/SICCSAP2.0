@@ -1,8 +1,8 @@
 
 <?php echo CHtml::beginForm(CHtml::normalizeUrl(array('consulta/prueba')),'post',array('id'=>'form-consulta'));?>
-    <?php echo CHtml::activeHiddenField($consultaModel,'id_historia'); ?>s
+    <?php echo CHtml::activeHiddenField($consultaModel,'id_historia'); ?>
 
-    <?php $this->renderPartial('_formSV',array('listaSV'=>$listaSV));?>
+    <?php //$this->renderPartial('_formSV',array('listaSV'=>$listaSV));?>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">

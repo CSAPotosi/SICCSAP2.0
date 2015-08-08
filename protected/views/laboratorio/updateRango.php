@@ -13,15 +13,21 @@ $this->pageTitle='Actualizacion de rango';
                 <?php echo CHtml::beginForm();?>
                 <?php echo CHtml::activeHiddenField($modelRango,'id_par_lab');?>
                 <div class="form-group">
-                    <?php echo CHtml::activeLabelEx($modelRango,'valor_min');?>
-                    <?php echo CHtml::activeTextField($modelRango,'valor_min',['class'=>'form-control']);?>
-                    <?php echo CHtml::error($modelRango,'valor_min',['class'=>'label label-danger']);?>
+                    <?php echo CHtml::activeLabelEx($modelRango,'valor_normal');?>
+                    <?php echo CHtml::activeTextField($modelRango,'valor_normal',['class'=>'form-control']);?>
+                    <?php echo CHtml::error($modelRango,'valor_normal',['class'=>'label label-danger']);?>
                 </div>
 
                 <div class="form-group">
-                    <?php echo CHtml::activeLabelEx($modelRango,'valor_max');?>
-                    <?php echo CHtml::activeTextField($modelRango,'valor_max',['class'=>'form-control']);?>
-                    <?php echo CHtml::error($modelRango,'valor_max',['class'=>'label label-danger']);?>
+                    <?php echo CHtml::activeLabelEx($modelRango,'edad_minima');?>
+                    <?php echo CHtml::activeTextField($modelRango,'edad_minima',['class'=>'form-control']);?>
+                    <?php echo CHtml::error($modelRango,'edad_minima',['class'=>'label label-danger']);?>
+                </div>
+
+                <div class="form-group">
+                    <?php echo CHtml::activeLabelEx($modelRango,'edad_maxima');?>
+                    <?php echo CHtml::activeTextField($modelRango,'edad_maxima',['class'=>'form-control']);?>
+                    <?php echo CHtml::error($modelRango,'edad_maxima',['class'=>'label label-danger']);?>
                 </div>
 
                 <div class="form-group">

@@ -38,20 +38,32 @@ class Cirugia extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_historial, id_q, duracion_aprox', 'required'),
+			array('id_historial, id_q', 'required'),
+            array('duracion_aprox', 'required','on'=>'programacion'),
             array('fecha_hora_prog', 'required','on'=>'programacion'),
+            array('fecha_hora_ent', 'required','on'=>'inicio'),
+            array('fecha_hora_sal', 'required','on'=>'fin'),
 			array('duracion_aprox, id_historial, id_q', 'numerical', 'integerOnly'=>true),
 			array('tipo_anestesia', 'length', 'max'=>32),
             array('duracion_aprox','numerical','min'=>0,'max'=>'5760','tooSmall'=>'DURACION no puede ser un numero negativo'),
 			array('estado_cirugia', 'length', 'max'=>10),
 			array('fecha_hora_prog, fecha_hora_ent, fecha_hora_sal, detalle_instru', 'safe'),
-            array('fecha_hora_prog, fecha_hora_ent, fecha_hora_sal','date','format'=>'yyyy-mm-dd HH:mm'),
+            array('fecha_hora_prog','date','format'=>'yyyy-mm-dd HH:mm','on'=>'programacion'),
+            array('fecha_hora_ent','date','format'=>'yyyy-mm-dd HH:mm','on'=>'inicio'),
+            array('fecha_hora_sal','date','format'=>'yyyy-mm-dd HH:mm','on'=>'fin'),
+           // array('fecha_hora_prog','validateCirugia','on'=>'programacion'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
 			array('id_c, fecha_hora_prog, duracion_aprox, fecha_hora_ent, fecha_hora_sal, detalle_instru, tipo_anestesia, estado_cirugia, id_historial, id_q', 'safe', 'on'=>'search'),
 		);
 	}
-
+/*
+    public function validateCirugia($attribute,$params){
+        //$fecha=new DateTime($this->fecha_hora_prog);
+        //$fecha->add(new DateInterval('10 minutes'));
+        $this->addError($attribute,'La sala ha sido tomada en el intervalo de tiempo escogido.'.$this->fecha_hora_prog);
+    }
+*/
 	/**
 	 * @return array relational rules.
 	 */
@@ -77,10 +89,10 @@ class Cirugia extends CActiveRecord
 			'id_c' => 'Id C',
 			'fecha_hora_prog' => 'FECHA Y HORA',
 			'duracion_aprox' => 'DURACION APROX. (en min.)',
-			'fecha_hora_ent' => 'Fecha Hora Ent',
-			'fecha_hora_sal' => 'Fecha Hora Sal',
-			'detalle_instru' => 'Detalle Instru',
-			'tipo_anestesia' => 'Tipo Anestesia',
+			'fecha_hora_ent' => 'FECHA Y HORA DE INICIO',
+			'fecha_hora_sal' => 'FECHA Y HORA DE FIN',
+			'detalle_instru' => 'DETALLE DE INSTRUMENTAL UTILIZADO',
+			'tipo_anestesia' => 'TIPO DE ANESTESIA APLICADA',
 			'estado_cirugia' => 'Estado Cirugia',
 			'id_historial' => 'Id Historial',
 			'id_q' => 'QUIROFANO',
@@ -136,5 +148,17 @@ class Cirugia extends CActiveRecord
         if($this->scenario=='programacion')
             $this->estado_cirugia='PROGRAMADA';
         return parent::beforeValidate();
+    }
+
+    public function getTipoAnestesia(){
+        return [
+            'NO ESPECIFICADA'=>'NO ESPECIFICADA',
+            'LOCAL'=>'LOCAL',
+            'GENERAL'=>'GENERAL',
+            'TRONCULAR'=>'TRONCULAR',
+            'EPIDURAL'=>'EPIDURAL',
+            'INTRATECAL'=>'INTRATECAL',
+            'REGIONAL INTRAVENOSA'=>'REGIONAL INTRAVENOSA'
+        ];
     }
 }

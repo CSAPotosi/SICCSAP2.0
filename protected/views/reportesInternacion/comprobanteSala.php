@@ -1,38 +1,29 @@
-<?php
-    $salaInicial=SalaInternacion::model()->find("id_inter = {$sala->id_inter}  and fecha_entrada < '{$sala->fecha_entrada}' order by fecha_entrada DESC");
-?>
+<?php $this->renderPartial('/layouts/_cabeceraReporte',['modelH'=>$sala->internacion->historial,'titulo'=>'COMPROBANTE DE ASIGNACION DE SALA']);?>
+
+<table class="cuerpo" width="100%" >
+    <tr>
+        <th width="33%">SALA ASIGNADA</th>
+        <th width="33%">TIPO DE SALA</th>
+        <th width="33%">FECHA Y HORA DE ASIGNACION</th>
+    </tr>
+    <tr>
+        <td><?php echo $sala->sala->numero_sala; ?></td>
+        <td><?php echo $sala->sala->tipoSala->servicio->nombre_serv; ?></td>
+        <td><?php echo date('Y-m-d H:i',strtotime($sala->fecha_entrada));  ?></td>
+    </tr>
+</table>
+
+<?php $this->renderPartial('/layouts/_pieReporte');?>
 
 <style>
-    table{
-        margin-bottom: 50px;
+    .cuerpo th{
+        text-align: left;
+        font-size: 9pt;
+    }
+    .cuerpo td{
+        font-size: 8.5pt;
+        text-align: left;
     }
 </style>
 
-<table width="100%">
-    <tr>
-        <td width="30%">Clinica Santa Ana</td>
-        <td width="40%"></td>
-        <td width="30%"><?php echo date('d-m-Y')?></td>
-    </tr>
-    <tr>
-        <td width="30%"></td>
-        <td width="40%"><?php echo 'Comprobante de ';
-                echo ($salaInicial==null)?'asignacion de sala':'cambio de sala';?></td>
-        <td width="30%"></td>
-    </tr>
-</table>
 
-<table width="100%">
-    <tr>
-        <td width="30%">Nombre del paciente:
-        </td>
-        <td width="70%"><?php echo $sala->internacion->historial->paciente->personapa->nombreCompleto;?></td>
-    </tr>
-</table>
-
-<?php if($salaInicial==null):?>
-    Sala asignada: <?php echo $sala->sala->numero_sala;?>
-<?php else:?>
-    Sala anterior: <?php echo $salaInicial->sala->numero_sala;?>
-    Nueva sala: <?php echo $sala->sala->numero_sala;?>
-<?php endif;?>

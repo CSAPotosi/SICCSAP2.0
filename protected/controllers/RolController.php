@@ -126,26 +126,34 @@ class RolController extends Controller
 	 */
 	public function actionIndex()
     {
-        $roles = new Rol('search');
-        $roles->unsetAttributes();
-        $rol=$roles->type = '0';
-        $roles->unsetAttributes();
-        $tareas=$roles->type = '1';
-        $roles->unsetAttributes();
-        $operaciones=$roles->type = '2';
+        $roles=new CActiveDataProvider('Rol', array(
+            'criteria'=>array(
+                'condition'=>'type=2',
+                'order'=>'name ASC',
+            ),
+        ));
+        $tareas=new CActiveDataProvider('Rol', array(
+            'criteria'=>array(
+                'condition'=>'type=1',
+                'order'=>'name ASC',
+            ),
+        ));
+        $operaciones=new CActiveDataProvider('Rol', array(
+            'criteria'=>array(
+                'condition'=>'type=0',
+                'order'=>'name ASC',
+            ),
+            'pagination'=>array(
+                'pageSize'=>2,
+            ),
+        ));
 
-        if (isset($_GET['Rol']))
-            $roles->attributes = $_GET['Rol'];
 
         $this->render('index', array(
-            'roles' => $rol,
+            'roles' => $roles,
             'tareas' => $tareas,
             'operaciones'=>$operaciones,
         ));
-		/*$dataProvider=new CActiveDataProvider('Rol');
-		$this->render('index',array(
-			'dataProvider'=>$dataProvider,
-		));*/
 	}
 
 	/**
@@ -215,16 +223,26 @@ class RolController extends Controller
 
     public function actionAddChild()
     {
-        $model=new RolChild;
+        $items=Rol::model()->findAll();
         $auth=Yii::app()->authManager;
-        if(isset($_POST['RolChild']))
+        $roles=new CActiveDataProvider('Rol', array(
+            'criteria'=>array(
+                'condition'=>'type!=0',
+                'order'=>'name ASC',
+            ),
+        ));
+        /***************************************/
+        if(isset($_POST['roles'])and isset($_POST['nombrerol']))
         {
-            $model->attributes=$_POST["RolChild"];
-            if($auth->addItemChild($model->parent,$model->child))
-                $this->redirect(array("index"));
+            foreach($_POST['roles'] as $item)
+            {
+                $auth->addItemChild($_POST['nombrerol'],$item);
+            }
+            $this->redirect(array("index"));
         }
-        $this->render('addChild',array(
-            'model'=>$model,
+        $this->render('addchild',array(
+            'items'=>$items,
+            'roles'=>$roles,
         ));
     }
 

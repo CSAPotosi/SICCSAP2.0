@@ -30,14 +30,10 @@ $this->menu=array(
 
                             <?php $this->widget('zii.widgets.grid.CGridView', array(
                                 'id'=>'auth-item-grid',
-                                'dataProvider'=>$roles->search(),
-                                'filter'=>$roles,
+                                'dataProvider'=>$roles,
                                 'columns'=>array(
                                     'name',
-                                    'type',
                                     'description',
-                                    'bizrule',
-                                    'data',
                                     array(
                                         'class'=>'CButtonColumn',
                                     ),
@@ -49,14 +45,10 @@ $this->menu=array(
 
                             <?php $this->widget('zii.widgets.grid.CGridView', array(
                                 'id'=>'auth-item-grid',
-                                'dataProvider'=>$tareas->search(),
-                                'filter'=>$tareas,
+                                'dataProvider'=>$tareas,
                                 'columns'=>array(
                                     'name',
-                                    'type',
                                     'description',
-                                    'bizrule',
-                                    'data',
                                     array(
                                         'class'=>'CButtonColumn',
                                     ),
@@ -68,14 +60,10 @@ $this->menu=array(
 
                             <?php $this->widget('zii.widgets.grid.CGridView', array(
                                 'id'=>'auth-item-grid',
-                                'dataProvider'=>$operaciones->search(),
-                                'filter'=>$operaciones,
+                                'dataProvider'=>$operaciones,
                                 'columns'=>array(
                                     'name',
-                                    'type',
                                     'description',
-                                    'bizrule',
-                                    'data',
                                     array(
                                         'class'=>'CButtonColumn',
                                     ),

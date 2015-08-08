@@ -3,8 +3,8 @@
 ?>
 
 <div class="row">
-    <div class="col-md-12">
-        <div class="box box-primary">
+    <div class="col-md-10 col-md-offset-1">
+        <div class="box box-primary box-solid">
             <div class="box-body">
                 <?php echo CHtml::beginForm((!$modelParametro->isNewRecord)?['updateParametro','id_par'=>$modelParametro->id_par_lab]:null,'post');?>
                     <?php echo CHtml::activeHiddenField($modelParametro,'id_par_lab');?>

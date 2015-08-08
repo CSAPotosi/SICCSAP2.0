@@ -121,7 +121,7 @@ Yii::app()->clientScript->registerScript('search', '
         <div class="input-group input-group-sm">
             <input type="text" id="nombrepersona" class="form-control"/>
             <span class="input-group-btn">
-              <button class="btn btn-info btn-flat" type="button" id="botonpersona"><i class="fa fa-fw fa-user-plus"></i></button>
+              <button class="btn btn-info btn-flat" type="button" id="botonpersona" onclick="location.href='/SICCSAP2.0/index.php?r=usuario/create'"><i class="fa fa-fw fa-user-plus"></i></button>
             </span>
         </div>
         <?php echo $form->error($model,'id_persona'); ?>

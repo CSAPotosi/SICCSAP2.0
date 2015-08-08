@@ -10,7 +10,7 @@ class ConsultaController extends Controller{
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
-            'historiaContext + index,listConsulta',
+            'historiaContext + index,listConsulta,viewAntecedente',
         );
     }
 
@@ -18,7 +18,7 @@ class ConsultaController extends Controller{
     {
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions'=>array('index','createConsultaAjax','listConsulta','loadConsultaAjax','NuevoAntecedente','CrearAntecedente','loadFormTratamientoAjax','createTratamientoAjax','loadDetalleTratamientoAjax','loadMedicamento','createEvolucionAjax'),
+                'actions'=>array('index','viewAntecedente','createConsultaAjax','listConsulta','loadConsultaAjax','NuevoAntecedente','CrearAntecedente','loadFormTratamientoAjax','createTratamientoAjax','loadDetalleTratamientoAjax','loadMedicamento','createEvolucionAjax','viewTratamiento'),
                 'users'=>array('@'),
             ),
             array('deny',  // deny all users
@@ -84,6 +84,49 @@ class ConsultaController extends Controller{
             'solicitud'=>$solicitud,
         ));
     }
+
+    public function actionViewAntecedente($cid=0){
+        $AntecedenteMedico=new AntecedenteMedico;
+        $TipoAntecente=new TipoAntecedente;
+        $listaAntecedentesMedico=AntecedenteMedico::model()->findAll();
+        $svModel= SignosVitales::model()->findAll();
+        $listaante=TipoAntecedente::model()->findAll();
+        $detalle=new DetalleSolicitudServicio;
+        $solicitud=new SolicitudServicios;
+        $listaSV=array();
+        $genero='';
+        $his="";
+        foreach($svModel as $item){
+            $model= new ConsultaSignosVitales;
+            $model->id_sv=$item->id_sv;
+            $listaSV[]=$model;
+        }
+        if($cid==0){
+            $consultaModel = new Consulta;
+            $consultaModel->id_historia = $this->_historia->id_historial;
+            $genero=Persona::model()->findByPk($consultaModel->id_historia);
+        }
+        else{
+            $consultaModel=Consulta::model()->findByPk($cid);
+            $genero=Persona::model()->findByPk($consultaModel->id_historia);
+        }
+        $his=$this->_historia->id_historial;
+        $this->render('fichaTratamiento',[
+            'TipoAntecedente'=>$TipoAntecente,
+            'genero'=>$genero,
+            'consulta_id'=>$cid,
+            'consultaModel'=>$consultaModel,
+            'listaSV'=>$listaSV,
+            'listaAntecedenteMedico'=>$listaAntecedentesMedico,
+            'AntecedenteMedico'=>$AntecedenteMedico,
+            'TipoAntecente'=>$TipoAntecente,
+            'listaante'=>$listaante,
+            'his'=>$his,
+            'detsolser'=>$detalle,
+            'solicitud'=>$solicitud,
+        ]);
+    }
+
     public function actionCrearAntecedente()
     {
         $model=new TipoAntecedente;

@@ -3,10 +3,10 @@
 
 $this->breadcrumbs=array(
     'Cirugia'=>array('/cirugia'),
-    'ProgramarCirugia',
+    'Reprogramar',
 );
 
-$this->pageTitle='Programacion de cirugia';
+$this->pageTitle='Reprogramacion de cirugia';
 ?>
 
 <?php $this->renderPartial('/historialPaciente/_form_datos_paciente',array('model'=>$model))?>
@@ -29,7 +29,7 @@ $this->pageTitle='Programacion de cirugia';
                         <?php echo CHtml::link('Quirofanos <span class="caret"></span>',['#'],['class'=>'dropdown-toggle animate','data-toggle'=>'dropdown']);?>
                         <ul class="dropdown-menu" role="menu">
                             <li class="active"><?php echo CHtml::link('Programar cirugia',['cirugia/programarCirugia','id_h'=>$model->id_historial]);?></li>
-                            <li><?php echo CHtml::link('Registrar cirugia',['cirugia/createCirugia','id_h'=>$model->id_historial]);?></li>
+                            <li><?php echo CHtml::link('Registrar cirugia',['cirugia/indexCirugia','id_h'=>$model->id_historial]);?></li>
                         </ul>
                     </li>
                 </ul>
