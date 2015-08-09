@@ -57,11 +57,13 @@
                 <dd>
                     <table class="table table-bordered table-hover">
                         <tr>
-                            <th>ASs</th>
+                            <th>CODIGO</th><th>TITULO</th>
                         </tr>
+                        <?php foreach($listaCie as $item):?>
                         <tr>
-                            <td>nueviasd </td>
+                            <td><?php echo $item;?></td><td><?php echo ItemCie10::model()->findByPk($item)->titulo; ?></td>
                         </tr>
+                        <?php endforeach;?>
                     </table>
                 </dd>
             </div>

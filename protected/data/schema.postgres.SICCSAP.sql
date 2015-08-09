@@ -246,7 +246,7 @@ create table if not exists categoria_cie10(
 
 create table if not exists item_cie10(
   codigo varchar(8) primary key not null,
-  titulo text not null unique,
+  titulo text not null,
   descripcion text,
   codigo_item_padre varchar(8),
   id_cat_cie10 int not null,

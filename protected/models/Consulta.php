@@ -58,6 +58,7 @@ class Consulta extends CActiveRecord
 			'idHistoria' => array(self::BELONGS_TO, 'HistorialPaciente', 'id_historia'),
 			'consultaSignosVitales' => array(self::HAS_MANY, 'ConsultaSignosVitales', 'id_consulta'),
 			'tratamientos' => array(self::HAS_MANY, 'Tratamiento', 'id_consulta','order'=>'fecha_trat DESC'),
+            'itemsCie'=>array(self::HAS_MANY,'ConsultaCie10','id_consulta'),
 		);
 	}
 
@@ -121,7 +122,9 @@ class Consulta extends CActiveRecord
 
 
     protected function beforeValidate(){
-        $this->fecha_diagnostico=new CDbExpression('NOW()');
+        if($this->isNewRecord){
+            $this->fecha_diagnostico=date('Y-m-d H:i');
+        }
         return parent::beforeValidate();
     }
 

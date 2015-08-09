@@ -1,34 +1,37 @@
 
-<?php echo CHtml::beginForm(CHtml::normalizeUrl(array('consulta/prueba')),'post',array('id'=>'form-consulta'));?>
+<?php echo CHtml::beginForm(CHtml::normalizeUrl(array('consulta/createConsultaAjax','hid'=>$consultaModel->id_historia)),'post',array('id'=>'form-consulta'));?>
     <?php echo CHtml::activeHiddenField($consultaModel,'id_historia'); ?>
 
     <?php //$this->renderPartial('_formSV',array('listaSV'=>$listaSV));?>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <?php echo CHtml::activeLabel($consultaModel,'anamnesis');?>
+                <?php echo CHtml::activeLabelEx($consultaModel,'anamnesis');?>
                 <?php echo CHtml::activeTextArea($consultaModel,'anamnesis',array('class'=>'form-control'));?>
                 <?php echo CHtml::error($consultaModel,'anamnesis',array('class'=>'label label-danger'));?>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <?php echo CHtml::activeLabel($consultaModel,'exploracion');?>
+                <?php echo CHtml::activeLabelEx($consultaModel,'exploracion');?>
                 <?php echo CHtml::activeTextArea($consultaModel,'exploracion',array('class'=>'form-control'));?>
+                <?php echo CHtml::error($consultaModel,'exploracion',array('class'=>'label label-danger'));?>
             </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <?php echo CHtml::activeLabel($consultaModel,'diagnostico');?>
+                <?php echo CHtml::activeLabelEx($consultaModel,'diagnostico');?>
                 <?php echo CHtml::activeTextArea($consultaModel,'diagnostico',array('class'=>'form-control'));?>
+                <?php echo CHtml::error($consultaModel,'diagnostico',array('class'=>'label label-danger'));?>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
-                <?php echo CHtml::activeLabel($consultaModel,'observaciones');?>
+                <?php echo CHtml::activeLabelEx($consultaModel,'observaciones');?>
                 <?php echo CHtml::activeTextArea($consultaModel,'observaciones',array('class'=>'form-control'));?>
+                <?php echo CHtml::error($consultaModel,'observaciones',array('class'=>'label label-danger'));?>
             </div>
         </div>
     </div>
@@ -41,6 +44,9 @@
                 <tr><th style="width: 15%">Codigo</th><th>Titulo</th><th style="width: 10%"></th></tr>
                 </thead>
                 <tbody id="clasificacion_cie10">
+                <?php foreach($listaCie as $item):?>
+                <tr><td><?php echo $item;?> <input type="hidden" name="CIE10[]" value="<?php echo $item?>" class="ItemCIE"> </td><td><?php echo ItemCie10::model()->findByPk($item)->titulo;?></td><td><a href="#" class="btn btn-primary eraseRow"><i class="fa fa-times"></i> Quitar</a></td></tr>
+                <?php endforeach;?>
                 </tbody>
             </table>
         </div>
@@ -51,7 +57,6 @@
     </div>
     <div class="margin">
         <?php echo CHtml::submitButton('Guardar',array('class'=>'btn btn-primary'));?>
-        <?php echo CHtml::button('Limpiar',array('class'=>'btn btn-primary','id'=>'prueba'));?>
     </div>
 <?php echo CHtml::endForm(); ?>
 
@@ -72,9 +77,12 @@
     </div>
 </div>
 
+
+
+
 <?php
 Yii::app()->clientScript->registerScript('ajax','
-    $("#form-consulta").on("submit",ajaxConsulta);
+    //$("#form-consulta").on("submit",ajaxConsulta);
 
     function ajaxConsulta(){
         loading();
