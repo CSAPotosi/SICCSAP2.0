@@ -66,9 +66,9 @@ class Servicio extends CActiveRecord
             'precioServicio1' => array(self::HAS_ONE, 'PrecioServicio', 'id_servicio','condition'=>'fecha_fin is not null'),
             'examenLaboratorios' => array(self::HAS_MANY, 'ExamenLaboratorio', 'id_cat_lab'),
             'detalleSolicitudServicios' => array(self::HAS_MANY, 'DetalleSolicitudServicio', 'id_servicio'),
+            'parametrosLaboratorio' => array(self::MANY_MANY, 'ParametroLaboratorio', 'examen_parametros(id_serv,id_par_lab)'),
         );
     }
-
     /**
      * @return array customized attribute labels (name=>label)
      */

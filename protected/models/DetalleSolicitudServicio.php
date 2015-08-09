@@ -52,6 +52,7 @@ class DetalleSolicitudServicio extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+            'resultadoLab' => array(self::HAS_ONE, 'ResultadoLaboratorio', 'id_detalle_servicio'),
             'idSolicitud' => array(self::BELONGS_TO, 'SolicitudServicios', 'id_solicitud'),
             'servicio' => array(self::BELONGS_TO, 'Servicio', 'id_servicio'),
 		);

@@ -139,6 +139,68 @@ class LaboratorioController extends Controller
         return $flag;
     }
 
+    public function actionVerEstadoExamen($id_det=0){
+        $modeloDetalle=DetalleSolicitudServicio::model()->findByPk($id_det);
+        $listaPar=$modeloDetalle->servicio->parametrosLaboratorio;
+
+        $modelResultado= new ResultadoLaboratorio();
+        $modelResultado->id_detalle_servicio=$id_det;
+        $listaParRes=array();
+
+        foreach($listaPar as $item){
+            $auxPar= new DetalleResultadoLaboratorio();
+            $auxPar->id_parametro=$item->id_par_lab;
+            $listaParRes[]=$auxPar;
+        }
+
+        return $this->render('verEstado',[
+            'modeloDetalle'=>$modeloDetalle,
+            'modelResultado'=>$modelResultado,
+            'listaParRes'=>$listaParRes
+        ]);
+    }
+
+    public function actionRealizarExamen($id_det=0){
+        $model= DetalleSolicitudServicio::model()->findByPk($id_det);
+        $model->estado_realizado='REALIZADO';
+        $model->save();
+        $this->redirect(['laboratorio/verEstadoExamen','id_det'=>$id_det]);
+    }
+
+    public function actionCreateExamenLaboratorio($id_det=0){
+        $modeloDetalle= DetalleSolicitudServicio::model()->findByPk($id_det);
+        $modelResultado= new ResultadoLaboratorio();
+        $modelResultado->id_detalle_servicio=$id_det;
+        $listaParRes= array();
+
+        if(isset($_POST['ResultadoLaboratorio'],$_POST['DetalleResultadoLaboratorio'])){
+            $modelResultado->attributes=array_map('strtoupper',$_POST['ResultadoLaboratorio']);
+            foreach($_POST['DetalleResultadoLaboratorio'] as $item){
+                $aux= new DetalleResultadoLaboratorio();
+                $aux->attributes=array_map('strtoupper',$item);
+                $listaParRes[]=$aux;
+            }
+            $val=$this->validar(array_merge([$modelResultado],$listaParRes));
+            if($val){
+                $modelResultado->save(false);
+                foreach($listaParRes as $item){
+                    $item->id_res_lab=$modelResultado->id_res_lab;
+                    $item->save(false);
+                }
+                return $this->redirect(['verEstadoExamen','id_det'=>$id_det]);
+            }
+        }
+
+        return $this->render('verEstado',[
+            'modeloDetalle'=>$modeloDetalle,
+            'modelResultado'=>$modelResultado,
+            'listaParRes'=>$listaParRes
+        ]);
+
+
+        var_dump($_POST);
+    }
+
 	// Uncomment the following methods and override them if needed
 	/*
 	public function filters()

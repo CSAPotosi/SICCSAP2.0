@@ -419,7 +419,7 @@ create table if not exists internacion(
   tipo_alta varchar(16),--medica, fuga, solicitada,transferencia
   observacion_alta varchar (256),
   fecha_egreso timestamp,
-  foreign key (id_historial) references historial_paciente(id_historial),
+  foreign key (id_historial) references historial_paciente(id_historial)
 );
 create table if not exists sala_internacion(
   id_inter int not null,

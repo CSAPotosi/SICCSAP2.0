@@ -32,12 +32,12 @@ class ResultadoLaboratorio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_historial', 'required'),
-			array('id_historial', 'numerical', 'integerOnly'=>true),
+			array('id_detalle_servicio', 'required'),
+			array('id_detalle_servicio', 'numerical', 'integerOnly'=>true),
 			array('diagnostico, observaciones, fecha_examen', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_res_lab, diagnostico, observaciones, fecha_examen, id_historial', 'safe', 'on'=>'search'),
+			array('id_res_lab, diagnostico, observaciones, fecha_examen, id_detalle_servicio', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,7 +50,7 @@ class ResultadoLaboratorio extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'parametroLaboratorios' => array(self::MANY_MANY, 'ParametroLaboratorio', 'detalle_resultado_laboratorio(id_res_lab, id_parametro)'),
-			'historial' => array(self::BELONGS_TO, 'HistorialPaciente', 'id_historial'),
+			'detalleSolicitud' => array(self::BELONGS_TO, 'DetalleSolicitudServicio', 'id_detalle_servicio'),
             'detalleResultados'=>array(self::HAS_MANY,'DetalleResultadoLaboratorio','id_res_lab'),
 		);
 	}
@@ -65,7 +65,7 @@ class ResultadoLaboratorio extends CActiveRecord
 			'diagnostico' => 'DIAGNOSTICO PRESUNTIVO',
 			'observaciones' => 'OBSERVACIONES',
 			'fecha_examen' => 'Fecha Examen',
-			'id_historial' => 'Id Historial',
+			'id_detalle_servicio' => 'Id Historial',
 		);
 	}
 
@@ -91,7 +91,7 @@ class ResultadoLaboratorio extends CActiveRecord
 		$criteria->compare('diagnostico',$this->diagnostico,true);
 		$criteria->compare('observaciones',$this->observaciones,true);
 		$criteria->compare('fecha_examen',$this->fecha_examen,true);
-		$criteria->compare('id_historial',$this->id_historial);
+		$criteria->compare('id_detalle_servicio',$this->id_detalle_servicio);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

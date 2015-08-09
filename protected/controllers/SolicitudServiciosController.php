@@ -106,11 +106,13 @@ class SolicitudServiciosController extends Controller
         $detalles=array();
         $detalle=null;
         $detalles=$_POST['DetalleSolicitudServicio'];
+
         foreach($detalles as $det):
             $detalle=new DetalleSolicitudServicio;
             $detalle->attributes=$det;
             $detalle->save();
         endforeach;
+
         $solicitud=SolicitudServicios::model()->findByPk($detalle->id_solicitud);
         $this->render('solicitudcompleto',array('solicitud'=>$solicitud,));
     }
