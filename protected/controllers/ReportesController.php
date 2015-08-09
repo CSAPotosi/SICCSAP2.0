@@ -23,6 +23,10 @@ class ReportesController extends Controller
     }
 
 
+    public function actionCensoSalas(){
+        echo 'hola mundo';
+    }
+
     public function actionElegirempleado()
     {
         return;
