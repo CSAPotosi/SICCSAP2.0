@@ -27,7 +27,7 @@ class Cie10Controller extends Controller
     public function actionCargaGrupo(){
         if(isset($_POST['categoria'])&&$_POST['categoria']!=''){
             echo CHtml::tag('option',array('value'=>''),CHtml::encode('SELECCIONE UN GRUPO'),true);
-            $grupo=ItemCie10::model()->findAll("id_cat_cie10='{$_POST['categoria']}' and codigo_item_padre is null");
+            $grupo=ItemCie10::model()->findAll("id_cat_cie10='{$_POST['categoria']}' and codigo_item_padre = codigo");
             $data=CHtml::listData($grupo,'codigo','titulo');
             foreach($data as $id=>$nombre)
                 echo CHtml::tag('option',array('value'=>$id),CHtml::encode($nombre),true);

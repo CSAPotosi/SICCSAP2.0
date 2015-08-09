@@ -10,7 +10,7 @@ class ConsultaController extends Controller{
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
-            'historiaContext + index,listConsulta,viewAntecedente',
+            'historiaContext + index,listConsulta,viewAntecedente,createConsultaAjax',
         );
     }
 
@@ -44,12 +44,12 @@ class ConsultaController extends Controller{
     }
     public function actionIndex($cid=0)
     {
-        $AntecedenteMedico=new AntecedenteMedico;
-        $TipoAntecente=new TipoAntecedente;
-        $listaAntecedentesMedico=AntecedenteMedico::model()->findAll();
+        //$AntecedenteMedico=new AntecedenteMedico;
+        //$TipoAntecente=new TipoAntecedente;
+        //$listaAntecedentesMedico=AntecedenteMedico::model()->findAll();
         $svModel= SignosVitales::model()->findAll();
-        $listaante=TipoAntecedente::model()->findAll();
-        $detalle=new DetalleSolicitudServicio;
+        //$listaante=TipoAntecedente::model()->findAll();
+        //$detalle=new DetalleSolicitudServicio;
         $solicitud=new SolicitudServicios;
         $listaSV=array();
         $genero='';
@@ -69,19 +69,24 @@ class ConsultaController extends Controller{
             $genero=Persona::model()->findByPk($consultaModel->id_historia);
         }
         $his=$this->_historia->id_historial;
+        $listaC=array();
+        foreach($consultaModel->itemsCie as $item)
+            $listaC[]=$item->codigo_cie10;
+
         $this->render('index',array(
-            'TipoAntecedente'=>$TipoAntecente,
-            'genero'=>$genero,
+          //  'TipoAntecedente'=>$TipoAntecente,
+            //'genero'=>$genero,
             'consulta_id'=>$cid,
             'consultaModel'=>$consultaModel,
             'listaSV'=>$listaSV,
-            'listaAntecedenteMedico'=>$listaAntecedentesMedico,
-            'AntecedenteMedico'=>$AntecedenteMedico,
-            'TipoAntecente'=>$TipoAntecente,
-            'listaante'=>$listaante,
+            'listaCie'=>$listaC,
+            //'listaAntecedenteMedico'=>$listaAntecedentesMedico,
+            //'AntecedenteMedico'=>$AntecedenteMedico,
+            //'TipoAntecente'=>$TipoAntecente,
+            //'listaante'=>$listaante,
             'his'=>$his,
-            'detsolser'=>$detalle,
-            'solicitud'=>$solicitud,
+            //'detsolser'=>$detalle,
+            //'solicitud'=>$solicitud,
         ));
     }
 
@@ -157,6 +162,7 @@ class ConsultaController extends Controller{
     }
     public function actionCreateConsultaAjax(){
 
+
         $consulta= new Consulta;
         $listaSV=array();
         if(isset($_POST['Consulta'])){
@@ -172,11 +178,31 @@ class ConsultaController extends Controller{
                         }
                     }
                 }
-                return $this->renderPartial('_detalleConsulta',array('detalleConsulta'=>Consulta::model()->findByPk($consulta->id_consulta)));
+                if(isset($_POST['CIE10'])){
+                    foreach($_POST['CIE10'] as $codigo){
+                        $item= new ConsultaCie10();
+                        $item->id_consulta=$consulta->id_consulta;
+                        $item->codigo_cie10=$codigo;
+                        if(ConsultaCie10::model()->findAll("id_consulta={$consulta->id_consulta} and codigo_cie10 = '{$codigo}'")==null)
+                            $item->save();
+                    }
+                }
+                return $this->redirect(['consulta/index','hid'=>$this->_historia->id_historial,'cid'=>$consulta->id_consulta]);
+                //return $this->renderPartial('_detalleConsulta',array('detalleConsulta'=>Consulta::model()->findByPk($consulta->id_consulta)));
             }
 
         }
-        return $this->renderPartial('_formConsulta',array('consultaModel'=>$consulta,'listaSV'=>$listaSV));
+
+
+
+        return $this->render('index',[
+            'his'=>$this->_historia->id_historial,
+            'consulta_id'=>0,
+            'consultaModel'=>$consulta,
+            'listaSV'=>$listaSV,
+            'listaCie'=>$_POST['CIE10']
+        ]);
+        //return $this->renderPartial('_formConsulta',array('consultaModel'=>$consulta,'listaSV'=>$listaSV));
     }
 
 
@@ -238,6 +264,10 @@ class ConsultaController extends Controller{
 
             }
         }
+    }
+
+    public function actionViewTratamiento($consulta_id=0){
+        return $this->render('_tratamiento',['modelConsulta'=>Consulta::model()->findByPk($consulta_id)]);
     }
 
     public function actionLoadFormTratamientoAjax($id=0,$id_con=0){
