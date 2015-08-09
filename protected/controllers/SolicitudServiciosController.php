@@ -122,8 +122,6 @@ class SolicitudServiciosController extends Controller
             $detalle=new DetalleSolicitudServicio;
             $detalle->attributes=$det;
             $detalle->save();
-            var_dump($detalle);
-            yii::app()->end;
         endforeach;
         $solicitud=SolicitudServicios::model()->findByPk($detalle->id_solicitud);
         $this->render('ordencompleto',array('solicitud'=>$solicitud,));

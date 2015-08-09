@@ -121,7 +121,8 @@
                                                                         <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->precioServicio->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>'','id'=>'valor_solicitud'))?>
                                                                         <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->Serviciogab->precioServicio->id_servicio?>][id_servicio]" value="<?php echo $e->Serviciogab->precioServicio->id_servicio?>">
                                                                         <?php echo CHtml::activeHiddenField($detsolser,'estado_realizado',array('value'=>'no realizado','id'=>'estado_realizado'))?>
-                                                                        <?php echo CHtml::activeHiddenField($detsolser,'autorizacion',array('value'=>'no autorizado','class'=>'autorizacion'))?>
+                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]estado_realizado",array('value'=>'no realizado','class'=>'estado_realizado'))?>
+                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]autorizacion",array('value'=>'no autorizado','class'=>'autorizacion'))?>
                                                                         <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]estado_pago",array('value'=>'pagado','class'=>'pago'))?>
                                                                     </td>
                                                                     <td class="hide" name="ocultar"><input type="text" value="<?php echo $e->Serviciogab->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->Serviciogab->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>
@@ -165,8 +166,8 @@
                                                                         <?php echo $e->ServicioCli->nombre_serv;?>
                                                                         <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->precioServicio->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>'','id'=>'valor_solicitud'))?>
                                                                         <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][id_servicio]" value="<?php echo $e->ServicioCli->precioServicio->id_servicio?>">
-                                                                        <?php echo CHtml::activeHiddenField($detsolser,'estado_realizado',array('value'=>'no realizado','id'=>'estado_realizado'))?>
-                                                                        <?php echo CHtml::activeHiddenField($detsolser,'autorizacion',array('value'=>'no autorizado','class'=>'autorizacion'))?>
+                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]estado_realizado",array('value'=>'no realizado','class'=>'estado_realizado'))?>
+                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]autorizacion",array('value'=>'no autorizado','class'=>'autorizacion'))?>
                                                                         <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]estado_pago",array('value'=>'pagado','class'=>'pago'))?>
                                                                     </td>
                                                                     <td class="hide" name="ocultar"><input type="text" value="<?php echo $e->ServicioCli->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>

@@ -374,6 +374,7 @@ create table if not exists solicitud_servicios(
   foreign key(id_historial) references historial_paciente(id_historial)
 );
 create table if not exists detalle_solicitud_servicio(
+  id_detalle_servicio serial not null primary key,
   id_solicitud int not null,
   id_servicio int not null,
   cantidad float not null,
@@ -414,15 +415,11 @@ create table if not exists internacion(
   motivo_ingreso varchar(32) not null,--accidente,enfermedad, parto
   observacion_ingreso varchar(256),
   procedencia_ingreso varchar(16),--consulta exterma,emergencia, referido
-  id_diagnostico_ingreso int,
   fecha_alta timestamp,
   tipo_alta varchar(16),--medica, fuga, solicitada,transferencia
-  id_diagnostico_alta int,
   observacion_alta varchar (256),
   fecha_egreso timestamp,
   foreign key (id_historial) references historial_paciente(id_historial),
-  foreign key (id_diagnostico_ingreso) references consulta(id_consulta),
-  foreign key (id_diagnostico_alta) references consulta(id_consulta)
 );
 create table if not exists sala_internacion(
   id_inter int not null,
@@ -463,8 +460,8 @@ create table if not EXISTS resultado_laboratorio(
   diagnostico varchar,
   observaciones varchar,
   fecha_examen TIMESTAMP,
-  id_historial int not null,
-  foreign key(id_historial) REFERENCES historial_paciente(id_historial)
+  id_detalle_servicio int not null,
+  foreign key(id_detalle_servicio) REFERENCES detalle_solicitud_servicio(id_detalle_servicio)
 );
 
 create table if not exists detalle_resultado_laboratorio(
@@ -597,6 +594,8 @@ create table if NOT EXISTS cirugia(
   estado_cirugia varchar(10), -- programada/en proceso/terminada/
   id_historial int not null,
   id_q int not null,
+  diagnostico_post_q varchar,
+  diagnostico_pre_q varchar,
   foreign KEY (id_historial) references historial_paciente(id_historial),
   foreign key (id_q) REFERENCES quirofano(id_q)
 );

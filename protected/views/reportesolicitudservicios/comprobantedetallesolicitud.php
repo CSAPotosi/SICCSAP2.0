@@ -29,10 +29,10 @@
             'condition'=>"id_solicitud ='{$solicitud->id_solicitud}'",
         ));
     ?>
+
     <?php
         $listalaboratorio=array();
         $listagabinete=array();
-        $listaenferemeria=array();
         $listaotros=array();
 
     ?>
@@ -50,6 +50,7 @@
         }
         ?>
     <?php endforeach;?>
+
     <tr>
         <td><h4>NOMBRE DEL SERVICIO</h4></td>
         <td align="center"><h4>PRECIO</h4></td>
