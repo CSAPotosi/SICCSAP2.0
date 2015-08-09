@@ -7,7 +7,9 @@
                         Crear Horario
                     </div>
                     <div class="box-body">
+                        <div id="contenedoradmi">
                         <?php $this->renderPartial('_form',array('horario'=>$horario))?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -40,6 +42,23 @@
         </div>
     </div>
 </div>
+<div class="modal fade in" id="updateturnohorario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title">Actualiza Turno</h4>
+            </div>
+            <div class="modal-body" id="contenedorturnoHorarioupd">
+
+            </div>
+            <div class="modal-footer clearfix">
+                <button type="button" class="btn btn-primary pull-left" id="updturnohorario">Guardar</button>
+                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade in" id="TurnoHorario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -58,6 +77,8 @@
         </div>
     </div>
 </div>
+
+
 <?php
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.css');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.js',CClientScript::POS_END);
@@ -79,6 +100,8 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resour
             type:"post",
             success:function(datos){
                $("#contenedorhorarioturno").html(datos);
+               nuevoAdminitracion();
+               $(".btnactualizarturno").on("click",verTutnoupdate);
             }
         });
         return false;
@@ -95,9 +118,50 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resour
                 if(contenido.children("#flag").val()==null){
                     $("#contenedorhorarioturno").html(datos);
                     $("#TurnoHorario").modal("hide");
+                    $(".btnactualizarturno").on("click",verTutnoupdate);
                 }
                 else{
                     $("#contenedorTurnoHorario").html(datos);
+                }
+            }
+        });
+     }
+     function nuevoAdminitracion(){
+        $.ajax({
+            url:"'.CHtml::normalizeUrl(array('horario/Nuevo')).'",
+            type:"post",
+            success:function(datos){
+               $("#contenedoradmi").html(datos);
+            }
+        });
+     }
+     $(".btnactualizarturno").on("click",verTutnoupdate);
+     function verTutnoupdate(){
+        $.ajax({
+            url:$(this).attr("href"),
+            type:"post",
+            success:function(datos){
+               $("#contenedorturnoHorarioupd").html(datos);
+               $("#updateturnohorario").modal("show");
+            }
+        });
+        return false;
+     }
+     $("#updturnohorario").on("click",apdateturnohorario);
+     function apdateturnohorario(){
+        $.ajax({
+            url:"'.CHtml::normalizeUrl(array('horario/ActualizarTurno')).'",
+            type:"post",
+            data:$("#turno-form-update").serialize(),
+            success:function(datos){
+                var contenido=$("<div>").html(datos);
+                if(contenido.children("#flag").val()==null){
+                    $("#contenedorhorarioturno").html(datos);
+                    $("#updateturnohorario").modal("hide");
+                    $(".btnactualizarturno").on("click",verTutnoupdate);
+                }
+                else{
+                    $("#contenedorturnoHorarioupd").html(datos);
                 }
             }
         });

@@ -20,8 +20,7 @@
                     <td><?php echo $list->descripcion_cargo?></td>
                     <td><input type="checkbox" class="btnChangeState" <?php echo ($list->estado)?'checked':''; ?> data-toggle="toggle" data-size="mini" data-on="ACTIVO" data-onstyle="primary" data-offstyle="danger" data-off="INACTIVO" data-url="<?php echo CHtml::normalizeUrl(['Unidad/ChangeStateCargo','id'=>$list->id_cargo]);?>"></td>
                     <td>
-                        <?php echo CHtml::link('<i class="fa fa-edit"></i>',array('/Unidad/Update','id'=>$list->id_cargo),array('title'=>'Actualizar'))?>
-                        <?php echo CHtml::link('<i class="fa fa-fw fa-list-ul"></i>',array('Unidad/VerCargosUnidad','id'=>$list->id_cargo),array('title'=>'Ver cargos','class'=>'btnCargosUnidades'))?>
+                        <?php echo CHtml::link('<i class="fa fa-edit"></i>',array('/Unidad/ActualizarCargo','id'=>$list->id_cargo),array('title'=>'Actualizar','class'=>'ActualizarUnidadCargo'))?>
                     </td>
                 </tr>
             <?php endforeach;?>

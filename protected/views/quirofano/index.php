@@ -51,6 +51,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/resources
 Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.js',CClientScript::POS_END);
 Yii::app()->clientScript->registerScript('javascript','
     $(".btnChangeState").on("change",function(){
+        alert("ll");
         $.ajax({
             url:$(this).attr("data-url"),
             type:"get"

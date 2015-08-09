@@ -80,6 +80,7 @@
                                                                 <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->serviciodelab->id_servicio;?>][id_servicio]" value="<?php echo $e->serviciodelab->precioServicio->id_servicio?>">
                                                                 <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]estado_realizado",array('value'=>"no realizado",'id'=>'estado_realizado'))?>
                                                                 <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]autorizacion",array('class'=>'autorizacion', 'value'=>'no autorizado','id'=>'autorizacion'))?>
+                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]estado_pago",array('class'=>'pago', 'value'=>'no pagado','id'=>'estado_pago'))?>
                                                             </td>
                                                             <td class="hide"><input type="text" value="<?php echo $e->serviciodelab->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->serviciodelab->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>
                                                             <td class="hide" name="ocultar"><span class="badge bg-red"><?php echo $e->serviciodelab->idInsti->nombre?></span></td>
@@ -119,7 +120,8 @@
                                                                 <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->precioServicio->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>'','id'=>'valor_solicitud'))?>
                                                                 <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->Serviciogab->precioServicio->id_servicio?>][id_servicio]" value="<?php echo $e->Serviciogab->precioServicio->id_servicio?>">
                                                                 <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]estado_realizado",array('value'=>'no realizado','id'=>'estado_realizado'))?>
-                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]autorizacion",array('class'=>'aotorizacion','value'=>'no autorizado','id'=>'autorizacion'))?>
+                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]autorizacion",array('class'=>'autorizacion','value'=>'no autorizado','id'=>'autorizacion'))?>
+                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]estado_pago",array('class'=>'pago', 'value'=>'no pagado','id'=>'estado_pago'))?>
                                                             </td>
                                                             <td class="hide"><input type="text" value="<?php echo $e->Serviciogab->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->Serviciogab->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>
                                                             <td class="hide" name="ocultar"><span class="badge bg-red"><?php echo $e->Serviciogab->idInsti->nombre?></span></td>
@@ -223,6 +225,7 @@
             });
         }
         function detallesolicitud(){
+            alert("hoola")
             $("#solicitud-servicios-detalle-int").submit();
         }
     });

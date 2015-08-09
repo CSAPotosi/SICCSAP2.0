@@ -355,7 +355,7 @@ class PersonaController extends Controller
                 $this->redirect(array('updateempleado','id'=>$model->id));
 
         }
-        $this->render('create',array(
+        $this->render('personaempleado',array(
             'model'=>$model,
         ));
     }

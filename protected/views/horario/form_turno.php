@@ -1,7 +1,7 @@
 <input id="flag" type="hidden" value="1">
 <div class="form">
     <?php $form=$this->beginWidget('CActiveForm', array(
-        'id'=>($turno?'turno-form':'turno-form-update'),
+        'id'=>($turno->isNewRecord?'turno-form':'turno-form-update'),
         'enableAjaxValidation'=>false,
         'htmlOptions'=>array('class'=>'form-horizontal'),
     )); ?>
@@ -68,6 +68,11 @@
             </div>
         </div>
     </div>
+    <?php if($turno->isNewRecord){?>
     <input type="hidden" name="Turno[id_horario]" id="idTurnoHorario">
+    <?php }else{?>
+        <input type="hidden" value="<?php echo $turno->id_horario?>" name="Turno[id_horario]" id="idTurnoHorario">
+        <input type="hidden" value="<?php echo $turno->id_turno?>" name="Turno[id_turno]">
+    <?php }?>
     <?php $this->endWidget(); ?>
 </div><!-- form -->

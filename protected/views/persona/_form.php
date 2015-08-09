@@ -61,7 +61,8 @@
                                     <br>
                                     <div class="form-group">
                                         <label>Sexo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <?php echo CHtml::activeRadioButtonList($model,'sexo',array('MASCULINO'=>'MASCULINO','FEMENINO'=>'FEMENINO'),array('class'=>'form-control','separator'=>'       ' ))?>
+                                        <?php echo CHtml::activeRadioButtonList($model,'sexo',array('MASCULINO'=>'MASCULINO','FEMENINO'=>'FEMENINO'),array('class'=>'form-control','separator'=>'' ))?>
+                                        <?php echo CHtml::error($model,'sexo',array('class'=>'label label-danger')); ?>
                                     </div>
                             </div>
                             <div class="col-md-5">

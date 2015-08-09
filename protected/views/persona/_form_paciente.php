@@ -1,3 +1,4 @@
+
 <div class="form">
     <?php $form=$this->beginWidget('CActiveForm', array(
         'id'=>'historial-paciente-form','action'=>($paciente->isNewRecord ? yii::app()->createUrl("persona/Crearpaciente"):yii::app()->createUrl("persona/_form_updatepa&id=".$paciente->id_paciente)),
@@ -8,51 +9,42 @@
         <?php echo $form->errorSummary($paciente,null,null,array('class'=>'alert alert-error')); ?>
         <input type="hidden" value="<?php echo $lastid;?>" name="Paciente[id_paciente]">
         <div class="form-group">
-            <?php echo $form->labelEx($paciente,'ocupacion_paciente',array('class'=>'col-md-2 control-label')); ?>
-            <div class="col-sm-8">
-                <?php echo $form->textField($paciente,'ocupacion_paciente',array('class'=>'form-control','placeholder'=>'Ocupacion Paciente')); ?>
-            </div>
+            <?php echo $form->labelEx($paciente,'ocupacion_paciente'); ?>
+            <?php echo $form->textField($paciente,'ocupacion_paciente',array('class'=>'form-control','placeholder'=>'Ocupacion Paciente')); ?>
             <?php echo $form->error($paciente,'ocupacion_paciente',array('class'=>'label label-danger')); ?>
         </div>
         <div class="form-group">
-            <?php echo $form->labelEx($paciente,'grupo_sanguineo_paciente',array('class'=>'col-md-2 control-label')); ?>
-            <div class="col-sm-8">
-                <?php echo $form->dropDownList($paciente,'grupo_sanguineo_paciente',$paciente->getTiposangre(),array('class'=>'form-control')); ?>
-            </div>
+            <?php echo $form->labelEx($paciente,'grupo_sanguineo_paciente'); ?>
+            <?php echo $form->dropDownList($paciente,'grupo_sanguineo_paciente',$paciente->getTiposangre(),array('class'=>'form-control')); ?>
             <?php echo $form->error($paciente,'grupo_sanguineo_paciente',array('class'=>'label label-danger')); ?>
         </div>
         <div class="form-group">
-            <?php echo $form->labelEx($paciente,'estado_paciente',array('class'=>'col-md-2 control-label')); ?>
-            <div class="col-sm-8">
-                <?php echo $form->textField($paciente,'estado_paciente',array('class'=>'form-control','placeholder'=>'Tipo Paciente')); ?>
-            </div>
+            <?php echo $form->labelEx($paciente,'estado_paciente'); ?>
+            <?php echo $form->textField($paciente,'estado_paciente',array('class'=>'form-control','placeholder'=>'Tipo Paciente')); ?>
             <?php echo $form->error($paciente,'estado_paciente',array('class'=>'label label-danger')); ?>
         </div>
         <div class="form-group">
-            <div class="col-sm-2">
                 <?php echo $form->hiddenField($paciente,'id_contacto_paciente',array('class'=>'form-control','id'=>'id_cont')); ?>
-            </div>
-            <div class="col-sm-8">
                 <div class="input-group margin" id="input-contacto">
                     <div class="input-group-btn">
-                       <?php echo CHtml::Button($paciente->isNewRecord ? 'Registrar Contacto de paciente' : 'Actualizar Contacto de paciente',array('class'=>"btn btn-warning", 'data-toggle'=>'modal', 'data-target'=>'#contacto')); ?>
+                       <?php echo CHtml::Button($paciente->isNewRecord ? 'Registrar Contacto de paciente' : 'Actualizar Contacto de paciente',array('class'=>"btn btn-primary", 'data-toggle'=>'modal', 'data-target'=>'#contacto')); ?>
                        <input class="form-control" type="text" id="nomcont" value="<?php echo ($paciente->id_paciente!=null ? ($paciente->id_contacto_paciente=="" ? "":$paciente->idContactoPaciente->nombreCompleto): "");?>" disabled="disabled">
                     </div>
                 </div>
                 <div id="id_contacto_persona">
-
                 </div>
             </div>
         </div>
     </div>
-    <div class="box-footer">
+    <div class="row">
         <div class="form-group">
-            <div class="col-sm-offset-0 col-sm-10">
+            <div class="col-md-12">
                 <?php echo CHtml::submitButton($paciente->isNewRecord ? 'Generar Historial Medico' : 'Actualizar Historial Medico',array('class'=>'btn btn-primary btn-lg')); ?>
             </div>
         </div>
     </div>
     <?php $this->endWidget(); ?>
+
 </div><!-- form -->
 <div class="modal fade in" id="contacto" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
     <div class="modal-dialog">

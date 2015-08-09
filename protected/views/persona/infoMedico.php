@@ -14,6 +14,21 @@ $this->breadcrumbs=array(
                     <h3>Informacion Medica</h3>
                 </div>
                 <div class="box-body">
+                    <?php if($medico->isNewRecord){?>
+                    <h1>Informacion completada al %50</h1>
+                    <div class="progress sm progress-striped active">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 50%">
+                            <span class="sr-only">50% complete</span>
+                        </div>
+                    </div>
+                    <?php }else{?>
+                        <h1>Informacion completada al %100</h1>
+                        <div class="progress sm progress-striped active">
+                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                                <span class="sr-only">100% complete</span>
+                            </div>
+                        </div>
+                    <?php }?>
                     <?php $this->renderPartial('/medico/_form_medico',array('medico'=>$medico,'medico_especialidad'=>$medico_especialidad,'id'=>$id))?>
                 </div>
             </div>

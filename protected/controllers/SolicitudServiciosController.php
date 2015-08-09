@@ -122,6 +122,8 @@ class SolicitudServiciosController extends Controller
             $detalle=new DetalleSolicitudServicio;
             $detalle->attributes=$det;
             $detalle->save();
+            var_dump($detalle);
+            yii::app()->end;
         endforeach;
         $solicitud=SolicitudServicios::model()->findByPk($detalle->id_solicitud);
         $this->render('ordencompleto',array('solicitud'=>$solicitud,));
@@ -167,7 +169,8 @@ class SolicitudServiciosController extends Controller
         foreach($detalles as $det):
             $detalle=new DetalleSolicitudServicio;
             $detalle->attributes=$det;
-            $detalle->save();
+            !$detalle->save();
+
         endforeach;
         $sol=SolicitudServicios::model()->findByPk($detalle->id_solicitud);
         $this->redirect(array('ListaDetalleSolicitudInternacion','sol'=>$sol->id_solicitud));
@@ -175,7 +178,6 @@ class SolicitudServiciosController extends Controller
     public function actionListaDetalleSolicitudInternacion($sol){
         $sol=SolicitudServicios::model()->findByPk($sol);
         $var=$sol->idHistorial->internacionActual->fecha_ingreso;
-
         $varhis=$sol->idHistorial->id_historial;
         $historial=$sol->idHistorial;
         $solicitud=SolicitudServicios::model()->findAll(array(
@@ -197,6 +199,7 @@ class SolicitudServiciosController extends Controller
         ));
        $this->render('listadetallesolicitudservicio',array('solicitud'=>$solicitud,'historial'=>$historial));
     }
+
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();

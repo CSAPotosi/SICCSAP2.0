@@ -25,7 +25,7 @@
                 <li><?php echo CHtml::link('Kardex de enfermeria',['evolucionEnfermeria/showKardex','id'=>$modelInternacion->id_inter]);?></li>
                 <li><?php echo CHtml::link('Cambio de sala',['internacion/viewHistorialSalas','id'=>$modelInternacion->id_inter]);?></li>
                 <li><?php echo CHtml::link('Servicios',['SolicitudServicios/OrdenInternacion','id'=>$modelInternacion->historial->id_historial]);?></li>
-                <li><?php echo CHtml::link('Examenes',['qweqw']);?></li>
+                <li><?php echo CHtml::link('Examenes',['SolicitudServicios/VerServiciosInternacion','id'=>$modelInternacion->historial->id_historial]);?></li>
                 <li><?php echo CHtml::link('Alta',['internacion/altaMedica','id'=>$modelInternacion->id_inter]);?></li>
             </ul>
         </div>

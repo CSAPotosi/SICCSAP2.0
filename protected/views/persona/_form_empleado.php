@@ -8,8 +8,14 @@
         <?php echo $form->errorSummary($empleado,null,null,array('class'=>'alert alert-error')); ?>
         <input type="hidden" value="<?php echo $lastid;?>" name="Empleado[id]">
         <div class="form-group">
-            <?php echo $form->labelEx($empleado,'fecha de Contratacion'); ?>
-            <?php echo $form->datefield($empleado,'fecha_contratacion',array('class'=>'form-control')); ?>
+            <?php echo $form->labelEx($empleado,'fecha_contratacion'); ?>
+            <div class="input-group date" id="datetimepicker1">
+                <input class="form-control" type="text"/>
+                       <span class="input-group-addon">
+                           <span class="glyphicon glyphicon-calendar">
+                           </span>
+                       </span>
+            </div>
             <?php echo $form->error($empleado,'fecha_contratacion',array('class'=>'label label-danger')); ?>
         </div>
         <div class="form-group">

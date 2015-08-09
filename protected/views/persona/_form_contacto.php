@@ -19,8 +19,8 @@
         'htmlOptions'=>array('class'=>'form-horizontal'),
     )); ?>
     <input type="hidden" value="<?php echo $valorcontacto;?>" id="campocontacto">
-    <input type="hidden" value="<?php echo $id_persona_contacto;?>" id="id_persona_contacto">
-    <input type="hidden" value="<?php echo $nombre_completo;?>" id="nombre_completo">
+    <input type="hidden" value="" id="id_persona_contacto">
+    <input type="hidden" value="" id="nombre_completo">
     <div class="form-group">
         <div class="col-sm-12">
             <?php echo CHtml::activetextField($contacto,'dni',array('class'=>'form-control text-center','placeholder'=>'dni')); ?>

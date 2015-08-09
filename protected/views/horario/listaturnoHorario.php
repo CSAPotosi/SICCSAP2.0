@@ -34,8 +34,7 @@
                     <td><?php echo $list->dias?></td>
                     <td><?php echo $list->HorarioTurno->nombre_horario?></td>
                     <td>
-                        <?php echo CHtml::link('<i class="fa fa-edit"></i>',array('/Unidad/Update','id'=>$list->id_turno),array('title'=>'Actualizar'))?>
-                        <?php echo CHtml::link('<i class="fa fa-fw fa-list-ul"></i>',array('Unidad/VerCargosUnidad','id'=>$list->id_turno),array('title'=>'Ver cargos','class'=>'btnCargosUnidades'))?>
+                        <?php echo CHtml::link('<i class="fa fa-edit"></i>',array('/horario/ActualizarTurno','id'=>$list->id_turno),array('title'=>'Actualizar','class'=>'btnactualizarturno'))?>
                     </td>
                 </tr>
             <?php endforeach;?>

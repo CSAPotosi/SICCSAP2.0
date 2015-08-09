@@ -1,15 +1,15 @@
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
         <?php
-        $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'])." Pacientes";
+        $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/indexEmpleado'])."Empleados";
         $this->breadcrumbs=array(
-            'Empleados'=>array('index'),
-            'Nueva Persona',
+            'Empleados'=>array('indexEmpleado'),
+            'Nuevo Empleado',
         );
         ?>
         <div class="box box-primary box-solid">
             <div class="box-header">
-                Registrar Datos perosnales de Paciente
+                Registro de Datos Personales de Empleado
             </div>
 
             <h1>Informacion completada al %0</h1>

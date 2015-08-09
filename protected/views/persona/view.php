@@ -1,14 +1,11 @@
 
 <?php
-/* @var $this PersonaController */
-/* @var $model Persona */
+        $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'])."Atras";
+        $this->breadcrumbs=array(
+            'Pacieste'=>array('index'),
+            'Nueva Persona',
+        );
 
-
-
-$this->breadcrumbs=array(
-    'Personas'=>array('index'),
-    $model->id,
-);
 
 $this->menu=array(
     array('label'=>'List Persona', 'url'=>array('index')),
