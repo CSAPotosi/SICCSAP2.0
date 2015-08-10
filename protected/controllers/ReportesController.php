@@ -27,10 +27,41 @@ class ReportesController extends Controller
         echo 'hola mundo';
     }
 
-    public function actionElegirempleado()
+    public function actionReporteServiciosGabinete()
     {
-        return;
+        $serviciogabinete=Servicio::model()->findAll();
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->renderPartial('servicioGabinete',['servicios'=>$serviciogabinete],true));
+        $mPDF1->Output();
     }
-
-
+    public function actionReporteServiciosLaboratorio(){
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->renderPartial('servicioLaboratorio',[],true));
+        $mPDF1->Output();
+    }
+    public function actionReporteServiciootros(){
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->renderPartial('servicioOtros',[],true));
+        $mPDF1->Output();
+    }
+    public function actionReportePacientesRegistrados(){
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->AddPage('L');
+        $mPDF1->WriteHTML($this->renderPartial('ReportePacientesPacientes',[],true));
+        $mPDF1->Output();
+    }
+    public function actionReporteSegurosPacienteServicio(){
+        $this->render('SegurosConvenioPaciente',array());
+    }
+    public function actionReporteConveniosCompleto(){
+        $convenio="";$servicio="";
+        if(isset($_POST['convenio']))
+            $convenio=$_POST['convenio'];
+        if(isset($_POST['servicios']))
+            $servicio=$_POST['servicios'];
+        $convenioinstitucion=ConvenioInstitucion::model()->findByPk($_POST['Convenioseguros']);
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->renderPartial('ReporteCompletoConvenios',['convenioinsti'=>$convenioinstitucion,'asegurados'=>$convenio,'servicios'=>$servicio],true));
+        $mPDF1->Output();
+    }
 }

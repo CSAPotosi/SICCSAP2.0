@@ -23,7 +23,7 @@
             <div class="col-md-4">
                 <?php  $value=($turno->hora_entrada=="")?"":date("h:i A", strtotime($turno->hora_entrada));   ?>
                     <?php echo $form->labelEx($turno,'hora_entrada'); ?>
-                    <?php echo $form->textField($turno,'hora_entrada',array('value'=>$value,'class'=>'form-control','data-inputmask'=>'"mask":"99:99 aM"','placeholder'=>'hora','data-mask'=>'data-mask'));?>
+                    <?php echo CHtml::activetimeField($turno,'hora_entrada',array('value'=>$value,'class'=>'form-control','data-inputmask'=>'"mask":"99:99 aM"','placeholder'=>'hora','data-mask'=>'data-mask'));?>
                     <?php echo $form->error($turno,'hora_entrada',array('class'=>'label label-danger')); ?>
             </div>
             <div class="col-md-4">
@@ -41,7 +41,7 @@
             <div class="col-md-4">
                 <?php  $value=($turno->hora_salida=="")?"":date("h:i A", strtotime($turno->hora_salida));   ?>
                     <?php echo $form->labelEx($turno,'hora_salida'); ?>
-                    <?php echo $form->textField($turno,'hora_salida',array('value'=>$value,'class'=>'form-control','data-inputmask'=>'"mask":"99:99 aM"','placeholder'=>'hora','data-mask'=>'data-mask'));?>
+                    <?php echo CHtml::activetimeField($turno,'hora_salida',array('value'=>$value,'class'=>'form-control','data-inputmask'=>'"mask":"99:99 aM"','placeholder'=>'hora','data-mask'=>'data-mask'));?>
                     <?php echo $form->error($turno,'hora_salida',array('class'=>'label label-danger')); ?>
             </div>
             <div class="col-md-4">
@@ -60,11 +60,6 @@
                     <?php echo $form->labelEx($turno,'tolerancia'); ?>
                     <?php echo $form->textField($turno,'tolerancia',array('class'=>'form-control','placeholder'=>'tolerancia')); ?>
                     <?php echo $form->error($turno,'tolerancia',array('class'=>'label label-danger')); ?>
-            </div>
-            <div class="col-md-6">
-                    <?php echo $form->labelEx($turno,'dias'); ?>
-                    <?php echo $form->textField($turno,'dias',array('value'=>'1111100','class'=>'form-control','data-inputmask'=>'"mask":"9999999"','placeholder'=>'Dias','data-mask'=>'data-mask')); ?>
-                    <?php echo $form->error($turno,'dias',array('class'=>'label label-danger')); ?>
             </div>
         </div>
     </div>

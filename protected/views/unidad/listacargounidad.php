@@ -40,7 +40,7 @@
 <input type="hidden" value="<?php echo $unidad->id_unidad?>" id="id_unidad_cargo">
 <div class="row">
     <div class="col-md-12">
-        <button type="button" class="btn btn-primary" data-target="#Unidadcargo" data-toggle="modal">
+        <button type="button" class="btn btn-primary" data-target="#unidadcargocar" data-toggle="modal">
             <b>Agregar Servicios</b>
         </button>
     </div>

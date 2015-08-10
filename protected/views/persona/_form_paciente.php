@@ -85,7 +85,8 @@
                  {
                     $("#contenedormodalcontacto").html(datos);
                     if($("#campocontacto").val()==1){
-                        $(\'#contacto\').modal(\'toggle\');
+                        $(\'#contacto\').modal(\'hide\');
+
                         $("#persona-form-contacto")[0].reset();
                         $("#id_cont").val($("#id_persona_contacto").val());
                         $("#nomcont").val($("#nombre_completo").val());

@@ -1,3 +1,9 @@
+<?php
+$this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['site/index'])." Pagina de Inicio";
+$this->breadcrumbs=array(
+    'Paciente de Emergecia',
+);
+?>
 <div class="row">
     <div class="col-md-offset-2 col-md-8">
         <div class="row">
@@ -24,8 +30,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <?php echo $form->labelEx($persona,'Tipo de Documento'); ?>
-                                        <?php echo $form->dropDownList($persona,'dni',array(''=>'Seleccione','dni'=>'Documento de Ientificacion Perosnal','pasaporte'=>'pasaporte'),array('class'=>'form-control')); ?>
-                                        <?php echo $form->error($persona,'dni',array('class'=>'label label-danger')); ?>
+                                        <?php echo $form->dropDownList($persona,'tipo_documento',array(''=>'Seleccione','dni'=>'Documento de Ientificacion Perosnal','pasaporte'=>'pasaporte'),array('class'=>'form-control')); ?>
+                                        <?php echo $form->error($persona,'tipo_documento',array('class'=>'label label-danger')); ?>
                                     </div>
                                 </div>
                             </div>
@@ -78,10 +84,9 @@
                                     <div class="col-md-offset-2">
                                     <br>
                                     <div class="form-group">
-                                        <?php echo $form->labelEx($persona,'SEXO'); ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        MASCULINO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $form->radiobutton($persona,'sexo',array('value'=>'Masculino'))?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                        FEMENINO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $form->radiobutton($persona,'sexo',array('value'=>'Femenino'))?>
-                                        <?php echo $form->error($persona,'sexo',array('class'=>'label label-danger')); ?>
+                                        <label>Sexo</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <?php echo CHtml::activeRadioButtonList($persona,'sexo',array('MASCULINO'=>'MASCULINO','FEMENINO'=>'FEMENINO'),array('class'=>'form-control','separator'=>'' ))?>
+                                        <?php echo CHtml::error($persona,'sexo',array('class'=>'label label-danger')); ?>
                                     </div>
                                 </div>
                             </div>
@@ -103,10 +108,10 @@
 Yii::app()->clientScript->registerScript('form_emergencia','
     $(function(){
         $("#datetimepicker1").datetimepicker({
-            locale:"es",
-            defaultDate:'.date("d-m-Y").',
-            format:"DD-MM-YYYY HH:mm A",
-            maxDate:'.$date.'
+        	locale:"es",
+        	defaultDate:"'.date('Y-m-d H:i').'",
+        	format:"YYYY-MM-DD HH:mm",
+        	minDate:"'.date('Y-m-d H:i').'"
         });
         $("input[type=\'radio\'],input[type=\'radio\']").iCheck({
             checkboxClass:"icheckbox_flat-blue",

@@ -1,3 +1,9 @@
+<?php
+$this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['site/index'])." Pagina de Inicio";
+$this->breadcrumbs=array(
+    'Atenciones medicas',
+);
+?>
 <div class="row">
     <div class="col-md-offset-1 col-md-10">
         <div class="box box-primary box-solid">
@@ -25,7 +31,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button class="close" type="button" data-dismiss="modal" aria-hidden="true">x</button>
-                <h4 class="modal-title">Actualizar Item de Laboratorio</h4>
+                <h4 class="modal-title">ESPECIALIDADES MEDICAS</h4>
             </div>
             <div class="modal-body" id="contenedoratencionesmedicas">
 

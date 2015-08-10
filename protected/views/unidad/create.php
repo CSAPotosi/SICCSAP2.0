@@ -1,3 +1,9 @@
+<?php
+$this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['site/index'])."Pagina Principal";
+$this->breadcrumbs=array(
+'Horarios',
+);
+?>
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -42,6 +48,31 @@
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade in" id="unidadcargocar" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title">Item Servicio Clinico</h4>
+            </div>
+            <div class="modal-body">
+                <div id="contenedorUnidadCargo">
+                    <?php $this->renderPartial('form_cargo',array('cargo'=>$cargo))?>
+                </div>
+            </div>
+            <div class="modal-footer clearfix">
+                <button type="button" class="btn btn-primary pull-left" id="btncargounidad">Guardar</button>
+                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <div class="modal fade in" id="Unidadcargoupd" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -68,9 +99,7 @@
                 <h4 class="modal-title">Registrar Cargo</h4>
             </div>
             <div class="modal-body"">
-            <div id="contenedorUnidadCargo">
-                <?php $this->renderPartial('form_cargo',array('cargo'=>$cargo))?>
-            </div>
+
         </div>
         <div class="modal-footer clearfix">
             <?php echo CHtml::tag('button',array('id'=>'btncargounidad','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Guardar',true)?>
@@ -78,6 +107,8 @@
         </div>
     </div>
 </div>
+
+
 
 
 <?php
@@ -122,7 +153,7 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resour
                 var contenido=$("<div>").html(datos);
                 if(contenido.children("#flag").val()==null){
                 $("#contenedorcargounidad").html(datos);
-                $("#Unidadcargo").modal("hide");
+                $("#unidadcargocar").modal("hide");
                 $(".ActualizarUnidadCargo").on("click",vercargoupd);
                 $(".btnChangeState").bootstrapToggle();
                       $(".btnChangeState").on("change",function(){
@@ -182,6 +213,9 @@ Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resour
         type:"post",
         success:function(datos){
             $("#contenedorunidad").html(datos);
+            $("#btnunidad").on("click",function(){
+         $("#unidad-form").submit();
+    });
         }
       });
     }

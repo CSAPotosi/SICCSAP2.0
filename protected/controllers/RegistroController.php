@@ -38,7 +38,7 @@ class RegistroController extends Controller
     {
         return array(
             array('allow',
-                'actions'=>array('Elegircargo','Elegirempleado'),
+                'actions'=>array('Elegircargo','Elegirempleado','AsignarEmpleado','CrearAsignacion'),
                 'users'=>array('*'),
             ),
         );
@@ -70,6 +70,24 @@ class RegistroController extends Controller
         foreach($lista as $valor=> $descripcion)
         {
             echo CHtml::tag('option',array('value'=>$valor),CHtml::encode($descripcion), true );
+        }
+    }
+    public function actionAsignarEmpleado($id){
+        $asignacion=new AsignacionEmpleado;
+        $empleado=Empleado::model()->findByPk($id);
+        $this->render('form_Asignacion_Empleado',array('empleado'=>$empleado,'asignacion'=>$asignacion));
+    }
+    public function actionVercargosAsignados(){
+        $listacargosasignados=AsignacionEmpleado::model()->findAll();
+        $this->render('listacargosasignacion',array('listacargosasignados'=>$listacargosasignados));
+    }
+    public function actionCrearAsignacion(){
+        $asignacion=new AsignacionEmpleado;
+        if(isset($_POST['AsignacionEmpleado'])){
+            $asignacion->attributes=array_map('strtoupper',$_POST['AsignacionEmpleado']);
+            if($asignacion->save()){
+                $this->redirect(array('/registro/VercargosAsignados'));
+            }
         }
     }
 }

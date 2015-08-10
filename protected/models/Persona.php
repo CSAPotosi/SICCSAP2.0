@@ -17,7 +17,7 @@ class Persona extends CActiveRecord
 			array('nombres, email, fotografia', 'length', 'max'=>128),
 			array('primer_apellido, segundo_apellido, provincia, localidad, direccion', 'length', 'max'=>64),
             array('dni','default','value'=>0),
-            array('fecha_nacimiento','default','value'=>'01-01-0001'),
+            array('fecha_nacimiento','default','value'=>'0001-01-01'),
 			array('fecha_nacimiento', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

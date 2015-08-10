@@ -1,3 +1,9 @@
+<?php
+$this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'])." Pagina de Inicio";
+$this->breadcrumbs=array(
+    'Instituciones',
+);
+?>
 <div class="row">
     <div class="col-md-offset-1 col-md-10">
         <div class="row">

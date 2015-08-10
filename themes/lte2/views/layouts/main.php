@@ -278,11 +278,61 @@
                                 </div>
                             </a>
                         </li>
-                    </ul><!-- /.control-sidebar-menu -->
+                    </ul>
+                </div>
+                <div class="tab-pane active" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">Servicios</h3>
+                    <ul class='control-sidebar-menu'>
+                        <li>
+                            <a href='<?php echo CHtml::normalizeUrl(['reportes/ReporteServiciosLaboratorio']);?>' target="_blank">
+                                <i class="menu-icon fa fa-fw fa-flask bg-red"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Servicos de Laboratorio</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href='<?php echo CHtml::normalizeUrl(['reportes/ReporteServiciosGabinete']);?>' target="_blank">
+                                <i class="menu-icon fa fa-fw fa-gratipay bg-red"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Servicios de Gabinete</h4>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href='<?php echo CHtml::normalizeUrl(['reportes/ReporteServiciootros']);?>' target="_blank">
+                                <i class="menu-icon fa fa-fw fa-h-square bg-red"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Servicios de Clinicos</h4>
+                                </div>
+                            </a>
+                        </li>
 
-                </div><!-- /.tab-pane -->
-                <!-- Stats tab content -->
-
+                    </ul>
+                </div>
+                <div class="tab-pane active" id="control-sidebar-home-tab">
+                    <h3 class="control-sidebar-heading">Pacientes</h3>
+                    <ul class='control-sidebar-menu'>
+                        <li>
+                            <a href='<?php echo CHtml::normalizeUrl(['reportes/ReportePacientesRegistrados']);?>' target="_blank">
+                                <i class="menu-icon fa fa-fw fa-wheelchair bg-red"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Pacientes Santa Ana</h4>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class='control-sidebar-menu'>
+                        <li>
+                            <a href='<?php echo CHtml::normalizeUrl(['reportes/ReporteSegurosPacienteServicio']);?>' target="_blank">
+                                <i class="menu-icon fa fa-fw fa-leanpub bg-red"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading">Pacientes Asegurados</h4>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </aside><!-- /.control-sidebar -->
         <!-- Add the sidebar's background. This div must be placed

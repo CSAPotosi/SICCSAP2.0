@@ -28,7 +28,7 @@ class ServicioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','Crearlab','Categorialab','CrearcategorialabAjax','Updatecatlab','UpdatecategoriaAjax','DeletecategoriaAjax','Deletecatlab','Itemcatlab','CreateItemlabAjax','Nuevoitemlab','Nuevocatlab','Updateitemcatlab','Upditemlabc','Detalleitemcatlab','Deleteitemcatlab','BuscarItemlabAjax','Creargab','CreargabineteAjax','Updategab','Deletegab','Itemgab','CrearGabItem','Updateitemcatgab','Deleteitemcatgab','Nuevocatgab','BuscarItemgabAjax','CrearSer','CrearclinicoAjax','Updatecli','Deletecli','Itemcli','CrearCliItem','NueCliRow','Updateitemcatcli','Deleteitemcatcli','BuscarItemcliAjax','CrearEnf','CrearCliItemenf','Updateitemcatenf','Deleteitemcatenf','BuscarItemenfAjax','IndexAtencion','CrearServicioAtencion','RegistrarAtencion','ListarEspecialidad','ActualizarAtencionMedica','EliminarAtencionMedica'),
+				'actions'=>array('index','view','Crearlab','Categorialab','CrearcategorialabAjax','Updatecatlab','UpdatecategoriaAjax','DeletecategoriaAjax','Deletecatlab','Itemcatlab','CreateItemlabAjax','Nuevoitemlab','Nuevocatlab','Updateitemcatlab','Upditemlabc','Detalleitemcatlab','Deleteitemcatlab','BuscarItemlabAjax','Creargab','CreargabineteAjax','Updategab','Deletegab','Itemgab','CrearGabItem','Updateitemcatgab','Deleteitemcatgab','Nuevocatgab','BuscarItemgabAjax','CrearSer','CrearclinicoAjax','Updatecli','Deletecli','Itemcli','CrearCliItem','NueCliRow','Updateitemcatcli','Deleteitemcatcli','BuscarItemcliAjax','CrearEnf','CrearCliItemenf','Updateitemcatenf','Deleteitemcatenf','BuscarItemenfAjax','IndexAtencion','CrearServicioAtencion','RegistrarAtencion','ListarEspecialidad','ActualizarAtencionMedica','EliminarAtencionMedica','ReportedeServicio'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -771,5 +771,6 @@ class ServicioController extends Controller
         $AtencionMedica=AtencionMedica::model()->findAll(array('order'=>'id_servicio ASC'));
         return $this->renderPartial('_form_lista_servicio_atencion',array('atencionmedica'=>$AtencionMedica));
     }
+
 }
 

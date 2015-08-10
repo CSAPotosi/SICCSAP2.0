@@ -108,6 +108,7 @@ class PersonaController extends Controller
         if(isset($_POST['Persona']))
         {
             $Percontacto->attributes=array_map('strtoupper',$_POST['Persona']);
+            $Percontacto->fotografia="no-photo.png";
             if($Percontacto->save()){
                 $this->renderPartial('_form_contacto',array('contacto'=>$Percontacto,'valorcontacto'=>"1",'id_persona_contacto'=>$Percontacto->id,'nombre_completo'=>$Percontacto->getNombreCompleto()));
                 return;
@@ -401,7 +402,7 @@ class PersonaController extends Controller
         {
             $empleado->attributes=array_map('strtoupper',$_POST['Empleado']);
             if($empleado->save()){
-                $this->redirect(array('index'));
+                $this->redirect(array('Empleado'));
             }
         }
         }

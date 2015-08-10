@@ -48,7 +48,7 @@ class MedicoController extends Controller
     {
         $especialidad= new Especialidad;
             if(isset($_POST['Especialidad'])){
-                $especialidad->attributes=$_POST['Especialidad'];
+                $especialidad->attributes=array_map('strtoupper',$_POST['Especialidad']) ;
                 if($especialidad->save()){
                     $listaespecialidad=Especialidad::model()->findAll(array(
                         'order'=>'id_especialidad ASC',
@@ -130,7 +130,7 @@ class MedicoController extends Controller
     public function actionUpdateEspecialidadAjax(){
         $especialidad=Especialidad::model()->findByPk($_POST['Especialidad']['id_especialidad']);
         if(isset($_POST['Especialidad'])){
-            $especialidad->attributes=$_POST['Especialidad'];
+            $especialidad->attributes=array_map('strtoupper',$_POST['Especialidad']);
             if($especialidad->save()){
                 $listaespecialidad=Especialidad::model()->findAll(array(
                     'order'=>'id_especialidad ASC',
@@ -179,7 +179,7 @@ class MedicoController extends Controller
             $medico=Medico::model()->findByPk($id);
         }
         if(isset($_POST['Medico'])){
-            $medico->attributes=$_POST['Medico'];
+            $medico->attributes=array_map('strtoupper',$_POST['Medico']);
             if($medico->save()){
                 if(isset($_POST['MedicoEspecialidad'])){
                 $listaespecialidades=$_POST['MedicoEspecialidad'];
