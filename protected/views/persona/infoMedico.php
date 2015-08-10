@@ -97,13 +97,17 @@ $this->breadcrumbs=array(
                         $("#contenedor_especialidad").html(datos);
                         $("#especialidad").modal("hide");
                         EventosEspecialidad();
+
+                        $("#especialidad-form")[0].reset();
                     }
                     else{
                         $(\'#contenedorformespecialidad\').html(datos);
                     }
                 }
+
         });
         return false;
+
     }
     function EventosEspecialidad(){
         $("input[type=\'checkbox\'],input[type=\'radio\']").iCheck({

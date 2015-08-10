@@ -52,9 +52,9 @@ class AsignacionEmpleado extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'registros' => array(self::HAS_MANY, 'Registro', 'id_asignacion'),
-			'idEmpleado' => array(self::BELONGS_TO, 'Empleado', 'id_empleado'),
-			'idCargo' => array(self::BELONGS_TO, 'Cargo', 'id_cargo'),
-			'idHorario' => array(self::BELONGS_TO, 'Horario', 'id_horario'),
+			'EmpleadoAsignacion' => array(self::BELONGS_TO, 'Empleado', 'id_empleado'),
+			'CargoAsignacion' => array(self::BELONGS_TO, 'Cargo', 'id_cargo'),
+			'HorarioAsignacion' => array(self::BELONGS_TO, 'Horario', 'id_horario'),
 		);
 	}
 
@@ -113,4 +113,10 @@ class AsignacionEmpleado extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+    public function getHorario($id){
+        return CHtml::listData(Horario::model()->findAll("id_horario not in (select id_horario from asignacion_empleado where fecha_fin is null and id_empleado={$id})"),'id_horario','nombre_horario');
+    }
+    public function getCargo($id){
+        return CHtml::listData(Cargo::model()->findAll("id_cargo not in (select id_cargo from asignacion_empleado where fecha_fin is null and id_empleado={$id})"),'id_cargo','nombre_cargo');
+    }
 }

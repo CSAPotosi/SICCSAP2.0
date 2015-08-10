@@ -110,4 +110,31 @@ class UnidadController extends Controller
         $cargo->estado=!$cargo->estado;
         $cargo->save();
     }
+    public function actionActualizarCargo($id=0){
+        if($id==0){
+            $cargo=Cargo::model()->findByPk($_POST['Cargo']['id_cargo']);
+            if(isset($_POST['Cargo'])){
+                $cargo->attributes=array_map('strtoupper',$_POST['Cargo']);
+                if($cargo->save()){
+                    $listacargos=Cargo::model()->findAll(array(
+                        'condition'=>"id_unidad='{$cargo->id_unidad}'"
+                    ));
+                    $unidad=Unidad::model()->findByPk($cargo->id_unidad);
+                    $this->renderPartial('listacargounidad',array('listacargos'=>$listacargos,'unidad'=>$unidad));
+                    return;
+                }
+                $this->renderPartial('form_cargo',array('cargo'=>$cargo));
+                return;
+            }
+        }
+        else{
+            $cargo=Cargo::model()->findByPk($id);
+            $this->renderPartial('form_cargo',array('cargo'=>$cargo));
+            return;
+        }
+    }
+    public function actionNuevaUnidad(){
+        $this->renderPartial('_form',array('unidad'=>new Unidad));
+        return;
+    }
 }

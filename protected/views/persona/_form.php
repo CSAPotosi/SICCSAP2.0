@@ -166,15 +166,14 @@
         <?php $this->endWidget(); ?>
     </div>
 <?php
-Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/moment.js',CClientScript::POS_END);
-Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/elements/js/bootstrap-datetimepicker.min.js',CClientScript::POS_END);
+
 Yii::app()->clientScript->registerScript('datetime','
     $(function(){
         $("#datetimepicker1").datetimepicker({
         	locale:"es",
-        	defaultDate:"04/27/2015",
-        	format:"DD-MM-YYYY HH:mm A",
-        	maxDate:"04/27/2015"
+        	defaultDate:"'.date('Y-m-d H:i').'",
+        	format:"YYYY-MM-DD HH:mm",
+        	minDate:"'.date('Y-m-d H:i').'"
         });
         $("input[type=\'radio\'],input[type=\'radio\']").iCheck({
             checkboxClass:"icheckbox_flat-blue",

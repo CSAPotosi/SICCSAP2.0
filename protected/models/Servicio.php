@@ -144,5 +144,4 @@ class Servicio extends CActiveRecord
             $this->id_insti=1;
         return parent::beforeValidate();
     }
-
 }

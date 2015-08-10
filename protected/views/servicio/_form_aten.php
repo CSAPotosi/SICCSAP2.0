@@ -1,11 +1,22 @@
+<?php
+/* @var $this ServicioController */
+/* @var $dataProvider CActiveDataProvider */
+    $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['servicio/index'])." Servicios";
+$this->breadcrumbs=array(
+    'Servicios'=>array('index'),
+    'Atenciones Medicas',
+
+);
+
+?>
 <div class="row">
     <div class="col-md-12">
         <?php $this->renderPartial('_form_servicios',array())?>
         <div class="row">
             <div class="col-md-4">
-                <div class="box box-primary">
+                <div class="box box-primary box-solid">
                     <div class="box-header">
-                        <h3>Medico Disponibles</h3>
+                        Medico Disponibles
                     </div>
                     <div class="box-body">
                         <div id="contenedorEspecialidad">
@@ -15,9 +26,9 @@
                 </div>
             </div>
             <div class="col-md-8">
-                <div class="box box-primary">
+                <div class="box box-primary box-solid">
                     <div class="box-header">
-                        <h3>Servicio de Atencion Medico Disponibles</h3>
+                        Servicio de Atencion Medico Disponibles
                     </div>
                     <div class="box-body">
                         <div id="contenedoratencionmedica">
@@ -65,19 +76,7 @@
 </div>
 <?php Yii::app()->clientScript->registerScript('pruebagabineteatencion ','
     $(document).ready(function(){
-        EventosClick();
-        eventosEspe();
-        function EventosClick(){
-            $(".btnAtencionEspecialidad").on("click",verServicioMedico);
-            $(".btnagregarprecio").on("click",CrearServicioAtencion);
-            $(".btnagregarprecio").on("click",CrearServicioAtencion);
-            $("#btncrearatencionmedica").on("click",enviarServicioAtencion);
-            $("#btnactualizarAtencion").on("click",ActualizarAtencion);
-            $(".btnEliminarAtencion").on("click",EliminarAtencion);
-        }
-        function eventosEspe(){
-
-        }
+        $(".btnagregarprecio").on("click",CrearServicioAtencion);
         function CrearServicioAtencion(){
             $.ajax({
                 url:$(this).attr("href"),
@@ -89,17 +88,7 @@
             $("#servicioatencion").modal("show");
             return false;
         }
-        function verServicioMedico(){
-            $.ajax({
-                url:$(this).attr("href"),
-                type:"post",
-                success:function(datos){
-                    $("#contenedorservicioatencionupd").html(datos);
-                }
-            });
-            $("#updservicioatencion").modal("show");
-            return false;
-        }
+        $("#btncrearatencionmedica").on("click",enviarServicioAtencion);
         function enviarServicioAtencion(){
             $.ajax({
                 url:"'.CHtml::normalizeUrl(array('servicio/RegistrarAtencion')).'",
@@ -111,7 +100,7 @@
                         $("#servicioatencion").modal("hide");
                         $("#contenedoratencionmedica").html(datos);
                         listEspecialidad();
-
+                        $("#btnactualizarAtencion").on("click",ActualizarAtencion);
                     }
                     else{
                         $("#contenedorservicioatencion").html(datos);
@@ -126,11 +115,12 @@
                 type:"post",
                 success:function(datos){
                     $("#contenedorEspecialidad").html(datos);
-                    EventosClick();
+                    $(".btnagregarprecio").on("click",CrearServicioAtencion);
                 }
             });
             return false;
         }
+        $("#btnactualizarAtencion").on("click",ActualizarAtencion);
         function ActualizarAtencion(){
             $.ajax({
                 url:"'.CHtml::normalizeUrl(array('servicio/ActualizarAtencionMedica')).'",
@@ -141,6 +131,7 @@
                     if(contenido.children("#flag").val()==null){
                         $("#updservicioatencion").modal("hide");
                         $("#contenedoratencionmedica").html(datos);
+                        $("#btnactualizarAtencion").on("click",ActualizarAtencion);
                     }
                     else{
                         $("#contenedorservicioatencionupd").html(datos);
@@ -148,14 +139,16 @@
                 }
             });
         }
+        $(".btnEliminarAtencion").on("click",EliminarAtencion);
         function EliminarAtencion(){
             $.ajax({
                 url:$(this).attr("href"),
                 type:"post",
                 success:function(datos){
                     $("#contenedoratencionmedica").html(datos);
-                    EventosClick();
+                    $(".btnEliminarAtencion").on("click",EliminarAtencion);
                     listEspecialidad();
+                    $("#btnactualizarAtencion").on("click",ActualizarAtencion);
                 }
             });
             return false;

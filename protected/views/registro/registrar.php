@@ -38,23 +38,23 @@
                             'class'=>'form-control','prompt'=>'seleccione',
                             )
                         );?>
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-2 control-label")>Cargo</label>
-            <div class="col-sm-5">
-                <?php echo $form->dropDownList($model,'id2',array(),
-                    array(
-                        'ajax'=>array(
-                            'type'=>'POST',
-                            'url'=>$this->createUrl('Registro/ElegirEmpleado'),
-                            'update'=>'#'.CHtml::activeId($model,'id_asignacion'),
-                        ),'class'=>'form-control','prompt'=>'seleccione',
-                    )
-                );?>
-            </div>
-            <?php echo $form->error($model,'id2',array('class'=>'label label-danger')); ?>
-        </div>
+                    </div>
+               </div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label")>Cargo</label>
+                    <div class="col-sm-5">
+                        <?php echo $form->dropDownList($model,'id2',array(),
+                            array(
+                                'ajax'=>array(
+                                    'type'=>'POST',
+                                    'url'=>$this->createUrl('Registro/ElegirEmpleado'),
+                                    'update'=>'#'.CHtml::activeId($model,'id_asignacion'),
+                                ),'class'=>'form-control','prompt'=>'seleccione',
+                            )
+                        );?>
+                    </div>
+                    <?php echo $form->error($model,'id2',array('class'=>'label label-danger')); ?>
+                </div>
         <div class="form-group">
             <?php echo $form->labelEx($model,'id_asignacion',array('class'=>'col-md-2 control-label')); ?>
             <div class="col-sm-8">

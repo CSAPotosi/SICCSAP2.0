@@ -173,6 +173,7 @@ class HistorialPacienteController extends Controller
         $historial=new HistorialPaciente;
         if(isset($_POST['Persona'])){
             $persona->attributes=array_map('strtoupper',$_POST['Persona']);
+            $persona->fotografia='no-photo.png';
             if($persona->save()){
                 $paciente->id_paciente=$persona->id;
                 $paciente->save();

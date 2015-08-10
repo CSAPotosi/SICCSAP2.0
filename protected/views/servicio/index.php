@@ -4,7 +4,7 @@
         <?php
         /* @var $this ServicioController */
         /* @var $dataProvider CActiveDataProvider */
-
+        $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['site/index'])." Pagina de Inicio";
         $this->breadcrumbs=array(
 		'Servicios',
 	);

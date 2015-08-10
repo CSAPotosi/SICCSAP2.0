@@ -57,9 +57,10 @@
                 echo ($personaModel->paciente?CHtml::link('Hacer Solicitud de Servicios',array('SolicitudServicios/Create','id'=>$personaModel->id),array('class'=>'btn btn-warning btn-xs pull-right')):'');
                 }?>
                 <?php
-                if($tipo_persona=='empleado')
+                if($tipo_persona=='empleado'){
                 echo ($personaModel->empleado)?CHtml::link('Ver Empleado',array('historialPaciente/view','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs')):CHtml::link('Agregar Info. Empleado',array('persona/Updateempleado','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs'));
-                ?>
+                echo ($personaModel->empleado)?CHtml::link('Asignar Horario y Cargo',array('registro/AsignarEmpleado','id'=>$personaModel->id),array('class'=>'btn btn-social btn-tumblr btn-xs pull-right')):"";
+                }?>
                 <?php if($tipo_persona=='medico'){
                     $listaespecialidad=Especialidad::model()->findAll(array(
                         'order'=>'id_especialidad ASC',

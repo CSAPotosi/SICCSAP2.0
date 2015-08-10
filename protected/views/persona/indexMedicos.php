@@ -52,7 +52,7 @@
     </div>
 </div>
 <?php
-    Yii::app()->clientScript->registerScript('buscadorAjax','
+    Yii::app()->clientScript->registerScript('buscadorAjaxjh','
         $("#buscaPersona").keyup(function(){buscarPersona($(this))});
         function buscarPersona(control){
             var cad=control.val();

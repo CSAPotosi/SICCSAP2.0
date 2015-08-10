@@ -9,13 +9,7 @@
         <input type="hidden" value="<?php echo $lastid;?>" name="Empleado[id]">
         <div class="form-group">
             <?php echo $form->labelEx($empleado,'fecha_contratacion'); ?>
-            <div class="input-group date" id="datetimepicker1">
-                <input class="form-control" type="text"/>
-                       <span class="input-group-addon">
-                           <span class="glyphicon glyphicon-calendar">
-                           </span>
-                       </span>
-            </div>
+            <?php echo $form->datefield($empleado,'fecha_contratacion',array('class'=>'form-control')); ?>
             <?php echo $form->error($empleado,'fecha_contratacion',array('class'=>'label label-danger')); ?>
         </div>
         <div class="form-group">
@@ -38,3 +32,12 @@
     </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->
+<?php Yii::app()->clientScript->registerScript('Controlcontacto','
+    $("#datetimepicker1").datetimepicker({
+        	locale:"es",
+        	defaultDate:"'.date('Y-m-d H:i').'",
+        	format:"YYYY-MM-DD HH:mm",
+        	minDate:"'.date('Y-m-d H:i').'"
+        });
+');
+

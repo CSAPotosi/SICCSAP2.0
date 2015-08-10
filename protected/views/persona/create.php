@@ -4,7 +4,7 @@
         <?php
         $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'])." Pacientes";
         $this->breadcrumbs=array(
-            'Pacieste'=>array('index'),
+            'Paciente'=>array('index'),
             'Nueva Persona',
         );
         ?>

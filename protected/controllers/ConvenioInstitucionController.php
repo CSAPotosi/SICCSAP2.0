@@ -283,6 +283,8 @@ class ConvenioInstitucionController extends Controller
             foreach($conveniosservicios as $conv):
                 $convenioser=new ConvenioServicios;
                 $convenioser->attributes=$conv;
+                $servicio=Servicio::model()->findByPk($conv['id_servicio']);
+                $convenioser->descuento_servicio=$servicio->precioServicio->monto*($conv['descuento_servicio'])/100;
                 $convenioser->save();
             endforeach;
         }
@@ -338,7 +340,6 @@ class ConvenioInstitucionController extends Controller
         $paciente=Paciente::model()->findByPk($_POST['paciente']);
         $seguro=new SeguroConvenio;
         $listaseguros=CHtml::listData(ConvenioInstitucion::model()->findAll("id_convenio not in (select id_convenio_institucion from seguro_convenio where id_paciente={$paciente->id_paciente})"),'id_convenio','nombre_convenio');
-
         $this->renderPartial('tiposeguro',array(
             'tipo_paciente'=>$tipo,
             'seguro'=>$seguro,

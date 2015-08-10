@@ -1,3 +1,9 @@
+<?php
+$this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['site/index'])."Pagina Principal";
+$this->breadcrumbs=array(
+    'Horarios',
+);
+?>
 <div class="row">
     <div class="col-md-12">
         <div class="row">
@@ -42,6 +48,27 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade in" id="TurnoHorario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">x</button>
+                <h4 class="modal-title">Registro de Turno</h4>
+            </div>
+            <div class="modal-body">
+                <div id="contenedorTurnoHorario">
+                    <?php $this->renderPartial('form_turno',array('turno'=>$turno))?>
+                </div>
+            </div>
+            <div class="modal-footer clearfix">
+                <?php echo CHtml::tag('button',array('id'=>'btnTurnoHorario','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Guardar',true)?>
+                <?php echo CHtml::tag('button',array('id'=>'btnCloseUpditemlab','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cancelar',true)?>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="modal fade in" id="updateturnohorario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -59,24 +86,8 @@
         </div>
     </div>
 </div>
-<div class="modal fade in" id="TurnoHorario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">x</button>
-                <h4 class="modal-title">Registrar Turno</h4>
-            </div>
-            <div class="modal-body"">
-            <div id="contenedorTurnoHorario">
-                <?php $this->renderPartial('form_turno',array('turno'=>$turno))?>
-            </div>
-        </div>
-        <div class="modal-footer clearfix">
-            <?php echo CHtml::tag('button',array('id'=>'btnTurnoHorario','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Guardar',true)?>
-            <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</button>
-        </div>
-    </div>
-</div>
+
+
 
 
 <?php
