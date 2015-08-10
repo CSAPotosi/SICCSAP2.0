@@ -24,7 +24,9 @@ class ReportesController extends Controller
 
 
     public function actionCensoSalas(){
-        echo 'hola mundo';
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->renderPartial('censoSalasDia',['modeloDetalle'=>$modelDetalle],true));
+        $mPDF1->Output();
     }
 
     public function actionReporteServiciosGabinete()

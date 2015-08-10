@@ -141,4 +141,10 @@ return array(
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
 	),
+
+    'behaviors'=>array(
+        'onBeginRequest'=>array(
+            'class'=>'application.components.RequireLogin',
+        ),
+    ),
 );

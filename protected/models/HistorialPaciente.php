@@ -49,7 +49,7 @@ class HistorialPaciente extends CActiveRecord
 			'antecedenteMedicos' => array(self::HAS_MANY, 'AntecedenteMedico', 'id_historia'),
 			'paciente' => array(self::BELONGS_TO, 'Paciente', 'id_historial'),
 			'consultas' => array(self::HAS_MANY, 'Consulta', 'id_historia'),
-            'internacion'=>array(self::HAS_MANY,'Internacion','id_historial'),
+            'internacion'=>array(self::HAS_MANY,'Internacion','id_historial','order'=>'fecha_ingreso DESC'),
             'internacionActual'=>array(self::HAS_ONE,'Internacion','id_historial','condition'=>'fecha_egreso is null'),
             'cirugiaProgramada'=>array(self::HAS_MANY,'Cirugia','id_historial','condition'=>"estado_cirugia = 'PROGRAMADA'",'order'=>'fecha_hora_prog DESC'),
             'cirugias'=>array(self::HAS_MANY,'Cirugia','id_historial','order'=>'fecha_hora_prog DESC','limit'=>'5'),

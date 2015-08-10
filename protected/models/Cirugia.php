@@ -94,6 +94,8 @@ class Cirugia extends CActiveRecord
 			'detalle_instru' => 'DETALLE DE INSTRUMENTAL UTILIZADO',
 			'tipo_anestesia' => 'TIPO DE ANESTESIA APLICADA',
 			'estado_cirugia' => 'Estado Cirugia',
+            'diagnostico_pre_q'=>'DIAGNOSTICO PRE-QUIRURGICO',
+            'diagnostico_post_q'=>'DIAGNOSTICO POST-QUIRURGICO',
 			'id_historial' => 'Id Historial',
 			'id_q' => 'QUIROFANO',
 		);

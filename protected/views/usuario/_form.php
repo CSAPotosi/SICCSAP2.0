@@ -1,4 +1,9 @@
 <script src="<?php echo Yii::app()->baseUrl; ?>/js/carpeta/jquery.yiigridview.js"></script>
+<style>
+    form#usuario-form input{text-transform:none;}
+</style>
+
+
 <?php
 /*
  *

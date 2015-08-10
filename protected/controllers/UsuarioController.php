@@ -28,16 +28,8 @@ class UsuarioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','listarPersona'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin','luis'),
+				'actions'=>array('index','view','listarPersona','eliminarRol','create','update','admin','delete'),
+				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -51,9 +43,10 @@ class UsuarioController extends Controller
 	 */
 	public function actionView($id)
 	{
-
+        $asignaciones=AsignacionRol::model()->findAll('userid=:id',array(':id'=>$id));
 		$this->render('view',array(
 			'model'=>$this->loadModel($id),
+            'asignaciones'=>$asignaciones,
 		));
 	}
 
@@ -182,7 +175,7 @@ class UsuarioController extends Controller
 	{
 		$model=Usuario::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404,'La pagina solicitada no existe.');
+			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
 	}
 
@@ -219,6 +212,13 @@ class UsuarioController extends Controller
 
         $personas=Persona::model()->findAll($criteria);
         echo CJSON::encode($personas);
+    }
+
+    public function actionEliminarRol($id,$rol)
+    {
+        $asignacion=AsignacionRol::model()->find("itemname='{$rol}' and userid='{$id}'");
+        $asignacion->delete();
+        $this->redirect(array('view','id'=>$id));
     }
     /***************************************************************************/
 }

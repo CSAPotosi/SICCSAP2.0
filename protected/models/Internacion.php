@@ -46,7 +46,7 @@ class Internacion extends CActiveRecord
 			array('motivo_ingreso', 'length', 'max'=>32),
 			array('observacion_ingreso, observacion_alta', 'length', 'max'=>256),
 			array('procedencia_ingreso, tipo_alta', 'length', 'max'=>16),
-            array('fecha_ingreso, fecha_alta','date','format'=>'dd-mm-yyyy HH:mm'),
+            array('fecha_alta','date','format'=>'dd-mm-yyyy HH:mm'),
 			array('fecha_alta, fecha_egreso', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

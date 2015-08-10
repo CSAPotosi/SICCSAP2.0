@@ -28,16 +28,8 @@ class HorarioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','CrearHorario','ChangeStateHorario','ActualizarHorario','VerTurnosHorario','CrearTurno','Nuevo','ActualizarTurno'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update','cambiaEstado'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
-				'users'=>array('admin'),
+				'actions'=>array('index','view','CrearHorario','ChangeStateHorario','ActualizarHorario','VerTurnosHorario','CrearTurno','create','update','cambiaEstado','admin','delete'),
+				'roles'=>array('ADMINISTRAR_HORARIOS'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -223,7 +215,7 @@ class HorarioController extends Controller
             }
         }
         $listahorarios=Horario::model()->findAll();
-        $this->render('index',array('horario'=>$horario,'listahorarios'=>$listahorarios,'turno'=>$turno));
+        $this->render('index',array('horario'=>$horario,'listahorarios'=>$listahorarios,'turno',$turno));
     }
     public function actionVerTurnosHorario($id){
         $horario=Horario::model()->findByPk($id);
@@ -238,39 +230,13 @@ class HorarioController extends Controller
             $turno->attributes=array_map('strtoupper',$_POST['Turno']);
             if($turno->save()){
                 $listaturno=Turno::model()->findAll(array(
-                    'condition'=>"id_horario='{$turno->id_horario}'",
+                    'condition'=>"id_horario='{$turno->id_horario}'"
                 ));
-                $horario=Horario::model()->findByPk($turno->id_horario);
-                $this->renderPartial('listaturnoHorario',array('listaturnos'=>$listaturno,'horario'=>$horario));
-                return;
+                $this->renderPartial('listaturnoHorario',array('listaturnos'=>$listaturno));
             }
             $this->renderPartial('form_turno',array('turno'=>$turno));
             return;
         }
-    }
-    public function actionNuevo(){
-        $this->renderPartial('_form',array('horario'=>new Horario));
-    }
-    public function actionActualizarTurno($id=0){
-        if($id==0){
-            if(isset($_POST['Turno'])){
-            $turno=Turno::model()->findByPk($_POST['Turno']['id_turno']);
-                $turno->attributes=array_map('strtoupper',$_POST['Turno']);
-                if($turno->save()){
-                    $listaturno=Turno::model()->findAll(array(
-                        'condition'=>"id_horario='{$turno->id_horario}'"
-                    ));
-                    $horario=Horario::model()->findByPk($turno->id_horario);
-                    $this->renderPartial('listaturnoHorario',array('listaturnos'=>$listaturno,'horario'=>$horario));
-                    return;
-                }
-            }
-            $this->renderPartial('form_turno',array('turno'=>$turno));
-            return;
-        }
-        else{
-            $turno=Turno::model()->findByPk($id);
-            $this->renderPartial('form_turno',array('turno'=>$turno));
-        }
+
     }
 }
