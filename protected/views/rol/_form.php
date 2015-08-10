@@ -34,9 +34,15 @@
 
 	<div class="form-group">
 		<?php echo $form->labelEx($model,'description'); ?>
-		<?php echo $form->textArea($model,'description',array('rows'=>6, 'cols'=>50, 'class'=>'form-control')); ?>
+		<?php echo $form->textArea($model,'description',array('rows'=>4, 'cols'=>50, 'class'=>'form-control')); ?>
 		<?php echo $form->error($model,'description'); ?>
 	</div>
+
+    <div class="form-group">
+        <?php echo $form->labelEx($model,'bizrule'); ?>
+        <?php echo $form->textArea($model,'bizrule',array('rows'=>2, 'cols'=>50, 'class'=>'form-control')); ?>
+        <?php echo $form->error($model,'bizrule'); ?>
+    </div>
 
 	<div class="box-footer">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save',array('class'=>'btn btn-primary btn-lg')); ?>

@@ -28,15 +28,7 @@ class RolController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','assign','addchild','admin'),
-				'users'=>array('*'),
-			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin','delete','view','create','update','index','addchild','assign'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -72,9 +64,9 @@ class RolController extends Controller
             $model->attributes=$_POST['Rol'];
             switch($_POST['Rol']['type'])
             {
-                case '2':if($auth->createRole($model->name,$model->description)) $this->redirect(array('view','id'=>$model->name));break;
-                case '1':if($auth->createTask($model->name,$model->description)) $this->redirect(array('view','id'=>$model->name));break;
-                case '0':if($auth->createOperation($model->name,$model->description)) $this->redirect(array('view','id'=>$model->name));break;
+                case '2':if($auth->createRole(strtoupper ( $model->name ),strtoupper ( $model->description ))) $this->redirect(/*array('view','id'=>$model->name)*/array('create'));break;
+                case '1':if($auth->createTask(strtoupper ( $model->name ),strtoupper ( $model->description ))) $this->redirect(/*array('view','id'=>$model->name)*/array('create'));break;
+                case '0':if($auth->createOperation(strtoupper ( $model->name ),strtoupper ( $model->description ))) $this->redirect(/*array('view','id'=>$model->name)*/array('create'));break;
             }
 		}
 
@@ -126,28 +118,9 @@ class RolController extends Controller
 	 */
 	public function actionIndex()
     {
-        $roles=new CActiveDataProvider('Rol', array(
-            'criteria'=>array(
-                'condition'=>'type=2',
-                'order'=>'name ASC',
-            ),
-        ));
-        $tareas=new CActiveDataProvider('Rol', array(
-            'criteria'=>array(
-                'condition'=>'type=1',
-                'order'=>'name ASC',
-            ),
-        ));
-        $operaciones=new CActiveDataProvider('Rol', array(
-            'criteria'=>array(
-                'condition'=>'type=0',
-                'order'=>'name ASC',
-            ),
-            'pagination'=>array(
-                'pageSize'=>2,
-            ),
-        ));
-
+        $roles=Rol::model()->findAll("type='2' order by name asc");
+        $tareas=Rol::model()->findAll("type='1' order by name asc");
+        $operaciones=Rol::model()->findAll("type='0' order by name asc");
 
         $this->render('index', array(
             'roles' => $roles,
@@ -201,10 +174,26 @@ class RolController extends Controller
 
     public function actionAssign()
     {
-        $items=Rol::model()->findAll();
+        if(isset($_GET['id']))
+        {
+            $roles=Rol::model()->findAll("type=2 and name not in (select itemname from asignacion_rol where userid='{$_GET['id']}')");
+            $tareas=Rol::model()->findAll("type=1 and name not in (select itemname from asignacion_rol where userid='{$_GET['id']}')");
+            $operaciones=Rol::model()->findAll("type=0 and name not in (select itemname from asignacion_rol where userid='{$_GET['id']}')");
+        }
+        else
+        {
+            $roles=Rol::model()->findAll("type=2");
+            $tareas=Rol::model()->findAll("type=1");
+            $operaciones=Rol::model()->findAll("type=0");
+        }
+            $items=Rol::model()->findAll();
         $auth=Yii::app()->authManager;
         $usuarios=new Usuario('search');
         $usuarios->unsetAttributes();
+
+
+        if(isset($_GET['id']))
+            $usuarios=Usuario::model()->find('id_usuario=:id',array(':id'=>$_GET['id']));
 
         /***************************************/
         if(isset($_POST['roles'])and isset($_POST['idusuario']))
@@ -213,24 +202,25 @@ class RolController extends Controller
             {
                 $auth->assign($item,$_POST['idusuario']);
             }
-            $this->redirect(array("index"));
+            $this->redirect(array("usuario/view",'id'=>$_POST['idusuario']));
         }
         $this->render('assign',array(
-            'items'=>$items,
             'usuarios'=>$usuarios,
+            'roles'=>$roles,
+            'tareas'=>$tareas,
+            'operaciones'=>$operaciones,
         ));
     }
 
     public function actionAddChild()
     {
-        $items=Rol::model()->findAll();
+        $items=Rol::model()->findAll("type!=0");
         $auth=Yii::app()->authManager;
-        $roles=new CActiveDataProvider('Rol', array(
-            'criteria'=>array(
-                'condition'=>'type!=0',
-                'order'=>'name ASC',
-            ),
-        ));
+        $roles=Rol::model()->findAll("type=2");
+        $tareas=Rol::model()->findAll("type=1");
+        $operaciones=Rol::model()->findAll("type=0");
+        if(isset($_GET["id"]))
+            $roles=Rol::model()->find('name=:name',array('name'=>$_GET["id"]));
         /***************************************/
         if(isset($_POST['roles'])and isset($_POST['nombrerol']))
         {
@@ -240,9 +230,12 @@ class RolController extends Controller
             }
             $this->redirect(array("index"));
         }
+
         $this->render('addchild',array(
             'items'=>$items,
             'roles'=>$roles,
+            'tareas'=>$tareas,
+            'operaciones'=>$operaciones,
         ));
     }
 

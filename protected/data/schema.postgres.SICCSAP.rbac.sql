@@ -8,9 +8,9 @@
  * @since 1.0
  */
 
-drop table if exists "rol";
 drop table if exists "subrol";
 drop table if exists "asignacion_rol";
+drop table if exists "rol";
 
 create table rol
 (

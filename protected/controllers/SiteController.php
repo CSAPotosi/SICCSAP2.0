@@ -3,6 +3,9 @@
 class SiteController extends Controller
 {
 
+	/**
+	 * Declares class-based actions.
+	 */
 
 	public function actions()
 	{
@@ -106,7 +109,7 @@ class SiteController extends Controller
 	public function actionLogout()
 	{
 		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
+		$this->redirect(Yii::app()->createAbsoluteUrl("site/login"));
 	}
 
     public function actionPruebas(){

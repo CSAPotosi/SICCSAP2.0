@@ -11,9 +11,11 @@ Yii::app()->clientScript->registerScript('search','
         $(this).prop("maxlength","0");
         $(this).prop("placeholder","Escoger un usuario de la siguiente tabla:");
     });
-    $("#botonusuario").on("click",function(){
-
-    });
+        $(".desabilitaboton").on("click",function(e){
+            $this=$(this);
+            $this.addClass("disabled");
+            setTimeout(function() { $this.removeClass("disabled"); }, 500);
+        });
 ');
 
 ?>
@@ -43,6 +45,7 @@ Yii::app()->clientScript->registerScript('search','
                 <div class="form">
                     <?php echo CHtml::beginForm(); ?>
 
+                    <?php if(!isset($_GET['id'])): ?>
                     <div class="form-group">
                         <input type="hidden" name="idusuario" id="idusuario" />
                         <label> Nombre Usuario</label>
@@ -64,13 +67,46 @@ Yii::app()->clientScript->registerScript('search','
                         )); ?>
 
                     </div>
+                    <?php else: ?>
+
+                        <div class="form-group">
+                            <input type="hidden" name="idusuario" id="idusuario" value="<?php echo $usuarios->id_usuario;?>"/>
+                            <label> Nombre Usuario</label>
+                            <input type="text" id="nombreusuario" class="form-control"  disabled="disabled" value="<?php echo $usuarios->persona->nombres.' '.$usuarios->persona->primer_apellido.' '.$usuarios->persona->segundo_apellido;?>"/>
+                        </div>
+
+                    <?php endif; ?>
 
                     <div class="row">
                             <div class="col-md-12">
                                 <div class="box box-primary box-solid">
                                     <div class="box-header"><h4> Seleccionar Roles</h4></div>
                                     <div class="box-body">
-                                        <?php foreach($items as $i=>$item): ?>
+                                        <?php foreach($roles as $i=>$item): ?>
+                                            <div class="col-md-3">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="roles[]" value=<?php echo $item->name;?> /><?php echo $item->name;?></label>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                                <div class="box box-primary box-solid">
+                                    <div class="box-header"><h4> Seleccionar Roles</h4></div>
+                                    <div class="box-body">
+                                        <?php foreach($tareas as $i=>$item): ?>
+                                            <div class="col-md-3">
+                                                <div class="checkbox">
+                                                    <label><input type="checkbox" name="roles[]" value=<?php echo $item->name;?> /><?php echo $item->name;?></label>
+                                                </div>
+                                            </div>
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                                <div class="box box-primary box-solid">
+                                    <div class="box-header"><h4> Seleccionar Roles</h4></div>
+                                    <div class="box-body">
+                                        <?php foreach($operaciones as $i=>$item): ?>
                                             <div class="col-md-3">
                                                 <div class="checkbox">
                                                     <label><input type="checkbox" name="roles[]" value=<?php echo $item->name;?> /><?php echo $item->name;?></label>
@@ -82,7 +118,7 @@ Yii::app()->clientScript->registerScript('search','
                             </div>
                         </div>
                     <div class="box-footer">
-                        <?php echo CHtml::submitButton('Save',array('class'=>'btn btn-primary btn-lg')); ?>
+                        <?php echo CHtml::submitButton('Save',array('class'=>'btn btn-primary btn-lg desabilitaboton')); ?>
                     </div>
                     <?php echo CHtml::endForm(); ?>
                 </div><!-- form -->

@@ -16,14 +16,22 @@ $this->menu=array(
 <?php
 Yii::app()->clientScript->registerScript('search','
     $("#roles-grid").hide();
-    function getroles(name){
-        $("#nombrerol").prop("value",name);
-        $("#usuarios-grid").slideToggle(400);
-    };
+
+
+    $(".selectrol").on("click",function(e){
+        e.preventDefault();
+        $("#nombrerol").prop("value",$(this).val());
+        $(".selectrol").removeClass("btn-info");
+        $(this).addClass("btn-info");
+        $("#roles-grid").slideToggle(400);
+        $(".rolesitems").removeClass("hidden");
+        $("#"+$(this).val()).addClass("hidden");
+    });
     $("#nombrerol").on("click",function(){
         $("#roles-grid").slideToggle(400);
         $(this).prop("maxlength","0");
         $(this).prop("placeholder","Escoger un rol de la siguiente tabla:");
+
     });
 ');
 
@@ -63,17 +71,21 @@ Yii::app()->clientScript->registerScript('search','
                     <label> Nombre Rol</label>
                     <input type="text" id="nombrerol" name="nombrerol" class="form-control"/>
                     </div>
-                    <?php $this->widget('zii.widgets.grid.CGridView', array(
-                        'id'=>'roles-grid',
-                        'dataProvider'=>$roles  ,
-                        'itemsCssClass' => 'table table-bordered table-striped dataTable',
-                        'columns'=>array(
-                            'name',
-                            'description',
-                        ),
-                        'selectionChanged'=>'function(name){getroles($.fn.yiiGridView.getSelection(name))}',
-                    )); ?>
 
+                    <table class="table table-bordered" id="roles-grid">
+                        <tbody>
+                        <?php if($roles!=null): ?>
+                            <?php $var=0;?>
+                            <?php foreach($items as $item): ?>
+                                <?php if($var==0) echo "<tr>"; ?>
+                                <td><button class="btn btn-block btn-default selectrol" value="<?php echo $item->name; ?>"><?php echo $item->name; ?></button>
+                                <?php if($var==3) { echo "</td>"; $var=0;} else $var=$var+1;  ?>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <p>No existen Roles</p>
+                        <?php endif; ?>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="row">
@@ -81,8 +93,32 @@ Yii::app()->clientScript->registerScript('search','
                         <div class="box box-primary box-solid">
                             <div class="box-header"><h4> Seleccionar Roles para asignar</h4></div>
                             <div class="box-body">
-                                <?php foreach($items as $i=>$item): ?>
-                                    <div class="col-md-3">
+                                <?php foreach($roles as $i=>$item): ?>
+                                    <div class="col-md-3 rolesitems" id="<?php echo $item->name;?>" >
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="roles[]" value=<?php echo $item->name;?> /><?php echo $item->name;?></label>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <div class="box box-primary box-solid">
+                            <div class="box-header"><h4> Seleccionar Roles para asignar</h4></div>
+                            <div class="box-body">
+                                <?php foreach($tareas as $i=>$item): ?>
+                                    <div class="col-md-3 rolesitems" id="<?php echo $item->name;?>" >
+                                        <div class="checkbox">
+                                            <label><input type="checkbox" name="roles[]" value=<?php echo $item->name;?> /><?php echo $item->name;?></label>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
+                        </div>
+                        <div class="box box-primary box-solid">
+                            <div class="box-header"><h4> Seleccionar Roles para asignar</h4></div>
+                            <div class="box-body">
+                                <?php foreach($operaciones as $i=>$item): ?>
+                                    <div class="col-md-3 rolesitems" id="<?php echo $item->name;?>" >
                                         <div class="checkbox">
                                             <label><input type="checkbox" name="roles[]" value=<?php echo $item->name;?> /><?php echo $item->name;?></label>
                                         </div>

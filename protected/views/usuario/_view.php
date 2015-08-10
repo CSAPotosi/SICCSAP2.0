@@ -44,7 +44,7 @@
                             <div class="row">
                                 <div class="col-md-4 col-md-offset-8">
                                     <?php echo CHtml::link("Mas Informacion",array('/usuario/view','id'=>$item->id_usuario),array('class'=>'btn btn-primary btn-md pull-right')); ?>&nbsp;
-                                    <a class="btn btn-danger btn-md pull-right">Agregar Roles</a>
+                                    <?php echo CHtml::link("Agregar Roles",array('/rol/assign','id'=>$item->id_usuario),array('class'=>'btn btn-danger btn-md pull-right')); ?>&nbsp;
                                 </div>
                             </div>
                         </div>
