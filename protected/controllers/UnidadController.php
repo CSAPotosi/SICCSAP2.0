@@ -29,7 +29,7 @@ class UnidadController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','enabled','VerCargosUnidad','formCrearCargo','ChangeStateCargo','create','update','admin','delete'),
-				'roles'=>array('ASISTENCIA'),
+				'roles'=>array('ADMINISTRAR_UNIDAD'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
