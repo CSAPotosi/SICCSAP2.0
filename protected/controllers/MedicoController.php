@@ -29,7 +29,7 @@ class MedicoController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','CrearEspecialidadAjax','ActualizarEs','VerEspecialidad','UpdateEspecialidadAjax','CrearMedicoEspe','CrearMedico','CrearMedicoComplementarios','UpdateMedicoEspe','QuitarEspecialidad','create','update','admin','delete'),
-				'roles'=>array('ADMINISTRAR_MEDICO'),
+				'roles'=>array('ADMINISTRAR_MEDICO','ADMIN'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),

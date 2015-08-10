@@ -28,11 +28,11 @@ class PersonaController extends Controller
 		return array(
             array('allow',
                 'actions'=>array('_form_Updateper','CrearEmpleado','Updateempleado','Updempleadoper','Medicos','Empleado','CrearMedico','MedicoInformacion','view','index','buscarPersonaAjax','admin','delete'),
-                'roles'=>array('ADMINISTRAR_EMPLEADO'),
+                'roles'=>array('ADMINISTRAR_EMPLEADO','ADMIN'),
             ),
             array('allow',
                 'actions'=>array('Crearcontacto','Crearpaciente','_form_updatepa','_form_Updateper','Nc','view','index','create','update','updatepa','buscarContactoAjax','buscarPersonaAjax'),
-                'roles'=>array('ADMINISTRAR_PACIENTE'),
+                'roles'=>array('ADMINISTRAR_PACIENTE','ADMIN'),
             ),
 			array('deny',  // deny all users
 				'users'=>array('*'),

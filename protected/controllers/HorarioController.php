@@ -29,7 +29,7 @@ class HorarioController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','CrearHorario','ChangeStateHorario','ActualizarHorario','VerTurnosHorario','CrearTurno','create','update','cambiaEstado','admin','delete'),
-				'roles'=>array('ADMINISTRAR_HORARIOS'),
+				'roles'=>array('ADMINISTRAR_HORARIOS','ADMIN'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),

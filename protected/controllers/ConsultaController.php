@@ -19,7 +19,7 @@ class ConsultaController extends Controller{
         return array(
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
                 'actions'=>array('index','viewAntecedente','createConsultaAjax','listConsulta','loadConsultaAjax','NuevoAntecedente','CrearAntecedente','loadFormTratamientoAjax','createTratamientoAjax','loadDetalleTratamientoAjax','loadMedicamento','createEvolucionAjax','viewTratamiento'),
-                'users'=>array('@'),
+                'ROLES'=>array('ADMIN'),
             ),
             array('deny',  // deny all users
                 'users'=>array('*'),
