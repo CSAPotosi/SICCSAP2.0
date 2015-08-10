@@ -61,10 +61,25 @@ class InternacionController extends Controller
 
     public function actionAltaMedica($id=0){
         $modelInternacion=Internacion::model()->findByPk($id);
+
         if(isset($_POST['Internacion'])){
             $modelInternacion->attributes=array_map('strtoupper',$_POST['Internacion']) ;
+            $modelInternacion->fecha_egreso=$modelInternacion->fecha_alta;
+
             if($modelInternacion->validate()&&$modelInternacion->save(false)){
-                return $this->redirect(['internacion/index','id'=>$modelInternacion->id_inter]);
+                $listaSalas=$modelInternacion->salas;
+
+                foreach($listaSalas as $sala){
+                    if($sala->fecha_salida==''||$sala->fecha_salida == null){
+                        $sala->fecha_salida=date('d-m-Y h:i A');
+                        $sala->save();
+                    }
+                    $sala->sala->estado_sala=1;
+                    $sala->sala->save();
+                }
+                $modelInternacion->historial->paciente->estado_paciente='ACTIVO';
+                $modelInternacion->historial->paciente->save();
+                return $this->redirect(['historialPaciente/view','id'=>$modelInternacion->historial->id_historial]);
             }
         }
         return $this->render('altaMedica',['modelInternacion'=>$modelInternacion]);

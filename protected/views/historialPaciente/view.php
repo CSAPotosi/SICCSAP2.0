@@ -25,13 +25,14 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'
         <div class="collapse navbar-collapse" id="menuHistoria">
             <ul class="nav navbar-nav">
                 <li class="active"><?php echo CHtml::link("<i class='fa fa-list'></i> Historia clinica",array('historialPaciente/view','id'=>$model->id_historial))?></li>
+                <li><?php echo CHtml::link('<i class="fa fa-h-square"></i> Antecedentes',['consulta/viewAntecedente','hid'=>$model->id_historial]);?></li>
                 <li><?php echo CHtml::link("<i class='fa fa-stethoscope'></i> Nueva consulta",array('consulta/','hid'=>$model->id_historial));?></li>
                 <li><?php echo ($model->paciente->estado_paciente!='INTERNADO')?CHtml::link("<i class='fa fa-wheelchair'></i> Nueva internacion",['internacion/createInternacion','id'=>$model->id_historial]):CHtml::link("<i class='fa fa-wheelchair'></i> Internacion actual",['internacion/index','id'=>$model->internacionActual->id_inter]); ?></li>
                 <li class="dropdown">
                     <?php echo CHtml::link('Quirofanos <span class="caret"></span>',['#'],['class'=>'dropdown-toggle animate','data-toggle'=>'dropdown']);?>
                     <ul class="dropdown-menu" role="menu">
                         <li><?php echo CHtml::link('Programar cirugia',['cirugia/programarCirugia','id_h'=>$model->id_historial]);?></li>
-                        <li><?php echo CHtml::link('Registrar cirugia',['cirugia/indexCirugia','id_h'=>$model->id_historial]);?></li>
+                        <li><?php echo CHtml::link('Registrar cirugia',['cirugia/createCirugia','id_h'=>$model->id_historial]);?></li>
                     </ul>
                 </li>
             </ul>
@@ -89,6 +90,43 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'
             </div>
         </div>
 
+
+        <div class="box box-solid box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Internaciones efectuadas</h3>
+                <div class="box-tools pull-right">
+                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
+                </div>
+            </div>
+
+            <div class="box-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>
+                            FECHA INGRESO
+                        </th>
+                        <th>
+                            FECHA EGRESO
+                        </th>
+                        <th>
+                            MOTIVO DE INTERNACION
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($model->internacion as $inter):?>
+                            <tr>
+                                <td><?php echo $inter->fecha_ingreso; ?></td>
+                                <td><?php echo $inter->fecha_egreso; ?></td>
+                                <td><?php echo $inter->motivo_ingreso;?></td>
+                            </tr>
+                        <?php endforeach;?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
 
     <div class="col-md-6">
@@ -143,45 +181,6 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['persona/index'
 
             <div class="box-footer">
                 <?php echo CHtml::link('Programar cirugia',array('cirugia/programarCirugia','id_h'=>$model->id_historial),array('class'=>'btn btn-primary pull-right'));?>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-6">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Mi titulo 3   </h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
-                </div>
-            </div>
-
-            <div class="box-body">
-                conytenido
-            </div>
-
-            <div class="box-footer">
-                pie
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Mi titulo 4   </h3>
-                <div class="box-tools pull-right">
-                    <button class="btn btn-default btn-sm" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Collapse"><i class="fa fa-minus"></i></button>
-                </div>
-            </div>
-
-            <div class="box-body">
-                conytenido
-            </div>
-
-            <div class="box-footer">
-                pie
             </div>
         </div>
     </div>

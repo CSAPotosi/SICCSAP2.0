@@ -1,11 +1,10 @@
 <?php
-/* @var $this EvolucionEnfermeriaController */
-
 $this->breadcrumbs=array(
-	'Evolucion Enfermeria',
+    'Pacientes'=>array('persona/index'),
+    'CSA-'.$modelInternacion->historial->paciente->personapa->codigo=>['historialPaciente/view','id'=>$modelInternacion->historial->id_historial],
+    'Historia de internacion',
 );
-
-$this->pageTitle='Kardex de enfermeria';
+$this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPaciente/view','id'=>$modelInternacion->historial->id_historial]).' Historial de internacion - Kardex';
 ?>
 
 <?php $this->renderPartial('/historialPaciente/_form_datos_paciente',array('model'=>$modelInternacion->historial));?>
@@ -22,17 +21,15 @@ $this->pageTitle='Kardex de enfermeria';
         <div class="collapse navbar-collapse" id="menuHistoria">
             <ul class="nav navbar-nav">
                 <li><?php echo CHtml::link('Datos generales',['internacion/index','id'=>$modelInternacion->id_inter]);?></li>
-                <li><?php echo CHtml::link('Nuevo diagnostico',['qweqw']);?></li>
                 <li class="active"><?php echo CHtml::link('Kardex de enfermeria',['evolucionEnfermeria/showKardex','id'=>$modelInternacion->id_inter]);?></li>
                 <li><?php echo CHtml::link('Cambio de sala',['internacion/viewHistorialSalas','id'=>$modelInternacion->id_inter]);?></li>
-                <li><?php echo CHtml::link('Servicios',['qweqw']);?></li>
-                <li><?php echo CHtml::link('Examenes',['qweqw']);?></li>
+                <li><?php echo CHtml::link('Ordenes de servicio',['SolicitudServicios/OrdenInternacion','id'=>$modelInternacion->historial->id_historial,'id_inter'=>$modelInternacion->id_inter]);?></li>
+                <li><?php echo CHtml::link('Servicios otorgados',['SolicitudServicios/VerServiciosInternacion','id'=>$modelInternacion->historial->id_historial,'id_inter'=>$modelInternacion->id_inter]);?></li>
                 <li><?php echo CHtml::link('Alta',['internacion/altaMedica','id'=>$modelInternacion->id_inter]);?></li>
             </ul>
         </div>
     </div>
 </nav>
-
 
 <div class="row">
     <div class="col-md-12">

@@ -152,12 +152,14 @@ class SolicitudServiciosController extends Controller
         $mPDF1->WriteHTML($this->render('/reportesolicitudservicios/comprobantedetalleordengab',['solicitud'=>$solicitud,'detalle'=>$deta],true));
         $mPDF1->Output();
     }
-    public function actionOrdenInternacion($id){
+    public function actionOrdenInternacion($id,$id_inter=0){
         $historial=HistorialPaciente::model()->findByPk($id);
+        $modelInternacion=Internacion::model()->findByPk($id_inter);
         $detalle=new DetalleSolicitudServicio;
         $solicitud=new SolicitudServicios;
         $this->render('solicitudInternacion',array(
             'historial'=>$historial->id_historial,
+            'modelInternacion'=>$modelInternacion,
             'detsolser'=>$detalle,
             'solicitud'=>$solicitud,
         ));
@@ -191,13 +193,14 @@ class SolicitudServiciosController extends Controller
         $this->render('versolicituddetalleinteenacion',array('solicitud'=>$solicitud));
 
     }
-    public function actionVerServiciosInternacion($id){
+    public function actionVerServiciosInternacion($id,$id_inter=0){
         $historial=HistorialPaciente::model()->findByPk($id);
+        $modelInternacion=Internacion::model()->findByPk($id_inter);
         $var=$historial->internacionActual->fecha_ingreso;
         $solicitud=SolicitudServicios::model()->findAll(array(
             'condition'=>"fecha_solicitud>='{$var}' and id_historial='{$historial->id_historial}'",
         ));
-       $this->render('listadetallesolicitudservicio',array('solicitud'=>$solicitud,'historial'=>$historial));
+       $this->render('listadetallesolicitudservicio',array('solicitud'=>$solicitud,'historial'=>$historial,'modelInternacion'=>$modelInternacion));
     }
 
 	public function actionDelete($id)

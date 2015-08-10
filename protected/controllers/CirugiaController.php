@@ -116,8 +116,7 @@ class CirugiaController extends Controller
                     $item->id_c=$modelCirugia->id_c;
                     $item->save(false);
                 }
-                echo 'hola mundo';
-                return ;
+                return $this->redirect(['historialPaciente/view','id'=>$modelCirugia->id_historial]);
             }
 
         }
