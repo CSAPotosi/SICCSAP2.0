@@ -204,81 +204,86 @@
                     <li class="header">OPCIONES</li>
                     <!-- Optionally, you can add icons to the links -->
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/']);?>" ><i class="fa fa-home"></i> <span>Inicio</span></a></li>
-                    <?php if(Yii::app()->user->checkAccess('ADMINISTRAR_PACIENTE')):?>
+                    <?php if(Yii::app()->user->checkAccess('MEDICO_ENFERMERA')):?>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/index'])?>" ><i class="fa fa-user"></i> <span>Paciente</span></a></li>
                     <?php endif; ?>
-                    <?php if(Yii::app()->user->checkAccess('ADMINISTRAR_MEDICO')):?>
-                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Medicos'])?>" ><i class="fa fa-fw fa-stethoscope"></i> <span>Medicos</span></a></li>
+
+                    <?php if(Yii::app()->user->checkAccess('ENCARGADO_DE_QUIROFANO')):?>
+                        <li class="treeview">
+                            <a href="#"><i class='fa fa-link fa-heartbeat'></i> <span>Quirofano</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/cirugia/agenda'])?>">Agenda</a></li>
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/quirofano/index'])?>">Administracion de Quirofanos</a></li>
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/quirofano/create'])?>">Nuevo de Quirofanos</a></li>
+                            </ul>
+                        </li>
                     <?php endif; ?>
-                    <?php if(Yii::app()->user->checkAccess('ADMINISTRAR_EMPLEADO')):?>
-                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Empleado'])?>" ><i class="fa fa-suitcase"></i> <span>Empleado</span></a></li>
+
+                    <?php if(Yii::app()->user->checkAccess('ENFERMERIA')):?>
+                        <li class="treeview">
+                            <a href="#"><i class='fa fa-link fa-bed'></i> <span>Salas</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/sala/index'])?>">Administracion de Salas</a></li>
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/sala/listsala'])?>">Control de Salas</a></li>
+                            </ul>
+                        </li>
                     <?php endif; ?>
+
+                    <?php if(Yii::app()->user->checkAccess('ENCARGADO_DE_LABORATORIO')):?>
+                        <li class="treeview">
+                            <a href="#"><i class='ion ion-beaker'></i> <span>Laboratorio</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/solicitudservicios/listasolicitudser'])?>">Solicitudes</a></li>
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/laboratorio/index'])?>">Administracion de Parametros</a></li>
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/servicio/crearlab'])?>">Administracion de examenes</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+
+
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/servicio'])?>" ><i class="fa fa-fw fa-plus-square"></i> <span>Servicios</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/agenda/atencionesmedicas'])?>" ><i class="fa fa-fw fa-medkit"></i><span>Atenciones medicas</span></a></li>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/historialpaciente/PacienteEmergencia'])?>" ><i class="fa fa-fw fa-plus-circle"></i><span>Paciente de Emergencia</span></a></li>
-                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Index'])?>" ><i class="fa fa-fw fa-shield"></i><span>Seguros Clinicos</span></a></li>
-                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Principal_Institucion'])?>" ><i class="fa fa-fw fa-building-o"></i><span>Institucion</span></a></li>
-                    <?php if(Yii::app()->user->checkAccess('ADMINISTRAR_UNIDAD')):?>
+
+                    <?php if(Yii::app()->user->checkAccess('ADMINISTRAR_MEDICO,RECURSOS_HUMANOS')):?>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Medicos'])?>" ><i class="fa fa-fw fa-stethoscope"></i> <span>Medicos</span></a></li>
+                    <?php endif; ?>
+                    <?php if(Yii::app()->user->checkAccess('ADMINISTRAR_EMPLEADO,RECURSOS_HUMANOS')):?>
+                    <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/Empleado'])?>" ><i class="fa fa-suitcase"></i> <span>Empleado</span></a></li>
+                    <?php endif; ?>
+
+                    <?php if(Yii::app()->user->checkAccess('RECURSOS_HUMANOS')):?>
+                        <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Index'])?>" ><i class="fa fa-fw fa-shield"></i><span>Seguros Clinicos</span></a></li>
+                        <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Principal_Institucion'])?>" ><i class="fa fa-fw fa-building-o"></i><span>Institucion</span></a></li>
+                    <?php endif; ?>
+                    <?php if(Yii::app()->user->checkAccess('ADMINISTRAR_UNIDAD,RECURSOS_HUMANOS')):?>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/Unidad/index'])?>" ><i class="fa fa-fw fa-cubes"></i><span>Unidad</span></a></li>
                     <?php endif; ?>
-                    <?php if(Yii::app()->user->checkAccess('ADMINISTRAR_HORARIOS')):?>
+                    <?php if(Yii::app()->user->checkAccess('ADMINISTRAR_HORARIOS,RECURSOS_HUMANOS')):?>
                     <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/Horario/index'])?>" ><i class="fa fa-fw fa-dashboard"></i><span>Horarios</span></a></li>
                     <?php endif; ?>
-                    <li class="treeview">
-                        <a href="#"><i class='fa fa-link fa-heartbeat'></i> <span>Quirofano</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/cirugia/agenda'])?>">Agenda</a></li>
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/quirofano/index'])?>">Administracion de Quirofanos</a></li>
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/quirofano/create'])?>">Nuevo de Quirofanos</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#"><i class='fa fa-link fa-bed'></i> <span>Salas</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/sala/index'])?>">Administracion de Salas</a></li>
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/sala/listsala'])?>">Control de Salas</a></li>
-                        </ul>
-                    </li>
-                    <li class="treeview">
-                        <a href="#"><i class='ion ion-beaker'></i> <span>Laboratorio</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/solicitudservicios/listasolicitudser'])?>">Solicitudes</a></li>
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/laboratorio/index'])?>">Administracion de Parametros</a></li>
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/servicio/crearlab'])?>">Administracion de examenes</a></li>
-                        </ul>
-                    </li>
 
-                    <li class="treeview">
-                        <a href="#"><i class='fa fa-user-secret'></i> <span>Usuario</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/usuario/index'])?>">Listar Usuarios</a></li>
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/usuario/create'])?>">Crear Usuarios</a></li>
-                        </ul>
-                    </li>
+                    <?php if(Yii::app()->user->checkAccess('RECURSOS_HUMANOS')):?>
+                        <li class="treeview">
+                            <a href="#"><i class='fa fa-user-secret'></i> <span>Usuario</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/usuario/index'])?>">Listar Usuarios</a></li>
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/usuario/create'])?>">Crear Usuarios</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
 
-                    <li class="treeview">
-                        <a href="#"><i class='ion ion-beaker'></i> <span>Rol</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/rol/assign'])?>">Asignar Roles</a></li>
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/rol/create'])?>">Crear Roles</a></li>
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/rol/addchild'])?>">Asignar SubRoles</a></li>
-                            <li><a href="<?php echo CHtml::normalizeUrl(['/rol/index'])?>">Listar Roles</a></li>
-                        </ul>
-                    </li>
-
-
-                    <!--
-
-                    <li><a href="#"><i class='fa fa-link'></i> <span>Another Link</span></a></li>
-                    <li class="treeview">
-                        <a href="#"><i class='fa fa-link'></i> <span>Multilevel</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="#">Link in level 2</a></li>
-                            <li><a href="#">Link in level 2</a></li>
-                        </ul>
-                    </li>
-
-                    -->
+                    <?php if(Yii::app()->user->checkAccess('RECURSOS_HUMANOS')):?>
+                        <li class="treeview">
+                            <a href="#"><i class='ion ion-beaker'></i> <span>Rol</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/rol/assign'])?>">Asignar Roles</a></li>
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/rol/create'])?>">Crear Roles</a></li>
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/rol/addchild'])?>">Asignar SubRoles</a></li>
+                                <li><a href="<?php echo CHtml::normalizeUrl(['/rol/index'])?>">Listar Roles</a></li>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
 
                 </ul><!-- /.sidebar-menu -->
             </section>
