@@ -173,7 +173,7 @@ Yii::app()->clientScript->registerScript('datetime','
         	locale:"es",
         	defaultDate:"'.date('Y-m-d H:i').'",
         	format:"YYYY-MM-DD HH:mm",
-        	minDate:"'.date('Y-m-d H:i').'"
+        	maxDate:"'.date('Y-m-d H:i').'"
         });
         $("input[type=\'radio\'],input[type=\'radio\']").iCheck({
             checkboxClass:"icheckbox_flat-blue",

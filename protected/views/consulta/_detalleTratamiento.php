@@ -28,6 +28,7 @@
             <div class="box-header">
                 <h3 class="box-title">Recetas</h3>
                 <div class="box-tools pull-right" id="tools-receta">
+                    <?php echo CHtml::link('<i class="fa fa-print"></i>',['reportes/receta','id_trat'=>$modelTratamiento->id_trat],['class'=>'btn btn-box-tool','target'=>'_blanck']);?>
                     <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i></button>
                 </div>
             </div>

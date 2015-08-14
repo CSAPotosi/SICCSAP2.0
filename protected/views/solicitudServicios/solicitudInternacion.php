@@ -30,6 +30,31 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
         </div>
     </div>
 </nav>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Orden de Examen</h3>
+                </div>
+                <div id="contenido_solicitudServicios">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="callout callout-info">
+                                <h4>PACIENTE</h4>
+                                <?php $nombre_pa=Persona::model()->findByPk($historial)?>
+                                <p><?php echo $nombre_pa->nombreCompleto;?></p>
+                            </div>
+                            <div class="hidden">
+                                <?php $this->renderPartial('/consulta/_form_solicitud',array('historial'=>$historial,'solicitud'=>$solicitud))?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 <div class="row">
     <div class="col-md-12">
 
@@ -146,6 +171,52 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
                                 </div>
                             <?php endforeach?>
                         </div>
+                        <div class="row" id="otros">
+                            <div class="col-md-12" >
+                                <h4>Otros Servicios</h4>
+                            </div>
+                            <?php foreach($ser as $l):
+
+                                ?>
+                                <div class="col-md-4">
+                                    <div class="box box-primary">
+                                        <div class="box box-success">
+                                            <div class="box-header">
+                                                <h3 class="box-title"><?php echo $l->nombre_cat_cli;?></h3>
+                                            </div>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="contenedorlaboratorio">
+                                                <?php
+                                                $Ex=ServicioClinico::model()->findAll(array(
+                                                    'condition'=>"id_cat_cli ='{$l->id_cat_cli}'",
+                                                ));?>
+                                                <table class="table table-hover bordered" id="<?php echo $l->nombre_cat_cli;?>">
+                                                    <?php foreach($Ex as $e):?>
+                                                        <?php if($e->ServicioCli->id_insti==1){?>
+                                                            <tr class="val" data-tipo="<?php echo $e->ServicioCli->nombre_serv?>" name-titulo="<?php echo $l->nombre_cat_cli;?>" name="<?php echo $e->ServicioCli->nombre_serv?>" precio="<?php echo $e->ServicioCli->precioServicio->monto?>" id="<?php echo $e->ServicioCli->precioServicio->id_servicio?>">
+                                                                <td>
+                                                                    <?php echo $e->ServicioCli->nombre_serv;?>
+                                                                    <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->precioServicio->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>'','id'=>'valor_solicitud'))?>
+                                                                    <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][id_servicio]" value="<?php echo $e->ServicioCli->precioServicio->id_servicio?>">
+                                                                    <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]estado_realizado",array('value'=>'no realizado','id'=>'estado_realizado'))?>
+                                                                    <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]autorizacion",array('class'=>'autorizacion','value'=>'no autorizado','id'=>'autorizacion'))?>
+                                                                    <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]estado_pago",array('class'=>'pago', 'value'=>'no pagado','id'=>'estado_pago'))?>
+                                                                </td>
+                                                                <td class="hide"><input type="text" value="<?php echo $e->ServicioCli->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>
+                                                                <td class="hide" name="ocultar"><span class="badge bg-red"><?php echo $e->ServicioCli->idInsti->nombre?></span></td>
+                                                                <td class="cantidad hide" name="ocultar"><input class="cantidad" type="text" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][cantidad]" id="cantidad" value="1"></td>
+                                                                <td class="checkk"><input class="checkeded" type="checkbox" value="<?php echo $e->ServicioCli->id_servicio;?>"/></td>
+                                                            </tr>
+                                                        <?php }?>
+                                                    <?php endforeach?>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach?>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -235,7 +306,6 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
             });
         }
         function detallesolicitud(){
-            alert("hoola")
             $("#solicitud-servicios-detalle-int").submit();
         }
     });

@@ -41,6 +41,7 @@ class Servicio extends CActiveRecord
         // will receive user inputs.
         return array(
             array('fecha_creacion, fecha_actualizacion, id_insti,nombre_serv', 'required'),
+            array('codigo_serv','unique'),
             array('id_insti, estado_serv', 'numerical', 'integerOnly'=>true),
             array('codigo_serv', 'length', 'max'=>16),
             array('nombre_serv', 'length', 'max'=>128),

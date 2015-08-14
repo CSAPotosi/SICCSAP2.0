@@ -45,7 +45,7 @@ class InternacionController extends Controller
         if(isset($_POST['Sala'])){
             $modelInternacion=Internacion::model()->findByPk($id);
             if($modelInternacion->salaActual!=null){
-                $modelInternacion->salaActual->sala->estado_sala=1;$modelInternacion->salaActual->sala->save();
+                $modelInternacion->salaActual->sala->estado_sala=3;$modelInternacion->salaActual->sala->save();
                 $modelInternacion->salaActual->fecha_salida=date('d-m-Y h:i A');$modelInternacion->salaActual->save();
             }
             $modelSalaInter= new SalaInternacion();
@@ -70,11 +70,13 @@ class InternacionController extends Controller
                 $listaSalas=$modelInternacion->salas;
 
                 foreach($listaSalas as $sala){
+                    $sala->sala->estado_sala=1;
                     if($sala->fecha_salida==''||$sala->fecha_salida == null){
                         $sala->fecha_salida=date('d-m-Y h:i A');
                         $sala->save();
+                        $sala->sala->estado_sala=3;
                     }
-                    $sala->sala->estado_sala=1;
+
                     $sala->sala->save();
                 }
                 $modelInternacion->historial->paciente->estado_paciente='ACTIVO';

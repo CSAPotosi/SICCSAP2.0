@@ -29,7 +29,7 @@ class SolicitudServiciosController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','CrearSolDetSer','Detalleservicios','reporteSolicitud','Listasolicitudser','Detalleserviciosconsulta','reporteOrdenlab','reporteOrdenGab','OrdenInternacion','DetalleServiciosInternacion','Verdetallesolicitud','ListaDetalleSolicitudInternacion','VerServiciosInternacion','create','update','admin','delete'),
-                'ROLES'=>array('ADMIN'),
+                'roles'=>array('ADMIN'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
@@ -163,8 +163,7 @@ class SolicitudServiciosController extends Controller
         foreach($detalles as $det):
             $detalle=new DetalleSolicitudServicio;
             $detalle->attributes=$det;
-            !$detalle->save();
-
+            $detalle->save();
         endforeach;
         $sol=SolicitudServicios::model()->findByPk($detalle->id_solicitud);
         $this->redirect(array('ListaDetalleSolicitudInternacion','sol'=>$sol->id_solicitud));
@@ -177,7 +176,7 @@ class SolicitudServiciosController extends Controller
         $solicitud=SolicitudServicios::model()->findAll(array(
             'condition'=>"fecha_solicitud>='{$var}'",
         ));
-        $this->render('listadetallesolicitudservicio',array('solicitud'=>$solicitud,'historial'=>$historial));
+        $this->render('listadetallesolicitudservicio',array('solicitud'=>$solicitud,'historial'=>$historial,'modelInternacion'=>$historial->internacionActual));
     }
     public function actionVerdetallesolicitud($id){
         $solicitud=SolicitudServicios::model()->findByPk($id);

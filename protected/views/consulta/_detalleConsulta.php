@@ -1,15 +1,12 @@
+<?php echo CHtml::activeHiddenField($detalleConsulta,'id_consulta');?>
 <div class="row">
     <div class="col-md-12">
-        <div class="callout callout-info">
-            <h4>Fecha y hora de la consulta</h4>
-            <div class="dl-horizontal">
-                <dt>Fecha:</dt><dd><?php setlocale(LC_TIME, ''); echo strtoupper(strftime('%A, %d de %B del %Y.',strtotime($detalleConsulta->fecha_diagnostico)));?></dd>
-                <dt>Hora:</dt><dd><?php echo date('h:i A.',strtotime($detalleConsulta->fecha_diagnostico));?></dd>
-            </div>
+        <div class="dl-horizontal">
+            <dt>FECHA:</dt><dd><?php setlocale(LC_TIME, ''); echo strtoupper(strftime('%A, %d de %B del %Y.',strtotime($detalleConsulta->fecha_diagnostico)));?></dd>
+            <dt>HORA:</dt><dd><?php echo date('h:i A.',strtotime($detalleConsulta->fecha_diagnostico));?></dd>
         </div>
     </div>
 </div>
-<?php echo CHtml::activeHiddenField($detalleConsulta,'id_consulta');?>
 <div class="row">
     <div class="col-md-6">
         <p>
@@ -70,3 +67,5 @@
         </p>
     </div>
 </div>
+
+<?php echo CHtml::link('<i class="fa fa-print"></i> PDF',['reportes/consulta','id_consulta'=>$detalleConsulta->id_consulta],['class'=>'btn btn-primary','target'=>'_blanck']);?>

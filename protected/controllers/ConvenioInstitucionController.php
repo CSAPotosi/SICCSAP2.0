@@ -29,7 +29,7 @@ class ConvenioInstitucionController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','Principal_Institucion','CrearInstitucion','ActualizarInstitucion','EliminarInstitucion','CrearConvenioInstitucion','ActualizarConvenioInstitucion','EliminarConvenioInstitucion','VerServiciosConvenio','ListaServiciosInstitucion','CrearConveniosServicios','ChangeStateConvenio','SegurospacientesIndex','changeTipoPaciente','CrearSeguroPaciente','ChangeStateAsegurado','create','update','admin','delete'),
-                'ROLES'=>array('ADMINISTRAR_SEGUROS','ADMIN'),
+                'roles'=>array('ADMINISTRAR_SEGUROS','ADMIN'),
 			),
 			array('deny',  // deny all users
                 'users'=>array('*'),

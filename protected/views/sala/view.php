@@ -6,12 +6,6 @@
 ?>
 
 <dl class="dl-horizontal">
-    <dt>
-        CODIGO
-    </dt>
-    <dd>
-        <?php echo $tipoSalaModel->servicio->codigo_serv;?>
-    </dd>
 
     <dt>
         NOMBRE

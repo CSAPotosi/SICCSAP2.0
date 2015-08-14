@@ -29,7 +29,7 @@ class AgendaController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','BuscarAtencionMedica','RegistrarCita','ActualizarEstadoCita','ComprobanteAtencionMedica','atencionesmedicas','detalleAtencionesMedicas','BuscarAtencionMedicaRapida','create','update','admin','delete'),
-                'ROLES'=>array('ADMIN'),
+                'roles'=>array('ADMIN'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),

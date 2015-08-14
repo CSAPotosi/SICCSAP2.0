@@ -66,4 +66,19 @@ class ReportesController extends Controller
         $mPDF1->WriteHTML($this->renderPartial('ReporteCompletoConvenios',['convenioinsti'=>$convenioinstitucion,'asegurados'=>$convenio,'servicios'=>$servicio],true));
         $mPDF1->Output();
     }
+
+    public function actionConsulta($id_consulta=0){
+        $consulta=Consulta::model()->findByPk($id_consulta);
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->WriteHTML($this->renderPartial('consulta',['consulta'=>$consulta],true));
+        $mPDF1->Output();
+    }
+
+    public function actionReceta($id_trat=0){
+        $modelTratamiento=Tratamiento::model()->findByPk($id_trat);
+        $mPDF1 = Yii::app()->ePdf->mpdf();
+        $mPDF1->addPage('L');
+        $mPDF1->WriteHTML($this->renderPartial('receta',['modelTratamiento'=>$modelTratamiento],true));
+        $mPDF1->Output();
+    }
 }

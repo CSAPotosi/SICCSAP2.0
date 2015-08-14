@@ -31,6 +31,7 @@ class Receta extends CActiveRecord
 		return array(
 			array('cant_solicitada, cant_dosis, via, id_med', 'required'),
 			array('id_trat, cant_solicitada, cant_dosis, id_med', 'numerical', 'integerOnly'=>true),
+            array('cant_solicitada,cant_dosis','numerical','min'=>1),
 			array('via', 'length', 'max'=>30),
 			array('pauta', 'safe'),
 			// The following rule is used by search().

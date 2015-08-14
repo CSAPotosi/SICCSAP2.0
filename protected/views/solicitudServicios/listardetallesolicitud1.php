@@ -27,6 +27,7 @@
                     </tr>
                     <?php foreach($listadetallesolicitud as $lis):?>
                         <?php $servicio=Servicio::model()->findByPk($lis->id_servicio)?>
+                        <?php if($servicio->examenLaboratorio!=null):?>
                         <?php $sol=SolicitudServicios::model()->findByPk($lis->id_solicitud)?>
                         <tr>
                             <td><?php echo $sol->idHistorial->paciente->personapa->getNombreCompleto();?></td>
@@ -45,6 +46,7 @@
                                 echo CHtml::link('Ver estado',['laboratorio/verEstadoExamen','id_det'=>$lis->id_detalle_servicio],['class'=>'btn btn-primary btn-sm']);?>
                             </td>
                         </tr>
+                        <?php endif; ?>
                     <?php endforeach?>
                 </table>
             </div>

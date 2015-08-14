@@ -30,7 +30,7 @@ class SalaController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','create','listSala','update','createTipoSalaAjax','updateTipoSalaAjax','listSalasAjax','changeStateSalaAjax','renderFormSalaAjax','createSalaAjax','updateSalaAjax','viewSalaAjax','changeStateTipoSalaAjax','viewTipoSalaAjax','viewDetailSalaAjax','simpleChangeStateSala','admin','delete'),
-                'ROLES'=>array('ADMIN'),
+                'roles'=>array('ADMIN'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),

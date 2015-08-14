@@ -29,7 +29,7 @@ class QuirofanoController extends Controller
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
 				'actions'=>array('index','view','create','update','admin','changeState'),
-                'ROLES'=>array('ADMIN'),
+                'roles'=>array('ADMIN'),
 			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
