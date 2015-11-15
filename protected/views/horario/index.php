@@ -34,62 +34,16 @@ $this->breadcrumbs=array(
             <div class="col-md-12">
                 <div class="box box-primary box-solid">
                     <div class="box-header">
-                        Turnos Registrados
+                        Horarios Existentes
                     </div>
                     <div class="box-body">
-                        <div id="contenedorhorarioturno">
-                            <div class="callout callout-danger">
-                                <h4>Elija Un Horario</h4>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<div class="modal fade in" id="TurnoHorario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">x</button>
-                <h4 class="modal-title">Registro de Turno</h4>
-            </div>
-            <div class="modal-body">
-                <div id="contenedorTurnoHorario">
-                    <?php $this->renderPartial('form_turno',array('turno'=>$turno))?>
-                </div>
-            </div>
-            <div class="modal-footer clearfix">
-                <?php echo CHtml::tag('button',array('id'=>'btnTurnoHorario','class'=>'btn btn-primary pull-left'),'<i class="fa fa-plus"></i> Guardar',true)?>
-                <?php echo CHtml::tag('button',array('id'=>'btnCloseUpditemlab','class'=>'btn btn-danger','data-dismiss'=>'modal'),'<i class="fa fa-times"></i> Cancelar',true)?>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade in" id="updateturnohorario" tabindex="-1" role="dialog" aria-hidden="true" style="display:none">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button class="close" type="button" data-dismiss="modal" aria-hidden="true">x</button>
-                <h4 class="modal-title">Actualiza Turno</h4>
-            </div>
-            <div class="modal-body" id="contenedorturnoHorarioupd">
-
-            </div>
-            <div class="modal-footer clearfix">
-                <button type="button" class="btn btn-primary pull-left" id="updturnohorario">Guardar</button>
-                <button type="button" class="btn btn-danger pull-right" data-dismiss="modal">Cancelar</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
 <?php
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.css');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.js',CClientScript::POS_END);

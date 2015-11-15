@@ -6,8 +6,8 @@
  * The followings are the available columns in table 'horario':
  * @property integer $id_horario
  * @property string $nombre_horario
- * @property string $tipo_horario
- * @property boolean $estado
+ * @property string $descripcion
+ * @property integer $total_dias
  */
 class Horario extends CActiveRecord
 {
@@ -28,11 +28,11 @@ class Horario extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('nombre_horario', 'required'),
-			array('nombre_horario, tipo_horario', 'length', 'max'=>32),
-			array('estado', 'safe'),
+			array('total_dias', 'numerical', 'integerOnly'=>true),
+			array('nombre_horario, descripcion', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_horario, nombre_horario, tipo_horario, estado', 'safe', 'on'=>'search'),
+			array('id_horario, nombre_horario, descripcion, total_dias', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -55,8 +55,8 @@ class Horario extends CActiveRecord
 		return array(
 			'id_horario' => 'Id Horario',
 			'nombre_horario' => 'Nombre Horario',
-			'tipo_horario' => 'Tipo Horario',
-			'estado' => 'Estado',
+			'descripcion' => 'Descripcion',
+			'total_dias' => 'Total Dias',
 		);
 	}
 
@@ -80,8 +80,8 @@ class Horario extends CActiveRecord
 
 		$criteria->compare('id_horario',$this->id_horario);
 		$criteria->compare('nombre_horario',$this->nombre_horario,true);
-		$criteria->compare('tipo_horario',$this->tipo_horario,true);
-		$criteria->compare('estado',$this->estado);
+		$criteria->compare('descripcion',$this->descripcion,true);
+		$criteria->compare('total_dias',$this->total_dias);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,10 +98,4 @@ class Horario extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-    public function getTipoHorario(){
-        return array(
-            'Medio tiempo'=>'Medio tiempo',
-            'Dia completo'=>'Dia completo',
-        );
-    }
 }

@@ -13,9 +13,14 @@
             <?php echo $form->error($horario,'nombre_horario',array('class'=>'label label-danger')); ?>
         </div>
         <div class="form-group">
-            <?php echo $form->labelEx($horario,'tipo_horario'); ?>
-            <?php echo $form->dropDownList($horario,'tipo_horario',$horario->getTipoHorario(),array('class'=>'form-control','placeholder'=>'Escribe un nombre para el horario')); ?> 
-            <?php echo $form->error($horario,'tipo_horario',array('class'=>'label label-danger')); ?>
+            <?php echo $form->labelEx($horario,'descripcion'); ?>
+            <?php echo $form->textField($horario,'descripcion',array('class'=>'form-control','placeholder'=>'Escribe un nombre para el horario')); ?>
+            <?php echo $form->error($horario,'descripcion',array('class'=>'label label-danger')); ?>
+        </div>
+        <div class="form-group">
+            <?php echo $form->labelEx($horario,'Ciclo de trabajo'); ?>
+            <?php echo $form->textField($horario,'total_dias',array('class'=>'form-control','placeholder'=>'Escribe un nombre para el horario')); ?>
+            <?php echo $form->error($horario,'total_dias',array('class'=>'label label-danger')); ?>
         </div>
     </div>
     

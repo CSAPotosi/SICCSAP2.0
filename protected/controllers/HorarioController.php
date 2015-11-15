@@ -28,7 +28,7 @@ class HorarioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','CrearHorario','ChangeStateHorario','ActualizarHorario','VerTurnosHorario','CrearTurno','create','update','cambiaEstado','admin','delete'),
+				'actions'=>array('index','view','CrearHorario','ChangeStateHorario','ActualizarHorario','VerTurnosHorario','CrearTurno','create','update','cambiaEstado','admin','delete','indexturno'),
 				'roles'=>array('ADMINISTRAR_HORARIOS','ADMIN'),
 			),
 			array('deny',  // deny all users
@@ -217,26 +217,25 @@ class HorarioController extends Controller
         $listahorarios=Horario::model()->findAll();
         $this->render('index',array('horario'=>$horario,'listahorarios'=>$listahorarios,'turno',$turno));
     }
-    public function actionVerTurnosHorario($id){
-        $horario=Horario::model()->findByPk($id);
-        $listaturnos=Turno::model()->findAll(array(
-            'condition'=>"id_horario='{$id}'",
-        ));
-        $this->renderPartial('listaturnoHorario',array('horario'=>$horario,'listaturnos'=>$listaturnos));
+    public function actionIndexTurno(){
+        $turno= new Turno();
+        $listaTurno=Turno::model()->findAll();
+        $this->render('/turno/index',array('turno'=>$turno,'listaTurno'=>$listaTurno));
     }
+
     public function actionCrearTurno(){
         $turno=new Turno;
         if(isset($_POST['Turno'])){
             $turno->attributes=array_map('strtoupper',$_POST['Turno']);
             if($turno->save()){
-                $listaturno=Turno::model()->findAll(array(
-                    'condition'=>"id_horario='{$turno->id_horario}'"
-                ));
-                $this->renderPartial('listaturnoHorario',array('listaturnos'=>$listaturno));
+                $this->redirect(array('/Horario/indexTurno'));
+            }else{
+                $listaTurno=Turno::model()->findAll();
+                $this->render('/turno/index',array('turno'=>$turno,'listaTurno'=>$listaTurno));
             }
-            $this->renderPartial('form_turno',array('turno'=>$turno));
             return;
         }
-
+        $listaTurno=Turno::model()->findAll();
+        $this->render('/turno/index',array('turno'=>$turno,'listaTurno'=>$listaTurno));
     }
 }

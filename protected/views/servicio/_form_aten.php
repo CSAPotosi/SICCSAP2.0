@@ -83,11 +83,13 @@ $this->breadcrumbs=array(
                 type:"post",
                 success:function(datos){
                     $("#contenedorservicioatencion").html(datos);
+                    $("#btnactualizarAtencion").on("click",ActualizarAtencion);
                 }
             });
             $("#servicioatencion").modal("show");
             return false;
         }
+        $("#btnactualizarAtencion").on("click",ActualizarAtencion);
         $("#btncrearatencionmedica").on("click",enviarServicioAtencion);
         function enviarServicioAtencion(){
             $.ajax({

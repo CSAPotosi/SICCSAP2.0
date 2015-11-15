@@ -1,7 +1,3 @@
-/* comando para insertar desde archivo \i ubicacion del archivo ej c:wamp/www/schema.postgres.SICCSAP.sql*/
-
-/* Oso */
-/*tabla persona*/
 create table if not exists pais(
   id_pais serial not null primary key ,
   nombre varchar (32),
@@ -65,7 +61,6 @@ create table if not exists usuario(
   id_persona int,
   foreign key (id_persona) references persona(id)
 );
-
 create table if not exists unidad(
   id_unidad serial primary key ,
   nombre_unidad varchar(32) not null unique,
@@ -82,13 +77,12 @@ create table if not exists cargo(
 create table if not exists horario(
   id_horario serial primary key ,
   nombre_horario varchar(32) not null unique,
-  tipo_horario varchar (32),
-  estado bool default true
+  descripcion varchar (32),
+  total_dias int
 );
 create table if not exists turno(
-  id_turno serial primary key ,
-  nombre_turno varchar(32) not null unique ,
-  tipo_turno varchar(8),
+  id_turno serial primary key,
+  nombre_turno varchar(32) unique,
   hora_entrada time not null,
   inicio_entrada int,
   fin_entrada int,
@@ -96,11 +90,16 @@ create table if not exists turno(
   inicio_salida int,
   fin_salida int,
   tolerancia int default 0,
-  dias varchar(7),
-  id_horario int,
-  foreign key (id_horario) references  horario(id_horario)
+  tipo_turno int
 );
-
+create table horario_turno(
+  id_turno_horario serial primary key not null,
+  id_horario int,
+  id_turno int,
+  dia_semana int,
+  foreign key (id_horario) references horario(id_horario),
+  foreign key (id_turno) references turno(id_turno)
+);
 create table if not exists asignacion_empleado(
   id_asignacion serial primary key,
   fecha_inicio date,
@@ -112,7 +111,6 @@ create table if not exists asignacion_empleado(
   foreign key (id_cargo) references cargo(id_cargo),
   foreign key (id_horario) references horario(id_horario)
 );
-
 create table if not exists registro(
   id_asignacion int not null,
   fecha date not null,
@@ -233,7 +231,6 @@ create table if not exists capitulo_cie10(
   codigo_inicial varchar(8) not null,
   codigo_final varchar(8) not null
 );
-
 create table if not exists categoria_cie10(
   id_cat_cie10 serial primary key not null,
   titulo_cat_cie10 text unique not null,
@@ -243,7 +240,6 @@ create table if not exists categoria_cie10(
   num_capitulo varchar(8) not null,
   foreign key (num_capitulo) references capitulo_cie10(num_capitulo)
 );
-
 create table if not exists item_cie10(
   codigo varchar(8) primary key not null,
   titulo text not null,
@@ -609,3 +605,4 @@ create table if not EXISTS participante_cirugia(
   FOREIGN KEY (id_per) REFERENCES persona(id),
   primary KEY (id_c,id_per)
 );
+

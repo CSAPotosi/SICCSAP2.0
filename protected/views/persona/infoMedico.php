@@ -9,9 +9,9 @@ $this->breadcrumbs=array(
 <div class="col-md-12">
     <div class="row">
         <div class="col-md-6">
-            <div class="box box-primary">
+            <div class="box box-primary box-solid">
                 <div class="box-header">
-                    <h3>Informacion Medica</h3>
+                    Informacion Medica
                 </div>
                 <div class="box-body">
                     <?php if($medico->isNewRecord){?>
@@ -34,9 +34,9 @@ $this->breadcrumbs=array(
             </div>
         </div>
         <div class="col-md-6">
-            <div class="box box-primary">
+            <div class="box box-primary box-solid">
                 <div class="box-header">
-                    <h3>Especialidades Disponibles</h3>
+                    Especialidades Disponibles
                 </div>
                 <div class="box-body" >
                     <div id="contenedor_especialidad">

@@ -281,7 +281,6 @@
                  });
                 return false;
             })
-
         }
         function updateitem(){
             $("#cat_lab_item_campo").val($("#campo_item_cat_lab").val());
