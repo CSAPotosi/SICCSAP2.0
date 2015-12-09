@@ -198,3 +198,53 @@ table tbody tr{
     cursor:pointer;
     cursor: hand;
 }
+
+
+
+.table-turno>thead>tr>th, .table-turno>tbody>tr>th, .table-turno>thead>tr>td, .table-turno>tbody>tr>td{
+    padding: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+.block-h{
+    position:absolute;
+    border-radius:5px;
+    background-color:#6f5499;
+    text-align:right;
+    color:#fff;
+    padding: 5px;
+}
+
+.block-h p{
+    text-align: center;
+    margin: 0;
+}
+
+.block-h>a{
+    color:#fff;
+    padding-right:3px;
+    text-decoration:none;
+}
+
+
+.table-turno>thead>tr>th, .table-turno>tbody>tr>th, .table-turno>thead>tr>td, .table-turno>tbody>tr>td{
+    padding: 2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    text-align: center;
+}
+
+ul.list-turno{
+    list-style: none;
+    padding: 0;
+}
+
+ul.list-turno>li{
+    margin: 2px 0px 2px 0px;
+}
+
+.column-hovered{
+    background-color: #ffff00;
+}

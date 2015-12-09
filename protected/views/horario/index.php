@@ -32,103 +32,72 @@ $this->breadcrumbs=array(
         </div>
         <div class="row">
             <div class="col-md-12">
-                <div class="box box-primary box-solid">
+                <div class="box box-primary box-solid" id="detalleHorario">
                     <div class="box-header">
                         Horarios Existentes
+                        <div class="box-tools">
+                            <a href="#" class="btn btn-primary"><i class="fa fa-cog"></i> Configurar</a>
+                        </div>
                     </div>
                     <div class="box-body">
-
                     </div>
+                    <div id="elementos"></div>
                 </div>
             </div>
         </div>
     </div>
+
+
 </div>
+
+
 <?php
 Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.css');
 Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.js',CClientScript::POS_END);
 ?>
 <?php Yii::app()->clientScript->registerScript('convenio_institucion','
+
+
+
      $("#btnhorario").on("click",function(){
         $("#horario-form").submit();
      });
-     $(".btnChangeState").on("change",function(){
-           $.ajax({
-                url:$(this).attr("data-url"),
-                type:"get"
-           });
-     });
-     $(".btnTurnosHorario").on("click",verturnos);
+     $(".btnViewDetailHorario").on("click",verturnos);
+     $(".btnViewDetailHorario[data-id=\''.$id_h.'\']").trigger("click");
+
+
      function verturnos(){
         $.ajax({
             url:$(this).attr("href"),
-            type:"post",
+            type:"get",
             success:function(datos){
-               $("#contenedorhorarioturno").html(datos);
-               nuevoAdminitracion();
-               $(".btnactualizarturno").on("click",verTutnoupdate);
+               $("#elementos").children().remove();
+               $("#detalleHorario .box-body").html(datos);
+               $.each(h_list,function(i,item){
+                    renderComplete(item);
+               });
             }
         });
+        $("#detalleHorario .box-tools a").attr("href",$(this).data("href"));
         return false;
      }
-     $("#btnTurnoHorario").on("click",crearturno);
-     function crearturno(){
-        $("#idTurnoHorario").val($("#idHorarioTurno").val());
-        $.ajax({
-            url:"'.CHtml::normalizeUrl(array('horario/CrearTurno')).'",
-            type:"post",
-            data:$("#turno-form").serialize(),
-            success:function(datos){
-                var contenido=$("<div>").html(datos);
-                if(contenido.children("#flag").val()==null){
-                    $("#contenedorhorarioturno").html(datos);
-                    $("#TurnoHorario").modal("hide");
-                    $(".btnactualizarturno").on("click",verTutnoupdate);
-                }
-                else{
-                    $("#contenedorTurnoHorario").html(datos);
-                }
-            }
-        });
-     }
-     function nuevoAdminitracion(){
-        $.ajax({
-            url:"'.CHtml::normalizeUrl(array('horario/Nuevo')).'",
-            type:"post",
-            success:function(datos){
-               $("#contenedoradmi").html(datos);
-            }
-        });
-     }
-     $(".btnactualizarturno").on("click",verTutnoupdate);
-     function verTutnoupdate(){
-        $.ajax({
-            url:$(this).attr("href"),
-            type:"post",
-            success:function(datos){
-               $("#contenedorturnoHorarioupd").html(datos);
-               $("#updateturnohorario").modal("show");
-            }
-        });
-        return false;
-     }
-     $("#updturnohorario").on("click",apdateturnohorario);
-     function apdateturnohorario(){
-        $.ajax({
-            url:"'.CHtml::normalizeUrl(array('horario/ActualizarTurno')).'",
-            type:"post",
-            data:$("#turno-form-update").serialize(),
-            success:function(datos){
-                var contenido=$("<div>").html(datos);
-                if(contenido.children("#flag").val()==null){
-                    $("#contenedorhorarioturno").html(datos);
-                    $("#updateturnohorario").modal("hide");
-                    $(".btnactualizarturno").on("click",verTutnoupdate);
-                }
-                else{
-                    $("#contenedorturnoHorarioupd").html(datos);
-                }
-            }
-        });
+
+     function renderComplete(item){
+        var $item=$("<div class=\'block-h\'>").append($("<p>").text(item.h_start+" - "+item.h_end));
+        var $cell=$(".table-turno>tbody>tr").eq(item.hh_start).children("td").eq(item.day-1);
+
+        var width=$cell.width();
+        var height=$cell.parent("tr").height()/60;
+
+        $item.width(width);
+        $item.height(item.len*height);
+
+        $("#elementos").append($item);
+
+        var pos=$cell.offset();
+        pos.left=pos.left+(parseFloat($cell.css("padding-left")));
+        pos.top=pos.top+height*item.mm_start;
+
+        $item.offset(pos);
      }
 ');

@@ -28,7 +28,7 @@ class HorarioController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','CrearHorario','ChangeStateHorario','ActualizarHorario','VerTurnosHorario','CrearTurno','create','update','cambiaEstado','admin','delete','indexturno'),
+				'actions'=>array('index','view','detalleHorario','CrearHorario','ViewDetailHorario','ActualizarHorario','CrearTurno','create','update','cambiaEstado','admin','delete','indexturno'),
 				'roles'=>array('ADMINISTRAR_HORARIOS','ADMIN'),
 			),
 			array('deny',  // deny all users
@@ -181,30 +181,24 @@ class HorarioController extends Controller
         }
         $this->redirect(array("index"));
     }*/
-    public function actionIndex()
+    public function actionIndex($id=0)
     {
         $horario=new Horario;
-        $turno=new Turno;
         $listahorarios=Horario::model()->findAll();
-        $this->render('index',array('horario'=>$horario,'listahorarios'=>$listahorarios,'turno'=>$turno));
+        $this->render('index',array('horario'=>$horario,'listahorarios'=>$listahorarios,'id_h'=>$id));
     }
     public function actionCrearHorario(){
         $horario=new Horario;
-        $turno=new Turno;
         if(isset($_POST['Horario'])){
             $horario->attributes=array_map('strtoupper',$_POST['Horario']);
             if($horario->save()){
                 $this->redirect(array('/horario/index'));
             }
-        $listahorarios=Horario::model()->findAll();
-        $this->render('index',array('horario'=>$horario,'listahorarios'=>$listahorarios,'turno'=>$turno));
+			$listahorarios=Horario::model()->findAll();
+			$this->render('index',array('horario'=>$horario,'listahorarios'=>$listahorarios));
         }
     }
-    public function actionChangeStateHorario($id){
-        $Horario= Horario::model()->findByPk($id);
-        $Horario->estado=!$Horario->estado;
-        $Horario->save();
-    }
+
     public function actionActualizarHorario($id){
         $horario=Horario::model()->findByPk($id);
         $turno=new Turno;
@@ -217,6 +211,12 @@ class HorarioController extends Controller
         $listahorarios=Horario::model()->findAll();
         $this->render('index',array('horario'=>$horario,'listahorarios'=>$listahorarios,'turno',$turno));
     }
+
+	public function actionViewDetailHorario($id_h=0){
+		$horario= Horario::model()->findByPk($id_h);
+		$this->renderPartial('_itemTurno',['modelHorario'=>$horario]);
+	}
+
     public function actionIndexTurno(){
         $turno= new Turno();
         $listaTurno=Turno::model()->findAll();
@@ -238,4 +238,21 @@ class HorarioController extends Controller
         $listaTurno=Turno::model()->findAll();
         $this->render('/turno/index',array('turno'=>$turno,'listaTurno'=>$listaTurno));
     }
+
+	public function actionDetalleHorario($id_h=0){
+		$modelHorario=Horario::model()->findByPk($id_h);
+		if(isset($_POST['HorarioTurno'])){
+			foreach($modelHorario->horarioTurno as $item)
+				$item->delete();
+			foreach($_POST['HorarioTurno'] as $item){
+				$model= new HorarioTurno();
+				$model->attributes=$item;$model->id_horario=$modelHorario->id_horario;
+				$model->save();
+			}
+			$this->redirect(array('/Horario/index','id'=>$modelHorario->id_horario));
+		}
+		return $this->render('detalleHorario',['modelHorario'=>$modelHorario]);
+	}
+
+
 }

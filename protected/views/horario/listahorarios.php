@@ -13,7 +13,7 @@
                 <td><?php echo $list->total_dias?></td>
                 <td>
                     <?php echo CHtml::link('<i class="fa fa-edit"></i>',array('horario/ActualizarHorario','id'=>$list->id_horario),array('title'=>'Actualizar'))?>
-                    <?php echo CHtml::link('<i class="fa fa-fw fa-list-ul"></i>',array('horario/VerTurnosHorario','id'=>$list->id_horario),array('title'=>'Ver cargos','class'=>'btnTurnosHorario'))?>
+                    <?php echo CHtml::link('<i class="fa fa-fw fa-list-ul"></i>',array('horario/ViewDetailHorario','id_h'=>$list->id_horario),array('title'=>'Ver detalle','class'=>'btnViewDetailHorario','data-id'=>$list->id_horario,'data-href'=>CHtml::normalizeUrl(['horario/detalleHorario','id_h'=>$list->id_horario])));?>
                 </td>
             </tr>
         <?php endforeach;?>

@@ -1,22 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "horario".
+ * This is the model class for table "horario_turno".
  *
- * The followings are the available columns in table 'horario':
+ * The followings are the available columns in table 'horario_turno':
+ * @property integer $id_turno_horario
  * @property integer $id_horario
- * @property string $nombre_horario
- * @property string $descripcion
- * @property integer $total_dias
+ * @property integer $id_turno
+ * @property integer $dia_semana
+ *
+ * The followings are the available model relations:
+ * @property Horario $idHorario
+ * @property Turno $idTurno
  */
-class Horario extends CActiveRecord
+class HorarioTurno extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'horario';
+		return 'horario_turno';
 	}
 
 	/**
@@ -27,12 +31,10 @@ class Horario extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nombre_horario', 'required'),
-			array('total_dias', 'numerical', 'integerOnly'=>true),
-			array('nombre_horario, descripcion', 'length', 'max'=>32),
+			array('id_horario, id_turno, dia_semana', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_horario, nombre_horario, descripcion, total_dias', 'safe', 'on'=>'search'),
+			array('id_turno_horario, id_horario, id_turno, dia_semana', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -44,8 +46,8 @@ class Horario extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'horarioTurno'=>[self::HAS_MANY,'HorarioTurno','id_horario'],
-			'turnos'=>[self::MANY_MANY,'Turno','HorarioTurno(id_horario,id_turno)']
+			'horario' => array(self::BELONGS_TO, 'Horario', 'id_horario'),
+			'turno' => array(self::BELONGS_TO, 'Turno', 'id_turno'),
 		);
 	}
 
@@ -55,10 +57,10 @@ class Horario extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
+			'id_turno_horario' => 'Id Turno Horario',
 			'id_horario' => 'Id Horario',
-			'nombre_horario' => 'Nombre Horario',
-			'descripcion' => 'Descripcion',
-			'total_dias' => 'Total Dias',
+			'id_turno' => 'Id Turno',
+			'dia_semana' => 'Dia Semana',
 		);
 	}
 
@@ -80,10 +82,10 @@ class Horario extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+		$criteria->compare('id_turno_horario',$this->id_turno_horario);
 		$criteria->compare('id_horario',$this->id_horario);
-		$criteria->compare('nombre_horario',$this->nombre_horario,true);
-		$criteria->compare('descripcion',$this->descripcion,true);
-		$criteria->compare('total_dias',$this->total_dias);
+		$criteria->compare('id_turno',$this->id_turno);
+		$criteria->compare('dia_semana',$this->dia_semana);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -94,7 +96,7 @@ class Horario extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return Horario the static model class
+	 * @return HorarioTurno the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

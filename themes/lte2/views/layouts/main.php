@@ -417,6 +417,8 @@
         <div class='control-sidebar-bg'></div>
     </div><!-- ./wrapper -->
 
+
+
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="<?php echo Yii::app()->theme->baseUrl;?>/resources/plugins/jQueryUI/jquery-ui-1.10.3.min.js"></script>
     <!-- Bootstrap 3.3.2 JS -->

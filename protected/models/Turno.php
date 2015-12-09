@@ -50,6 +50,8 @@ class Turno extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'horarioTurno'=>[self::HAS_MANY,'HorarioTurno','id_turno'],
+			'horarios'=>[self::MANY_MANY,'Horario','HorarioTurno(id_turno,id_horario)']
 		);
 	}
 
