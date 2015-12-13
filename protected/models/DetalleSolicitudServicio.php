@@ -8,9 +8,7 @@
  * @property integer $id_servicio
  * @property double $cantidad
  * @property double $precio_servicio
- * @property string $estado_pago
  * @property string $estado_realizado
- * @property string $autorizacion
  *
  * The followings are the available model relations:
  * @property SolicitudServicios $idSolicitud
@@ -34,13 +32,13 @@ class DetalleSolicitudServicio extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_solicitud, id_servicio, cantidad, precio_servicio, estado_pago, estado_realizado, autorizacion', 'required'),
+			array('id_solicitud, id_servicio, cantidad, precio_servicio, estado_realizado', 'required'),
 			array('id_solicitud, id_servicio', 'numerical', 'integerOnly'=>true),
 			array('cantidad, precio_servicio', 'numerical'),
-			array('estado_pago, estado_realizado, autorizacion', 'length', 'max'=>32),
+			array('estado_realizado', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_solicitud, id_servicio, cantidad, precio_servicio, estado_pago, estado_realizado, autorizacion', 'safe', 'on'=>'search'),
+			array('id_solicitud, id_servicio, cantidad, precio_servicio, estado_realizado', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,9 +66,7 @@ class DetalleSolicitudServicio extends CActiveRecord
 			'id_servicio' => 'Id Servicio',
 			'cantidad' => 'Cantidad',
 			'precio_servicio' => 'Precio Servicio',
-			'estado_pago' => 'Estado Pago',
 			'estado_realizado' => 'Estado Realizado',
-			'autorizacion' => 'Autorizacion',
 		);
 	}
 
@@ -96,9 +92,7 @@ class DetalleSolicitudServicio extends CActiveRecord
 		$criteria->compare('id_servicio',$this->id_servicio);
 		$criteria->compare('cantidad',$this->cantidad);
 		$criteria->compare('precio_servicio',$this->precio_servicio);
-		$criteria->compare('estado_pago',$this->estado_pago,true);
 		$criteria->compare('estado_realizado',$this->estado_realizado,true);
-		$criteria->compare('autorizacion',$this->autorizacion,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -115,4 +109,11 @@ class DetalleSolicitudServicio extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+	protected function beforeValidate(){
+		if($this->IsNewRecord)
+			$this->fecha_solicitud=date('d/m/Y h:i:s A');
+		return parent::beforeValidate();
+	}
+
 }

@@ -6,10 +6,9 @@
  * The followings are the available columns in table 'solicitud_servicios':
  * @property integer $id_solicitud
  * @property integer $id_historial
- * @property string $fecha_solicitud
  * @property string $estado
  * @property string $observaciones
- * @property double $descuento
+ * @property double $tipo
  * @property double $total
  *
  * The followings are the available model relations:
@@ -36,13 +35,12 @@ class SolicitudServicios extends CActiveRecord
 		return array(
 			array('id_historial', 'required'),
 			array('id_historial', 'numerical', 'integerOnly'=>true),
-			array('descuento, total', 'numerical'),
+			array('total', 'numerical'),
 			array('estado', 'length', 'max'=>32),
 			array('observaciones', 'length', 'max'=>256),
-			array('fecha_solicitud', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_solicitud, id_historial, fecha_solicitud, estado, observaciones, descuento, total', 'safe', 'on'=>'search'),
+			array('id_solicitud, id_historial, estado, observaciones, tipo, total', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,10 +65,9 @@ class SolicitudServicios extends CActiveRecord
 		return array(
 			'id_solicitud' => 'Id Solicitud',
 			'id_historial' => 'Id Historial',
-			'fecha_solicitud' => 'Fecha Solicitud',
 			'estado' => 'Estado',
 			'observaciones' => 'Observaciones',
-			'descuento' => 'Descuento',
+			'tipo' => 'Tipo',
 			'total' => 'Total',
 		);
 	}
@@ -116,9 +113,5 @@ class SolicitudServicios extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-    protected function beforeValidate(){
-        if($this->IsNewRecord)
-            $this->fecha_solicitud=date('d/m/Y h:i:s A');
-        return parent::beforeValidate();
-    }
+
 }

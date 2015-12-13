@@ -362,22 +362,20 @@ create table if not exists detalle_orden_examen(
 create table if not exists solicitud_servicios(
   id_solicitud serial not null primary key,
   id_historial int not null,
-  fecha_solicitud timestamp,
-  estado varchar(32),
   observaciones varchar(256),
-  descuento float,
   total float,
+  tipo int not null,--0 externo 1 internacion
+  estado varchar(32),
   foreign key(id_historial) references historial_paciente(id_historial)
 );
 create table if not exists detalle_solicitud_servicio(
   id_detalle_servicio serial not null primary key,
   id_solicitud int not null,
   id_servicio int not null,
+  fecha_solicitud TIMESTAMP not null,
   cantidad float not null,
   precio_servicio float not null,
-  estado_pago varchar(32) not null,
   estado_realizado varchar(32) not null,
-  autorizacion varchar(32) not null,
   foreign key (id_solicitud) references solicitud_servicios(id_solicitud),
   foreign key (id_servicio) references servicio(id_servicio)
 );
