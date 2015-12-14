@@ -1,45 +1,10 @@
 <div class="row">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-md-4">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="box box-primary box-solid">
-                            <div class="box-header">
-                                Especialidades disponibles
-                            </div>
-                            <div class="box-body">
-                                <div class="input-group margin">
-                                    <input class="form-control" type="text" id="buscaratencion" placeholder="Servico de Enfermeria">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-float btn-primary" type="button"><i class="fa fa-fw fa-search"></i></button>
-                                        </span>
-
-                                </div>
-                                <div id="contenedoratencionmedica">
-                                    <?php $this->renderPartial('atencionesdisponibles',array('atencionmedica'=>$atencionmedica))?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12">
-                        <div class="box box-primary box-solid">
-                            <div class="box-header">
-                                cita
-                            </div>
-                            <div class="box-body">
-                                <div id="contenedorformcita">
-                                    <?php $this->renderPartial('_form',array('cita'=>$cita,'persona'=>$persona))?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-8">
+            <div class="col-md-12">
                 <div class="box box-primary box-solid">
                     <div class="box-header">
-                        calendario
+                        Calendario
                     </div>
                     <div class="box-body">
                         <div id="calendar" class="fc fc-ltr fc-unthemed">
@@ -51,22 +16,24 @@
             </div>
         </div>
     </div>
-    <?php
-        $connection = Yii::app()->db;
-        $sql = "select c.id_cita as id, c.fecha+c.hora_cita as start,c.fecha+c.hora_cita+'15 minutes' as end, (pe.nombres ||'  '|| pe.primer_apellido) as title,
-                false as editable, c.estado_cita as estado, ser.nombre_serv as servinombre, 'popoverclass' as \"className\", pa.id_paciente as paciente
+</div>
+<?php
+$connection = Yii::app()->db;
+$sql = "select c.id_cita as id, c.fecha+c.hora_cita as start,c.fecha+c.hora_cita+'15 minutes' as end, (pe.nombres ||'  '|| pe.primer_apellido) as title,
+                false as editable, c.estado_cita as estado,c.estado_atencion as listopaciente, ser.nombre_serv as servinombre, 'popoverclass' as \"className\", pa.id_paciente as paciente
                 from cita c
                 inner join paciente pa on c.id_paciente=pa.id_paciente
                 inner join persona pe on pa.id_paciente = pe.id
                 inner join atencion_medica ate on c.medico_consulta_servicio=ate.id_servicio
                 inner join servicio ser on ate.id_servicio=ser.id_servicio";
-        $command = $connection->createCommand($sql);
-        $dataReader = $command->query();
-        $rows = $dataReader->readAll();
-        $var = json_encode($rows);
-    ?>
-    </div>
+$command = $connection->createCommand($sql);
+$dataReader = $command->query();
+$rows = $dataReader->readAll();
+$var = json_encode($rows);
+Yii::app()->clientScript->registerCssFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.css');
+Yii::app()->clientScript->registerScriptFile(Yii::app()->theme->baseUrl.'/resources/plugins/toggle/bootstrap-toggle.min.js',CClientScript::POS_END);
 
+?>
 <?php Yii::app()->clientScript->registerScript('pruebagabineteatencion ','
     eventoClick();
     eventoClickCita();
@@ -172,13 +139,19 @@
                     var dato="Recibo Medico";
                     var ide="confirmado";
                     var ocultar="btn btn-primary";
+                    var ocul="";
                     var ocultar1="btn btn-primary hidden";
+                    if(event.listopaciente==1){
+                        var ya="checked";
+                    }
+                    else{ var ya="";}
                 }
                 else{
                     var estado="Reservado";
                     var dato="Confirmar Cita";
                     var ide="Reservado";
                     var ocultar="btn btn-primary hidden";
+                    var ocul="hidden";
                     var ocultar1="btn btn-primary";
                 }
 		        element.popover({
@@ -187,7 +160,7 @@
 		            html:true,
 		            trigger : \'click\',
 		            animation : \'true\',
-		            content: "<div class=\'callout callout-success\'><h4>"+event.title+"</h4><p>"+event.servinombre+"</p></div><br><center><a class=\'"+ocultar+"\' href=\'/SICCSAP2.0/index.php?r=/agenda/ComprobanteAtencionMedica&id="+event.id+"\' target=\'_blank\'>"+dato+"</a><a id="+ide+" class=\'"+ocultar1+"\' href=\'/SICCSAP2.0/index.php?r=/agenda/ActualizarEstadoCita&cita="+event.id+"&idpaciente="+event.paciente+"\'>"+dato+"</a></br><br><a href=\'/SICCSAP2.0/ind\ex.php?r=historialPaciente/view&id="+event.paciente+"\' class=\'"+ocultar+"\'>Ver Historial</a></center>",
+		            content: "<div class=\'callout callout-success\'><h4>"+event.title+"</h4><p>"+event.servinombre+"</p></div><br><center><a class=\'"+ocultar+"\' href=\'/SICCSAP2.0/index.php?r=/agenda/ComprobanteAtencionMedica&id="+event.id+"\' target=\'_blank\'>"+dato+"</a><a id="+ide+" class=\'"+ocultar1+"\' href=\'/SICCSAP2.0/index.php?r=/agenda/ActualizarEstadoCita&cita="+event.id+"&idpaciente="+event.paciente+"\'>"+dato+"</a></br><br><a href=\'/SICCSAP2.0/ind\ex.php?r=historialPaciente/view&id="+event.paciente+"\' class=\'"+ocultar+"\'>Ver Historial</a><br><br><div class=\'"+ocul+"\'><input type=\'checkbox\' "+ya+" class=\'btnChangeState\' data-toggle=\'toggle\' data-size=\'mini\' data-on=\'LLEGO\' data-onstyle=\'primary\' data-offstyle=\'danger\' data-off=\'NO LLEGO\' data-url=\'/SICCSAP2.0/index.php?r=/Agenda/ChangeStateCita&id="+event.id+"\'></div></center>",
                 });
 
                 element.on(\'click\',function(){
@@ -203,6 +176,13 @@
                             }
                         });
                         return false;
+                    });
+                    $(".btnChangeState").bootstrapToggle();
+                    $(".btnChangeState").on("change",function(){
+                        $.ajax({
+                            url:$(this).attr("data-url"),
+                                type:"get"
+                        });
                     });
                 });
 

@@ -57,7 +57,6 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
     </div>
 <div class="row">
     <div class="col-md-12">
-
         <div class="row">
             <div class="col-md-7">
                 <div class="box box-primary">

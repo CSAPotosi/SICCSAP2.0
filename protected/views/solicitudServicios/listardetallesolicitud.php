@@ -13,18 +13,12 @@
             <td>
                 <?php echo $sol->idHistorial->paciente->personapa->getNombreCompleto();?>
             </td>
-            <?php if($lis->autorizacion=="autorizado"){?>
+
                 <td align="center">
                     <?php echo $servicio->nombre_serv?><br>
                     <?php echo CHtml::link('Examen',['laboratorio/createExamenLab','id_serv'=>$servicio->id_servicio,'id_historial'=>$sol->idHistorial->id_historial])?>
                     <span class="badge bg-blue">autorizado</span>
                 </td>
-            <?php }else{?>
-                <td align="center">
-                    <?php echo $servicio->nombre_serv?><br>
-                    <span class="badge bg-red">no autorizado</span>
-                </td>
-            <?php }?>
         </tr>
         <?php }?>
     <?php endforeach?>

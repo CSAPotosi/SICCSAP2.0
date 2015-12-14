@@ -9,6 +9,7 @@
  * @property string $hora_cita
  * @property integer $estado_cita
  * @property integer $id_paciente
+ * @property integer $estado_atencion
  * @property integer $medico_consulta_servicio
  *
  * The followings are the available model relations:
@@ -34,10 +35,10 @@ class Cita extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('fecha, hora_cita, estado_cita, id_paciente, medico_consulta_servicio', 'required'),
-			array('estado_cita, id_paciente, medico_consulta_servicio', 'numerical', 'integerOnly'=>true),
+			array('estado_cita, id_paciente, estado_atencion, medico_consulta_servicio', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_cita, fecha, hora_cita, estado_cita, id_paciente, medico_consulta_servicio', 'safe', 'on'=>'search'),
+			array('id_cita, fecha, hora_cita, estado_cita, id_paciente, estado_atencion, medico_consulta_servicio', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -53,6 +54,10 @@ class Cita extends CActiveRecord
 			'medicoConsultaServicio' => array(self::BELONGS_TO, 'AtencionMedica', 'medico_consulta_servicio'),
 		);
 	}
+
+	/**
+	 * @return array customized attribute labels (name=>label)
+	 */
 	public function attributeLabels()
 	{
 		return array(
@@ -61,6 +66,7 @@ class Cita extends CActiveRecord
 			'hora_cita' => 'Hora Cita',
 			'estado_cita' => 'Estado Cita',
 			'id_paciente' => 'Id Paciente',
+			'estado_atencion' => 'Estado Atencion',
 			'medico_consulta_servicio' => 'Medico Consulta Servicio',
 		);
 	}
@@ -88,6 +94,7 @@ class Cita extends CActiveRecord
 		$criteria->compare('hora_cita',$this->hora_cita,true);
 		$criteria->compare('estado_cita',$this->estado_cita);
 		$criteria->compare('id_paciente',$this->id_paciente);
+		$criteria->compare('estado_atencion',$this->estado_atencion);
 		$criteria->compare('medico_consulta_servicio',$this->medico_consulta_servicio);
 
 		return new CActiveDataProvider($this, array(
@@ -105,5 +112,4 @@ class Cita extends CActiveRecord
 	{
 		return parent::model($className);
 	}
-
 }

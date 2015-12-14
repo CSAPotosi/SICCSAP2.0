@@ -25,7 +25,7 @@
         <div class="col-sm-12">
             <?php echo CHtml::activetextField($contacto,'dni',array('class'=>'form-control text-center','placeholder'=>'dni')); ?>
         </div>
-        <?php echo CHtml::error($contacto,'dni',array('class'=>'label label-danger')); ?>
+        kaka<?php echo CHtml::error($contacto,'dni',array('class'=>'label label-danger')); ?>
     </div>
     <div class="form-group">
         <div class="col-sm-12">

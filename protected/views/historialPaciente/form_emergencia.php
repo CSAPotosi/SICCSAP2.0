@@ -30,7 +30,7 @@ $this->breadcrumbs=array(
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <?php echo $form->labelEx($persona,'Tipo de Documento'); ?>
-                                        <?php echo $form->dropDownList($persona,'tipo_documento',array(''=>'Seleccione','dni'=>'Documento de Ientificacion Perosnal','pasaporte'=>'pasaporte'),array('class'=>'form-control')); ?>
+                                        <?php echo $form->dropDownList($persona,'tipo_documento',array(''=>'Seleccione','DNI'=>'CARNET DE IDENTIFICACION PERSONAL','LIBRETA DE SERVICIO MILITAR'=>'LIBRETA DE SERVICIO MILITAR'),array('class'=>'form-control')); ?>
                                         <?php echo $form->error($persona,'tipo_documento',array('class'=>'label label-danger')); ?>
                                     </div>
                                 </div>
@@ -111,7 +111,7 @@ Yii::app()->clientScript->registerScript('form_emergencia','
         	locale:"es",
         	defaultDate:"'.date('Y-m-d H:i').'",
         	format:"YYYY-MM-DD HH:mm",
-        	minDate:"'.date('Y-m-d H:i').'"
+        	maxDate:"'.date('Y-m-d H:i').'"
         });
         $("input[type=\'radio\'],input[type=\'radio\']").iCheck({
             checkboxClass:"icheckbox_flat-blue",

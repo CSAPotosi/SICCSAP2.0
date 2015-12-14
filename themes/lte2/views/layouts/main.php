@@ -236,6 +236,7 @@
                             <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/Unidad/index'])?>" ><span>Unidad</span></a></li>
                             <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/Horario/index'])?>" ><span>Horarios</span></a></li>
                             <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/Horario/IndexTurno'])?>" ><span>Turnos</span></a></li>
+
                         </ul>
                     </li>
                     <li class="treeview">
@@ -243,6 +244,13 @@
                         <ul class="treeview-menu">
                             <li><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Principal_Institucion'])?>" ><span>Institucion</span></a></li>
                             <li><a href="<?php echo CHtml::normalizeUrl(['/ConvenioInstitucion/Index'])?>" ><span>Convenios</span></a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#"><i class='fa fa-fw fa-shield'></i> <span>Agenda Medica</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="<?php echo CHtml::normalizeUrl(['/Agenda/RegistrarCitas'])?>" ><span>Ver Citas</span></a></li>
+                            <li><a href="<?php echo CHtml::normalizeUrl([''])?>" ><span>Sala de espera</span></a></li>
                         </ul>
                     </li>
                     <li class="treeview">
@@ -334,11 +342,22 @@
         </footer>
 
         <!-- Control Sidebar -->
+        <section class="sidebar">
+            <ul class="sibebar-menu">
+                <li class="header">REPORTES</li>
+                <li class="treeview">
+                    <a href="#"><i class='fa fa-fw fa-user'></i> <span>Nuevo Paciente</span><i class="fa fa-angle-left pull-right"></i></a>
+                    <ul class="treeview-menu">
+                        <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/persona/index'])?>" ><span>Pacientes</span></a></li>
+                        <li class="active"><a href="<?php echo CHtml::normalizeUrl(['/historialpaciente/PacienteEmergencia'])?>" ></i><span>Paciente de Emergencia</span></a></li>
+                    </ul>
+                </li>
+            </ul>
+        </section>
         <aside class="control-sidebar control-sidebar-dark">
             <!-- Create the tabs -->
             <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
                 <li class="active"><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-file-text-o"></i></a></li>
-
             </ul>
             <!-- Tab panes -->
             <div class="tab-content">
@@ -357,25 +376,27 @@
                         </li>
                     </ul>
                 </div>
+
                 <div class="tab-pane active" id="control-sidebar-home-tab">
                     <h3 class="control-sidebar-heading">Servicios</h3>
                     <ul class='control-sidebar-menu'>
-                        <li>
+                        <li class="treeview">
                             <a href='<?php echo CHtml::normalizeUrl(['reportes/ReporteServiciosLaboratorio']);?>' target="_blank">
-                                <i class="menu-icon fa fa-fw fa-flask bg-red"></i>
+                                Servicios<i class="menu-icon fa fa-fw fa-flask bg-red"></i>
                                 <div class="menu-info">
                                     <h4 class="control-sidebar-subheading">Servicos de Laboratorio</h4>
                                 </div>
                             </a>
                         </li>
                         <li>
-
-                                <i class="menu-icon fa fa-fw fa-gratipay bg-red"></i>
+                            <a href="">
+                            <i class="menu-icon fa fa-fw fa-gratipay bg-red"></i>
                                 <div class="menu-info">
                                     <h4 class="control-sidebar-subheading">Servicios de Gabinete</h4>
                                 </div>
                             </a>
                         </li>
+
                         <li>
                             <a href='<?php echo CHtml::normalizeUrl(['reportes/ReporteServiciootros']);?>' target="_blank">
                                 <i class="menu-icon fa fa-fw fa-h-square bg-red"></i>

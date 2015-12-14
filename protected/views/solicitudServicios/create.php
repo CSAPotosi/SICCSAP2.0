@@ -79,8 +79,6 @@
                                                                         <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>'','id'=>'valor_solicitud'))?>
                                                                         <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->serviciodelab->id_servicio;?>][id_servicio]" value="<?php echo $e->serviciodelab->precioServicio->id_servicio?>">
                                                                         <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]estado_realizado",array('value'=>'no realizado','class'=>'estado_realizado'))?>
-                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]autorizacion",array('value'=>'no autorizado','class'=>'autorizacion'))?>
-                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]estado_pago",array('value'=>'pagado','class'=>'pago'))?>
                                                                     </td>
                                                                     <td class="hide" name="ocultar"><input type="text" value="<?php echo $e->serviciodelab->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->serviciodelab->id_servicio;?>][precio_servicio]" id="precio_ser"></td>
                                                                     <td class="cantidad hide" name="ocultar"><input class="cantidad" type="text" name="DetalleSolicitudServicio[<?php echo $e->serviciodelab->id_servicio;?>][cantidad]" id="cantidad" value="1"></td>
@@ -122,8 +120,6 @@
                                                                         <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->Serviciogab->precioServicio->id_servicio?>][id_servicio]" value="<?php echo $e->Serviciogab->precioServicio->id_servicio?>">
                                                                         <?php echo CHtml::activeHiddenField($detsolser,'estado_realizado',array('value'=>'no realizado','id'=>'estado_realizado'))?>
                                                                         <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]estado_realizado",array('value'=>'no realizado','class'=>'estado_realizado'))?>
-                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]autorizacion",array('value'=>'no autorizado','class'=>'autorizacion'))?>
-                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]estado_pago",array('value'=>'pagado','class'=>'pago'))?>
                                                                     </td>
                                                                     <td class="hide" name="ocultar"><input type="text" value="<?php echo $e->Serviciogab->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->Serviciogab->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>
                                                                     <td class="cantidad hide" name="ocultar"><input class="cantidad" type="text" name="DetalleSolicitudServicio[<?php echo $e->Serviciogab->precioServicio->id_servicio?>][cantidad]" id="cantidad" value="1"></td>
@@ -167,8 +163,6 @@
                                                                         <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->precioServicio->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>'','id'=>'valor_solicitud'))?>
                                                                         <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][id_servicio]" value="<?php echo $e->ServicioCli->precioServicio->id_servicio?>">
                                                                         <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]estado_realizado",array('value'=>'no realizado','class'=>'estado_realizado'))?>
-                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]autorizacion",array('value'=>'no autorizado','class'=>'autorizacion'))?>
-                                                                        <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]estado_pago",array('value'=>'pagado','class'=>'pago'))?>
                                                                     </td>
                                                                     <td class="hide" name="ocultar"><input type="text" value="<?php echo $e->ServicioCli->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>
                                                                     <td class="cantidad hide" name="ocultar"><input class="cantidad" type="text" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][cantidad]" id="cantidad" value="1"></td>
@@ -235,6 +229,8 @@
             vueltapru(valor);
         });
         function idapru(valor){
+            var totalbruto=$("#totalbruto").val();
+            $("#total").val(totalbruto);
             $("#segcontenedor").append($("#"+valor+""));
             $("#"+valor+"").children("[name=\'ocultar\']").removeClass("hide");
             $("#"+valor+"").prop("class","val2");
@@ -256,25 +252,11 @@
                 }
                 suma=suma+(parseInt($(this).attr("precio"))*cant);
             });
-            $("#totalbruto").val(suma);
+            $("#total").val(suma);
         }
         $(".cantidad").on("keyup",function(){
             calcular($(".val2"));
         });
-        $("#descuento").on("keyup",descuento);
-         function descuento(){
-            var descu=$(this).val();
-            if(isNaN(descu) || descu==""){
-                descu=0;
-            }
-            var totalbruto=$("#totalbruto").val();
-            var total=parseInt(totalbruto)-parseInt(descu);
-            if(total<0){
-                total=0;
-            }
-            $("#total").val(total);
-            $("#btnsolicitud").removeAttr("disabled");
-        }
         $("#btnsolicitud").on("click",solicitudservicios);
         function solicitudservicios(){
             $("#descuentototal").val($("#descuento").val());

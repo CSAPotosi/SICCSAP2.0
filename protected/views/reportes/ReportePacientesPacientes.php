@@ -33,11 +33,11 @@
                 <td><?php echo $item->pacihisto->fecha_creacion?></td>
                 <td><?php echo $item->personapa->fecha_nacimiento?></td>
                 <td><?php echo $item->personapa->estado_civil?></td>
-                <td><?php echo $item->personapa->paisNacimiento->nombre_pais?></td>
+                <td><?php echo $item->personapa->paisNacimiento->nombre?></td>
                 <td><?php echo $item->personapa->provincia?></td>
                 <td><?php echo $item->personapa->localidad?></td>
                 <td><?php echo $item->personapa->nivel_estudio?></td>
-                <td><?php echo $item->personapa->paisVive->nombre_pais?></td>
+                <td><?php echo $item->personapa->paisVive->nombre?></td>
                 <td><?php echo $item->personapa->direccion?></td>
                 <td><?php echo $item->personapa->telefono?></td>
                 <td><?php echo $item->personapa->celular?></td>

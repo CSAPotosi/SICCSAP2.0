@@ -78,7 +78,7 @@
                                 <div class="form-group">
                                     <?php echo $form->labelEx($model,'fecha_nacimiento'); ?>
                                     <div class="input-group date" id="datetimepicker1">
-                                        <input class="form-control" type="text"/>
+                                        <input class="form-control"  type="text" name="Persona[fecha_nacimiento]"/>
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-calendar">
                                             </span>

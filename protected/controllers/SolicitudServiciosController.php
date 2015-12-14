@@ -88,7 +88,10 @@ class SolicitudServiciosController extends Controller
     public function actionCrearSolDetSer()
     {
         $solicitud=new SolicitudServicios;
-        $solicitud->attributes=$_POST['SolicitudServicios'];
+        $solicitud->estado=$_POST['SolicitudServicios']['estado'];
+        $solicitud->id_historial=$_POST['SolicitudServicios']['id_historial'];
+        $solicitud->tipo=$_POST['SolicitudServicios']['tipo'];
+        $solicitud->observaciones=$_POST['SolicitudServicios']['observaciones'];
         $solicitud->total=$_POST['SolicitudServicios']['total'];
         $solicitud->save();
         header('Content-Type:application/json;');
@@ -256,4 +259,5 @@ class SolicitudServiciosController extends Controller
 			Yii::app()->end();
 		}
 	}
+
 }

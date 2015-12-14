@@ -28,7 +28,7 @@ class AgendaController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','BuscarAtencionMedica','RegistrarCita','ActualizarEstadoCita','ComprobanteAtencionMedica','atencionesmedicas','detalleAtencionesMedicas','BuscarAtencionMedicaRapida','create','update','admin','delete'),
+				'actions'=>array('index','view','BuscarAtencionMedica','RegistrarCita','ActualizarEstadoCita','ComprobanteAtencionMedica','atencionesmedicas','detalleAtencionesMedicas','BuscarAtencionMedicaRapida','create','update','admin','delete','RegistrarCitas','ChangeStateCita'),
                 'roles'=>array('ADMIN'),
 			),
 			array('deny',  // deny all users
@@ -230,5 +230,21 @@ class AgendaController extends Controller
         endforeach;
         $this->renderPartial('detalleatencionmedica',array('servicio'=>$servicio,'atencionmedica'=>$atencionmedica));
         return;
+    }
+    public function actionRegistrarCitas(){
+        $atencion=AtencionMedica::model()->findAll();
+        $this->render('registrarcitas',array('atencionmedica'=>$atencion));
+    }
+    public function actionChangeStateCita($id)
+    {
+
+        $modelQ= Cita::model()->findByPk($id);
+        var_dump($modelQ);
+        $modelQ->estado_atencion=($modelQ->estado_atencion+1)%2;
+        if($modelQ->save())
+            var_dump($modelQ);
+        else
+            echo "no se puede";
+        echo $id.$modelQ->estado_atencion;
     }
 }
