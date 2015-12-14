@@ -174,4 +174,15 @@ class Internacion extends CActiveRecord
 		}
 		return parent::afterSave();
 	}
+
+	public function getSolicitudInternacion(){
+		$id_h=$this->historial->id_historial;
+		$fecha_ini=$this->fecha_ingreso;
+		$fecha_end=($this->fecha_egreso!=null||$this->fecha_egreso!='')?$this->fecha_egreso : date('Y-m-d H:i:s');
+		return SolicitudServicios::model()->find([
+			'select'=>'id_solicitud',
+			'condition'=>"id_historial=:id_h and fecha_solicitud >= :fecha_ini and fecha_solicitud <= :fecha_fin",
+			'params'=>[':id_h'=>$id_h,':fecha_ini'=>$fecha_ini,'fecha_fin'=>$fecha_end]
+		]);
+	}
 }

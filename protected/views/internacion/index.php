@@ -8,6 +8,8 @@
 ?>
 
 <?php $this->renderPartial('/historialPaciente/_form_datos_paciente',array('model'=>$modelInternacion->historial));?>
+
+
 <nav class="navbar navbar-menu">
     <div class="container">
         <div class="navbar-header">
@@ -31,7 +33,6 @@
     </div>
 </nav>
 
-<?php var_dump($modelInternacion);?>
 
 <div class="row">
     <div class="col-md-6">

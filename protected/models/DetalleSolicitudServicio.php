@@ -116,4 +116,11 @@ class DetalleSolicitudServicio extends CActiveRecord
 		return parent::beforeValidate();
 	}
 
+	protected function afterSave(){
+		if($this->isNewRecord){
+			$this->idSolicitud->total+=$this->precio_servicio;
+			$this->idSolicitud->save();
+		}
+		return parent::afterSave();
+	}
 }

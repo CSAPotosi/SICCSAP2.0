@@ -8,6 +8,9 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
 ?>
 
 <?php $this->renderPartial('/historialPaciente/_form_datos_paciente',array('model'=>$modelInternacion->historial));?>
+
+
+
 <nav class="navbar navbar-menu">
     <div class="container">
         <div class="navbar-header">
@@ -63,7 +66,7 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
                     <div class="box-header">
                         <h3 class="box-title">Servicios</h3>
                         <div class="input-group margin">
-                            <input class="form-control" type="text" id="buscasolser" placeholder="Item de Examen de gabinete">
+                            <input class="form-control" type="text" id="buscasolser" placeholder="Buscar servicio">
                             <span class="input-group-btn">
                                 <button class="btn btn-success btn-float" type="button"><i class="fa fa-fw fa-search"></i></button>
                             </span>
@@ -110,11 +113,9 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
                                                         <tr class="val" data-tipo="<?php echo $e->serviciodelab->nombre_serv?>" name="<?php echo $e->serviciodelab->nombre_serv?>" name-titulo="<?php echo $l->nombre_cat_lab;?>" precio="<?php echo $e->serviciodelab->precioServicio->monto?>" id="<?php echo $e->serviciodelab->precioServicio->id_servicio?>">
                                                             <td>
                                                                 <?php echo $e->serviciodelab->nombre_serv;?>
-                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>'','id'=>'valor_solicitud'))?>
+                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>$modelInternacion->getSolicitudInternacion()->id_solicitud,'id'=>'valor_solicitud'))?>
                                                                 <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->serviciodelab->id_servicio;?>][id_servicio]" value="<?php echo $e->serviciodelab->precioServicio->id_servicio?>">
                                                                 <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]estado_realizado",array('value'=>"no realizado",'id'=>'estado_realizado'))?>
-                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]autorizacion",array('class'=>'autorizacion', 'value'=>'no autorizado','id'=>'autorizacion'))?>
-                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->serviciodelab->id_servicio."]estado_pago",array('class'=>'pago', 'value'=>'no pagado','id'=>'estado_pago'))?>
                                                             </td>
                                                             <td class="hide"><input type="text" value="<?php echo $e->serviciodelab->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->serviciodelab->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>
                                                             <td class="hide" name="ocultar"><span class="badge bg-red"><?php echo $e->serviciodelab->idInsti->nombre?></span></td>
@@ -151,11 +152,9 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
                                                         <tr class="val" data-tipo="<?php echo $e->Serviciogab->nombre_serv?>" name="<?php echo $e->Serviciogab->nombre_serv?>" name-titulo="<?php echo $l->nombre_cat_gab;?>" precio="<?php echo $e->Serviciogab->precioServicio->monto?>" id="<?php echo $e->Serviciogab->precioServicio->id_servicio?>">
                                                             <td>
                                                                 <?php echo $e->Serviciogab->nombre_serv;?>
-                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->precioServicio->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>'','id'=>'valor_solicitud'))?>
+                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->precioServicio->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>$modelInternacion->getSolicitudInternacion()->id_solicitud,'id'=>'valor_solicitud'))?>
                                                                 <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->Serviciogab->precioServicio->id_servicio?>][id_servicio]" value="<?php echo $e->Serviciogab->precioServicio->id_servicio?>">
                                                                 <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]estado_realizado",array('value'=>'no realizado','id'=>'estado_realizado'))?>
-                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]autorizacion",array('class'=>'autorizacion','value'=>'no autorizado','id'=>'autorizacion'))?>
-                                                                <?php echo CHtml::activeHiddenField($detsolser,"[".$e->Serviciogab->id_servicio."]estado_pago",array('class'=>'pago', 'value'=>'no pagado','id'=>'estado_pago'))?>
                                                             </td>
                                                             <td class="hide"><input type="text" value="<?php echo $e->Serviciogab->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->Serviciogab->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>
                                                             <td class="hide" name="ocultar"><span class="badge bg-red"><?php echo $e->Serviciogab->idInsti->nombre?></span></td>
@@ -196,11 +195,9 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
                                                             <tr class="val" data-tipo="<?php echo $e->ServicioCli->nombre_serv?>" name-titulo="<?php echo $l->nombre_cat_cli;?>" name="<?php echo $e->ServicioCli->nombre_serv?>" precio="<?php echo $e->ServicioCli->precioServicio->monto?>" id="<?php echo $e->ServicioCli->precioServicio->id_servicio?>">
                                                                 <td>
                                                                     <?php echo $e->ServicioCli->nombre_serv;?>
-                                                                    <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->precioServicio->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>'','id'=>'valor_solicitud'))?>
+                                                                    <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->precioServicio->id_servicio."]id_solicitud",array('class'=>'idsolicitud','value'=>$modelInternacion->getSolicitudInternacion()->id_solicitud,'id'=>'valor_solicitud'))?>
                                                                     <input type="hidden" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][id_servicio]" value="<?php echo $e->ServicioCli->precioServicio->id_servicio?>">
                                                                     <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]estado_realizado",array('value'=>'no realizado','id'=>'estado_realizado'))?>
-                                                                    <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]autorizacion",array('class'=>'autorizacion','value'=>'no autorizado','id'=>'autorizacion'))?>
-                                                                    <?php echo CHtml::activeHiddenField($detsolser,"[".$e->ServicioCli->id_servicio."]estado_pago",array('class'=>'pago', 'value'=>'no pagado','id'=>'estado_pago'))?>
                                                                 </td>
                                                                 <td class="hide"><input type="text" value="<?php echo $e->ServicioCli->precioServicio->monto?>" name="DetalleSolicitudServicio[<?php echo $e->ServicioCli->precioServicio->id_servicio?>][precio_servicio]" id="precio_ser"></td>
                                                                 <td class="hide" name="ocultar"><span class="badge bg-red"><?php echo $e->ServicioCli->idInsti->nombre?></span></td>
@@ -278,32 +275,9 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
         }
         $("#btnsolicitudinternacion").on("click",solicitudservicios);
         function solicitudservicios(){
-            $("#estadosolicitud").val("orden");
-            $("#total").removeAttr("disabled");
-            $.ajax({
-               url:"'.CHtml::normalizeUrl(array('SolicitudServicios/CrearSolDetSer')).'",
-               type:"post",
-               data:$("#solicitud-servicios-form").serialize(),
-               success:function(datos){
-                    darsolicitud(datos.id_solicitud_j);
-                    autorizar();
-                    detallesolicitud();
-               }
-            });
-            return false;
+             detallesolicitud();
         }
-        function darsolicitud(valor){
-            var lista=$(".val2");
-            lista.each(function( index ) {
-                $(this).children().children(".idsolicitud").val(valor);
-            });
-        }
-        function autorizar(){
-            var lista=$(".val2");
-            lista.each(function( index ) {
-                $(this).children().children(".autorizacion").val("autorizado");
-            });
-        }
+
         function detallesolicitud(){
             $("#solicitud-servicios-detalle-int").submit();
         }

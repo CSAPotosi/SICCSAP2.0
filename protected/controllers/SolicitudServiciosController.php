@@ -160,8 +160,7 @@ class SolicitudServiciosController extends Controller
         ));
     }
     public  function actionDetalleServiciosInternacion(){
-        $detalles=array();
-        $detalles=null;
+        $detalles=[];
         $detalles=$_POST['DetalleSolicitudServicio'];
         foreach($detalles as $det):
             $detalle=new DetalleSolicitudServicio;
@@ -172,13 +171,9 @@ class SolicitudServiciosController extends Controller
         $this->redirect(array('ListaDetalleSolicitudInternacion','sol'=>$sol->id_solicitud));
     }
     public function actionListaDetalleSolicitudInternacion($sol){
-        $sol=SolicitudServicios::model()->findByPk($sol);
-        $var=$sol->idHistorial->internacionActual->fecha_ingreso;
-        $varhis=$sol->idHistorial->id_historial;
-        $historial=$sol->idHistorial;
-        $solicitud=SolicitudServicios::model()->findAll(array(
-            'condition'=>"fecha_solicitud>='{$var}'",
-        ));
+
+        $solicitud=SolicitudServicios::model()->findByPk($sol);
+        $historial=$solicitud->idHistorial;
         $this->render('listadetallesolicitudservicio',array('solicitud'=>$solicitud,'historial'=>$historial,'modelInternacion'=>$historial->internacionActual));
     }
     public function actionVerdetallesolicitud($id){
@@ -190,10 +185,7 @@ class SolicitudServiciosController extends Controller
     public function actionVerServiciosInternacion($id,$id_inter=0){
         $historial=HistorialPaciente::model()->findByPk($id);
         $modelInternacion=Internacion::model()->findByPk($id_inter);
-        $var=$historial->internacionActual->fecha_ingreso;
-        $solicitud=SolicitudServicios::model()->findAll(array(
-            'condition'=>"fecha_solicitud>='{$var}' and id_historial='{$historial->id_historial}'",
-        ));
+        $solicitud=$modelInternacion->getSolicitudInternacion();
        $this->render('listadetallesolicitudservicio',array('solicitud'=>$solicitud,'historial'=>$historial,'modelInternacion'=>$modelInternacion));
     }
 
