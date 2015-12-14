@@ -92,7 +92,7 @@ create table if not exists turno(
   tolerancia int default 0,
   tipo_turno int
 );
-create table horario_turno(
+create table if not EXISTS horario_turno(
   id_turno_horario serial primary key not null,
   id_horario int,
   id_turno int,
@@ -366,6 +366,7 @@ create table if not exists solicitud_servicios(
   total float,
   tipo int not null,--0 externo 1 internacion
   estado varchar(32),
+  fecha_solicitud timestamp,
   foreign key(id_historial) references historial_paciente(id_historial)
 );
 create table if not exists detalle_solicitud_servicio(
@@ -484,43 +485,6 @@ insert into empleado(id) values (1);
 insert into usuario( nombre, clave, id_empleado) values ('admin',md5('admin'),1);*/
 
 
-
-
-
-
-create table if not exists moneda(
-  id_moneda serial not null primary key,
-  sigla varchar(4) not null ,
-  moneda varchar(20) not null
-);
-
-create table if not exists tipo_de_cambio(
-  id_tipo_cambio serial not null primary key,
-  moneda int not null ,
-  fecha_inicio date not null ,
-  fecha_fin date,
-  valor float not null ,
-  foreign key (moneda) references moneda(id_moneda)
-);
-
-create table if not exists cuenta(
-  id_cuenta serial not null primary key,
-  codigo varchar(12) not null,
-  nombre varchar(120) not null,
-  descripcion varchar(200),
-  moneda int,
-  nivel char(1),
-  estado char(1),
-  foreign key (moneda) references moneda(id_moneda)
-);
-/****        array_ma()                ****/
-create table if not exists ciclocontable(
-  id_ciclo serial not null primary key,
-  anio int,
-  fecha_inicio date not null,
-  fecha_fin date not null
-
-);
 
 create table if not exists tratamiento(
   id_trat serial primary key,

@@ -18,7 +18,7 @@
  * @property string $fecha_egreso
  *
  * The followings are the available model relations:
- * @property HistorialPaciente $idHistorial
+ * @property HistorialPaciente $historial
  * @property Consulta $idDiagnosticoIngreso
  * @property Consulta $idDiagnosticoAlta
  */
@@ -161,4 +161,17 @@ class Internacion extends CActiveRecord
         ];
     }
 
+
+	public function afterSave(){
+		if($this->isNewRecord){
+			$model= new SolicitudServicios();
+			$model->id_historial=$this->historial->id_historial;
+			$model->observaciones='';
+			$model->total=0;
+			$model->tipo=1;//internado
+			$model->estado='PENDIENTE';
+			$model->save();
+		}
+		return parent::afterSave();
+	}
 }

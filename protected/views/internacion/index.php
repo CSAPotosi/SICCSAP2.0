@@ -31,6 +31,8 @@
     </div>
 </nav>
 
+<?php var_dump($modelInternacion);?>
+
 <div class="row">
     <div class="col-md-6">
         <div class="box box-solid box-success">

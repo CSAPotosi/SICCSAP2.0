@@ -81,7 +81,7 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
                         <input type="radio" class="checked" name="checked" value="3">
                         <b>Otros servicios</b>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="radio" class="checked" name="checked" value="4">
+                        <input type="radio" class="checked" name="checked" value="4" checked>
                         <b>Todo</b>
                     </div>
                     <div id="contenido_solSerDetalle">
@@ -223,7 +223,7 @@ $this->pageTitle=CHtml::link('<i class="fa fa-arrow-left"></i>',['historialPacie
             <div class="col-md-5">
                 <div class="box box-primary">
                     <div class="box-header">
-                        <h3 class="box-title">Items de Categoria</h3>
+                        <h3 class="box-title">Servicios seleccionados</h3>
                     </div>
                     <?php $this->renderPartial('/solicitudServicios/detallesolicitudinternacion',array('detsolser'=>$detsolser))?>
                 </div>

@@ -114,4 +114,10 @@ class SolicitudServicios extends CActiveRecord
 		return parent::model($className);
 	}
 
+	protected function beforeValidate(){
+		if($this->isNewRecord)
+			$this->fecha_solicitud=date('d/m/Y h:i:s A');
+		return parent::beforeValidate();
+	}
+
 }
